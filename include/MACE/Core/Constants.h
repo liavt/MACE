@@ -101,7 +101,8 @@ The above copyright notice and this permission notice shall be included in all c
 
 //[[nodiscard]] attribute
 #ifndef MACE_NODISCARD
-#	if MACE_HAS_ATTRIBUTE(nodiscard)
+// clang issues a warning on [[nodiscard]] when it's not in C++17 mode
+#	if MACE_HAS_ATTRIBUTE(nodiscard) && !(defined(MACE_CLANG) && __cplusplus < 201703L)
 #		define MACE_NODISCARD [[nodiscard]]
 #	else
 #		define MACE_NODISCARD

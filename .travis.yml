@@ -11,6 +11,66 @@ branches:
   
 matrix:
   include:
+    - compiler: clang++-3.3
+      os: osx
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.3
+          packages:
+            - clang-3.3
+      env: COMPILER=clang++-3.3
+    - compiler: clang++-4.0
+      os: osx
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-4.0
+          packages:
+            - clang-4.0
+      env: COMPILER=clang++-4.0
+    - compiler: clang++-5.0
+      os: osx
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-5.0
+          packages:
+            - clang-5.0
+      env: COMPILER=clang++-5.0
+    - compiler: clang++-6.0
+      os: osx
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-6.0
+          packages:
+            - clang-6.0
+      env: COMPILER=clang++-6.0
+    - compiler: clang++-7.0
+      os: osx
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-7.0
+          packages:
+            - clang-7.0
+      env: COMPILER=clang++-7.0
+    - compiler: clang++-8.0
+      os: osx
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-8.0
+          packages:
+            - clang-8.0
+      env: COMPILER=clang++-8.0
     - compiler: g++-5
       os: linux
       addons:
@@ -29,42 +89,99 @@ matrix:
           packages:
             - g++-6
       env: COMPILER=g++-6
-    - compiler: clang++-3.7
+    - compiler: g++-7
       os: linux
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.7
           packages:
-            - clang-3.7
-      env: COMPILER=clang++-3.7
-    - compiler: clang++-3.5
+            - g++-7
+      env: COMPILER=g++-7
+    - compiler: g++-8
       os: linux
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.5
           packages:
-            - clang-3.5
-      env: COMPILER=clang++-3.5
-    - compiler: clang++
-      os: osx
+            - g++-8
+      env: COMPILER=g++-8
+    - compiler: clang++-3.3
+      os: linux
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.5
+            - llvm-toolchain-precise-3.3
           packages:
-            - clang-3.5
+            - clang-3.3
+      env: COMPILER=clang++-3.3
+    - compiler: clang++-4.0
+      os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-4.0
+          packages:
+            - clang-4.0
+      env: COMPILER=clang++-4.0
+    - compiler: clang++-5.0
+      os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-5.0
+          packages:
+            - clang-5.0
+      env: COMPILER=clang++-5.0
+    - compiler: clang++-6.0
+      os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-6.0
+          packages:
+            - clang-6.0
+      env: COMPILER=clang++-6.0
+    - compiler: clang++-7.0
+      os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-7.0
+          packages:
+            - clang-7.0
+      env: COMPILER=clang++-7.0
+    - compiler: clang++-8.0
+      os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-8.0
+          packages:
+            - clang-8.0
+      env: COMPILER=clang++-8.0
 
 
 before_install:
-  - if [[ "$COMPILER" == "clang++-3.5" ]]; then export CXX=clang++-3.5;export CC=clang-3.5; fi
-  - if [[ "$COMPILER" == "clang++-3.7" ]]; then export CXX=clang++-3.7;export CC=clang-3.7; fi
+  - if [[ "$COMPILER" == "clang++-3.3" ]]; then export CXX=clang++-3.3;export CC=clang-3.3; fi
+  - if [[ "$COMPILER" == "clang++-4.0" ]]; then export CXX=clang++-4.0;export CC=clang-4.0; fi
+  - if [[ "$COMPILER" == "clang++-5.0" ]]; then export CXX=clang++-5.0;export CC=clang-5.0; fi
+  - if [[ "$COMPILER" == "clang++-6.0" ]]; then export CXX=clang++-6.0;export CC=clang-6.0; fi
+  - if [[ "$COMPILER" == "clang++-7.0" ]]; then export CXX=clang++-7.0;export CC=clang-7.0; fi
+  - if [[ "$COMPILER" == "clang++-8.0" ]]; then export CXX=clang++-8.0;export CC=clang-8.0; fi
   - if [[ "$COMPILER" == "g++-5" ]]; then export CXX=g++-5;export CC=gcc-5; fi
   - if [[ "$COMPILER" == "g++-6" ]]; then export CXX=g++-6;export CC=gcc-6; fi
+  - if [[ "$COMPILER" == "g++-7" ]]; then export CXX=g++-7;export CC=gcc-7; fi
+  - if [[ "$COMPILER" == "g++-8" ]]; then export CXX=g++-8;export CC=gcc-8; fi
+  - export OMP_NUM_THREADS=4
+  - $CC --version
   - $CXX --version
 
 install: sudo bash ./scripts/travis-install.sh
@@ -72,7 +189,7 @@ install: sudo bash ./scripts/travis-install.sh
 before_script:
   - mkdir build/
   - cd build/
-  - cmake -DMACE_TESTS=ON -DMACE_DEMOS=ON -DCMAKE_BUILD_TYPE=Debug -DMACE_ALL_WARNINGS=ON .. -DFT_WITH_HARFBUZZ=OFF
+  - cmake -DMACE_TESTS=ON -DMACE_DEMOS=ON -DCMAKE_BUILD_TYPE=Debug -DMACE_ALL_WARNINGS=ON ..
   - cd ..
 
 script: sudo bash ./scripts/travis-run.sh
@@ -88,7 +205,7 @@ deploy:
     skip_cleanup: true
     overwrite: true
     on:
-      condition: $TRAVIS_OS_NAME == linux && $COMPILER == g++-6 && $TRAVIS_PULL_REQUEST = false
+      condition: $TRAVIS_OS_NAME == linux && $COMPILER == g++-8 && $TRAVIS_PULL_REQUEST = false
       branch: none
       repo: liavt/MACE
   - provider: script

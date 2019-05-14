@@ -70,7 +70,7 @@ namespace mc {
 
 		template<typename T>
 		inline bool bittest(const T& val, const T& pos) {
-#ifndef MACE_MSVC
+#ifdef MACE_MSVC
 			return _bittest(&static_cast<long>(val), static_cast<long>(pos));
 #else
 			return ((val) & (1 << (pos)));

@@ -243,23 +243,23 @@ namespace mc {
 			}
 			SECTION("Testing copy constructors") {
 				Matrix4i m = Matrix4i();
-				for (int x = 0; x < m.width(); x++) {
-					for (int y = 0; y < m.height(); y++) {
+				for (Index x = 0; x < m.width(); ++x) {
+					for (Index y = 0; y < m.height(); ++y) {
 						m[x][y] = x * y;
 					}
 				}
 				SECTION("Testing via explicit constructor") {
 					Matrix4i other = Matrix4i(m);
-					for (int x = 0; x < other.width(); x++) {
-						for (int y = 0; y < other.height(); y++) {
+					for (Index x = 0; x < other.width(); ++x) {
+						for (Index y = 0; y < other.height(); ++y) {
 							REQUIRE(other[x][y] == x * y);
 						}
 					}
 				}
 				SECTION("Testing via assignment") {
 					Matrix4i other = m;
-					for (int x = 0; x < other.width(); x++) {
-						for (int y = 0; y < other.height(); y++) {
+					for (Index x = 0; x < other.width(); ++x) {
+						for (Index y = 0; y < other.height(); ++y) {
 							REQUIRE(other[x][y] == x * y);
 						}
 					}
@@ -272,7 +272,7 @@ namespace mc {
 		SECTION("Testing getting and setting of a vector") {
 			Vector5i v = Vector5i();
 
-			for (int i = 0; i < v.size(); i++) {
+			for (Index i = 0; i < v.size(); ++i) {
 				v[i] = i;
 				REQUIRE(v[i] == i);
 				REQUIRE(v.get(i) == i);

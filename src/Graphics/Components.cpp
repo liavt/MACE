@@ -322,7 +322,7 @@ namespace mc {
 		EaseComponent::EaseComponent(const EaseUpdateCallback callback, const EaseSettings easeSettings, const float start, const float dest)
 			: Component(), settings(easeSettings)
 			, duration(std::chrono::milliseconds(easeSettings.ms) / std::chrono::seconds(1)),
-			updateCallback(callback), startingProgress(start), destination(dest), progress(start), currentRepetition(0) {}
+			updateCallback(callback), startingProgress(start), progress(start), destination(dest), currentRepetition(0) {}
 
 		void EaseComponent::setProgress(const float prog) {
 			if (progress != prog) {
@@ -525,7 +525,7 @@ namespace mc {
 
 		void FPSComponent::destroy() {}
 
-		TextureFramesComponent::TextureFramesComponent(const std::vector<Texture> & tex, const FrameCallback call) : frames(tex), callback(call), progress(0) {}
+		TextureFramesComponent::TextureFramesComponent(const std::vector<Texture> & tex, const FrameCallback call) : callback(call), frames(tex), progress(0) {}
 
 		void TextureFramesComponent::setProgress(const float prog) {
 			if (progress != prog) {
@@ -706,13 +706,13 @@ namespace mc {
 
 		TweenComponent::TweenComponent(Entity * const en, const TransformMatrix dest, const EaseSettings settings) : TweenComponent(en, en->getTransformation(), dest, settings) {}
 
-		TweenComponent::TweenComponent(Entity * const en, const TransformMatrix start, const TransformMatrix dest, const EaseSettings settings) : entity(en), EaseComponent([start, dest, en](Entity*, float prog) {
+		TweenComponent::TweenComponent(Entity * const en, const TransformMatrix start, const TransformMatrix dest, const EaseSettings settings) : EaseComponent([start, dest, en](Entity*, float prog) {
 			TransformMatrix current = TransformMatrix();
 			current.translation = math::lerp(start.translation, dest.translation, prog);
 			current.rotation = math::lerp(start.rotation, dest.rotation, prog);
 			current.scaler = math::lerp(start.scaler, dest.scaler, prog);
 			en->setTransformation(current);
-		}, settings) {}
+		}, settings), entity(en) {}
 
 		Entity* const TweenComponent::getEntity() {
 			return entity;
@@ -811,7 +811,7 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		PaddingComponent::PaddingComponent(const float top, const float right, const float bottom, const float left, const float front, const float back) : paddingTop(top), paddingRight(right), paddingBottom(bottom), paddingLeft(left), paddingFront(front), paddingBack(back) {}
+		PaddingComponent::PaddingComponent(const float top, const float right, const float bottom, const float left, const float front, const float back) : paddingTop(top), paddingBottom(bottom), paddingRight(right), paddingLeft(left), paddingFront(front), paddingBack(back) {}
 
 		PaddingComponent::PaddingComponent(const float top, const float right, const float bottom, const float left, const float z) : PaddingComponent(top, right, bottom, left, z, z) {}
 

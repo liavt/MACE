@@ -130,7 +130,7 @@ namespace mc {
 
 			MACE_GETTER_SETTER_DEC(Components, std::queue<std::shared_ptr<Component>>&)
 
-			bool operator==(const ComponentQueue& other) const;
+				bool operator==(const ComponentQueue& other) const;
 			bool operator!=(const ComponentQueue& other) const;
 		protected:
 			void init() final;
@@ -318,7 +318,7 @@ namespace mc {
 			using ConstraintCallback = std::function<void(Metrics&, T)>;
 
 			ConstraintComponent(const T constraint = T(), const ConstraintCallback constrainFunc = [](Metrics&, T) {})
-				: constraint(constraint), constraintCallback(constrainFunc) {}
+				: constraintCallback(constrainFunc), constraint(constraint) {}
 
 			~ConstraintComponent() = default;
 
@@ -334,8 +334,8 @@ namespace mc {
 			@dirty
 			*/
 			void setConstraint(const T val) {
-				if(constraint != val){
-					if(getParent() != nullptr){
+				if (constraint != val) {
+					if (getParent() != nullptr) {
 						getParent()->makeDirty();
 					}
 
@@ -439,7 +439,7 @@ namespace mc {
 			@dirty
 			*/
 			void setBoundsZ(const Vector<float, 2>& vec);
-			
+
 			bool operator==(const BoundsComponent& other);
 			bool operator!=(const BoundsComponent& other);
 			bool operator>(const BoundsComponent& other);

@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/liavt/MACE.svg?branch=master)](https://travis-ci.org/liavt/MACE)
-[![Build status](https://ci.appveyor.com/api/projects/status/dovlvxm1xrg5bewc?svg=true)](https://ci.appveyor.com/project/liavt/mace)
+[![Build status](https://ci.appveyor.com/api/projects/status/dovlvxm1xrg5bewc/branch/master?svg=true)](https://ci.appveyor.com/project/liavt/mace/branch/master)
 
 # MACE
 MACE stands for MACE is A C++ Engine, Modular Abstract Components Engine, Many Amazing Classes Everywhere, Many Acronyms Can Exist, or the medievel weapon. Choose whichever one you like best.
