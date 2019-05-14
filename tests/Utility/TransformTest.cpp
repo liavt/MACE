@@ -1,3 +1,8 @@
+/*
+Copyright (c) 2016-2019 Liav Turkia
+
+See LICENSE.md for full copyright information
+*/
 #include <catch2/catch.hpp>
 #include <MACE/Utility/Transform.h>
 #include <MACE/Utility/MatrixTypes.h>
