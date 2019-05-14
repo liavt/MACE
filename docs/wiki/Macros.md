@@ -115,12 +115,24 @@ Additionally, if the compiler supports GNU C, `MACE_GNU` will be defined.
 | MACE_FALLTHROUGH | If not defined previously, if the compiler supports the fallthrough attribute, MACE_FALLTHROUGH is defined to that. Otherwise, defined to nothing  |
 | MACE_NODISCARD | If not defined previously, if the compiler supports the nodiscard attribute, MACE_NODISCARD is defined to that. Otherwise, defined to nothing  |
 | MACE_NORETURN | If not defined previously, if the compiler supports the noreturn attribute, MACE_NORETURN is defined to that. Otherwise, defined to nothing  |
+| MACE_NOVTABLE | If not defined previously, if the compiler supports the novtable declspec, MACE_NOVTABLE is defined to that. Otherwise, defined to nothing  |
 | MACE_UNREACHABLE | If not defined previously, if the compiler supports it, MACE_UNREACHABLE is defined to an attribute which signals to a compiler that a code path is unreachable at runtime. Otherwise, defined to nothing  |
 | MACE_UNREACHABLE_RETURN | If not defined previously, if the compiler supports it, MACE_UNREACHABLE_RETURN is defined to an attribute which signals to a compiler that a return statement is unreachable at runtime. Otherwise, defined to nothing  |
+| MACE_LIKELY | If not defined previously, if the compiler supports the likely attribute, MACE_LIKELY is defined to that. Otherwise, defined to nothing  |
+| MACE_UNLIKELY | If not defined previously, if the compiler supports the unlikely attribute, MACE_UNLIKELY is defined to that. Otherwise, defined to nothing  |
+| MACE_EXPECTS_MODIFIER(cond, mod) | If not defined previously, if the compiler supports the expects attribute, MACE_EXPECTS_MODIFIER is defined to that, in the form `expects <mod>: <cond>`. Otherwise, defined to nothing  |
+| MACE_EXPECTS(cond) | Overload of MACE_EXPECS_MODIFIER where `<mod>` is `default`  |
+| MACE_ENSURES_MODIFIER(ret, cond, mod) | If not defined previously, if the compiler supports the ensures attribute, MACE_ENSURES_MODIFIER is defined to that, in the form `ensures <mod> <ret>: <cond>`. Otherwise, defined to nothing  |
+| MACE_ENSURES(ret, cond) | Overload of MACE_ENSURES_MODIFIER where `<mod>` is `default`  |
 | MACE_CONSTEXPR | If not defined previously, defined to be `constexpr` on compilers that `constexpr` is supported, otherwise becomes nothing |
+| MACE_IF_CONSTEXPR(expr) | If not defined previously, defined to be `if constexpr(<expr>)` on compilers that `if constexpr` is supported, otherwise becomes a normal if statement. |
+| MACE_EXPLICIT(cond) | If not defined previously, defined to be `explicit(<cond>)` on compilers that conditional `explicit` is supported, otherwise becomes `explicit` without the conditional |
 | MACE_DEPRECATED | If not defined previously, Marks a function that is deprecated. Based on the compiler, this is defined to the respective attribute to generate the proper warnings. If not supported, empty. |
-| MACE_STATIC_ASSERT(condition, message) | If not defined, defined to be `static_assert`. Can be defined before including MACE headers to change the static assert used by MACE |
+| MACE_STATIC_ASSERT(condition, message) | If not defined, defined to be `static_assert(<condition>, <message>)`. Can be defined before including MACE headers to change the static assert used by MACE |
 | MACE_STRINGIFY(name) | Directly stringifies a macro  |
 | MACE_STRINGIFY_NAME(name) | Stringifies a macro name. If the expanded macro is empty, this function returns "" |
 | MACE_STRINGIFY_DEFINITION(name) | Stringifies the definition of a macro. If the macro doesn't have a definition, this function returns "" |
-
+| MACE_GETTER_SETTER_DEC_BASE(name, inType, outType) | Utility macro to automatically create getter and setter declarations, where the setter is called set`<name>` and takes in a value of `<inType>` while the getter is called get`<name>` and returns a value of `<outType>`. |
+| MACE_GETTER_SETTER_DEC(name, type) | Overload of MACE_GETTER_SETTER_DEC_BASE where `<inType>` and `<outType>` are both `<type>` |
+| MACE_GETTER_SETTER_DEF_BASE(className, funcName, varName, inType, outType) | Utility macro to automatically create getter and setter definitions, where the setter is called `<className>`::set`<funcName>` and sets `<varName` to a value of `inType>` while the getter is called `<className>`::get`<name>` and returns a value of `<outType>`. |
+| MACE_GETTER_SETTER_DEF(className, funcName, varName, type) | Overload of MACE_GETTER_SETTER_DEC_BASE where `<inType>` and `<outType>` are both `<type>` |

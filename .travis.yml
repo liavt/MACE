@@ -181,7 +181,6 @@ before_install:
   - if [[ "$COMPILER" == "g++-7" ]]; then export CXX=g++-7;export CC=gcc-7; fi
   - if [[ "$COMPILER" == "g++-8" ]]; then export CXX=g++-8;export CC=gcc-8; fi
   - export OMP_NUM_THREADS=4
-  - $CC --version
   - $CXX --version
 
 install: sudo bash ./scripts/travis-install.sh
