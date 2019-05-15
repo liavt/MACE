@@ -269,7 +269,7 @@ namespace mc {
 		/**
 		Retrieves the `WindowModule` from the `Renderer` context in this thread if exists, throws an error otherwise.
 
-		@opengl
+		@rendercontext
 		@return The `WindowModule` in this thread. Will never be `nullptr`.
 		@throw NoRendererContext if this thread does not contain a `Renderer` context.
 		@see hasWindow()
@@ -280,7 +280,7 @@ namespace mc {
 		/**
 		Retrieves the `WindowModule` from the `Renderer` context in this thread if exists, returns `nullptr` otherwise.
 
-		@opengl
+		@rendercontext
 		@return The `WindowModule` in this thread. Will be `nullptr` if doesn't exist.
 		@see hasWindow()
 		@see getCurrentWindow()
@@ -291,7 +291,7 @@ namespace mc {
 		Checks if the current thread has a `Renderer`.
 		<br>
 		Best used in conjuction with `getCurrentWindow()`
-		@opengl
+		@rendercontext
 		@return whether this thread is a valid rendering thread
 		@see getCurrentWindow()
 		@see getCurrentWindowOrNull()

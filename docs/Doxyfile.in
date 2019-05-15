@@ -38,7 +38,7 @@ PROJECT_NAME           = MACE
 # could be handy for archiving the generated documentation or if some version
 # control system is used.
 
-PROJECT_NUMBER         = Alpha
+PROJECT_NUMBER         = @MACE_VERSION@
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewer a
@@ -58,7 +58,7 @@ PROJECT_LOGO           =
 # entered, it will be relative to the location where doxygen was started. If
 # left blank the current directory will be used.
 
-OUTPUT_DIRECTORY       = out/
+OUTPUT_DIRECTORY       = @CMAKE_CURRENT_BINARY_DIR@/docs/
 
 # If the CREATE_SUBDIRS tag is set to YES then doxygen will create 4096 sub-
 # directories (in 2 levels) under the output directory of each output format and
@@ -128,7 +128,8 @@ ABBREVIATE_BRIEF       = "The $name class" \
                          represents \
                          a \
                          an \
-                         the
+                         the \
+						 calculates
 
 # If the ALWAYS_DETAILED_SEC and REPEAT_BRIEF tags are both set to YES then
 # doxygen will generate a detailed section even if there is only a brief
@@ -239,8 +240,8 @@ TAB_SIZE               = 4
 # newlines.
 
 ALIASES                = "dirty=@note This will make this `Entity` dirty.\n@see Entity::DIRTY" \
-                         "internal=@warning This should only be used internally or by advanced users. Misuse can cause undefined behavior" \
-                         "opengl=@attention This uses an rendering function and must be called in a thread with an rendering context. Otherwise, an error will be thrown.\n\@see mc::gfx::getCurrentWindow() \n@exception If the current thread does not have an OpenGL context"
+                         "internal=@warning This should only be used internally. Misuse can cause undefined behavior." \
+                         "rendercontext=@attention This may use a rendering function and must be called in a thread with an rendering context. Otherwise, an error will be thrown. See mc::gfx::getCurrentWindow() \n@throws NoRendererContextError If the current thread does not have an rendering context"
 
 # This tag can be used to specify a number of word-keyword mappings (TCL only).
 # A mapping has the form "name=value". For example adding "class=itcl::class"
@@ -783,11 +784,11 @@ WARN_LOGFILE           =
 # spaces. See also FILE_PATTERNS and EXTENSION_MAPPING
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = ../include/ \
-                         ../README.md \
-                         ../INSTALLATION.md \
-                         ../LICENSE.md \
-                         wiki/
+INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@/include/ \
+                         @CMAKE_CURRENT_SOURCE_DIR@/README.md \
+						 @CMAKE_CURRENT_SOURCE_DIR@/CONTRIBUTING.md \
+                         @CMAKE_CURRENT_SOURCE_DIR@/LICENSE.md \
+                         @CMAKE_CURRENT_SOURCE_DIR@/docs/wiki/
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
@@ -872,9 +873,7 @@ RECURSIVE              = YES
 # Note that relative paths are relative to the directory from which doxygen is
 # run.
 
-EXCLUDE                = Catch.hpp \
-                         Catch.h \
-                         stb_image.h
+EXCLUDE                =  @STB_IMAGE_DOWNLOAD_PATH@/stb_image.h
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
 # directories that are symbolic links (a Unix file system feature) are excluded
@@ -1174,7 +1173,7 @@ HTML_HEADER            =
 # that doxygen normally uses.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_FOOTER            = footer.html
+HTML_FOOTER            = @CMAKE_CURRENT_SOURCE_DIR@/docs/footer.html
 
 # The HTML_STYLESHEET tag can be used to specify a user-defined cascading style
 # sheet that is used by each HTML page. It can be used to fine-tune the look of
@@ -2088,7 +2087,7 @@ SEARCH_INCLUDES        = YES
 # preprocessor.
 # This tag requires that the tag SEARCH_INCLUDES is set to YES.
 
-INCLUDE_PATH           = ../include/
+INCLUDE_PATH           = @CMAKE_CURRENT_SOURCE_DIR@/include/
 
 # You can use the INCLUDE_FILE_PATTERNS tag to specify one or more wildcard
 # patterns (like *.h and *.hpp) to filter out the header-files in the
@@ -2123,7 +2122,22 @@ EXPAND_AS_DEFINED      = MACE_VECTOR_X_MACRO \
                          MACE__SIGNAL_ERROR \
                          MACE__SIGNAL_ERROR(name) \
 						 MACE__GET_ERROR_NAME \
-						 MACE__GET_ERROR_NAME(name)
+						 MACE__GET_ERROR_NAME(name) \ 
+						 MACE_GETTER_SETTER_DEC_BASE \
+						 MACE_GETTER_SETTER_DEC \
+						 MACE_GETTER_SETTER_DEF_BASE \
+						 MACE_GETTER_SETTER_DEF \
+						 MACE_STRINGIFY \
+						 MACE_STRINGIFY_NAME \
+						 MACE_STRINGIFY_DEFINITION \
+						 MACE_NODISCARD \
+						 MACE_NOVTABLE \
+						 MACE_NORETURN \
+						 MACE_DEPRECATED \
+						 MACE_EXPECTS \
+						 MACE_ENSURES \
+						 MACE_CONSTEXPR \
+						 MACE_EXPLICIT
 
 # If the SKIP_FUNCTION_MACROS tag is set to YES then doxygen's preprocessor will
 # remove all references to function-like macros that are alone on a line, have
@@ -2229,7 +2243,7 @@ HIDE_UNDOC_RELATIONS   = YES
 # set to NO
 # The default value is: NO.
 
-HAVE_DOT               = YES
+HAVE_DOT               = @DOXYGEN_DOT_FOUND@
 
 # The DOT_NUM_THREADS specifies the number of dot invocations doxygen is allowed
 # to run in parallel. When set to 0 doxygen will base this on the number of

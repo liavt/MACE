@@ -39,8 +39,9 @@ include(ExternalProject)
 include(ParseAndAddCatchTests)
 include(cotire)
 
-option(MACE_TESTS "Whether to build the unit tests under /tests." OFF)
-option(MACE_DEMOS "Whether to build the demo programs under /demos" OFF)
+option(MACE_TESTS "Whether to create a 'MACE-Tests' target to build the unit tests." OFF)
+option(MACE_DEMOS "Whether to create a 'MACE-Demos' target to build the demo programs" OFF)
+option(MACE_DOCS "Whether to create a 'MACE-Docs' target for generating the documentation" OFF)
 option(MACE_ALL_WARNINGS "Whether to include all warnings in compilation" OFF)
 option(MACE_SWIG "Whether to generage cross-language binaries with SWIG" OFF)
 set(MACE_SWIG_LANGUAGE "" CACHE STRING "What language to generate binaries for using SWIG. MACE_SWIG must be enabled for this to work.")
@@ -251,6 +252,13 @@ if(${MACE_DEMOS})
 		
 		set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "MC/Demos")
 	endforeach()
+endif()
+
+if(${MACE_DOCS})
+	find_package(Doxygen REQUIRED)
+	configure_file(${CMAKE_CURRENT_SOURCE_DIR}/docs/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
+	add_custom_target(MACE-Docs ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR} COMMENT "Generating API documentation using Doxygen..." VERBATIM)
+	set_target_properties(MACE-Docs PROPERTIES FOLDER "MC")
 endif()
 
 #COMPILER CHECKS

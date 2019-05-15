@@ -10,16 +10,13 @@ See LICENSE.md for full copyright information
 
 #include <MACE/Graphics/Entity.h>
 #include <MACE/Graphics/Renderer.h>
+#include <MACE/Graphics/Font.h>
 #include <MACE/Graphics/Context.h>
 #include <MACE/Graphics/Components.h>
 #include <MACE/Utility/Vector.h>
 
 namespace mc {
 	namespace gfx {
-		/**
-		Thrown when something relate to Freetype or fonts fails
-		*/
-		MACE__DECLARE_ERROR(Font);
 
 		class Entity2D: public GraphicsEntity {
 		public:
@@ -200,16 +197,9 @@ namespace mc {
 		class Letter;
 		class Text;
 
-		enum class Fonts: Byte {
-			CODE,
-			SANS,
-			SERIF,
-		};
-
 		/**
 		@todo instead of using an id system add FT_Face
 		@todo get rid of FT_Library global constant
-		@bug HorizontalAlignment::RIGHT misses the last letter in the width calculation
 		*/
 		class Font {
 			friend class Text;
@@ -256,18 +246,6 @@ namespace mc {
 
 			void calculateMetrics() const;
 		};//Font
-
-		struct GlyphMetrics {
-			signed long width = 0;
-			signed long height = 0;
-			signed long bearingX = 0;
-			signed long bearingY = 0;
-			signed long advanceX = 0;
-			signed long advanceY = 0;
-
-			bool operator ==(const GlyphMetrics& other) const;
-			bool operator !=(const GlyphMetrics& other) const;
-		};
 
 		class Letter: public Entity2D {
 			friend class Font;

@@ -4,8 +4,11 @@ Copyright (c) 2016-2019 Liav Turkia
 See LICENSE.md for full copyright information
 */
 #pragma once
-#ifndef MACE__GRAPHICS_OGL_OGL_H
-#define MACE__GRAPHICS_OGL_OGL_H
+#ifndef MACE__GRAPHICS_OGL_OGL33_H
+#define MACE__GRAPHICS_OGL_OGL33_H
+
+//The api docs shouldn't include a bunch of internal classes, since any end user wouldn't care about them
+#ifndef MACE__DOXYGEN_PASS
 
 #include <MACE/Core/Constants.h>
 #include <MACE/Core/Interfaces.h>
@@ -24,7 +27,6 @@ See LICENSE.md for full copyright information
 
 namespace mc {
 	namespace gfx {
-
 		/**
 		Contains various abstractions for OpenGL. Assume that any class in this namespace requires an OpenGL context.
 		<p>
@@ -40,6 +42,7 @@ namespace mc {
 		Each abstraction follows a very similar syntax and style to make it easier to understand.
 		@see Object
 		@see Buffer
+		@internal
 		*/
 		namespace ogl33 {
 
@@ -65,7 +68,7 @@ namespace mc {
 			void forceCheckGLError(const unsigned int line, const char* file, const char* message);
 
 			/**
-			@opengl
+			@rendercontext
 			*/
 			inline void checkGLError(const unsigned int line = 0, const char* file = "Unknown file", const char* message = "No message specified") {
 #ifdef MACE_DEBUG_OPENGL
@@ -82,20 +85,20 @@ namespace mc {
 			}
 
 			/**
-			@opengl
+			@rendercontext
 			*/
 			inline void enable(const Enum param) {
 				glEnable(param);
 			}
 			/**
-			@opengl
+			@rendercontext
 			*/
 			inline void disable(const Enum param) {
 				glDisable(param);
 			}
 
 			/**
-			@opengl
+			@rendercontext
 			*/
 			inline void setBlending(const Enum sfactor, const Enum dfactor) {
 				glBlendFunc(sfactor, dfactor);
@@ -103,14 +106,14 @@ namespace mc {
 
 			/**
 			Reset the blending values to default values
-			@opengl
+			@rendercontext
 			*/
 			inline void resetBlending() {
 				setBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			}
 
 			/**
-			@opengl
+			@rendercontext
 			*/
 			inline void setViewport(const int x, const int y, const int width, const int height) {
 				glViewport(x, y, width, height);
@@ -143,7 +146,7 @@ namespace mc {
 
 				/**
 				Calls the corresponding glCreate\* function and assigns an ID.
-				@opengl
+				@rendercontext
 				@see Object::destroy()
 				@see Object::bind() const
 				@see Object::unbind const
@@ -152,7 +155,7 @@ namespace mc {
 				virtual void init() override;
 				/**
 				Calls the corresponding glDestroy\* function and deletes the ID.
-				@opengl
+				@rendercontext
 				@see Object::init()
 				@see Object::bind() const
 				@see Object::unbind const
@@ -163,14 +166,14 @@ namespace mc {
 
 				/**
 				Binds this `Object` to be used in an OpenGL function.
-				@opengl
+				@rendercontext
 				@see Object::unbind() const
 				@throws GL_INVALID_OPERATION If this `Object` has not been created yet
 				*/
 				virtual void bind() const override;
 				/**
 				Unbinds this `Object` which is equivalent to binding ID 0.
-				@opengl
+				@rendercontext
 				@see Object::bind() const
 				*/
 				virtual void unbind() const override;
@@ -180,7 +183,7 @@ namespace mc {
 				@return Whether this `Object` represents memory
 				@see Object::bind() const
 				@see Object::init()
-				@opengl
+				@rendercontext
 				*/
 				virtual bool isCreated() const = 0;
 
@@ -226,7 +229,7 @@ namespace mc {
 				/**
 				Intended to be overloaded to bind to a certain index. Object::bind() const and Object::unbind() const both use this function.
 				@param id Index to bind to. If it is 0, it needs to be unbinded.
-				@opengl
+				@rendercontext
 				@internal
 				*/
 				virtual void bindIndex(const GLuint id) const = 0;
@@ -265,7 +268,7 @@ namespace mc {
 				@see https://www.opengl.org/wiki/GLAPI/glBeginQuery
 				@see QueryObject::counter()
 				@attention When you use this function make sure to also call QueryObject::end(const Enum) eventually
-				@opengl
+				@rendercontext
 				*/
 				void begin(const Enum target);
 				/**
@@ -277,7 +280,7 @@ namespace mc {
 				@param target The kind of data being queried. Can not be GL_TIMESTAMP
 				@see https://www.opengl.org/wiki/GLAPI/glBeginQuery
 				@throws GL_INVALID_OPERATION If QueryObject::begin(const Enum was never called)
-				@opengl
+				@rendercontext
 				*/
 				void end(const Enum target);
 
@@ -289,7 +292,7 @@ namespace mc {
 				@see QueryObject::end(const Enum)
 				@see QueryObject::counter()
 				@see https://www.opengl.org/wiki/GLAPI/glGetQueryObject
-				@opengl
+				@rendercontext
 				*/
 				void get(const Enum name, int* data) const;
 
@@ -315,7 +318,7 @@ namespace mc {
 				@see QueryObject::end(const Enum)
 				@see QueryObject::get(const Enum, uint64_t*) const
 				@see https://www.opengl.org/wiki/GLAPI/glQueryCounter
-				@opengl
+				@rendercontext
 				*/
 				void counter();
 
@@ -351,7 +354,7 @@ namespace mc {
 				@param height The height of the buffer
 				@see RenderBuffer::setStorageMultisampled(const Size, const Enum, const Size, const Size)
 				@see https://www.opengl.org/wiki/GLAPI/glRenderbufferStorage
-				@opengl
+				@rendercontext
 				*/
 				void setStorage(const Enum format, const GLsizei width, const GLsizei height);
 				/**
@@ -362,7 +365,7 @@ namespace mc {
 				@param height The height of the buffer
 				@see RenderBuffer::setStorage(const Enum, const Size, const Size)
 				@see https://www.opengl.org/wiki/GLAPI/glRenderbufferStorageMultisample
-				@opengl
+				@rendercontext
 				*/
 				void setStorageMultisampled(const GLsizei samples, const Enum format, const GLsizei width, const GLsizei height);
 
@@ -390,19 +393,19 @@ namespace mc {
 				bool isCreated() const override;
 
 				/**
-				@opengl
+				@rendercontext
 				@see https://www.opengl.org/wiki/GLAPI/glTexImage2D
 				*/
 				void setData(const void* data, GLsizei width, GLsizei height, Enum type, Enum format, Enum internalFormat, GLint mipmapLevel);
 
 				/**
-				@opengl
+				@rendercontext
 				@see https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glTexImage2DMultisample.xhtml
 				*/
 				void setMultisampledData(const GLsizei samples, const GLsizei width, const GLsizei height, const Enum internalFormat, const bool fixedSamples = true);
 
 				/**
-				@opengl
+				@rendercontext
 				@see https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glPixelStore.xhtml
 				*/
 				void setPixelStorage(const Enum alignment, const int number);
@@ -419,7 +422,7 @@ namespace mc {
 				void setPixelStorage(const Enum alignment, const bool value);
 
 				/**
-				@opengl
+				@rendercontext
 				@see https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGenerateMipmap.xhtml
 				*/
 				void generateMipmap();
@@ -431,7 +434,7 @@ namespace mc {
 				void getImage(const Enum format, const Enum type, void* data) const;
 
 				/**
-				@opengl
+				@rendercontext
 				@see https://www.opengl.org/wiki/GLAPI/glTexParameter
 				*/
 				void setParameter(const Enum name, const int value);
@@ -481,24 +484,24 @@ namespace mc {
 				@see FrameBuffer::attachTexture2D(const Enum, const Enum, const Enum, const unsigned int, const int, const int)
 				@see FrameBuffer::attachTextureLayer(const Enum, const Enum, const unsigned int, const int)
 				@see FrameBuffer::attachRenderbuffer(const Enum, const Enum, const RenderBuffer&)
-				@opengl
+				@rendercontext
 				*/
 				static void setReadBuffer(const Enum mode);
 
 				/**
-				@opengl
+				@rendercontext
 				*/
 				static void setDrawBuffer(const Enum mode);
 
 				static FrameBuffer getDefaultFramebuffer();
 
 				/**
-				@opengl
+				@rendercontext
 				*/
 				static void clear(const unsigned int field);
 
 				/**
-				@opengl
+				@rendercontext
 				*/
 				static void setClearColor(const float r, const float g, const float b, const float a);
 
@@ -510,7 +513,7 @@ namespace mc {
 				@param level Mipmap level to attach. Is 0 by default.
 				@see https://www.opengl.org/wiki/GLAPI/glFramebufferTexture
 				@see setDrawBuffers(const Size, const Enum*)
-				@opengl
+				@rendercontext
 				*/
 				void attachTexture(const Enum target, const Enum attachment, const Texture2D& tex, const int level = 0);
 				/**
@@ -535,7 +538,7 @@ namespace mc {
 				@param level Mipmap level to attach. Is 0 by default.
 				@param layer Which layer of the texture to use. It is 0 by default.
 				@see https://www.opengl.org/wiki/GLAPI/glFramebufferTextureLayer
-				@opengl
+				@rendercontext
 				*/
 				void attachTextureLayer(const Enum target, const Enum attachment, const Texture2D& tex, const int level = 0, const int layer = 0);
 
@@ -545,7 +548,7 @@ namespace mc {
 				@param attachment Which attachment port to use
 				@param buffer The `RenderBuffer` to use.
 				@see https://www.opengl.org/wiki/GLAPI/glFramebufferRenderbuffer
-				@opengl
+				@rendercontext
 				*/
 				void attachRenderbuffer(const Enum target, const Enum attachment, const RenderBuffer& buffer);
 
@@ -562,7 +565,7 @@ namespace mc {
 				@see FrameBuffer::attachTexture2D(const Enum, const Enum, const Enum, const unsigned int, const int, const int)
 				@see FrameBuffer::attachTextureLayer(const Enum, const Enum, const unsigned int, const int)
 				@see FrameBuffer::attachRenderbuffer(const Enum, const Enum, const RenderBuffer&)
-				@opengl
+				@rendercontext
 				*/
 				void setDrawBuffers(const Size arrSize, const Enum* buffers);
 
@@ -579,7 +582,7 @@ namespace mc {
 				@see https://www.opengl.org/sdk/docs/man/html/glReadPixels.xhtml
 				@see FrameBuffer::setPixelStorage(const Enum, const float)
 				@see FrameBuffer::setReadBuffer(const Enum);
-				@opengl
+				@rendercontext
 				*/
 				void readPixels(const int x, const int y, const Size width, const Size height, const Enum format, const Enum type, void* data) const;
 
@@ -591,7 +594,7 @@ namespace mc {
 				@param param What to change it to
 				@see https://www.opengl.org/sdk/docs/man/html/glPixelStore.xhtml
 				@see
-				@opengl
+				@rendercontext
 				*/
 				void setPixelStorage(const Enum name, const float param);
 				/**
@@ -607,7 +610,7 @@ namespace mc {
 				@param target The framebuffer target. Must be `GL_DRAW_FRAMEBUFFER`, `GL_READ_FRAMEBUFFER` or `GL_FRAMEBUFFER`
 				@return The `FrameBuffer` status. The full list of enums is described in the OpenGL specification.
 				@see https://www.opengl.org/wiki/GLAPI/glCheckFramebufferStatus
-				@opengl
+				@rendercontext
 				*/
 				Enum checkStatus(const Enum target);
 
@@ -662,7 +665,7 @@ namespace mc {
 				@see Buffer::setDataRange(const Index, const ptrdiff_t, const void*)
 				@see Buffer::copyData(Buffer&, const ptrdiff_t&, const Index, const Index)
 				@see https://www.opengl.org/wiki/GLAPI/glBufferData
-				@opengl
+				@rendercontext
 				*/
 				void setData(const ptrdiff_t& dataSize, const void* data, const Enum drawType = GL_DYNAMIC_DRAW);
 				/**
@@ -674,7 +677,7 @@ namespace mc {
 				@param data Pointer to the data being inserted
 				@see https://www.opengl.org/wiki/GLAPI/glBufferSubData
 				@see Buffer::copyData(Buffer&, const ptrdiff_t&, const Index, const Index)
-				@opengl
+				@rendercontext
 				*/
 				void setDataRange(const Index offset, const ptrdiff_t& dataSize, const void* data);
 
@@ -689,7 +692,7 @@ namespace mc {
 				@see https://www.opengl.org/wiki/GLAPI/glCopyBufferSubData
 				@see CopyReadBuffer
 				@see CopyWriteBuffer
-				@opengl
+				@rendercontext
 				*/
 				void copyData(Buffer& other, const ptrdiff_t& size, const Index readOffset = 0, const Index writeOffset = 0);
 
@@ -702,7 +705,7 @@ namespace mc {
 				@warning DO NOT DELETE THE POINTER RETURNED. IT IS NOT DYNAMICALLY ALLOCATED.
 				@warning After Buffer::unmap() is called, the pointer returned may be unsafe. Using it will be undefined.
 				@attention When using this function don't forget to use Buffer::unmap() when you are done using the pointer
-				@opengl
+				@rendercontext
 				*/
 				void* map(const Enum access = GL_READ_WRITE);
 
@@ -717,7 +720,7 @@ namespace mc {
 				@warning DO NOT DELETE THE POINTER RETURNED. IT IS NOT DYNAMICALLY ALLOCATED.
 				@warning After Buffer::unmap() is called, the pointer returned may be unsafe. Using it will be undefined.
 				@attention When using this function don't forget to use Buffer::unmap() when you are done using the pointer
-				@opengl
+				@rendercontext
 				*/
 				void* mapRange(const Index offset, const Size length, const unsigned int access);
 
@@ -729,7 +732,7 @@ namespace mc {
 				@see Buffer::mapRange(const Index, const Size, const unsigned int)
 				@see https://www.opengl.org/wiki/GLAPI/glMapBuffer
 				@warning Using a pointer after it was unmapped will be undefined
-				@opengl
+				@rendercontext
 				*/
 				bool unmap();
 
@@ -829,7 +832,7 @@ namespace mc {
 				@param pointer An offset of the first component. 0 by default.
 				@see https://www.opengl.org/wiki/GLAPI/glVertexAttribPointer
 				@see VertexArray
-				@opengl
+				@rendercontext
 				*/
 				void setAttributePointer(const GLint attribSize, const Enum type, const bool normalized = 0, const GLsizei stride = 0, const void* pointer = nullptr);
 
@@ -838,7 +841,7 @@ namespace mc {
 				this function does nothing.
 				@param divisor The rate at which it moves through the data in rendering
 				@see https://www.opengl.org/wiki/GLAPI/glVertexAttribDivisor
-				@opengl
+				@rendercontext
 				@*/
 				void setDivisor(const GLuint divisor);
 
@@ -847,7 +850,7 @@ namespace mc {
 				data for modification or reading.
 				@see https://www.opengl.org/wiki/GLAPI/glEnableVertexAttribArray
 				@see VertexBuffer::disable() const
-				@opengl
+				@rendercontext
 				*/
 				void enable() const;
 				/**
@@ -855,7 +858,7 @@ namespace mc {
 				data for modification or reading.
 				@see https://www.opengl.org/wiki/GLAPI/glEnableVertexAttribArray
 				@see VertexBuffer::enable() const
-				@opengl
+				@rendercontext
 				*/
 				void disable() const;
 
@@ -956,26 +959,26 @@ namespace mc {
 				bool isCreated() const override;
 
 				/**
-				@opengl
+				@rendercontext
 				@see VertexBuffer
 				@param verticeSize amount of vertices
 				*/
 				void loadVertices(const unsigned int verticeSize, const float* vertices, const GLuint location = 15, const Byte attributeSize = 3, const Enum type = GL_FLOAT, const bool normalized = false);
 				/**
-				@opengl
+				@rendercontext
 				@see VertexBuffer
 				*/
 				void loadIndices(const unsigned int indiceNum, const unsigned int* indiceData);
 
 				/**
-				@opengl
+				@rendercontext
 				@see VertexBuffer
 				@param dataSize amount of elements * sizeof() each individual element
 				*/
 				void storeDataInAttributeList(const unsigned int dataSize, const GLvoid* data, const GLuint location = 0, const Byte attributeSize = 3, const Enum type = GL_FLOAT, const bool normalized = false);
 
 				/**
-				@opengl
+				@rendercontext
 				*/
 				void addBuffer(const VertexBuffer& newBuffer);
 
@@ -1110,35 +1113,35 @@ namespace mc {
 
 				/**
 				@see https://www.opengl.org/wiki/GLAPI/glShaderSource
-				@opengl
+				@rendercontext
 				*/
 				void setSource(const GLsizei count, const char* strings[], const int lengths[]);
 				void setSource(const char string[], const int length);
 				void setSource(const std::string& string);
 
 				/**
-				@opengl
+				@rendercontext
 				*/
 				char* getSource(const GLsizei length, char* characters, int amount = 0) const;
 
 				/**
-				@opengl
+				@rendercontext
 				*/
 				int getParameter(const Enum param) const;
 				/**
-				@opengl
+				@rendercontext
 				*/
 				int getInfoLogLength() const;
 				/**
-				@opengl
+				@rendercontext
 				*/
 				int getSourceLength() const;
 				/**
-				@opengl
+				@rendercontext
 				*/
 				bool isDeleted() const;
 				/**
-				@opengl
+				@rendercontext
 				*/
 				bool isCompiled() const;
 
@@ -1192,41 +1195,41 @@ namespace mc {
 				void destroy() override;
 
 				/**
-				@opengl
+				@rendercontext
 				*/
 				void link();
 
 				bool isCreated() const override;
 
 				/**
-				@opengl
+				@rendercontext
 				*/
 				int getParameter(const Enum param) const;
 
 				/**
-				@opengl
+				@rendercontext
 				*/
 				int getInfoLogLength() const;
 				/**
-				@opengl
+				@rendercontext
 				*/
 				int getAttachedShaders() const;
 
 				/**
-				@opengl
+				@rendercontext
 				*/
 				bool isDeleted() const;
 				/**
-				@opengl
+				@rendercontext
 				*/
 				bool isLinked() const;
 				/**
-				@opengl
+				@rendercontext
 				*/
 				bool isValidated() const;
 
 				/**
-				@opengl
+				@rendercontext
 				*/
 				void detachShader(const GLuint id);
 				/**
@@ -1235,43 +1238,43 @@ namespace mc {
 				void detachShader(const Shader& sh);
 
 				/**
-				@opengl
+				@rendercontext
 				*/
 				void validate();
 
 				/**
-				@opengl
+				@rendercontext
 				*/
 				void attachShader(const Shader shader);
 
 				/**
-				@opengl
+				@rendercontext
 				*/
 				void createFragment(const char shader[]);
 				/**
-				@opengl
+				@rendercontext
 				*/
 				void createFragment(const GLsizei count, const char* strings[]);
 				/**
-				@opengl
+				@rendercontext
 				*/
 				void createVertex(const char shader[]);
 				/**
-				@opengl
+				@rendercontext
 				*/
 				void createVertex(const GLsizei count, const char* strings[]);
 
 				/**
-				@opengl
+				@rendercontext
 				*/
 				void createUniform(const std::string& name);
 				/**
-				@opengl
+				@rendercontext
 				*/
 				void createUniform(const char* name);
 
 				/**
-				@opengl
+				@rendercontext
 				*/
 				void createUniformBuffer(const char* name, const GLint location = -1);
 				/**
@@ -1284,16 +1287,16 @@ namespace mc {
 				UniformBufferData& getUniformBuffer(const UniformBuffer& buf);
 
 				/**
-				@opengl
+				@rendercontext
 				*/
 				void setUniformBufferField(UniformBuffer& buf, const std::string name, const void* data, const ptrdiff_t size);
 
 				/**
-				@opengl
+				@rendercontext
 				*/
 				void bindUniformBuffer(const UniformBuffer& buf);
 				/**
-				@opengl
+				@rendercontext
 				*/
 				void bindUniformBuffers(const UniformBuffer* buf[], const Size size);
 
@@ -1303,7 +1306,7 @@ namespace mc {
 				//Up next are a bunch of autogenerated overloaded functions
 				//setUniform with float matrices
 				/**
-				@opengl
+				@rendercontext
 				*/
 				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 2, 2>& m);
 				void setUniform(const char* name, const mc::Matrix<float, 2, 2>& m);
@@ -1409,4 +1412,6 @@ namespace mc {
 	}//gfx
 }//mc
 
-#endif
+#endif//MACE__DOXYGEN_PASS
+
+#endif//MACE__GRAPHICS_OGL_OGL33_H

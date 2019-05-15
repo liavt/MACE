@@ -313,7 +313,7 @@ namespace mc {
 			}
 
 			/**
-			@opengl
+			@rendercontext
 			*/
 			virtual void setRefreshColor(const float r, const float g, const float b, const float a = 1.0f) = 0;
 
@@ -326,7 +326,7 @@ namespace mc {
 			}
 
 			/**
-			@opengl
+			@rendercontext
 			*/
 			void setRefreshColor(const Color& c);
 
@@ -374,38 +374,38 @@ namespace mc {
 		private:
 			/**
 			@internal
-			@opengl
+			@rendercontext
 			*/
 			void resize(gfx::WindowModule* win, const int width, const int height);
 
 			/**
 			@internal
-			@opengl
+			@rendercontext
 			*/
 			void init(gfx::WindowModule* win);
 
 			/**
 			@internal
-			@opengl
+			@rendercontext
 			*/
 			void setUp(gfx::WindowModule* win);
 
 			/**
 			@internal
-			@opengl
+			@rendercontext
 			*/
 			void tearDown(gfx::WindowModule* win);
 
 			/**
 			@internal
-			@opengl
+			@rendercontext
 			*/
 			void checkInput(gfx::WindowModule* win);
 
 
 			/**
 			@internal
-			@opengl
+			@rendercontext
 			*/
 			void destroy();
 

@@ -65,7 +65,7 @@ namespace mc {
 			Called when this `Component` is added to the `Entity` via Entity::addComponent(Component&).
 			Required function.
 			@note This is not called at Entity::init(), instead it is called when the component is added to the `Entity`. Keep that in mind.
-			@opengl
+			@rendercontext
 			*/
 			virtual void init() override;
 			/**
@@ -75,26 +75,26 @@ namespace mc {
 			<p>
 			Component::destroy(Entity*) will be called afterwards.
 			@return Whether this `Component` should be deleted or not.
-			@opengl
+			@rendercontext
 			*/
 			virtual bool update();
 			/**
 			Called when Entity::destroy() is called or the `Component` is removed via Component::update(Entity*),
 			whichever comes first. Once Component::destroy(Entity*) is called, it is immediately removed from
 			the `Entity`. Required function.
-			@opengl
+			@rendercontext
 			*/
 			virtual void destroy() override;
 
 			virtual void render();
 			/**
 			Called when Entity::clean() is called and it was dirty. This is not required for inheritance.
-			@opengl
+			@rendercontext
 			*/
 			virtual void clean(Metrics& metrics);
 
 			/**
-			@opengl
+			@rendercontext
 			*/
 			virtual void hover();
 		};//Component
@@ -522,20 +522,20 @@ namespace mc {
 			Entity* getRoot();
 
 			/**
-			@opengl
+			@rendercontext
 			*/
 			const Metrics& getMetrics() const;
 
 			/**
 			@internal
-			@opengl
+			@rendercontext
 			*/
 			virtual void clean();
 
 
 			/**
 			@internal
-			@opengl
+			@rendercontext
 			*/
 			virtual void hover();
 
@@ -571,7 +571,7 @@ namespace mc {
 			<p>
 			Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override `onInit()`
 			@dirty
-			@opengl
+			@rendercontext
 			@throws InitializationError If the property `Entity::INIT` is true, meaning `init()` has already been called.
 			*/
 			virtual void init() override;
@@ -580,7 +580,7 @@ namespace mc {
 			<p>
 			Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override `onDestroy()`
 			@dirty
-			@opengl
+			@rendercontext
 			@throws InitializationError If the property `Entity::INIT` is false, meaning `init()` was not called.
 			*/
 			virtual void destroy() override;
@@ -589,7 +589,7 @@ namespace mc {
 			Should be called by a `Entity` when the graphical `Window` clears the frame.
 			<p>
 			Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override `onRender()`
-			@opengl
+			@rendercontext
 			@see Entity#update()
 			*/
 			virtual void render();
@@ -604,33 +604,33 @@ namespace mc {
 			When `Entity.init()` is called, `onInit()` is called on all of it's children.
 			@see MACE#init()
 			@internal
-			@opengl
+			@rendercontext
 			*/
 			virtual void onInit();
 			/**
 			When `Entity.destroy()` is called, `onDestroy()` is called on all of it's children.
 			@see MACE#destroy()
 			@internal
-			@opengl
+			@rendercontext
 			*/
 			virtual void onDestroy();
 
 			/**
 			When `Entity.render()` is called, `onRender()` is called on all of it's children.
 			@internal
-			@opengl
+			@rendercontext
 			*/
 			virtual void onRender();
 
 			/**
 			@internal
-			@opengl
+			@rendercontext
 			*/
 			virtual void onClean();
 
 			/**
 			@internal
-			@opengl
+			@rendercontext
 			*/
 			virtual void onHover();
 		private:

@@ -7,6 +7,9 @@ See LICENSE.md for full copyright information
 #ifndef MACE__GRAPHICS_OGL_OGL33RENDERER_H
 #define MACE__GRAPHICS_OGL_OGL33RENDERER_H
 
+//The api docs shouldn't include a bunch of internal classes, since any end user wouldn't care about them
+#ifndef MACE__DOXYGEN_PASS
+
 #include <MACE/Graphics/Renderer.h>
 #include <MACE/Graphics/OGL/OGL33.h>
 #include <map>
@@ -106,4 +109,6 @@ namespace mc {
 	}//gfx
 }//mc
 
-#endif
+#endif//MACE__DOXYGEN_PASS
+
+#endif//MACE__GRAPHICS_OGL_OGL33RENDERER_H
