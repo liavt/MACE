@@ -292,7 +292,7 @@ namespace mc {
 		@todo add function to change how many samples msaa uses
 		@todo add renderers for directx, cpu, vulkan, opengl es, opengl 1.1/2.1
 		*/
-		class Renderer {
+		class MACE_NOVTABLE Renderer {
 			friend class Painter;
 			friend class GraphicsContext;
 			friend class WindowModule;

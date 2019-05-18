@@ -59,7 +59,7 @@ int main() {
 		});
 		module.addComponent(f);
 
-		instance.init();
+		const Initializer init(instance);
 		while (instance.isRunning()) {
 			instance.update();
 
@@ -67,7 +67,6 @@ int main() {
 
 			mc::os::wait(33);
 		}
-		instance.destroy();
 	} catch (const std::exception& e) {
 		Error::handleError(e, instance);
 		return -1;

@@ -73,11 +73,10 @@ namespace mc {
 			MASK = 2
 		};
 
-		class MACE_NOVTABLE ModelImpl: public Initializable, public Bindable {
+		class MACE_NOVTABLE ModelImpl: public Bindable {
 			friend class Model;
 		public:
-			virtual void init() override = 0;
-			virtual void destroy() override = 0;
+			virtual ~ModelImpl() = default;
 
 			virtual void bind() const override = 0;
 			virtual void unbind() const override = 0;
@@ -87,8 +86,6 @@ namespace mc {
 			virtual void loadTextureCoordinates(const unsigned int dataSize, const float* data) = 0;
 			virtual void loadVertices(const unsigned int verticeSize, const float* vertices) = 0;
 			virtual void loadIndices(const unsigned int indiceNum, const unsigned int* indiceData) = 0;
-
-			virtual bool isCreated() const = 0;
 
 			bool operator==(const ModelImpl& other) const;
 			bool operator!=(const ModelImpl& other) const;
@@ -101,29 +98,58 @@ namespace mc {
 			static Model& getQuad();
 
 			Model();
-			Model(const std::shared_ptr<ModelImpl> mod);
 			Model(const Model& other);
 			~Model() = default;
 
+			/**
+			@rendercontext
+			*/
 			void init() override;
+			/**
+			@rendercontext
+			*/
 			void destroy() override;
 
+			/**
+			@rendercontext
+			*/
 			void bind() const override;
+			/**
+			@rendercontext
+			*/
 			void unbind() const override;
 
+			/**
+			@rendercontext
+			*/
 			void createTextureCoordinates(const unsigned int dataSize, const float* data);
+			/**
+			@rendercontext
+			*/
 			template<const unsigned int N>
 			void createTextureCoordinates(const float(&data)[N]) {
 				createTextureCoordinates(N, data);
 			}
 
+			/**
+			@rendercontext
+			*/
 			void createVertices(const unsigned int verticeSize, const float* vertices, const PrimitiveType& prim);
+			/**
+			@rendercontext
+			*/
 			template<const unsigned int N>
 			void createVertices(const float(&vertices)[N], const PrimitiveType& prim) {
 				createVertices(N, vertices, prim);
 			}
 
+			/**
+			@rendercontext
+			*/
 			void createIndices(const unsigned int indiceNum, const unsigned int* indiceData);
+			/**
+			@rendercontext
+			*/
 			template<const unsigned int N>
 			void createIndices(const unsigned int(&indiceData)[N]) {
 				createIndices(N, indiceData);
@@ -132,14 +158,19 @@ namespace mc {
 			PrimitiveType getPrimitiveType();
 			const PrimitiveType getPrimitiveType() const;
 
+			/**
+			@rendercontext
+			*/
 			void draw() const;
 
 			bool isCreated() const;
 
-			bool operator==(const Model& other) const;
-			bool operator!=(const Model& other) const;
+			virtual bool operator==(const Model& other) const;
+			virtual bool operator!=(const Model& other) const;
 		private:
 			std::shared_ptr<ModelImpl> model;
+
+			Model(const std::shared_ptr<ModelImpl> mod);
 		};
 
 		struct TextureDesc {
@@ -247,8 +278,6 @@ namespace mc {
 			virtual void bind(const TextureSlot slot) const = 0;
 			virtual void unbind() const override = 0;
 
-			virtual bool isCreated() const = 0;
-
 			virtual void setData(const void* data, const int mipmap) = 0;
 
 			virtual void setUnpackStorageHint(const PixelStorage hint, const int value) = 0;
@@ -261,26 +290,47 @@ namespace mc {
 
 		class Texture: public Bindable {
 		public:
+			/**
+			@rendercontext
+			*/
 			static Texture create(const Color& col, const unsigned int width = 1, const unsigned int height = 1);
+			/**
+			@rendercontext
+			*/
 			static Texture createFromFile(const std::string& file, const ImageFormat format = ImageFormat::DONT_CARE, const TextureDesc::Wrap wrap = TextureDesc::Wrap::CLAMP);
+			/**
+			@rendercontext
+			*/
 			static Texture createFromFile(const char* file, const ImageFormat format = ImageFormat::DONT_CARE, const TextureDesc::Wrap wrap = TextureDesc::Wrap::CLAMP);
+			/**
+			@rendercontext
+			*/
 			static Texture createFromMemory(const unsigned char* c, const int size);
-
+			/**
+			@rendercontext
+			*/
 			static Texture& getSolidColor();
 			/**
 			- Vertical gradient
 			- Darker part on bottom
 			- Height is 100
+
+			@rendercontext
 			*/
 			static Texture& getGradient();
 
 			Texture();
 			Texture(const TextureDesc& d);
 			Texture(const Color& col);
-			Texture(const std::shared_ptr<TextureImpl> tex, const Color& col = Color(0.0f, 0.0f, 0.0f, 0.0f));
 			Texture(const Texture& tex, const Color& col = Color(0.0, 0.0f, 0.0f, 0.0f));
 
+			/**
+			@rendercontext
+			*/
 			void init(const TextureDesc& desc);
+			/**
+			@rendercontext
+			*/
 			void destroy();
 
 			bool isCreated() const;
@@ -305,6 +355,9 @@ namespace mc {
 
 			//this needs to be defined in the header file to prevent linker conflicts, because Entity.cpp does not have opencv included ever.
 #			ifdef MACE_OPENCV
+			/**
+			@rendercontext
+			*/
 			Texture(cv::Mat mat) : Texture() {
 				TextureDesc desc = TextureDesc(mat.rows, mat.cols);
 
@@ -346,6 +399,9 @@ namespace mc {
 				setData(mat.ptr());
 			}
 
+			/**
+			@rendercontext
+			*/
 			cv::Mat toMat() {
 				cv::Mat img(getHeight(), getWidth(), CV_8UC3);
 
@@ -360,7 +416,7 @@ namespace mc {
 				cv::flip(img, img, 0);
 
 				return img;
-			}
+		}
 #			endif//MACE_OPENCV
 
 			Color & getHue();
@@ -371,13 +427,31 @@ namespace mc {
 			const Vector<float, 4> & getTransform() const;
 			void setTransform(const Vector<float, 4> & trans);
 
+			/**
+			@rendercontext
+			*/
 			void bind() const override;
+			/**
+			@rendercontext
+			*/
 			void bind(const TextureSlot slot) const;
+			/**
+			@rendercontext
+			*/
 			void unbind() const override;
 
+			/**
+			@rendercontext
+			*/
 			void resetPixelStorage();
 
+			/**
+			@rendercontext
+			*/
 			void setData(const void* data, const int mipmap = 0);
+			/**
+			@rendercontext
+			*/
 			template<typename T, unsigned int W, unsigned int H>
 			void setData(const T(&data)[W][H], const int mipmap = 0) {
 				MACE_STATIC_ASSERT(W != 0, "Width of Texture can not be 0!");
@@ -389,10 +463,17 @@ namespace mc {
 
 				setData(static_cast<const void*>(data[0]), mipmap);
 			}
-
+			/**
+			@rendercontext
+			*/
 			void setUnpackStorageHint(const PixelStorage hint, const int value);
+			/**
+			@rendercontext
+			*/
 			void setPackStorageHint(const PixelStorage hint, const int value);
-
+			/**
+			@rendercontext
+			*/
 			void readPixels(void* data) const;
 
 			bool operator==(const Texture & other) const;
@@ -403,7 +484,9 @@ namespace mc {
 			Color hue = Colors::INVISIBLE;
 
 			Vector<float, 4> transform{0.0f, 0.0f, 1.0f, 1.0f};
-		};//Texture
+
+			Texture(const std::shared_ptr<TextureImpl> tex, const Color & col = Color(0.0f, 0.0f, 0.0f, 0.0f));
+	};//Texture
 
 		struct RenderTargetDesc {
 		public:
@@ -414,9 +497,14 @@ namespace mc {
 
 		};//RenderTargetImpl
 
+		//forward declare
+		struct FontDesc;
+		class FontImpl;
+
 		class GraphicsContext: public Initializable {
 			friend class Texture;
 			friend class Model;
+			friend class Font2;
 		public:
 			using TextureCreateCallback = std::function<Texture()>;
 			using ModelCreateCallback = std::function<Model()>;
@@ -476,8 +564,9 @@ namespace mc {
 			semantic because near impossible. Because multiple Model objects
 			may have to own the same pointer to data, they have to use std::shared_ptr
 			*/
-			virtual std::shared_ptr<ModelImpl> createModelImpl() const = 0;
-			virtual std::shared_ptr<TextureImpl> createTextureImpl(const TextureDesc& desc) const = 0;
+			virtual std::shared_ptr<ModelImpl> createModelImpl() = 0;
+			virtual std::shared_ptr<TextureImpl> createTextureImpl(const TextureDesc& desc) = 0;
+			virtual std::shared_ptr<FontImpl> createFontImpl(const FontDesc& desc) = 0;
 
 			virtual void onInit(gfx::WindowModule* win) = 0;
 			virtual void onRender(gfx::WindowModule* win) = 0;
@@ -487,7 +576,7 @@ namespace mc {
 			std::map<std::string, Texture> textures{};
 			std::map<std::string, Model> models{};
 		};
-	}
+}
 }//mc
 
 #endif//MACE__GRAPHICS_CONTEXT_H

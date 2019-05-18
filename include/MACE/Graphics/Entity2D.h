@@ -207,7 +207,7 @@ namespace mc {
 			static Font loadFont(const std::string& name, unsigned int size = 12);
 			static Font loadFont(const char* name, unsigned int size = 12);
 			static Font loadFontFromMemory(const unsigned char* data, unsigned long int dataSize, unsigned int size = 12);
-			template<std::size_t N>
+			template<Size N>
 			static inline Font loadFontFromMemory(const unsigned char data[N], unsigned int size = 12) {
 				return loadFontFromMemory(data, static_cast<long int>(N));
 			}

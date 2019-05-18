@@ -10,9 +10,9 @@ See LICENSE.md for full copyright information
 //The api docs shouldn't include a bunch of internal classes, since any end user wouldn't care about them
 #ifndef MACE__DOXYGEN_PASS
 
-#include <MACE/Graphics/Window.h>
 #include <MACE/Graphics/Context.h>
-#include <MACE/Graphics/OGL/OGL33Renderer.h>
+#include <MACE/Graphics/OGL/OGL33.h>
+#include <MACE/Graphics/OGL/FreetypeFont.h>
 
 namespace mc {
 	namespace gfx {
@@ -20,8 +20,8 @@ namespace mc {
 			class OGL33Model: public ModelImpl, private ogl33::VertexArray {
 				friend class OGL33Renderer;
 			public:
-				void init() override;
-				void destroy() override;
+				OGL33Model();
+				~OGL33Model();
 
 				void bind() const override;
 				void unbind() const override;
@@ -31,8 +31,6 @@ namespace mc {
 				void loadTextureCoordinates(const unsigned int dataSize, const float* data) override;
 				void loadVertices(const unsigned int verticeSize, const float* vertices) override;
 				void loadIndices(const unsigned int indiceNum, const unsigned int* indiceData) override;
-
-				bool isCreated() const override;
 			};
 
 			class OGL33Texture: public TextureImpl, private ogl33::Texture2D {
@@ -43,8 +41,6 @@ namespace mc {
 				void bind() const override;
 				void bind(const TextureSlot slot) const override;
 				void unbind() const override;
-
-				bool isCreated() const override;
 
 				void setUnpackStorageHint(const gfx::PixelStorage hint, const int value) override;
 				void setPackStorageHint(const gfx::PixelStorage hint, const int value) override;
@@ -61,14 +57,18 @@ namespace mc {
 				~OGL33Context() = default;
 
 				Renderer* getRenderer() const override;
-				std::shared_ptr<ModelImpl> createModelImpl() const override;
-				std::shared_ptr<TextureImpl> createTextureImpl(const TextureDesc& desc) const override;
+
+				std::shared_ptr<ModelImpl> createModelImpl() override;
+				std::shared_ptr<TextureImpl> createTextureImpl(const TextureDesc& desc) override;
+				std::shared_ptr<FontImpl> createFontImpl(const FontDesc& desc) override;
 			protected:
 				void onInit(gfx::WindowModule* win) override;
 				void onRender(gfx::WindowModule* win) override;
 				void onDestroy(gfx::WindowModule* win) override;
 			private:
 				std::unique_ptr<Renderer> renderer;
+				//TODO forward declare this insead of including FreetypeFont.h
+				fty::FreetypeLibrary freetype;
 			};
 		}//ogl33
 	}//gfx

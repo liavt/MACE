@@ -581,14 +581,6 @@ namespace mc {
 
 		Font::Font(const Font & f) : Font(f.id, f.height) {}
 
-		bool GlyphMetrics::operator==(const GlyphMetrics & other) const {
-			return width == other.width && height == other.height && bearingX == other.bearingX && bearingY == other.bearingY && advanceX == other.advanceX && advanceY == other.advanceY;
-		}
-
-		bool GlyphMetrics::operator!=(const GlyphMetrics & other) const {
-			return !operator==(other);
-		}
-
 		Letter::Letter() {}
 
 		const Texture& Letter::getGlyph() const {

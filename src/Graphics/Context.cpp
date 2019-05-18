@@ -35,7 +35,7 @@ See LICENSE.md for full copyright information
 
 namespace mc {
 	namespace gfx {
-#ifdef MACE_DEBUG
+#ifdef MACE_DEBUG_CHECK_NULLPTR
 #	define MACE__VERIFY_TEXTURE_INIT() do{if(texture == nullptr){ MACE__THROW(InvalidState, "This Texture has not had init() called yet"); }}while(0)
 #	define MACE__VERIFY_MODEL_INIT() do{if(model == nullptr){ MACE__THROW(InvalidState, "This Model has not had init() called yet"); }}while(0)
 #else
@@ -104,17 +104,11 @@ namespace mc {
 		Model::Model(const Model& other) : model(other.model) {}
 
 		void Model::init() {
-			if (model == nullptr) {
-				model = gfx::getCurrentWindow()->getContext()->createModelImpl();
-			}
-
-			model->init();
+			model = gfx::getCurrentWindow()->getContext()->createModelImpl();
 		}
 
 		void Model::destroy() {
-			MACE__VERIFY_MODEL_INIT();
-
-			model->destroy();
+			model.reset();
 		}
 
 		void Model::bind() const {
@@ -164,9 +158,7 @@ namespace mc {
 		}
 
 		bool Model::isCreated() const {
-			MACE__VERIFY_MODEL_INIT();
-
-			return model->isCreated();
+			return model != nullptr;
 		}
 
 		bool Model::operator==(const Model& other) const {
@@ -243,7 +235,7 @@ namespace mc {
 				} else if (outputComponents == 4) {
 					desc.format = TextureDesc::Format::RGBA;
 					desc.internalFormat = TextureDesc::InternalFormat::RGBA;
-				} else MACE_UNLIKELY {
+				} else MACE_UNLIKELY{
 					MACE__THROW(BadImage, "Internal Error: createFromFile: outputComponents is not 1-4");
 				}
 				desc.type = TextureDesc::Type::UNSIGNED_BYTE;

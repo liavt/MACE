@@ -345,6 +345,8 @@ namespace mc {
 	@see Size
 	*/
 	using Enum = unsigned int;
+
+	using CString = const char*;
 }
 
 #endif//MACE_CORE_CONSTANTS_H

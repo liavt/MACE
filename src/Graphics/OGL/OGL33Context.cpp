@@ -5,9 +5,7 @@ See LICENSE.md for full copyright information
 */
 #include <MACE/Graphics/OGL/OGL33Context.h>
 #include <MACE/Graphics/OGL/OGL33Renderer.h>
-
-//debug
-#include <iostream>
+#include <MACE/Graphics/OGL/FreetypeFont.h>
 
 namespace mc {
 	namespace gfx {
@@ -244,10 +242,6 @@ namespace mc {
 				ogl33::Texture2D::unbind();
 			}
 
-			bool OGL33Texture::isCreated() const {
-				return ogl33::Texture2D::isCreated();
-			}
-
 			void OGL33Texture::setUnpackStorageHint(const PixelStorage hint, const int value) {
 				ogl33::Texture2D::bind();
 				switch (hint) {
@@ -290,11 +284,11 @@ namespace mc {
 				ogl33::Texture2D::getImage(getFormat(desc.format), getType(desc.type), data);
 			}
 
-			void OGL33Model::init() {
+			OGL33Model::OGL33Model() {
 				ogl33::VertexArray::init();
 			}
 
-			void OGL33Model::destroy() {
+			OGL33Model::~OGL33Model() {
 				ogl33::VertexArray::destroy();
 			}
 
@@ -334,11 +328,9 @@ namespace mc {
 				ogl33::VertexArray::loadIndices(indiceNum, indiceData);
 			}
 
-			bool OGL33Model::isCreated() const {
-				return ogl33::VertexArray::isCreated();
-			}
-
 			void OGL33Context::onInit(gfx::WindowModule*) {
+				freetype.init();
+
 				renderer = std::unique_ptr<Renderer>(new OGL33Renderer());
 			}
 
@@ -346,6 +338,8 @@ namespace mc {
 
 			void OGL33Context::onDestroy(gfx::WindowModule*) {
 				renderer.reset();
+
+				freetype.destroy();
 			}
 
 			OGL33Context::OGL33Context(gfx::WindowModule * win) : GraphicsContext(win) {}
@@ -354,12 +348,15 @@ namespace mc {
 				return renderer.get();
 			}
 
-			std::shared_ptr<ModelImpl> OGL33Context::createModelImpl() const {
+			std::shared_ptr<ModelImpl> OGL33Context::createModelImpl() {
 				return std::unique_ptr<ModelImpl>(new OGL33Model());
 			}
 
-			std::shared_ptr<TextureImpl> OGL33Context::createTextureImpl(const TextureDesc & desc) const {
+			std::shared_ptr<TextureImpl> OGL33Context::createTextureImpl(const TextureDesc & desc) {
 				return std::unique_ptr<TextureImpl>(new OGL33Texture(desc));
+			}
+			std::shared_ptr<FontImpl> OGL33Context::createFontImpl(const FontDesc & desc) {
+				return std::shared_ptr<FontImpl>(new fty::FreetypeFont(desc, freetype));
 			}
 		}//ogl33
 	}//gfx

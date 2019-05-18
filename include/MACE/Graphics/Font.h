@@ -9,16 +9,18 @@ See LICENSE.md for full copyright information
 #define MACE__GRAPHICS_FONT_H
 
 #include <MACE/Core/Interfaces.h>
+#include <MACE/Graphics/Context.h>
 #include <memory>
+#include <unordered_map>
 
 namespace mc {
 	namespace gfx {
 		/**
-		Thrown when something relate to Freetype or fonts fails
+		Thrown when something relating to fonts fails
 		*/
 		MACE__DECLARE_ERROR(Font);
 
-		class Texture;
+		using FontSize = unsigned int;
 
 		/**
 		All units are in fractional pixels (26.6)
@@ -50,21 +52,36 @@ namespace mc {
 			signed long descent = 0;
 			signed long ascent = 0;
 			signed long height = 0;
+			bool kerning = false;
 
 			bool operator ==(const FontMetrics& other) const;
 			bool operator !=(const FontMetrics& other) const;
 		};
 
-		class FontImpl: public Initializable {
-		public:
-			virtual void init() override = 0;
-			virtual void destroy() override = 0;
+		class MACE_NOVTABLE FontImpl {
+			friend class Font2;
+		protected:
+			virtual ~FontImpl() = default;
 
-			virtual signed long getDesc
+			/**
+			@rendercontext
+			*/
+			virtual void fillGlyph(Glyph& glyph, const wchar_t character) const = 0;
 
-			virtual bool hasKerning() const = 0;
+			/**
+			@rendercontext
+			*/
+			virtual void calculateMetricsForSize(const FontSize size) = 0;
 
-			virtual bool isCreated() const = 0;
+			/**
+			@rendercontext
+			*/
+			virtual FontMetrics getFontMetrics() = 0;
+
+			/**
+			@rendercontext
+			*/
+			virtual Vector<signed long, 2> getKerning(const wchar_t prev, const wchar_t current) const = 0;
 		};
 
 		enum class Fonts: Byte {
@@ -73,33 +90,53 @@ namespace mc {
 			SERIF,
 		};
 
-		class Font2: public Initializable {
+		enum class FontLoadType: Byte {
+			FILE, MEMORY
+		};
+
+		struct FontDesc {
+			FontLoadType loadType = FontLoadType::FILE;
+			union {
+				CString path;
+				struct {
+					const unsigned char* data;
+					Size size;
+				} memory;
+			} input;
+		};
+
+		class Font2 {
 		public:
-			Font2();
-			Font2(const std::shared_ptr<FontImpl> mod);
+			static Font2 loadFont(const std::string& name, const FontSize size = 12);
+			static Font2 loadFont(CString name, const FontSize size = 12);
+			static Font2 loadFontFromMemory(const unsigned char* data, Size dataSize, const FontSize size = 12);
+			template<Size N>
+			static inline Font2 loadFontFromMemory(const unsigned char data[N], const FontSize size = 12) {
+				return loadFontFromMemory(data, N);
+			}
+
+			Font2() noexcept;
+			/**
+			@rendercontext
+			*/
+			Font2(const FontDesc& desc, const FontSize size = 12);
 			Font2(const Font2& other);
+			Font2(const Font2& other, const FontSize size);
 			~Font2() = default;
 
 			/**
 			@rendercontext
 			*/
-			void init() override;
+			void init(const FontDesc& desc);
 			/**
 			@rendercontext
 			*/
-			void destroy() override;
+			void destroy();
 
 			/**
 			@rendercontext
 			*/
-			Glyph getGlyph(const wchar_t character) const;
-
-			/**
-			@rendercontext
-			*/
-			void calculateMetricsForHeight(const unsigned int height);
-
-			bool hasKerning() const;
+			Glyph& getGlyph(const wchar_t character);
 
 			/**
 			@rendercontext
@@ -109,17 +146,25 @@ namespace mc {
 			/**
 			@rendercontext
 			*/
-			Vector<signed long, 2> getKerning(const wchar_t prev, const wchar_t current) const;
+			Vector<signed long, 2> getKerning(const wchar_t prev, const wchar_t current);
 
-			/**
-			@rendercontext
-			*/
+			MACE_GETTER_SETTER_DEC(Size, FontSize);
+
 			bool isCreated() const;
 
 			bool operator==(const Font2& other) const;
 			bool operator!=(const Font2& other) const;
 		private:
 			std::shared_ptr<FontImpl> impl;
+
+			std::unordered_map<FontSize, std::unordered_map<wchar_t, Glyph>> glyphs{};
+
+			FontSize size = 12, lastCalculatedSize = 0;
+
+			/**
+			@rendercontext
+			*/
+			void checkHeight();
 		};
 	}
 }

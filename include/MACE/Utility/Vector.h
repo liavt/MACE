@@ -91,9 +91,9 @@ namespace mc {
 		<p>
 		The data is default initialized.
 		*/
-		VectorBase() : content{ } {};
+		VectorBase() noexcept : content{ } {};
 
-		VectorBase(const T& val) : VectorBase() {
+		VectorBase(const T& val) noexcept : VectorBase() {
 			for (Index i = 0; i < N; ++i) {
 				content[i] = val;
 			}
@@ -127,7 +127,7 @@ namespace mc {
 		*/
 		VectorBase(const std::initializer_list<T> args) : VectorBase() {//this is for aggregate initializaition
 			MACE_IF_CONSTEXPR(args.size() != N) {
-				MACE__THROW(OutOfBounds, "The number of arguments MUST be equal to the size of the array.");
+				MACE__THROW(OutOfBounds, "The number of arguments MUST be equal to the size of the Vector");
 			}
 
 			Index counter = 0;
