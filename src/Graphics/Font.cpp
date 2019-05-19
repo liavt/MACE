@@ -32,37 +32,88 @@ namespace mc {
 		bool FontMetrics::operator!=(const FontMetrics& other) const {
 			return !operator==(other);
 		}
-		Font2 Font2::loadFont(const std::string& name, const FontSize size) {
+		Font Font::loadFont(const std::string& name, const FontSize size) {
 			return loadFont(name.c_str(), size);
 		}
-		Font2 Font2::loadFont(CString name, const FontSize size) {
+		Font Font::loadFont(CString name, const FontSize size) {
 			FontDesc desc{};
-			desc.loadType = FontLoadType::MEMORY;
+			desc.loadType = FontLoadType::FILE;
 			desc.input.path = name;
-			return Font2(desc, size);
+			return Font(desc, size);
 		}
-		Font2 Font2::loadFontFromMemory(const unsigned char* data, Size dataSize, const FontSize size) {
+		Font Font::loadFontFromMemory(const unsigned char* data, Size dataSize, const FontSize size) {
 			FontDesc desc{};
 			desc.loadType = FontLoadType::MEMORY;
 			desc.input.memory.data = data;
 			desc.input.memory.size = dataSize;
-			return Font2(desc, size);
+			return Font(desc, size);
 		}
-		Font2::Font2() noexcept : impl(nullptr) {}
-		Font2::Font2(const FontDesc& desc, const FontSize size) : impl(nullptr), size(size) {
+		Font::Font() noexcept : impl(nullptr) {}
+		Font::Font(const FontDesc& desc, const FontSize size) : impl(nullptr), size(size) {
 			init(desc);
 		}
-		Font2::Font2(const Font2& other) : impl(other.impl), size(other.getSize()) {}
+		Font::Font(const Font& other) : impl(other.impl), size(other.getSize()) {}
 
-		Font2::Font2(const Font2& other, const FontSize size) : impl(other.impl), size(size) {}
+		Font::Font(const Font& other, const FontSize size) : impl(other.impl), size(size) {}
 
-		void Font2::init(const FontDesc& desc) {
+		//font data, compiled in another file to increase compilation time
+		extern unsigned char sourceCodeProData[];
+		extern unsigned int sourceCodeProLength;
+
+		extern unsigned char sourceSansProData[];
+		extern unsigned int sourceSansProLength;
+
+		extern unsigned char sourceSerifProData[];
+		extern unsigned int sourceSerifProLength;
+
+		Font::Font(const Fonts f, const FontSize h) : impl(nullptr), size(h) {
+			static Font sourceCodePro, sourceSerifPro, sourceSansPro;
+
+			//TODO make this not use static Font's
+			switch (f) {
+			case Fonts::CODE:
+				if (!sourceCodePro.isCreated()) {
+					sourceCodePro = Font::loadFontFromMemory(sourceCodeProData, sourceCodeProLength);
+				}
+				impl = sourceCodePro.impl;
+				break;
+			case Fonts::SANS:
+				if (!sourceSansPro.isCreated()) {
+					sourceSansPro = Font::loadFontFromMemory(sourceSansProData, sourceSansProLength);
+				}
+
+				impl = sourceSansPro.impl;
+				break;
+			case Fonts::SERIF:
+				if (!sourceSerifPro.isCreated()) {
+					sourceSerifPro = Font::loadFontFromMemory(sourceSerifProData, sourceSerifProLength);
+				}
+
+				impl = sourceSerifPro.impl;
+				break;
+				default MACE_UNLIKELY:
+				//should never be reached, but just to be safe
+				MACE__THROW(Font, "Unknown Fonts enum constant");
+			}
+		}
+
+		void Font::init(const FontDesc& desc) {
+			if (desc.loadType == FontLoadType::FILE) {
+				if (desc.input.path == nullptr) {
+					MACE__THROW(NullPointer, "Input file path in FontDesc was nullptr");
+				}
+			} else if (desc.loadType == FontLoadType::MEMORY) {
+				if (desc.input.memory.data == nullptr) {
+					MACE__THROW(NullPointer, "Input memory in FontDesc was nullptr");
+				}
+			}
+
 			impl = gfx::getCurrentWindow()->getContext()->createFontImpl(desc);
 		}
-		void Font2::destroy() {
+		void Font::destroy() {
 			impl.reset();
 		}
-		Glyph& Font2::getGlyph(const wchar_t character) {
+		Glyph& Font::getGlyph(const wchar_t character) {
 			MACE__VERIFY_FONT_INIT();
 
 			Glyph& glyph = glyphs[size][character];
@@ -77,21 +128,21 @@ namespace mc {
 			return glyph;
 		}
 
-		void Font2::checkHeight() {
+		void Font::checkHeight() {
 			if (size != lastCalculatedSize && impl != nullptr) {
 				impl->calculateMetricsForSize(size);
 				lastCalculatedSize = size;
 			}
 		}
 
-		FontMetrics Font2::getFontMetrics() {
+		FontMetrics Font::getFontMetrics() {
 			MACE__VERIFY_FONT_INIT();
 
 			checkHeight();
 
 			return impl->getFontMetrics();
 		}
-		Vector<signed long, 2> Font2::getKerning(const wchar_t prev, const wchar_t current) {
+		Vector<signed long, 2> Font::getKerning(const wchar_t prev, const wchar_t current) {
 			MACE__VERIFY_FONT_INIT();
 
 			checkHeight();
@@ -99,15 +150,15 @@ namespace mc {
 			return impl->getKerning(prev, current);
 		}
 
-		MACE_GETTER_SETTER_DEF(Font2, Size, size, FontSize);
+		MACE_GETTER_SETTER_DEF(Font, Size, size, FontSize);
 
-		bool Font2::isCreated() const {
+		bool Font::isCreated() const {
 			return impl != nullptr;
 		}
-		bool Font2::operator==(const Font2& other) const {
+		bool Font::operator==(const Font& other) const {
 			return impl == other.impl;
 		}
-		bool Font2::operator!=(const Font2& other) const {
+		bool Font::operator!=(const Font& other) const {
 			return !operator==(other);
 		}
 	}//gfx

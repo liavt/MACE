@@ -40,9 +40,6 @@ namespace mc {
 		Contains virtual functions for every event in an `Entity` which each have 1 parameter - the
 		`Entity` being acted on.
 		<p>
-		You are required to implement Component::init(Entity*), Component::update(Entity*), and Component::destroy(Entity*).
-		There are additional functions which are optional to implement.
-		<p>
 		There is no function to remove a `Component` from an `Entity`. Instead, the `Component` decides when to be removed
 		from Component::update(Entity*). This makes sure that the `Component` completes whatever task it was trying to do.
 		@see Entity::addComponent(Component&)

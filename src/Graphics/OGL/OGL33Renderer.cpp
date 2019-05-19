@@ -108,6 +108,7 @@ namespace mc {
 
 				void initializeRenderProtocolForSettings(OGL33Renderer::RenderProtocol& prot, const std::pair<Painter::Brush, Painter::RenderFeatures>& settings) {
 					ogl33::ShaderProgram program;
+
 					program.init();
 
 					ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error initializing ShaderProgram");
@@ -368,9 +369,7 @@ namespace mc {
 			void OGL33Renderer::onTearDown(gfx::WindowModule* win) {
 				ogl33::checkGLError(__LINE__, __FILE__, "Error occured during rendering");
 
-				frameBuffer.unbind();
-
-				ogl33::FrameBuffer::clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+				//frameBuffer.unbind();
 
 				int width, height;
 				glfwGetWindowSize(win->getGLFWWindow(), &width, &height);
@@ -378,12 +377,14 @@ namespace mc {
 				glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 				glBindFramebuffer(GL_READ_FRAMEBUFFER, frameBuffer.getID());
 				ogl33::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
-				ogl33::FrameBuffer::setDrawBuffer(GL_BACK);
+				ogl33::FrameBuffer::setDrawBuffer(GL_FRONT);
 
-				glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT, GL_NEAREST);
+				glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to tear down renderer");
 
-				glfwSwapBuffers(win->getGLFWWindow());
+				//glfwSwapBuffers(win->getGLFWWindow());
+
+				glFlush();
 
 				ogl33::forceCheckGLError(__LINE__, __FILE__, "An OpenGL error occurred during a rendering frame");
 			}

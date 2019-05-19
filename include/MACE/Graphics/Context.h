@@ -504,7 +504,7 @@ namespace mc {
 		class GraphicsContext: public Initializable {
 			friend class Texture;
 			friend class Model;
-			friend class Font2;
+			friend class Font;
 		public:
 			using TextureCreateCallback = std::function<Texture()>;
 			using ModelCreateCallback = std::function<Model()>;

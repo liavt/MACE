@@ -19,99 +19,6 @@ See LICENSE.md for full copyright information
 
 namespace mc {
 	namespace gfx {
-		namespace {
-			FT_Library freetype;
-			//error if freetype init failed or -1 if it hasnt been created
-			int freetypeStatus = -1;
-
-			std::vector<FT_Face> fonts = std::vector<FT_Face>();
-
-			Texture convertBitmapToTexture(const FT_Bitmap& bitmap) {
-				TextureDesc desc = TextureDesc(bitmap.width, bitmap.rows);
-				switch (bitmap.pixel_mode) {
-				case FT_PIXEL_MODE_GRAY:
-					desc.format = TextureDesc::Format::LUMINANCE;
-					desc.internalFormat = TextureDesc::InternalFormat::RED;
-					break;
-				case FT_PIXEL_MODE_LCD:
-					desc.width /= 3;
-					desc.format = TextureDesc::Format::RGB;
-					desc.internalFormat = TextureDesc::InternalFormat::RGB8;
-					break;
-				}
-				desc.type = TextureDesc::Type::UNSIGNED_BYTE;
-				desc.wrapS = TextureDesc::Wrap::CLAMP;
-				desc.wrapT = TextureDesc::Wrap::CLAMP;
-				desc.minFilter = TextureDesc::Filter::LINEAR;
-				desc.magFilter = TextureDesc::Filter::LINEAR;
-
-				Texture out = Texture(desc);
-				out.bind();
-
-				out.resetPixelStorage();
-				out.setUnpackStorageHint(gfx::PixelStorage::ALIGNMENT, 1);
-
-				out.setData(bitmap.buffer);
-
-				return out;
-			}
-
-			MACE_NORETURN void throwFreetypeError(const FT_Error& status, const std::string message) {
-				/*
-				using a custom X-Macro instead of using FT_ERROR_H because
-				certain error codes (like Cannot_Open_Resource) require custom
-				error classes (for example, Invalid_File_Format needs to throw
-				BadFileError instead of FontError)
-
-				there is no way to do that using FreeType's built in error
-				X-Macro as you can't do conditional macros
-				*/
-#define MACE__FREETYPE_ERROR_CASE_TYPE(err, msg, type) case FT_Err_##err: MACE__THROW(type, message + ": Status " + std::to_string(status) + ": " + msg); break;
-#define MACE__FREETYPE_ERROR_CASE(err, msg) MACE__FREETYPE_ERROR_CASE_TYPE(err, msg, Font)
-				switch (status) {
-					MACE__FREETYPE_ERROR_CASE(Ok, "No error (invalid internal call to throwFreetypeError)")
-						MACE__FREETYPE_ERROR_CASE_TYPE(Cannot_Open_Resource, "Unable to open font file", FileNotFound)
-						MACE__FREETYPE_ERROR_CASE_TYPE(Unknown_File_Format, "Unknown file format", BadFile)
-						MACE__FREETYPE_ERROR_CASE_TYPE(Invalid_File_Format, "Broken file", BadFile)
-						MACE__FREETYPE_ERROR_CASE_TYPE(Invalid_Version, "Invalid FreeType version", InitializationFailed)
-						MACE__FREETYPE_ERROR_CASE(Invalid_Argument, "Invalid argument")
-						MACE__FREETYPE_ERROR_CASE(Unimplemented_Feature, "Unimplemented feature")
-						MACE__FREETYPE_ERROR_CASE(Invalid_Glyph_Index, "Invalid glyph index")
-						MACE__FREETYPE_ERROR_CASE(Invalid_Character_Code, "Invalid character code")
-						MACE__FREETYPE_ERROR_CASE(Cannot_Render_Glyph, "Cannot render glyph")
-						MACE__FREETYPE_ERROR_CASE(Invalid_Pixel_Size, "Invalid pixel size")
-						MACE__FREETYPE_ERROR_CASE(Invalid_Handle, "Invalid object handle")
-						MACE__FREETYPE_ERROR_CASE(Invalid_Library_Handle, "Invalid library handle")
-						MACE__FREETYPE_ERROR_CASE(Invalid_Driver_Handle, "Invalid driver handle")
-						MACE__FREETYPE_ERROR_CASE(Invalid_Face_Handle, "Invalid face handle")
-						MACE__FREETYPE_ERROR_CASE(Invalid_Size_Handle, "Invalid size handle")
-						MACE__FREETYPE_ERROR_CASE(Invalid_Slot_Handle, "Invalid slot handle")
-						MACE__FREETYPE_ERROR_CASE_TYPE(Too_Many_Drivers, "Too many drivers", System)
-						MACE__FREETYPE_ERROR_CASE_TYPE(Too_Many_Extensions, "Too many extensions", System)
-						MACE__FREETYPE_ERROR_CASE_TYPE(Out_Of_Memory, "Out of memory", OutOfMemory)
-				default:
-					MACE__THROW(Font, message + ": Unknown error code " + std::to_string(freetypeStatus));
-				}
-#undef MACE__FREETYPE_ERROR_CASE_TYPE
-#undef MACE__FREETYPE_ERROR_CASE
-			}
-
-			inline void checkFreetypeError(const FT_Error & status, const std::string message) {
-				if (status != FT_Err_Ok) {
-					throwFreetypeError(status, message);
-				}
-			}
-
-			void ensureFreetypeInit() {
-				if (freetypeStatus < 0) {
-					checkFreetypeError(freetypeStatus = FT_Init_FreeType(&freetype), "Failed to initialize FreeType");
-
-					//font 0 should be null
-					fonts.resize(2);
-				}
-			}
-		}//anon namespace
-
 		Entity2D::Entity2D() : GraphicsEntity() {}
 
 		bool Entity2D::operator==(const Entity2D& other) const {
@@ -363,8 +270,8 @@ namespace mc {
 		void ProgressBar::onRender(Painter& p) {
 			p.enableRenderFeatures(Painter::RenderFeatures::DISCARD_INVISIBLE);
 			p.conditionalMaskImages(foregroundTexture, backgroundTexture, selectionTexture,
-								minimumProgress / maximumProgress,
-								(progress - minimumProgress) / (maximumProgress - minimumProgress));
+									minimumProgress / maximumProgress,
+									(progress - minimumProgress) / (maximumProgress - minimumProgress));
 		}
 
 		void ProgressBar::onDestroy() {
@@ -407,179 +314,6 @@ namespace mc {
 		void Slider::onHover() {
 			doHover();
 		}
-
-		Font Font::loadFont(const std::string & name, unsigned int size) {
-			return loadFont(name.c_str(), size);
-		}
-
-		Font Font::loadFont(const char* name, unsigned int size) {
-			ensureFreetypeInit();
-
-			//on 64 bit systems this cast is required
-			Index id = static_cast<Index>(fonts.size());
-
-			fonts.push_back(FT_Face());
-			checkFreetypeError(FT_New_Face(freetype, name, 0, &fonts[id]), "Failed to create font");
-
-			checkFreetypeError(FT_Select_Charmap(fonts[id], FT_ENCODING_UNICODE), "Failed to change charmap from font");
-
-			return Font(id, size);
-		}
-
-		Font Font::loadFontFromMemory(const unsigned char* data, unsigned long int size, unsigned int fontSize) {
-#ifdef MACE_DEBUG_CHECK_ARGS
-			if (size <= 0) {
-				MACE__THROW(OutOfBounds, "Input size for loadFontFromMemory is less or equal to than 0!");
-			}
-#endif
-
-			ensureFreetypeInit();
-
-			//on 64 bit systems this cast is required
-			Index id = static_cast<Index>(fonts.size());
-
-			fonts.push_back(FT_Face());
-
-			checkFreetypeError(FT_New_Memory_Face(freetype, data, size, 0, &fonts[id]), "Failed to create font from memory");
-
-			checkFreetypeError(FT_Select_Charmap(fonts[id], FT_ENCODING_UNICODE), "Failed to change charmap from font");
-
-			return Font(id, fontSize);
-		}
-
-		void Font::destroy() {
-			checkFreetypeError(FT_Done_Face(fonts[id]), "Failed to delete font");
-		}
-
-		bool Font::hasKerning() const {
-			return FT_HAS_KERNING(fonts[id]) == 1;
-		}
-
-		signed long Font::getDescent() const {
-			return fonts[id]->size->metrics.descender;
-		}
-
-		signed long Font::getAscent() const {
-			return fonts[id]->size->metrics.ascender;
-		}
-
-		Index Font::getID() const {
-			return id;
-		}
-
-		void Font::getCharacter(const wchar_t c, std::shared_ptr<Letter> character) const {
-			checkFreetypeError(FT_Load_Char(fonts[id], c, FT_LOAD_RENDER | FT_LOAD_PEDANTIC | FT_LOAD_TARGET_LCD), "Failed to load glyph");
-
-			GlyphMetrics & metrics = character->glyphMetrics;
-
-			const FT_GlyphSlot glyph = fonts[id]->glyph;
-			const FT_Glyph_Metrics& gMetrics = glyph->metrics;
-			const FT_Vector& advance = glyph->advance;
-			metrics.width = gMetrics.width;
-			metrics.height = gMetrics.height;
-			metrics.bearingX = gMetrics.horiBearingY;
-			metrics.bearingY = gMetrics.horiBearingY;
-			metrics.advanceX = advance.x;
-			metrics.advanceY = advance.y;
-
-			if (metrics.width == 0 || metrics.height == 0) {
-				character->glyph = Colors::BLACK;
-			} else {
-				GraphicsContext* const context = getCurrentWindow()->getContext();
-
-				character->glyph = context->getOrCreateTexture("MC/Fonts/" + std::to_string(id) + "/Sizes/" + std::to_string(id) + "/Glyphs/" + std::to_string(static_cast<int>(c)), [&glyph]() {
-					FT_Bitmap targetBitmap;
-					FT_Bitmap_New(&targetBitmap);
-
-					checkFreetypeError(FT_Bitmap_Convert(freetype, &glyph->bitmap, &targetBitmap, 1), "Failed to convert bitmaps");
-
-					targetBitmap.pixel_mode = FT_PIXEL_MODE_LCD;
-
-					Texture out = convertBitmapToTexture(targetBitmap);
-
-					checkFreetypeError(FT_Bitmap_Done(freetype, &targetBitmap), "Failed to delete bitmap");
-
-					return out;
-				});
-			}
-		}
-
-		signed long Font::getHeight() const {
-			return fonts[id]->size->metrics.height;
-		}
-
-		Vector<signed long, 2> Font::getKerning(const wchar_t prev, const wchar_t current) const {
-			FT_Vector vec;
-
-			checkFreetypeError(FT_Get_Kerning(fonts[id], prev, current, FT_KERNING_DEFAULT, &vec), "Failed to get kerning from font");
-
-			return{vec.x, vec.y};
-		}
-
-		void Font::calculateMetrics() const {
-#ifdef MACE_DEBUG_CHECK_ARGS
-			if (height <= 0) {
-				MACE__THROW(OutOfBounds, "The height of the font cannot be 0 - you must set it!");
-			}
-#endif
-
-			const Vector<int, 2> dpi = getCurrentWindow()->getMonitor().getDPI();
-
-			checkFreetypeError(FT_Set_Char_Size(fonts[id], 0, height << 6, dpi[0], dpi[1]), "Failed to change char size");
-		}
-
-		bool Font::operator==(const Font & other) const {
-			return id == other.id && height == other.height;
-		}
-
-		bool Font::operator!=(const Font & other) const {
-			return !operator==(other);
-		}
-
-		Font::Font(const Index fontID, const unsigned int h) : id(fontID), height(h) {}
-
-		//font data, compiled in another file to increase compilation time
-		extern unsigned char sourceCodeProData[];
-		extern unsigned int sourceCodeProLength;
-
-		extern unsigned char sourceSansProData[];
-		extern unsigned int sourceSansProLength;
-
-		extern unsigned char sourceSerifProData[];
-		extern unsigned int sourceSerifProLength;
-
-		Font::Font(const Fonts f, const unsigned int h) : Font(0, h) {
-			static Font sourceCodePro, sourceSerifPro, sourceSansPro;
-
-			switch (f) {
-			case Fonts::CODE:
-				if (sourceCodePro.getID() == 0) {
-					sourceCodePro = Font::loadFontFromMemory(sourceCodeProData, sourceCodeProLength);
-				}
-
-				id = sourceCodePro.getID();
-				break;
-			case Fonts::SANS:
-				if (sourceSansPro.getID() == 0) {
-					sourceSansPro = Font::loadFontFromMemory(sourceSansProData, sourceSansProLength);
-				}
-
-				id = sourceSansPro.getID();
-				break;
-			case Fonts::SERIF:
-				if (sourceSerifPro.getID() == 0) {
-					sourceSerifPro = Font::loadFontFromMemory(sourceSerifProData, sourceSerifProLength);
-				}
-
-				id = sourceSerifPro.getID();
-				break;
-				default MACE_UNLIKELY:
-				//should never be reached, but just to be safe
-				MACE__THROW(Font, "Unknown Fonts enum constant");
-			}
-		}
-
-		Font::Font(const Font & f) : Font(f.id, f.height) {}
 
 		Letter::Letter() {}
 
@@ -708,10 +442,14 @@ namespace mc {
 			p.fillRect();
 		}
 
-		void Text::onDestroy() {}
+		void Text::onDestroy() {
+			if(font.isCreated()){
+				font.destroy();
+			}
+		}
 
 		void Text::onClean() {
-			if (font.getID() == 0) {
+			if (!font.isCreated()) {
 				MACE__THROW(InitializationFailed, "Can\'t render Text with unitialized font!");
 			}
 
@@ -725,36 +463,45 @@ namespace mc {
 				addChild(letter);
 			}
 
-			font.calculateMetrics();
-
 			const WindowModule* window = gfx::getCurrentWindow();
 
-			const bool hasKerning = font.hasKerning();
+			const FontMetrics fontMetrics = font.getFontMetrics();
 
-			const signed long linegap = font.getAscent() - font.getDescent() + font.getHeight();
+			const signed long linegap = fontMetrics.ascent - fontMetrics.descent + fontMetrics.height;
 
 			signed long x = 0;
 
 			std::vector<signed long> lineWidths{};
 			for (Index i = 0; i < text.length(); ++i) {
+				const Glyph& glyph = font.getGlyph(text[i]);
+				const GlyphMetrics& glyphMetrics = glyph.metrics;
+
+				letters[i]->glyph = glyph.texture;
+
+				if (this->texture.isCreated()) {
+					letters[i]->texture = this->texture;
+				} else {
+					letters[i]->texture = Colors::WHITE;
+				}
+
 				if (text[i] == '\n') {
 					lineWidths.push_back(x);
 
 					x = 0;
-					font.getCharacter(' ', letters[i]);
 					letters[i]->getPainter().setOpacity(0.0f);
+
+					letters[i]->setX(0.0f);
+					letters[i]->setY(0.0f);
+					letters[i]->setWidth(0.0f);
+					letters[i]->setHeight(0.0f);
 				} else {
-					font.getCharacter(text[i], letters[i]);
-
-					const GlyphMetrics& glyphMetrics = letters[i]->getGlpyhMetrics();
-
 					//freetype uses absolute values (pixels) and we use relative. so by dividing the pixel by the size, we get relative values
 					letters[i]->setWidth(window->convertPixelsToRelativeXCoordinates(glyphMetrics.width >> 6));
 					letters[i]->setHeight(window->convertPixelsToRelativeYCoordinates(glyphMetrics.height >> 6));
 
 					Vector<signed long, 2> position = {x, -static_cast<signed long>(lineWidths.size()) * linegap};
 
-					if (i > 0 && hasKerning) {
+					if (i > 0 && fontMetrics.kerning) {
 						const Vector<signed long, 2> delta = font.getKerning(text[i - 1], text[i]);
 
 						position[0] += delta[0];
@@ -765,7 +512,7 @@ namespace mc {
 					//i cant bear this
 					position[1] -= (glyphMetrics.height - glyphMetrics.bearingY) << 1;
 					position[1] -= linegap;
-					position[1] -= font.getDescent() << 1;
+					position[1] -= fontMetrics.descent << 1;
 
 					letters[i]->setX(window->convertPixelsToRelativeXCoordinates((position[0] + glyphMetrics.width) >> 6));
 					letters[i]->setY(window->convertPixelsToRelativeYCoordinates(position[1] >> 6));
@@ -774,12 +521,6 @@ namespace mc {
 
 					x += glyphMetrics.advanceX;
 					x += glyphMetrics.width;
-
-					if (this->texture.isCreated()) {
-						letters[i]->texture = this->texture;
-					} else {
-						letters[i]->texture = Colors::WHITE;
-					}
 				}
 			}
 
@@ -787,8 +528,8 @@ namespace mc {
 
 			signed long height = static_cast<signed long>(lineWidths.size()) * linegap;
 			signed long width = 0;
-			for(auto lineWidth : lineWidths){
-				if(lineWidth > width){
+			for (auto lineWidth : lineWidths) {
+				if (lineWidth > width) {
 					width = lineWidth;
 				}
 			}

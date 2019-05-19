@@ -11,79 +11,81 @@ See LICENSE.md for full copyright information
 #include <MACE/Utility/Matrix.h>
 
 namespace mc {
+	
+
 	namespace math {
 		/**
 		Creates a rotation matrix, which when multiplied by a `Vector4f`, rotates it.
 		<p>
-		The base `Matrix4f` is an identity matrix
+		The base `Matrix` is an identity matrix
 		@param x Rotation in radians around the X axis
 		@param y Rotation in radians around the Y axis
 		@param z Rotation in radians around the Z axis
-		@return A rotation `Matrix4f`
+		@return A rotation `Matrix`
 		*/
 		Matrix<float, 4> rotate(const float x, const float y, const float z);
 		/**
 		Creates a rotation matrix, which when multiplied by a `Vector4f`, rotates it.
 		<p>
-		The base `Matrix4f` is an identity matrix
+		The base `Matrix` is an identity matrix
 		@param v A quaternion representing a rotation
-		@return A rotated `Matrix4f`
+		@return A rotated `Matrix`
 		*/
 		Matrix<float, 4> rotate(const Vector<float, 3>& v);
 		/**
-		Rotates an existing `Matrix4f`
+		Rotates an existing `Matrix`
 		@param v A quaternion representing a rotation
-		@param m `Matrix4f` base to rotate
-		@return A rotated `Matrix4f`
+		@param m `Matrix` base to rotate
+		@return A rotated `Matrix`
 		*/
 		Matrix<float, 4> rotate(const Matrix<float, 4>& m, const Vector<float, 3>& v);
 		/**
-		Rotates an existing `Matrix4f`
-		@param m A `Matrix4f` to rotate
+		Rotates an existing `Matrix`
+		@param m A `Matrix` to rotate
 		@param x Rotation in radians around the X axis
 		@param y Rotation in radians around the Y axis
 		@param z Rotation in radians around the Z axis
-		@return A rotated `Matrix4f`
+		@return A rotated `Matrix`
 		*/
 		Matrix<float, 4> rotate(const Matrix<float, 4>& m, const float x, const float y, const float z);
 
 		/**
 		Creates a scaling matrix, that when multiplied by a vector, scales the X, Y, and Z values.
 		<p>
-		The base `Matrix4f` is an identity matrix
+		The base `Matrix` is an identity matrix
 		@param x How much to scale the X coordinate
 		@param y How much to scale the Y coordinate
 		@param z How much to scale the Z coordinate
-		@return A `Matrix4f` that is scaled based on the supplied values
+		@return A `Matrix` that is scaled based on the supplied values
 		*/
 		Matrix<float, 4> scale(const float x, const float y, const float z);
 		/**
 		Scales an existing transformation matrix.
-		@param m The base `Matrix4f` to get scaled
+		@param m The base `Matrix` to get scaled
 		@param x How much to scale the X coordinate
 		@param y How much to scale the Y coordinate
 		@param z How much to scale the Z coordinate
-		@return A `Matrix4f` that is scaled based on the supplied values
+		@return A `Matrix` that is scaled based on the supplied values
 		*/
 		Matrix<float, 4> scale(const Matrix<float, 4>& m, const float x, const float y, const float z);
 
 		/**
 		Creates a translation matrix, that when multiplied by a vector, translates the X, Y, and Z values.
 		<p>
-		The base `Matrix4f` is an identity matrix
+		The base `Matrix` is an identity matrix
 		@param x How much to translate the X coordinate
 		@param y How much to translate the Y coordinate
 		@param z How much to translate the Z coordinate
-		@return A `Matrix4f` that is translated based on the supplied values
+		@return A `Matrix` that is translated based on the supplied values
 		*/
 		Matrix<float, 4> translate(const float x, const float y, const float z);
 		/**
 		Translates an existing transformation matrix.
-		@param m The base `Matrix4f` to get translated
+		@param m The base `Matrix` to get translated
 		@param x How much to translate the X coordinate
 		@param y How much to translate the Y coordinate
 		@param z How much to translate the Z coordinate
-		@return A `Matrix4f` that is translated based on the supplied values
+		@return A `Matrix` that is translated based on the supplied values
 		*/
 		Matrix<float, 4> translate(const Matrix<float, 4>& m, const float x, const float y, const float z);
 
@@ -152,7 +154,7 @@ namespace mc {
 		@param y How much to translate in the Y plane.
 		@param z How much to translate in the Z plane.
 		@return Itself for chaining
-		@see translate(const Matrix4f&, const float, const float, const float)
+		@see translate(const Matrix&, const float, const float, const float)
 		*/
 		TransformMatrix& translate(const float x, const float y, const float z);
 		/**
@@ -161,7 +163,7 @@ namespace mc {
 		@param y How much to rotate in the Y plane.
 		@param z How much to rotate in the Z plane.
 		@return Itself for chaining
-		@see rotate(const Matrix4f&, const float, const float, const float)
+		@see rotate(const Matrix&, const float, const float, const float)
 		*/
 		TransformMatrix& rotate(const float x, const float y, const float z);
 		/**
@@ -170,7 +172,7 @@ namespace mc {
 		@param y How much to scale in the Y plane.
 		@param z How much to scale in the Z plane.
 		@return Itself for chaining
-		@see scale(const Matrix4f&, const float, const float, const float)
+		@see scale(const Matrix&, const float, const float, const float)
 		*/
 		TransformMatrix& scale(const float x, const float y, const float z);
 		/**
@@ -180,7 +182,7 @@ namespace mc {
 		TransformMatrix& reset();
 
 		/**
-		Converts this `TransformMatrix` into a `Matrix4f` based on the stored transformations.
+		Converts this `TransformMatrix` into a `Matrix` based on the stored transformations.
 		@return The transformation matrix represented by the values stored via `rotate()`, `scale()`, and `translate()`
 		*/
 		Matrix<float, 4> get() const;

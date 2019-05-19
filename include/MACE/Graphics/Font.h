@@ -59,7 +59,7 @@ namespace mc {
 		};
 
 		class MACE_NOVTABLE FontImpl {
-			friend class Font2;
+			friend class Font;
 		protected:
 			virtual ~FontImpl() = default;
 
@@ -105,24 +105,25 @@ namespace mc {
 			} input;
 		};
 
-		class Font2 {
+		class Font {
 		public:
-			static Font2 loadFont(const std::string& name, const FontSize size = 12);
-			static Font2 loadFont(CString name, const FontSize size = 12);
-			static Font2 loadFontFromMemory(const unsigned char* data, Size dataSize, const FontSize size = 12);
+			static Font loadFont(const std::string& name, const FontSize size = 12);
+			static Font loadFont(CString name, const FontSize size = 12);
+			static Font loadFontFromMemory(const unsigned char* data, Size dataSize, const FontSize size = 12);
 			template<Size N>
-			static inline Font2 loadFontFromMemory(const unsigned char data[N], const FontSize size = 12) {
+			static inline Font loadFontFromMemory(const unsigned char data[N], const FontSize size = 12) {
 				return loadFontFromMemory(data, N);
 			}
 
-			Font2() noexcept;
+			Font() noexcept;
 			/**
 			@rendercontext
 			*/
-			Font2(const FontDesc& desc, const FontSize size = 12);
-			Font2(const Font2& other);
-			Font2(const Font2& other, const FontSize size);
-			~Font2() = default;
+			Font(const FontDesc& desc, const FontSize size = 12);
+			Font(const Font& other);
+			Font(const Font& other, const FontSize size);
+			Font(const Fonts font, const FontSize soze = 12);
+			~Font() = default;
 
 			/**
 			@rendercontext
@@ -152,8 +153,8 @@ namespace mc {
 
 			bool isCreated() const;
 
-			bool operator==(const Font2& other) const;
-			bool operator!=(const Font2& other) const;
+			bool operator==(const Font& other) const;
+			bool operator!=(const Font& other) const;
 		private:
 			std::shared_ptr<FontImpl> impl;
 

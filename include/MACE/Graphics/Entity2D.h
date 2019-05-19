@@ -197,56 +197,6 @@ namespace mc {
 		class Letter;
 		class Text;
 
-		/**
-		@todo instead of using an id system add FT_Face
-		@todo get rid of FT_Library global constant
-		*/
-		class Font {
-			friend class Text;
-		public:
-			static Font loadFont(const std::string& name, unsigned int size = 12);
-			static Font loadFont(const char* name, unsigned int size = 12);
-			static Font loadFontFromMemory(const unsigned char* data, unsigned long int dataSize, unsigned int size = 12);
-			template<Size N>
-			static inline Font loadFontFromMemory(const unsigned char data[N], unsigned int size = 12) {
-				return loadFontFromMemory(data, static_cast<long int>(N));
-			}
-
-			Font(const Font& f);
-			Font(const Index id = 0, const unsigned int h = 0);
-			Font(const Fonts f, const unsigned int height = 12);
-
-			void destroy();
-
-			/**
-			@todo cache characters
-			*/
-			void getCharacter(const wchar_t character, std::shared_ptr<Letter> let) const;
-
-			bool hasKerning() const;
-
-			signed long getDescent() const;
-
-			signed long getAscent() const;
-
-			/**
-			Returns the scaled height in fractional pixels (26.6px)
-			*/
-			signed long getHeight() const;
-
-			Vector<signed long, 2> getKerning(const wchar_t prev, const wchar_t current) const;
-
-			Index getID() const;
-
-			bool operator==(const Font& other) const;
-			bool operator!=(const Font& other) const;
-		private:
-			Index id;
-			unsigned int height;
-
-			void calculateMetrics() const;
-		};//Font
-
 		class Letter: public Entity2D {
 			friend class Font;
 			friend class Text;
