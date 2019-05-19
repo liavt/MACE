@@ -132,12 +132,6 @@ namespace mc {
 
 			//check if we can render
 			if (!getProperty(Entity::DISABLED)) {
-				//we want to do the actual cleaning in render() because clean() does some graphical work,
-				//like updating buffers on the gpu side, so it needs a graphics context
-				if (getProperty(Entity::DIRTY)) {
-					clean();
-				}
-
 				onRender();
 
 				for (Index i = 0; i < children.size(); ++i) {
@@ -184,14 +178,12 @@ namespace mc {
 				if (hasParent()) {
 					const Entity* par = getParent();
 
-					const Metrics parentMetrics = par->getMetrics();
+					const Metrics& parentMetrics = par->getMetrics();
 
 					metrics.inherited.translation += parentMetrics.transform.translation + parentMetrics.inherited.translation;
 					metrics.inherited.scaler *= parentMetrics.transform.scaler;
 					metrics.inherited.rotation += parentMetrics.transform.rotation;
 				}
-
-				metrics.transform.rotation += metrics.inherited.rotation;
 
 				for (Index i = 0; i < components.size(); ++i) {
 #ifdef MACE_DEBUG_CHECK_NULLPTR

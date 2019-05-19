@@ -832,5 +832,12 @@ namespace mc {
 			translation.z() -= paddingFront - paddingBack;
 			scaler.z() += paddingFront + paddingBack;
 		}
+
+		UninheritScaleComponent::UninheritScaleComponent() {}
+
+		void UninheritScaleComponent::clean(Metrics & metrics) {
+			metrics.transform.scaler /= metrics.inherited.scaler;
+			metrics.transform.translation /= metrics.inherited.scaler;
+		}
 	}//gfx
 }//mc

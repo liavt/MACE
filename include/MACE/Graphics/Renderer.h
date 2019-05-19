@@ -65,11 +65,11 @@ namespace mc {
 				on the value of the mask texture.
 				<br>
 				`data[0]` and `data[1]` define a range,
-				where `data[0]` is the lower bound (must be >= 0.0f) 
+				where `data[0]` is the lower bound (must be >= 0.0f)
 				and `data[1]` is the upper bound (must be <= 1.0f).
 				<br>
 				If the value of the mask texture is within the range,
-				the foreground texture is rendered. Otherwise the 
+				the foreground texture is rendered. Otherwise the
 				backgrond texture is rendered.
 				<br>
 				This is used in the rendering of the `ProgressBar`.
@@ -102,13 +102,10 @@ namespace mc {
 				FILTER = 0x02,
 				TEXTURE = 0x04,
 				TEXTURE_TRANSFORM = 0x08,
-				INHERIT_TRANSLATION = 0x10,
-				INHERIT_SCALE = 0x20,
-				INHERIT_ROTATION = 0x40,
-				STORE_ID = 0x80,
+				STORE_ID = 0x10,
 
 				NONE = 0x00,
-				DEFAULT = FILTER | TEXTURE | TEXTURE_TRANSFORM | INHERIT_TRANSLATION | INHERIT_SCALE | INHERIT_ROTATION | STORE_ID,
+				DEFAULT = FILTER | TEXTURE | TEXTURE_TRANSFORM | STORE_ID,
 			};
 
 			struct State {

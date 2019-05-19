@@ -268,7 +268,7 @@ namespace mc {
 		}
 
 		void ProgressBar::onRender(Painter& p) {
-			p.enableRenderFeatures(Painter::RenderFeatures::DISCARD_INVISIBLE);
+			p.enableRenderFeatures(Painter::RenderFeatures::FILTER | Painter::RenderFeatures::DISCARD_INVISIBLE);
 			p.conditionalMaskImages(foregroundTexture, backgroundTexture, selectionTexture,
 									minimumProgress / maximumProgress,
 									(progress - minimumProgress) / (maximumProgress - minimumProgress));
@@ -341,7 +341,7 @@ namespace mc {
 		void Letter::onUpdate() {}
 
 		void Letter::onRender(Painter & p) {
-			p.disableRenderFeatures(Painter::RenderFeatures::INHERIT_SCALE | Painter::RenderFeatures::STORE_ID);
+			p.disableRenderFeatures(Painter::RenderFeatures::DISCARD_INVISIBLE | Painter::RenderFeatures::FILTER | Painter::RenderFeatures::STORE_ID);
 			p.setTexture(texture, TextureSlot::FOREGROUND);
 			p.setTexture(glyph, TextureSlot::BACKGROUND);
 			p.drawQuad(Painter::Brush::MULTICOMPONENT_BLEND);
@@ -459,6 +459,7 @@ namespace mc {
 			}
 			while (letters.size() < text.length()) {
 				std::shared_ptr<Letter> letter = std::shared_ptr<Letter>(new Letter());
+				letter->addComponent(std::shared_ptr<UninheritScaleComponent>(new UninheritScaleComponent()));
 				letters.push_back(letter);
 				addChild(letter);
 			}

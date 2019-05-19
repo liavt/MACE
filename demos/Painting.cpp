@@ -32,7 +32,7 @@ public:
 
 		p.translate(2.0f / 3.0f, 0.0f);
 		//sepia filter
-		p.setFilter(Matrix4f({
+		p.setFilter(Matrix<float, 4>({
 			{ 0.3588f, 0.7044f, 0.1368f, 0.0f },
 			{ 0.2990f, 0.5870f, 0.1140f, 0.0f },
 			{ 0.2392f, 0.4696f, 0.0912f, 0.0f },
@@ -61,7 +61,7 @@ public:
 
 		p.translate(2.0f / 3.0f, 0.0f);
 		p.setTexture(lena, gfx::TextureSlot::FOREGROUND);
-		p.setForegroundTransform(Vector4f({0.25f, 0.25f, 0.5f, 0.5f}));
+		p.setForegroundTransform(Vector<float, 4>({0.25f, 0.25f, 0.5f, 0.5f}));
 		//render lena slightly zoomed in
 		p.drawQuad(gfx::Painter::Brush::TEXTURE);
 

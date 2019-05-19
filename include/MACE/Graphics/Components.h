@@ -464,6 +464,13 @@ namespace mc {
 			void clean(Metrics&) final;
 		};
 
+		class UninheritScaleComponent: public Component {
+		public:
+			UninheritScaleComponent();
+		private:
+			void clean(Metrics&) override final;
+		};
+
 		class TextureFramesComponent: public Component, public Progressable {
 		public:
 			using FrameCallback = std::function<void(const Texture&, Entity*, TextureFramesComponent*)>;

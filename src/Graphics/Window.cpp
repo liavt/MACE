@@ -346,6 +346,8 @@ namespace mc {
 						if (getProperty(Entity::DIRTY)) {
 							Renderer* const renderer = context->getRenderer();
 							renderer->setUp(this);
+							setProperty(Entity::DIRTY, false);
+							Entity::clean();
 							Entity::render();
 							renderer->tearDown(this);
 						}

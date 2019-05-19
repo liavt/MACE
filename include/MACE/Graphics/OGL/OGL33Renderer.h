@@ -93,10 +93,6 @@ namespace mc {
 				struct {
 					UniformBuffer entityData;
 					UniformBuffer painterData;
-
-					UniformBuffer* begin() {
-						return &entityData;
-					}
 				} uniformBuffers;
 
 				Metrics savedMetrics;

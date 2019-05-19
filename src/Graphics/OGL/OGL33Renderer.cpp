@@ -78,9 +78,6 @@ namespace mc {
 					MACE__SHADER_RENDER_FEATURE(FILTER);
 					MACE__SHADER_RENDER_FEATURE(TEXTURE);
 					MACE__SHADER_RENDER_FEATURE(TEXTURE_TRANSFORM);
-					MACE__SHADER_RENDER_FEATURE(INHERIT_TRANSLATION);
-					MACE__SHADER_RENDER_FEATURE(INHERIT_SCALE);
-					MACE__SHADER_RENDER_FEATURE(INHERIT_ROTATION);
 					MACE__SHADER_RENDER_FEATURE(STORE_ID);
 #undef MACE__SHADER_RENDER_FEATURE
 
@@ -702,9 +699,9 @@ namespace mc {
 			}
 
 			void OGL33Painter::begin() {
-				uniformBuffers.painterData.bind();
-
 				uniformBuffers.entityData.bind();
+
+				uniformBuffers.painterData.bind();
 			}
 
 			void OGL33Painter::end() {}
