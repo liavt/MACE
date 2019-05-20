@@ -368,15 +368,14 @@ namespace mc {
 
 				//frameBuffer.unbind();
 
-				int width, height;
-				glfwGetWindowSize(win->getGLFWWindow(), &width, &height);
+				const Vector<Pixels, 2> size = win->getWindowSize();
 
 				glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 				glBindFramebuffer(GL_READ_FRAMEBUFFER, frameBuffer.getID());
 				ogl33::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
 				ogl33::FrameBuffer::setDrawBuffer(GL_FRONT);
 
-				glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+				glBlitFramebuffer(0, 0, size[0], size[1], 0, 0, size[0], size[1], GL_COLOR_BUFFER_BIT, GL_NEAREST);
 				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to tear down renderer");
 
 				//glfwSwapBuffers(win->getGLFWWindow());

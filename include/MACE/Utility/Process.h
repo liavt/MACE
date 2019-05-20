@@ -38,13 +38,6 @@ namespace mc {
 		void setArgs(const char* a) MACE_EXPECTS(a != nullptr);
 		const char* getArgs() const;
 
-#if defined(MACE_WINAPI) && defined(MACE_EXPOSE_WINAPI)
-		void* getProcess() const;
-		void* getThread() const;
-#elif defined(MACE_POSIX) && defined(MACE_EXPOSE_POSIX)
-		pid_t getPID() const;
-#endif
-
 	private:
 		bool created = false;
 

@@ -3,8 +3,6 @@ Copyright (c) 2016-2019 Liav Turkia
 
 See LICENSE.md for full copyright information
 */
-#define MACE_EXPOSE_WINAPI
-#define MACE_EXPOSE_POSIX
 #include <MACE/Utility/Process.h>
 #include <MACE/Core/System.h>
 
@@ -24,9 +22,9 @@ See LICENSE.md for full copyright information
 #endif
 
 namespace mc {
-	Process::Process(const char * p, const char * a) : path(p), args(a) {}
+	Process::Process(const char* p, const char* a) : path(p), args(a) {}
 
-	Process::Process(const std::string & path, std::string & args) : Process(path.c_str(), args.c_str()) {}
+	Process::Process(const std::string& path, std::string& args) : Process(path.c_str(), args.c_str()) {}
 
 	Process::Process() : Process(nullptr, nullptr) {}
 
@@ -215,33 +213,19 @@ namespace mc {
 		return created;
 	}
 
-	void Process::setPath(const char * p) {
+	void Process::setPath(const char* p) {
 		path = p;
 	}
 
-	const char * Process::getPath() const {
+	const char* Process::getPath() const {
 		return path;
 	}
 
-	void Process::setArgs(const char * a) {
+	void Process::setArgs(const char* a) {
 		args = a;
 	}
 
-	const char * Process::getArgs() const {
+	const char* Process::getArgs() const {
 		return args;
 	}
-
-#if defined(MACE_WINAPI)
-	void* Process::getProcess() const {
-		return process;
-	}
-
-	void* Process::getThread() const {
-		return thread;
-	}
-#elif defined(MACE_POSIX)
-	pid_t Process::getPID() const {
-		return process;
-	}
-#endif
 }//mc

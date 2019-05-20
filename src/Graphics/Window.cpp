@@ -54,6 +54,19 @@ namespace mc {
 				}
 			}
 
+			WindowModule* convertGLFWWindowToModule(GLFWwindow* win) {
+				if (win == nullptr) {
+					return nullptr;
+				}
+
+				WindowModule* windowModule = static_cast<WindowModule*>(glfwGetWindowUserPointer(win));
+				if (windowModule == nullptr) {
+					return nullptr;
+				}
+
+				return windowModule;
+			}
+
 			///GLFW callback functions
 
 			void onGLFWError(int id, const CString desc) {
@@ -466,7 +479,25 @@ namespace mc {
 			return {static_cast<Pixels>(width), static_cast<Pixels>(height)};
 		}
 
+		Vector<Pixels, 2> WindowModule::getWindowSize() const {
+			if (!getProperty(gfx::Entity::INIT)) {
+				MACE__THROW(InvalidState, "WindowModule not initialized! Must call MACE::init() first!");
+			}
+
+			Vector<int, 2> out = {};
+
+			int width, height;
+
+			glfwGetWindowSize(window, &width, &height);
+
+			return {static_cast<Pixels>(width), static_cast<Pixels>(height)};
+		}
+
 		Vector<float, 2> WindowModule::getContentScale() const {
+			if (!getProperty(gfx::Entity::INIT)) {
+				MACE__THROW(InvalidState, "WindowModule not initialized! Must call MACE::init() first!");
+			}
+
 			Vector<float, 2> out = {};
 
 			glfwGetWindowContentScale(window, &out[0], &out[1]);
@@ -567,19 +598,6 @@ namespace mc {
 
 		Monitor getPrimaryMonitor() {
 			return Monitor(glfwGetPrimaryMonitor());
-		}
-
-		WindowModule* convertGLFWWindowToModule(GLFWwindow * win) {
-			if (win == nullptr) {
-				return nullptr;
-			}
-
-			WindowModule* windowModule = static_cast<WindowModule*>(glfwGetWindowUserPointer(win));
-			if (windowModule == nullptr) {
-				return nullptr;
-			}
-
-			return windowModule;
 		}
 
 		Vector<unsigned int, 2> Monitor::getSizeMM() const {

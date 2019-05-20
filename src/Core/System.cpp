@@ -16,6 +16,7 @@ See LICENSE.md for full copyright information
 #ifdef MACE_WINAPI
 #	define WIN32_LEAN_AND_MEAN
 #	include <windows.h>
+#	undef WIN32_LEAN_AND_MEAN
 #elif defined(MACE_POSIX)
 #	include <unistd.h>
 #	include <errno.h>
@@ -24,7 +25,7 @@ See LICENSE.md for full copyright information
 
 namespace mc {
 	namespace os {
-		std::tm* localtime(std::tm * pointer, const std::time_t * time) {
+		std::tm* localtime(std::tm* pointer, const std::time_t* time) {
 			clearError(__LINE__, __FILE__);
 
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
@@ -81,7 +82,7 @@ namespace mc {
 #endif
 		}
 
-		char* ctime(char* buffer, std::size_t bufSize, const std::time_t* time) {
+		char* ctime(char* buffer, std::size_t bufSize, const std::time_t * time) {
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
 			if (const errno_t status = ctime_s(buffer, bufSize, time)) {
 				checkError(__LINE__, __FILE__, "Failed to use ctime_s: " + std::to_string(status));
@@ -97,7 +98,7 @@ namespace mc {
 #endif
 		}
 
-		char* asctime(char* buffer, std::size_t bufSize, const std::tm* time) {
+		char* asctime(char* buffer, std::size_t bufSize, const std::tm * time) {
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
 			if (const errno_t status = asctime_s(buffer, bufSize, time)) {
 				checkError(__LINE__, __FILE__, "Failed to use asctime_s: " + std::to_string(status));
@@ -113,7 +114,7 @@ namespace mc {
 #endif
 		}
 
-		FILE * fopen(FILE ** result, const char * filename, const char * mode) {
+		FILE* fopen(FILE * *result, const char* filename, const char* mode) {
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
 			if (const errno_t status = fopen_s(result, filename, mode)) {
 				checkError(__LINE__, __FILE__, "Failed to use fopen_s: " + std::to_string(status));
@@ -127,7 +128,7 @@ namespace mc {
 #endif
 		}
 
-		std::size_t mbsrtowcs(std::size_t * returnValue, wchar_t * wcstr, std::size_t sizeInWords, const char ** mbstr, std::size_t count, mbstate_t * mbstate) {
+		std::size_t mbsrtowcs(std::size_t * returnValue, wchar_t* wcstr, std::size_t sizeInWords, const char** mbstr, std::size_t count, mbstate_t * mbstate) {
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
 			if (const errno_t status = mbsrtowcs_s(returnValue, wcstr, sizeInWords, mbstr, count, mbstate)) {
 				checkError(__LINE__, __FILE__, "Failed to use mbsrtowcs: " + std::to_string(status));
@@ -141,7 +142,7 @@ namespace mc {
 #endif
 		}
 
-		std::size_t wcstombs(std::size_t * returnValue, char * dst, std::size_t sizeInWords, const wchar_t * src, std::size_t length) {
+		std::size_t wcstombs(std::size_t * returnValue, char* dst, std::size_t sizeInWords, const wchar_t* src, std::size_t length) {
 #if defined(MACE_WINDOWS) || defined(__STDC_LIB_EXT1__)
 			if (const errno_t status = wcstombs_s(returnValue, dst, sizeInWords, src, length)) {
 				checkError(__LINE__, __FILE__, "Failed to use wsctombs_s: " + std::to_string(status));
@@ -160,7 +161,7 @@ namespace mc {
 			assertion(cond, message.c_str());
 		}
 
-		void assertion(const bool cond, const char * message) {
+		void assertion(const bool cond, const char* message) {
 			if (cond) {
 				MACE__THROW(AssertionFailed, message);
 			}
@@ -179,7 +180,7 @@ namespace mc {
 		std::wstring toWideString(const std::string & s) {
 			clearError(__LINE__, __FILE__);
 
-			const char * cs = s.c_str();
+			const char* cs = s.c_str();
 			std::size_t wn;
 			wn = mc::os::mbsrtowcs(&wn, nullptr, 0, &cs, 0, nullptr);
 
@@ -205,7 +206,7 @@ namespace mc {
 		std::string toNarrowString(const std::wstring & s) {
 			clearError(__LINE__, __FILE__);
 
-			const wchar_t * cs = s.c_str();
+			const wchar_t* cs = s.c_str();
 			std::size_t wn;
 			wn = mc::os::wcstombs(&wn, nullptr, 0, cs, 0);
 
@@ -228,7 +229,7 @@ namespace mc {
 			return std::string(buf.data(), wn);
 		}
 
-		const char * strerror(char * buf, std::size_t bufsize, int errnum) {
+		const char* strerror(char* buf, std::size_t bufsize, int errnum) {
 			//cant use checkError() or clearError() here as that would create an infinite recursive loop
 			//clearError() and checkError() calls this function
 
@@ -267,7 +268,7 @@ namespace mc {
 
 				LPSTR messageBuffer = nullptr;
 				std::size_t size = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-												  nullptr, lastError, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&messageBuffer, 0, nullptr);
+												  nullptr, lastError, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR) & messageBuffer, 0, nullptr);
 
 				std::string message(messageBuffer, size);
 
@@ -300,63 +301,63 @@ namespace mc {
 		std::string consoleColor(const ConsoleColor & foreground, const ConsoleColor & background) {
 #ifdef MACE_WINAPI
 			Byte attribute = 0;
-			const ConsoleColor colors[] = { background, foreground };
+			const ConsoleColor colors[] = {background, foreground};
 
 			for (unsigned int i = 0; i < 2; ++i) {
 				attribute *= 15;
 				switch (colors[i]) {
-					case ConsoleColor::BLACK:
-						attribute = 0;
-						break;
-					case ConsoleColor::BLUE:
-						attribute = 1;
-						break;
-					case ConsoleColor::GREEN:
-						attribute = 2;
-						break;
-					case ConsoleColor::CYAN:
-						attribute = 3;
-						break;
-					case ConsoleColor::RED:
-						attribute = 4;
-						break;
-					case ConsoleColor::MAGENTA:
-						attribute = 5;
-						break;
-					case ConsoleColor::YELLOW:
-						attribute = 6;
-						break;
-					case ConsoleColor::DEFAULT:
-						MACE_FALLTHROUGH;
-					case ConsoleColor::LIGHT_GRAY:
-						MACE_FALLTHROUGH;
-					default:
-						attribute = 7;
-						break;
-					case ConsoleColor::GRAY:
-						attribute = 8;
-						break;
-					case ConsoleColor::LIGHT_BLUE:
-						attribute = 9;
-						break;
-					case ConsoleColor::LIGHT_GREEN:
-						attribute = 10;
-						break;
-					case ConsoleColor::LIGHT_CYAN:
-						attribute = 11;
-						break;
-					case ConsoleColor::LIGHT_RED:
-						attribute = 12;
-						break;
-					case ConsoleColor::LIGHT_MAGENTA:
-						attribute = 13;
-						break;
-					case ConsoleColor::LIGHT_YELLOW:
-						attribute = 14;
-						break;
-					case ConsoleColor::WHITE:
-						attribute = 15;
-						break;
+				case ConsoleColor::BLACK:
+					attribute = 0;
+					break;
+				case ConsoleColor::BLUE:
+					attribute = 1;
+					break;
+				case ConsoleColor::GREEN:
+					attribute = 2;
+					break;
+				case ConsoleColor::CYAN:
+					attribute = 3;
+					break;
+				case ConsoleColor::RED:
+					attribute = 4;
+					break;
+				case ConsoleColor::MAGENTA:
+					attribute = 5;
+					break;
+				case ConsoleColor::YELLOW:
+					attribute = 6;
+					break;
+				case ConsoleColor::DEFAULT:
+					MACE_FALLTHROUGH;
+				case ConsoleColor::LIGHT_GRAY:
+					MACE_FALLTHROUGH;
+				default:
+					attribute = 7;
+					break;
+				case ConsoleColor::GRAY:
+					attribute = 8;
+					break;
+				case ConsoleColor::LIGHT_BLUE:
+					attribute = 9;
+					break;
+				case ConsoleColor::LIGHT_GREEN:
+					attribute = 10;
+					break;
+				case ConsoleColor::LIGHT_CYAN:
+					attribute = 11;
+					break;
+				case ConsoleColor::LIGHT_RED:
+					attribute = 12;
+					break;
+				case ConsoleColor::LIGHT_MAGENTA:
+					attribute = 13;
+					break;
+				case ConsoleColor::LIGHT_YELLOW:
+					attribute = 14;
+					break;
+				case ConsoleColor::WHITE:
+					attribute = 15;
+					break;
 				}
 			}
 
@@ -365,64 +366,64 @@ namespace mc {
 			return "";
 #elif defined(MACE_POSIX)
 			std::ostringstream output;
-			ConsoleColor colors[] = { foreground, background };
+			ConsoleColor colors[] = {foreground, background};
 
 			for (unsigned int i = 0; i < 2; ++i) {
 				unsigned int code;
 
 				switch (colors[i]) {
-					case ConsoleColor::DEFAULT:
-					default:
-						code = 39;
-						break;
-					case ConsoleColor::BLACK:
-						code = 30;
-						break;
-					case ConsoleColor::RED:
-						code = 31;
-						break;
-					case ConsoleColor::GREEN:
-						code = 32;
-						break;
-					case ConsoleColor::YELLOW:
-						code = 33;
-						break;
-					case ConsoleColor::BLUE:
-						code = 34;
-						break;
-					case ConsoleColor::MAGENTA:
-						code = 35;
-						break;
-					case ConsoleColor::CYAN:
-						code = 36;
-						break;
-					case ConsoleColor::LIGHT_GRAY:
-						code = 37;
-						break;
-					case ConsoleColor::GRAY:
-						code = 90;
-						break;
-					case ConsoleColor::LIGHT_RED:
-						code = 91;
-						break;
-					case ConsoleColor::LIGHT_GREEN:
-						code = 92;
-						break;
-					case ConsoleColor::LIGHT_YELLOW:
-						code = 93;
-						break;
-					case ConsoleColor::LIGHT_BLUE:
-						code = 94;
-						break;
-					case ConsoleColor::LIGHT_MAGENTA:
-						code = 95;
-						break;
-					case ConsoleColor::LIGHT_CYAN:
-						code = 96;
-						break;
-					case ConsoleColor::WHITE:
-						code = 97;
-						break;
+				case ConsoleColor::DEFAULT:
+				default:
+					code = 39;
+					break;
+				case ConsoleColor::BLACK:
+					code = 30;
+					break;
+				case ConsoleColor::RED:
+					code = 31;
+					break;
+				case ConsoleColor::GREEN:
+					code = 32;
+					break;
+				case ConsoleColor::YELLOW:
+					code = 33;
+					break;
+				case ConsoleColor::BLUE:
+					code = 34;
+					break;
+				case ConsoleColor::MAGENTA:
+					code = 35;
+					break;
+				case ConsoleColor::CYAN:
+					code = 36;
+					break;
+				case ConsoleColor::LIGHT_GRAY:
+					code = 37;
+					break;
+				case ConsoleColor::GRAY:
+					code = 90;
+					break;
+				case ConsoleColor::LIGHT_RED:
+					code = 91;
+					break;
+				case ConsoleColor::LIGHT_GREEN:
+					code = 92;
+					break;
+				case ConsoleColor::LIGHT_YELLOW:
+					code = 93;
+					break;
+				case ConsoleColor::LIGHT_BLUE:
+					code = 94;
+					break;
+				case ConsoleColor::LIGHT_MAGENTA:
+					code = 95;
+					break;
+				case ConsoleColor::LIGHT_CYAN:
+					code = 96;
+					break;
+				case ConsoleColor::WHITE:
+					code = 97;
+					break;
 				}
 
 				code += (i * 10);

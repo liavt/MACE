@@ -343,16 +343,6 @@ namespace mc {
 			unsigned int getHeight();
 			const unsigned int getHeight() const;
 
-#ifdef MACE_EXPOSE_OPENGL
-			std::shared_ptr<TextureImpl> getImpl() {
-				return texture;
-			}
-
-			const std::shared_ptr<TextureImpl> getImpl() const {
-				return texture;
-			}
-#endif
-
 			//this needs to be defined in the header file to prevent linker conflicts, because Entity.cpp does not have opencv included ever.
 #			ifdef MACE_OPENCV
 			/**

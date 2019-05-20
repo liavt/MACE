@@ -33,16 +33,6 @@ namespace mc {
 		void* operator[](const std::string& name) const;
 
 		bool isCreated() const;
-
-#if defined(MACE_WINAPI)&&defined(MACE_EXPOSE_WINAPI)
-		void* getHandle() const {
-			return dll;
-		}
-#elif defined(MACE_POSIX)&&defined(MACE_EXPOSE_POSIX)
-		void* getDescriptor() const {
-			return dll;
-		}
-#endif
 	private:
 		bool created;
 

@@ -3,8 +3,6 @@ Copyright (c) 2016-2019 Liav Turkia
 
 See LICENSE.md for full copyright information
 */
-#define MACE_EXPOSE_WINAPI 1
-#define MACE_EXPOSE_POSIX 1
 #include <MACE/Utility/Serial.h>
 #include <MACE/Core/System.h>
 #include <MACE/Core/Error.h>
@@ -26,11 +24,11 @@ namespace mc {
 	namespace os {
 		Serial::Serial() : serial(nullptr) {}
 
-		Serial::Serial(const char * port, const unsigned int baudRate) : Serial() {
+		Serial::Serial(const char* port, const unsigned int baudRate) : Serial() {
 			init(port, baudRate);
 		}
 
-		Serial::Serial(const std::string & port, const unsigned int baudRate) : Serial(port.c_str(), baudRate) {}
+		Serial::Serial(const std::string& port, const unsigned int baudRate) : Serial(port.c_str(), baudRate) {}
 
 		Serial::~Serial() {
 			if (isConnected()) {
@@ -38,7 +36,7 @@ namespace mc {
 			}
 		}
 
-		void Serial::init(const char * port, const unsigned int baudRate) {
+		void Serial::init(const char* port, const unsigned int baudRate) {
 			os::clearError();
 
 			if (isConnected()) {
@@ -62,7 +60,7 @@ namespace mc {
 
 			os::checkError(__LINE__, __FILE__, "Error opening serial socket with CreateFile at " + std::string(port));
 
-			DCB serialParams = { 0 };
+			DCB serialParams = {0};
 
 			if (!GetCommState(serial, &serialParams)) {
 				throw BadFileError("Error getting serial parameters from " + std::string(port));
@@ -80,7 +78,7 @@ namespace mc {
 
 			os::checkError(__LINE__, __FILE__, "Error setting serial communication status for " + std::string(port));
 
-			COMMTIMEOUTS timeout = { 0 };
+			COMMTIMEOUTS timeout = {0};
 			timeout.ReadIntervalTimeout = 50;
 			timeout.ReadTotalTimeoutConstant = 50;
 			timeout.ReadTotalTimeoutMultiplier = 50;
@@ -122,7 +120,7 @@ namespace mc {
 			os::checkError(__LINE__, __FILE__, "Error getting serial attributes for " + std::string(port));
 
 			speed_t baud;
-			switch(baudRate){
+			switch (baudRate) {
 			case 0:
 				baud = B0;
 				break;
@@ -227,7 +225,7 @@ namespace mc {
 
 		}
 
-		int Serial::read(char * buffer, unsigned int bufferSize) {
+		int Serial::read(char* buffer, unsigned int bufferSize) {
 			os::clearError();
 
 			if (!isConnected()) {
@@ -271,7 +269,7 @@ namespace mc {
 #endif
 		}
 
-		void Serial::write(const char * buffer, const unsigned int bufferSize) {
+		void Serial::write(const char* buffer, const unsigned int bufferSize) {
 			os::clearError();
 
 			if (!isConnected()) {
@@ -398,14 +396,5 @@ namespace mc {
 			return valid;
 #endif
 		}
-#ifdef MACE_WINAPI
-		void* Serial::getHandle() const {
-			return serial;
-		}
-#elif defined(MACE_POSIX)
-		int Serial::getDescriptor() const {
-			return serial;
-		}
-#endif
 	}//os
 }//mc

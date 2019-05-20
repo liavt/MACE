@@ -261,19 +261,6 @@ See LICENSE.md for full copyright information
 #	define MACE_OPENCV 1
 #endif
 
-//meaning doxygen is currently parsing this file
-#ifdef MACE__DOXYGEN_PASS
-#	define MACE_EXPOSE_ALL 1
-#endif
-
-#ifdef MACE_EXPOSE_ALL
-#	define MACE_EXPOSE_WINAPI 1
-#	define MACE_EXPOSE_POSIX 1
-#	define MACE_EXPOSE_OPENGL 1
-#	define MACE_EXPOSE_GLFW 1
-#	define MACE_EXPOSE_OPENAL 1
-#endif
-
 #define MACE_GETTER_SETTER_DEC_BASE(name, inType, outType) void set##name (inType val); outType get##name (); const outType get##name () const;
 #define MACE_GETTER_SETTER_DEC(name, type) MACE_GETTER_SETTER_DEC_BASE(name, const type, type)
 

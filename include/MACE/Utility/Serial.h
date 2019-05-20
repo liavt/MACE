@@ -53,12 +53,6 @@ namespace mc {
 
 			bool isConnected() const;
 			bool isValid() const;
-
-#if defined(MACE_WINAPI) && MACE_EXPOSE_WINAPI
-			void* getHandle() const;
-#elif defined(MACE_POSIX) && defined(MACE_EXPOSE_POSIX)
-			int getDescriptor() const;
-#endif
 		private:
 			bool connected = false;
 

@@ -109,22 +109,6 @@ namespace mc {
 
 			WindowModule(const LaunchConfig& config);
 
-#ifdef MACE_EXPOSE_GLFW
-			/**
-			@internal
-			*/
-			GLFWwindow* getGLFWWindow() {
-				return window;
-			}
-
-			/**
-			@internal
-			*/
-			const GLFWwindow* getGLFWWindow() const {
-				return window;
-			}
-#endif//MACE_EXPOSE_GLFW
-
 			const LaunchConfig& getLaunchConfig() const;
 
 			void setTitle(const std::string& newTitle) MACE_EXPECTS(!newTitle.empty());
@@ -134,6 +118,8 @@ namespace mc {
 			bool isDestroyed() const;
 
 			Vector<Pixels, 2> getFramebufferSize() const;
+
+			Vector<Pixels, 2> getWindowSize() const;
 
 			Vector<float, 2> getContentScale() const;
 
@@ -203,15 +189,6 @@ namespace mc {
 			Color getChannelBits() const;
 
 			int getRefreshRate() const;
-
-#ifdef MACE_EXPOSE_GLFW
-			/**
-			@internal
-			*/
-			const GLFWvidmode* const getGLFWVidemode() const {
-				return mode;
-			}
-#endif//MACE_EXPOSE_GLFW
 		private:
 			VideoMode(const GLFWvidmode* const mode);
 
@@ -243,23 +220,6 @@ namespace mc {
 			VideoMode getCurrentVideoMode() const;
 
 			Vector<Pixels, 2> getResolution() const;
-
-#ifdef MACE_EXPOSE_GLFW
-
-			/**
-			@internal
-			*/
-			GLFWmonitor* const getGLFWMonitor() {
-				return monitor;
-			}
-
-			/**
-			@internal
-			*/
-			const GLFWmonitor* const getGLFWMonitor() const {
-				return monitor;
-			}
-#endif//MACE_EXPOSE_GLFW
 		private:
 			Monitor(GLFWmonitor* const mon);
 
@@ -298,24 +258,9 @@ namespace mc {
 		*/
 		bool hasWindow();
 
-
-#ifdef MACE_EXPOSE_GLFW
 		/**
-		Grabs the `WindowModule` that owns a `GLFWwindow` if it exists.
-		<p>
-		The `GLFWwindow` stores a custom user pointer to the `WindowModule` that created it.
-		<p>
-		This can be called from any thread.
-
-		@param win `GLFWwindow` to convert. Must not be null. Must have been created by a `WindowModule`
-		@return The `WindowModule` that owns `win`. Guarenteed to never be `nullptr`
-		@throw NullPointer if `win` is `nullptr`
-		@throw NoRendererContext if `win` was not created by a `WindowModule`
-		@internal
+		@todo put this somewhere inside of WindowModule instead of it's own seperate thing
 		*/
-		WindowModule* convertGLFWWindowToModule(GLFWwindow* win);
-#endif
-
 		namespace Input {
 			//it is a short int to save memory as no value exceeds MAX_SHORT_INT
 			using KeyCode = short int;
@@ -333,7 +278,7 @@ namespace mc {
 				MODIFIER_CONTROL = 0x10,
 				MODIFIER_ALT = 0x20,
 				MODIFIER_SUPER = 0x40
-			};//Action
+	};//Action
 
 			enum Key: KeyCode {
 				UNKNOWN = -1,
@@ -630,7 +575,7 @@ namespace mc {
 
 			double getScrollVertical() noexcept;
 			double getScrollHorizontal() noexcept;
-		}//Input
+}//Input
 	}//os
 }//mc
 
