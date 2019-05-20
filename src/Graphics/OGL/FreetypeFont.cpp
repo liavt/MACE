@@ -110,18 +110,20 @@ namespace mc {
 			void FreetypeFont::fillGlyph(Glyph& out, const wchar_t character) const {
 				checkFreetypeError(FT_Load_Char(face, character, FT_LOAD_RENDER | FT_LOAD_PEDANTIC | FT_LOAD_TARGET_LCD), "Failed to load glyph", __LINE__, __FILE__);
 
+				const WindowModule* window = gfx::getCurrentWindow();
+
 				const FT_GlyphSlot glyph = face->glyph;
 				const FT_Glyph_Metrics & gMetrics = glyph->metrics;
 				const FT_Vector & advance = glyph->advance;
-				out.metrics.width = gMetrics.width;
-				out.metrics.height = gMetrics.height;
-				out.metrics.bearingX = gMetrics.horiBearingY;
-				out.metrics.bearingY = gMetrics.horiBearingY;
-				out.metrics.advanceX = advance.x;
-				out.metrics.advanceY = advance.y;
+				out.metrics.width = window->convertPixelsToRelativeXCoordinates(gMetrics.width >> 6);
+				out.metrics.height = window->convertPixelsToRelativeYCoordinates(gMetrics.height >> 6);
+				out.metrics.bearingX = window->convertPixelsToRelativeXCoordinates(gMetrics.horiBearingY >> 6);
+				out.metrics.bearingY = window->convertPixelsToRelativeYCoordinates(gMetrics.horiBearingY >> 6);
+				out.metrics.advanceX = window->convertPixelsToRelativeXCoordinates(advance.x >> 6);
+				out.metrics.advanceY = window->convertPixelsToRelativeYCoordinates(advance.y >> 6);
 
 				// spaces and control characters have either 0 width or 0 height (or both!)
-				if (out.metrics.width == 0 || out.metrics.height == 0) {
+				if (out.metrics.width == 0.0f || out.metrics.height == 0.0f) {
 					/*
 					since these glyphs are used in a RGB blend,
 					a #allblack texture will result in an invisible
@@ -159,20 +161,22 @@ namespace mc {
 			}
 
 			FontMetrics FreetypeFont::getFontMetrics() {
+				const WindowModule* window = gfx::getCurrentWindow();
+
 				FontMetrics out{};
-				out.ascent = face->size->metrics.ascender;
-				out.descent = face->size->metrics.descender;
-				out.height = face->size->metrics.height;
+				out.ascent = window->convertPixelsToRelativeYCoordinates(face->size->metrics.ascender >> 6);
+				out.descent = window->convertPixelsToRelativeYCoordinates(face->size->metrics.descender >> 6);
+				out.height = window->convertPixelsToRelativeYCoordinates(face->size->metrics.height >> 6);
 				out.kerning = FT_HAS_KERNING(face);
 				return out;
 			}
 
-			Vector<signed long, 2> FreetypeFont::getKerning(const wchar_t prev, const wchar_t current) const {
+			Vector<RelativeTranslation, 2> FreetypeFont::getKerning(const wchar_t prev, const wchar_t current) const {
 				FT_Vector vec;
 
 				checkFreetypeError(FT_Get_Kerning(face, prev, current, FT_KERNING_DEFAULT, &vec), "Failed to get kerning from face", __LINE__, __FILE__);
 
-				return{vec.x, vec.y};
+				return{static_cast<RelativeTranslation>(vec.x >> 6), static_cast<RelativeTranslation>(vec.y >> 6)};
 			}
 
 			void FreetypeLibrary::init() {

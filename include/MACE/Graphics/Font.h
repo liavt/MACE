@@ -22,16 +22,13 @@ namespace mc {
 
 		using FontSize = unsigned int;
 
-		/**
-		All units are in fractional pixels (26.6)
-		*/
 		struct GlyphMetrics {
-			signed long width = 0;
-			signed long height = 0;
-			signed long bearingX = 0;
-			signed long bearingY = 0;
-			signed long advanceX = 0;
-			signed long advanceY = 0;
+			RelativeScale width = 0;
+			RelativeScale height = 0;
+			RelativeTranslation bearingX = 0;
+			RelativeTranslation bearingY = 0;
+			RelativeTranslation advanceX = 0;
+			RelativeTranslation advanceY = 0;
 
 			bool operator ==(const GlyphMetrics& other) const;
 			bool operator !=(const GlyphMetrics& other) const;
@@ -45,13 +42,10 @@ namespace mc {
 			bool operator != (const Glyph& other) const;
 		};
 
-		/**
-		All units are in fractional pixels (26.6)
-		*/
 		struct FontMetrics {
-			signed long descent = 0;
-			signed long ascent = 0;
-			signed long height = 0;
+			RelativeTranslation descent = 0;
+			RelativeTranslation ascent = 0;
+			RelativeScale height = 0;
 			bool kerning = false;
 
 			bool operator ==(const FontMetrics& other) const;
@@ -81,7 +75,7 @@ namespace mc {
 			/**
 			@rendercontext
 			*/
-			virtual Vector<signed long, 2> getKerning(const wchar_t prev, const wchar_t current) const = 0;
+			virtual Vector<RelativeTranslation, 2> getKerning(const wchar_t prev, const wchar_t current) const = 0;
 		};
 
 		enum class Fonts: Byte {
@@ -147,7 +141,7 @@ namespace mc {
 			/**
 			@rendercontext
 			*/
-			Vector<signed long, 2> getKerning(const wchar_t prev, const wchar_t current);
+			Vector<RelativeTranslation, 2> getKerning(const wchar_t prev, const wchar_t current);
 
 			MACE_GETTER_SETTER_DEC(Size, FontSize);
 

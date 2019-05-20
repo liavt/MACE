@@ -142,7 +142,7 @@ namespace mc {
 
 			return impl->getFontMetrics();
 		}
-		Vector<signed long, 2> Font::getKerning(const wchar_t prev, const wchar_t current) {
+		Vector<RelativeTranslation, 2> Font::getKerning(const wchar_t prev, const wchar_t current) {
 			MACE__VERIFY_FONT_INIT();
 
 			checkHeight();

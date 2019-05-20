@@ -443,7 +443,7 @@ namespace mc {
 		}
 
 		void Text::onDestroy() {
-			if(font.isCreated()){
+			if (font.isCreated()) {
 				font.destroy();
 			}
 		}
@@ -464,15 +464,13 @@ namespace mc {
 				addChild(letter);
 			}
 
-			const WindowModule* window = gfx::getCurrentWindow();
-
 			const FontMetrics fontMetrics = font.getFontMetrics();
 
-			const signed long linegap = fontMetrics.ascent - fontMetrics.descent + fontMetrics.height;
+			const RelativeTranslation linegap = fontMetrics.ascent - fontMetrics.descent + fontMetrics.height;
 
-			signed long x = 0;
+			RelativeTranslation x = 0;
 
-			std::vector<signed long> lineWidths{};
+			std::vector<RelativeScale> lineWidths{};
 			for (Index i = 0; i < text.length(); ++i) {
 				const Glyph& glyph = font.getGlyph(text[i]);
 				const GlyphMetrics& glyphMetrics = glyph.metrics;
@@ -497,13 +495,13 @@ namespace mc {
 					letters[i]->setHeight(0.0f);
 				} else {
 					//freetype uses absolute values (pixels) and we use relative. so by dividing the pixel by the size, we get relative values
-					letters[i]->setWidth(window->convertPixelsToRelativeXCoordinates(glyphMetrics.width >> 6));
-					letters[i]->setHeight(window->convertPixelsToRelativeYCoordinates(glyphMetrics.height >> 6));
+					letters[i]->setWidth(glyphMetrics.width);
+					letters[i]->setHeight(glyphMetrics.height);
 
-					Vector<signed long, 2> position = {x, -static_cast<signed long>(lineWidths.size()) * linegap};
+					Vector<RelativeTranslation, 2> position = {x, -static_cast<RelativeTranslation>(lineWidths.size()) * linegap};
 
 					if (i > 0 && fontMetrics.kerning) {
-						const Vector<signed long, 2> delta = font.getKerning(text[i - 1], text[i]);
+						const Vector<RelativeTranslation, 2> delta = font.getKerning(text[i - 1], text[i]);
 
 						position[0] += delta[0];
 						position[1] += delta[1];
@@ -511,12 +509,12 @@ namespace mc {
 
 					position[1] += glyphMetrics.height;
 					//i cant bear this
-					position[1] -= (glyphMetrics.height - glyphMetrics.bearingY) << 1;
+					position[1] -= (glyphMetrics.height - glyphMetrics.bearingY) * 2.0f;
 					position[1] -= linegap;
-					position[1] -= fontMetrics.descent << 1;
+					position[1] -= fontMetrics.descent * 2.0f;
 
-					letters[i]->setX(window->convertPixelsToRelativeXCoordinates((position[0] + glyphMetrics.width) >> 6));
-					letters[i]->setY(window->convertPixelsToRelativeYCoordinates(position[1] >> 6));
+					letters[i]->setX(position[0] + glyphMetrics.width);
+					letters[i]->setY(position[1]);
 
 					letters[i]->getPainter().setOpacity(getPainter().getOpacity());
 
@@ -527,23 +525,22 @@ namespace mc {
 
 			lineWidths.push_back(x);
 
-			signed long height = static_cast<signed long>(lineWidths.size()) * linegap;
-			signed long width = 0;
+			RelativeScale height = static_cast<RelativeScale>(lineWidths.size()) * linegap;
+			RelativeScale width = 0;
 			for (auto lineWidth : lineWidths) {
 				if (lineWidth > width) {
 					width = lineWidth;
 				}
 			}
 
-			// it is >> 7 instead of >> 6 because we also want to divide the total of it in half (so shift an additional bit to the right)
-			const float widthPx = window->convertPixelsToRelativeXCoordinates(width >> 7);
-			const float heightPx = window->convertPixelsToRelativeYCoordinates(height >> 7);
+			width /= 2.0f;
+			height /= 2.0f;
 
-			setWidth(widthPx);
-			setHeight(heightPx);
+			setWidth(width);
+			setHeight(height);
 
 			for (auto letter : letters) {
-				letter->translate(-widthPx, heightPx);
+				letter->translate(-width, height);
 			}
 		}
 

@@ -39,7 +39,7 @@ namespace mc {
 
 				FontMetrics getFontMetrics() override;
 
-				Vector<signed long, 2> getKerning(const wchar_t prev, const wchar_t current) const override;
+				Vector<RelativeTranslation, 2> getKerning(const wchar_t prev, const wchar_t current) const override;
 			private:
 				FT_Face face;
 				FT_Library& library;
