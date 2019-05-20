@@ -267,7 +267,7 @@ namespace mc {
 		SECTION("Testing getting and setting of a vector") {
 			Vector<int, 5> v = Vector<int, 5>();
 
-			for (Index i = 0; i < v.size(); ++i) {
+			for (int i = 0; i < v.size(); ++i) {
 				v[i] = i;
 				REQUIRE(v[i] == i);
 				REQUIRE(v.get(i) == i);

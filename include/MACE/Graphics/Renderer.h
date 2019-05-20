@@ -111,7 +111,7 @@ namespace mc {
 			struct State {
 				Color foregroundColor, backgroundColor, maskColor;
 
-				Vector<float, 4> foregroundTransform, backgroundTransform, maskTransform;
+				Vector<RelativeUnit, 4> foregroundTransform, backgroundTransform, maskTransform;
 
 				Vector<float, 4> data;
 
@@ -129,9 +129,9 @@ namespace mc {
 
 			void fillModel(const Model& m);
 
-			void fillRect(const float x = 0.0f, const float y = 0.0f, const float w = 1.0f, const float h = 1.0f);
-			void fillRect(const Vector<float, 2>& pos, const Vector<float, 2>& size);
-			void fillRect(const Vector<float, 4>& dim);
+			void fillRect(const RelativeTranslation x = 0.0f, const RelativeTranslation y = 0.0f, const RelativeScale w = 1.0f, const RelativeScale h = 1.0f);
+			void fillRect(const Vector<RelativeTranslation, 2>& pos, const Vector<RelativeScale, 2>& size);
+			void fillRect(const Vector<RelativeUnit, 4>& dim);
 
 			void drawImage(const Texture& img);
 
@@ -139,7 +139,7 @@ namespace mc {
 
 			void conditionalMaskImages(const Texture& foreground, const Texture& background, const Texture& mask, const float minimumThreshold = 0.0f, const float maximumThreshold = 1.0f);
 
-			void blendImages(const Texture& foreground, const Texture& background, const float amount = 0.5f);
+			void blendImages(const Texture& foreground, const Texture& background, const Progress amount = 0.5f);
 
 			void drawQuad(const Brush brush);
 			void draw(const Model& m, const Brush brush);
@@ -152,25 +152,25 @@ namespace mc {
 			Color& getForegroundColor();
 			const Color& getForegroundColor() const;
 
-			void setForegroundTransform(const Vector<float, 4>& trans);
-			Vector<float, 4>& getForegroundTransform();
-			const Vector<float, 4>& getForegroundTransform() const;
+			void setForegroundTransform(const Vector<RelativeUnit, 4>& trans);
+			Vector<RelativeUnit, 4>& getForegroundTransform();
+			const Vector<RelativeUnit, 4>& getForegroundTransform() const;
 
 			void setBackgroundColor(const Color& col);
 			Color& getBackgroundColor();
 			const Color& getBackgroundColor() const;
 
-			void setBackgroundTransform(const Vector<float, 4>& trans);
-			Vector<float, 4>& getBackgroundTransform();
-			const Vector<float, 4>& getBackgroundTransform() const;
+			void setBackgroundTransform(const Vector<RelativeUnit, 4>& trans);
+			Vector<RelativeUnit, 4>& getBackgroundTransform();
+			const Vector<RelativeUnit, 4>& getBackgroundTransform() const;
 
 			void setMaskColor(const Color& col);
 			Color& getMaskColor();
 			const Color& getMaskColor() const;
 
-			void setMaskTransform(const Vector<float, 4>& trans);
-			Vector<float, 4>& getMaskTransform();
-			const Vector<float, 4>& getMaskTransform() const;
+			void setMaskTransform(const Vector<RelativeUnit, 4>& trans);
+			Vector<RelativeUnit, 4>& getMaskTransform();
+			const Vector<RelativeUnit, 4>& getMaskTransform() const;
 
 			void enableRenderFeatures(const RenderFeatures feature);
 			void disableRenderFeatures(const RenderFeatures feature);
@@ -199,14 +199,14 @@ namespace mc {
 
 			void setTarget(const FrameBufferTarget& target);
 
-			void translate(const Vector<float, 3>& vec);
-			void translate(const float x, const float y, const float z = 0.0f);
+			void translate(const Vector<RelativeTranslation, 3>& vec);
+			void translate(const RelativeTranslation x, const RelativeTranslation y, const RelativeTranslation z = 0.0f);
 
-			void rotate(const Vector<float, 3>& vec);
-			void rotate(const float x, const float y, const float z);
+			void rotate(const Vector<RelativeRadian, 3>& vec);
+			void rotate(const RelativeRadian x, const RelativeRadian y, const RelativeRadian z);
 
-			void scale(const Vector<float, 3>& vec);
-			void scale(const float x, const float y, const float z = 1.0f);
+			void scale(const Vector<RelativeScale, 3>& vec);
+			void scale(const RelativeScale x, const RelativeScale y, const RelativeScale z = 1.0f);
 
 			void resetTransform();
 
@@ -297,15 +297,15 @@ namespace mc {
 		public:
 			virtual ~Renderer() = default;
 
-			GraphicsEntity* getEntityAt(const float x, const float y);
-			const GraphicsEntity* getEntityAt(const float x, const float y) const;
-			GraphicsEntity* getEntityAt(const unsigned int x, const unsigned int y);
-			const GraphicsEntity* getEntityAt(const unsigned int x, const unsigned int y) const;
+			GraphicsEntity* getEntityAt(const RelativeTranslation x, const RelativeTranslation y);
+			const GraphicsEntity* getEntityAt(const RelativeTranslation x, const RelativeTranslation y) const;
+			GraphicsEntity* getEntityAt(const Pixels x, const Pixels y);
+			const GraphicsEntity* getEntityAt(const Pixels x, const Pixels y) const;
 
 
-			virtual void getEntitiesAt(const unsigned int x, const unsigned int y, const unsigned int w, const unsigned int h, EntityID* arr) const = 0;
+			virtual void getEntitiesAt(const Pixels x, const Pixels y, const Pixels w, const Pixels h, EntityID* arr) const = 0;
 			template<Size W, Size H>
-			void getEntitiesAt(const unsigned int x, const unsigned int y, EntityID arr[W][H]) const {
+			void getEntitiesAt(const Pixels x, const Pixels y, EntityID arr[W][H]) const {
 				getEntitiesAt(x, y, W, H, arr);
 			}
 
@@ -314,11 +314,11 @@ namespace mc {
 			*/
 			virtual void setRefreshColor(const float r, const float g, const float b, const float a = 1.0f) = 0;
 
-			Color getPixelAt(const float x, const float y, const FrameBufferTarget target = FrameBufferTarget::COLOR) const;
-			Color getPixelAt(const unsigned int x, const unsigned int y, const FrameBufferTarget target = FrameBufferTarget::COLOR) const;
-			virtual void getPixelsAt(const unsigned int x, const unsigned int y, const unsigned int w, const unsigned int h, Color* arr, const FrameBufferTarget target = FrameBufferTarget::COLOR) const = 0;
-			template<Size W, Size H>
-			void getPixelsAt(const unsigned int x, const unsigned int y, Color arr[W][H], const FrameBufferTarget target = FrameBufferTarget::COLOR) const {
+			Color getPixelAt(const RelativeTranslation x, const RelativeTranslation y, const FrameBufferTarget target = FrameBufferTarget::COLOR) const;
+			Color getPixelAt(const Pixels x, const Pixels y, const FrameBufferTarget target = FrameBufferTarget::COLOR) const;
+			virtual void getPixelsAt(const Pixels x, const Pixels y, const Pixels w, const Pixels h, Color* arr, const FrameBufferTarget target = FrameBufferTarget::COLOR) const = 0;
+			template<Pixels W, Pixels H>
+			void getPixelsAt(const Pixels x, const Pixels y, Color arr[W][H], const FrameBufferTarget target = FrameBufferTarget::COLOR) const {
 				getPixelsAt(x, y, W, H, arr, target);
 			}
 
@@ -327,8 +327,8 @@ namespace mc {
 			*/
 			void setRefreshColor(const Color& c);
 
-			int getWidth() const;
-			int getHeight() const;
+			Pixels getWidth() const;
+			Pixels getHeight() const;
 
 			unsigned int getSamples() const;
 
@@ -359,7 +359,7 @@ namespace mc {
 
 			GraphicsContext* context;
 
-			virtual void onResize(gfx::WindowModule* win, const int width, const int height) = 0;
+			virtual void onResize(gfx::WindowModule* win, const Pixels width, const Pixels height) = 0;
 			virtual void onInit(gfx::WindowModule* win) = 0;
 			virtual void onSetUp(gfx::WindowModule* win) = 0;
 			virtual void onTearDown(gfx::WindowModule* win) = 0;
@@ -373,7 +373,7 @@ namespace mc {
 			@internal
 			@rendercontext
 			*/
-			void resize(gfx::WindowModule* win, const int width, const int height);
+			void resize(gfx::WindowModule* win, const Pixels width, const Pixels height);
 
 			/**
 			@internal

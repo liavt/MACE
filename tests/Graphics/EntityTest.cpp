@@ -96,12 +96,18 @@ namespace mc {
 				REQUIRE(!e.getProperty(Entity::DIRTY));
 				REQUIRE_FALSE(e.isCleaned);
 
-				e.setProperty(Entity::DIRTY, true);
+				e.makeDirty();
 				REQUIRE(e.getProperty(Entity::DIRTY));
 				REQUIRE_FALSE(e.isCleaned);
 
 				e.update();
+				e.clean();
 				e.render();
+
+				REQUIRE_FALSE(e.getProperty(Entity::DIRTY));
+				REQUIRE(e.isCleaned);
+
+				e.clean();
 
 				REQUIRE_FALSE(e.getProperty(Entity::DIRTY));
 				REQUIRE(e.isCleaned);

@@ -105,7 +105,7 @@ namespace mc {
 		class ProgressBar: public Entity2D, public Progressable {
 		public:
 			ProgressBar() noexcept;
-			ProgressBar(const float minimum, const float maximum, const float progress = 0) noexcept;
+			ProgressBar(const Progress minimum, const Progress maximum, const Progress progress = 0) noexcept;
 			virtual ~ProgressBar() = default;
 
 			/**
@@ -141,33 +141,33 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			void setMinimum(const float tex);
+			void setMinimum(const Progress tex);
 
-			float getMinimum() override;
-			const float getMinimum() const override;
-
-
-			/**
-			@dirty
-			*/
-			void setMaximum(const float tex);
-
-			float getMaximum() override;
-			const float getMaximum() const override;
+			Progress getMinimum() override;
+			const Progress getMinimum() const override;
 
 
 			/**
 			@dirty
 			*/
-			void setProgress(const float tex) override;
+			void setMaximum(const Progress tex);
+
+			Progress getMaximum() override;
+			const Progress getMaximum() const override;
+
 
 			/**
 			@dirty
 			*/
-			float& getProgress() override;
-			const float& getProgress() const override;
+			void setProgress(const Progress tex) override;
 
-			void easeTo(const float progress, const EaseSettings settings);
+			/**
+			@dirty
+			*/
+			Progress& getProgress() override;
+			const Progress& getProgress() const override;
+
+			void easeTo(const Progress progress, const EaseSettings settings);
 
 			bool operator==(const ProgressBar& other) const;
 			bool operator!=(const ProgressBar& other) const;
@@ -175,7 +175,7 @@ namespace mc {
 			virtual void onRender(Painter& p) override;
 			void onDestroy() override final;
 
-			float minimumProgress = 0, maximumProgress = 0, progress = 0;
+			Progress minimumProgress = 0, maximumProgress = 0, progress = 0;
 
 			Texture backgroundTexture;
 			Texture foregroundTexture;
@@ -185,7 +185,7 @@ namespace mc {
 		class Slider: public ProgressBar, public Selectable {
 		public:
 			Slider() noexcept;
-			Slider(const float minimum, const float maximum, const float progress = 0) noexcept;
+			Slider(const Progress minimum, const Progress maximum, const Progress progress = 0) noexcept;
 		private:
 			void onRender(Painter& p) override;
 			void onClick() override;

@@ -26,7 +26,7 @@ See LICENSE.md for full copyright information
 namespace mc {
 	namespace gfx {
 		namespace {
-			std::unordered_map< short int, Byte > keys = std::unordered_map< short int, Byte >();
+			std::unordered_map< Input::KeyCode, Byte > keys = std::unordered_map< Input::KeyCode, Byte >();
 
 			int mouseX = -1;
 			int mouseY = -1;
@@ -34,7 +34,7 @@ namespace mc {
 			double scrollX = 0;
 			double scrollY = 0;
 
-			void pushKeyEvent(const short int& key, const Byte action) {
+			void pushKeyEvent(const Input::KeyCode key, const Byte action) {
 				keys[key] = action;
 			}
 
@@ -50,13 +50,13 @@ namespace mc {
 
 					return glfwCreateWindow(mode->width, mode->height, config.title, mon, nullptr);
 				} else {
-					return glfwCreateWindow(config.width, config.height, config.title, nullptr, nullptr);
+					return glfwCreateWindow(static_cast<int>(config.width), static_cast<int>(config.height), config.title, nullptr, nullptr);
 				}
 			}
 
 			///GLFW callback functions
 
-			void onGLFWError(int id, const char* desc) {
+			void onGLFWError(int id, const CString desc) {
 				if (id == GLFW_NOT_INITIALIZED) {
 					MACE__THROW(InvalidState, "Windowing manager was not initialized/initialization was invalid: NOT_INITIALIZED: " + std::string(desc));
 				} else if (id == GLFW_NO_CURRENT_CONTEXT) {
@@ -114,7 +114,7 @@ namespace mc {
 					actions |= Input::MODIFIER_SUPER;
 				}
 
-				pushKeyEvent(static_cast<short int>(key), actions);
+				pushKeyEvent(static_cast<Input::KeyCode> (key), actions);
 			}
 
 			void onWindowMouseButton(GLFWwindow*, int button, int action, int mods) {
@@ -142,7 +142,7 @@ namespace mc {
 				}
 
 				//in case that we dont have it mapped the same way that GLFW does, we add MOUSE_FIRST which is the offset to the mouse bindings.
-				pushKeyEvent(static_cast<short int>(button) + Input::MOUSE_FIRST, actions);
+				pushKeyEvent(static_cast<Input::KeyCode>(button) + Input::MOUSE_FIRST, actions);
 			}
 
 			void onWindowCursorPosition(GLFWwindow * window, double xpos, double ypos) {
@@ -452,16 +452,18 @@ namespace mc {
 			return properties & WindowModule::DESTROYED;
 		}
 
-		Vector<int, 2> WindowModule::getFramebufferSize() const {
+		Vector<Pixels, 2> WindowModule::getFramebufferSize() const {
 			if (!getProperty(gfx::Entity::INIT)) {
 				MACE__THROW(InvalidState, "WindowModule not initialized! Must call MACE::init() first!");
 			}
 
 			Vector<int, 2> out = {};
 
-			glfwGetFramebufferSize(window, &out[0], &out[1]);
+			int width, height;
 
-			return out;
+			glfwGetFramebufferSize(window, &width, &height);
+
+			return {static_cast<Pixels>(width), static_cast<Pixels>(height)};
 		}
 
 		Vector<float, 2> WindowModule::getContentScale() const {
@@ -501,19 +503,19 @@ namespace mc {
 		}//clean()
 
 		namespace Input {
-			const Byte& getKey(const short int key) {
+			const Byte& getKey(const KeyCode key) {
 				return keys[key];
 			}
 
-			bool isKeyDown(const short int key) {
+			bool isKeyDown(const KeyCode key) {
 				return keys[key] & Input::PRESSED || keys[key] & Input::REPEATED;
 			}
 
-			bool isKeyRepeated(const short int key) {
+			bool isKeyRepeated(const KeyCode key) {
 				return keys[key] & Input::REPEATED;
 			}
 
-			bool isKeyReleased(const short int key) {
+			bool isKeyReleased(const KeyCode key) {
 				return keys[key] & Input::RELEASED;
 			}
 			int getMouseX() noexcept {
@@ -530,7 +532,7 @@ namespace mc {
 			}
 		}//Input
 
-		WindowModule::LaunchConfig::LaunchConfig(const int w, const int h, const char* t) : title(t), width(w), height(h) {}
+		WindowModule::LaunchConfig::LaunchConfig(const Pixels w, const Pixels h, CString t) : title(t), width(w), height(h) {}
 
 		bool WindowModule::LaunchConfig::operator==(const LaunchConfig & other) const {
 			return title == other.title && width == other.width && height == other.height
@@ -580,20 +582,20 @@ namespace mc {
 			return windowModule;
 		}
 
-		Vector<int, 2> Monitor::getSizeMM() const {
-			Vector<int, 2> out = {};
+		Vector<unsigned int, 2> Monitor::getSizeMM() const {
+			int width, height;
 
-			glfwGetMonitorPhysicalSize(monitor, &out[0], &out[1]);
+			glfwGetMonitorPhysicalSize(monitor, &width, &height);
 
-			return out;
+			return {static_cast<unsigned int>(width), static_cast<unsigned int>(height)};
 		}
 
-		Vector<int, 2> Monitor::getSizeInches() const {
-			const Vector<int, 2> mm = getSizeMM();
-			return {static_cast<int>(static_cast<float>(mm[0]) / 25.4f), static_cast<int>(static_cast<float>(mm[1]) / 25.4f)};
+		Vector<unsigned int, 2> Monitor::getSizeInches() const {
+			const Vector<unsigned int, 2> mm = getSizeMM();
+			return {static_cast<unsigned int>(static_cast<float>(mm[0]) / 25.4f), static_cast<unsigned int>(static_cast<float>(mm[1]) / 25.4f)};
 		}
 
-		Vector<int, 2> Monitor::getDPI() const {
+		Vector<unsigned int, 2> Monitor::getDPI() const {
 			return getResolution() / getSizeInches();
 		}
 
@@ -605,7 +607,7 @@ namespace mc {
 			return out;
 		}
 
-		const char* Monitor::getName() const {
+		CString Monitor::getName() const {
 			return glfwGetMonitorName(monitor);
 		}
 
@@ -617,12 +619,12 @@ namespace mc {
 			return out;
 		}
 
-		Vector<int, 2> Monitor::getVirtualPosition() const {
-			Vector<int, 2> out = {};
+		Vector<Pixels, 2> Monitor::getVirtualPosition() const {
+			int x, y;
 
-			glfwGetMonitorPos(monitor, &out[0], &out[1]);
+			glfwGetMonitorPos(monitor, &x, &y);
 
-			return out;
+			return {static_cast<Pixels>(x), static_cast<Pixels>(y)};
 		}
 
 		std::vector<VideoMode> Monitor::getVideoModes() const {
@@ -640,19 +642,19 @@ namespace mc {
 			return VideoMode(glfwGetVideoMode(monitor));
 		}
 
-		Vector<int, 2> Monitor::getResolution() const {
+		Vector<Pixels, 2> Monitor::getResolution() const {
 			VideoMode mode = getCurrentVideoMode();
 			return {mode.getWidth(), mode.getHeight()};
 		}
 
 		VideoMode::VideoMode(const GLFWvidmode * const mod) : mode(mod) {}
 
-		int VideoMode::getWidth() const {
-			return mode->width;
+		Pixels VideoMode::getWidth() const {
+			return static_cast<Pixels>(mode->width);
 		}
 
-		int VideoMode::getHeight() const {
-			return mode->height;
+		Pixels VideoMode::getHeight() const {
+			return static_cast<Pixels>(mode->height);
 		}
 
 		int VideoMode::getRedBits() const {

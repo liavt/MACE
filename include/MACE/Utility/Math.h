@@ -14,6 +14,7 @@ namespace mc {
 	Namespace with various mathmatical functions
 	*/
 	namespace math {
+
 		/**
 		Calculates the mathmatical constant `pi`. `Pi` is the ratio of a circle's circumfernce to it's diameter, always coming out to equal roughly 3.14, no matter the size of the circle.
 		<p>

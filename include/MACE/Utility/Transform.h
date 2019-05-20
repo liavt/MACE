@@ -11,7 +11,11 @@ See LICENSE.md for full copyright information
 #include <MACE/Utility/Matrix.h>
 
 namespace mc {
-	
+
+	using RelativeUnit = float;
+	using RelativeTranslation = RelativeUnit;
+	using RelativeScale = RelativeUnit;
+	using RelativeRadian = RelativeUnit;
 
 	namespace math {
 		/**
@@ -23,7 +27,7 @@ namespace mc {
 		@param z Rotation in radians around the Z axis
 		@return A rotation `Matrix`
 		*/
-		Matrix<float, 4> rotate(const float x, const float y, const float z);
+		Matrix<RelativeUnit, 4> rotate(const RelativeRadian x, const RelativeRadian y, const RelativeRadian z);
 		/**
 		Creates a rotation matrix, which when multiplied by a `Vector4f`, rotates it.
 		<p>
@@ -31,14 +35,14 @@ namespace mc {
 		@param v A quaternion representing a rotation
 		@return A rotated `Matrix`
 		*/
-		Matrix<float, 4> rotate(const Vector<float, 3>& v);
+		Matrix<RelativeUnit, 4> rotate(const Vector<RelativeRadian, 3>& v);
 		/**
 		Rotates an existing `Matrix`
 		@param v A quaternion representing a rotation
 		@param m `Matrix` base to rotate
 		@return A rotated `Matrix`
 		*/
-		Matrix<float, 4> rotate(const Matrix<float, 4>& m, const Vector<float, 3>& v);
+		Matrix<RelativeUnit, 4> rotate(const Matrix<RelativeUnit, 4>& m, const Vector<RelativeRadian, 3>& v);
 		/**
 		Rotates an existing `Matrix`
 		@param m A `Matrix` to rotate
@@ -47,7 +51,7 @@ namespace mc {
 		@param z Rotation in radians around the Z axis
 		@return A rotated `Matrix`
 		*/
-		Matrix<float, 4> rotate(const Matrix<float, 4>& m, const float x, const float y, const float z);
+		Matrix<RelativeUnit, 4> rotate(const Matrix<RelativeUnit, 4>& m, const RelativeRadian x, const RelativeRadian y, const RelativeRadian z);
 
 		/**
 		Creates a scaling matrix, that when multiplied by a vector, scales the X, Y, and Z values.
@@ -58,7 +62,7 @@ namespace mc {
 		@param z How much to scale the Z coordinate
 		@return A `Matrix` that is scaled based on the supplied values
 		*/
-		Matrix<float, 4> scale(const float x, const float y, const float z);
+		Matrix<RelativeUnit, 4> scale(const RelativeScale x, const RelativeScale y, const RelativeScale z);
 		/**
 		Scales an existing transformation matrix.
 		@param m The base `Matrix` to get scaled
@@ -67,7 +71,7 @@ namespace mc {
 		@param z How much to scale the Z coordinate
 		@return A `Matrix` that is scaled based on the supplied values
 		*/
-		Matrix<float, 4> scale(const Matrix<float, 4>& m, const float x, const float y, const float z);
+		Matrix<RelativeUnit, 4> scale(const Matrix<RelativeUnit, 4>& m, const RelativeScale x, const RelativeScale y, const RelativeScale z);
 
 		/**
 		Creates a translation matrix, that when multiplied by a vector, translates the X, Y, and Z values.
@@ -78,7 +82,7 @@ namespace mc {
 		@param z How much to translate the Z coordinate
 		@return A `Matrix` that is translated based on the supplied values
 		*/
-		Matrix<float, 4> translate(const float x, const float y, const float z);
+		Matrix<RelativeUnit, 4> translate(const RelativeTranslation x, const RelativeTranslation y, const RelativeTranslation z);
 		/**
 		Translates an existing transformation matrix.
 		@param m The base `Matrix` to get translated
@@ -87,7 +91,7 @@ namespace mc {
 		@param z How much to translate the Z coordinate
 		@return A `Matrix` that is translated based on the supplied values
 		*/
-		Matrix<float, 4> translate(const Matrix<float, 4>& m, const float x, const float y, const float z);
+		Matrix<RelativeUnit, 4> translate(const Matrix<RelativeUnit, 4>& m, const RelativeTranslation x, const RelativeTranslation y, const RelativeTranslation z);
 
 		/**
 		Generates a projection matrix based on values. Each time the window changes size, you need to regenerate your projection matrix
@@ -100,7 +104,7 @@ namespace mc {
 		@return A projection matrix made from the specified settings
 		@see ortho(const float, const float, const float, const float, const float)
 		*/
-		Matrix<float, 4> projection(const float FOV, const float NEAR_PLANE, const float FAR_PLANE, const float aspectRatio);
+		Matrix<RelativeUnit, 4> projection(const float FOV, const float NEAR_PLANE, const float FAR_PLANE, const float aspectRatio);
 		/**
 		Generates an orthographic projection matrix. As opposed to a standard projection matrix, vectors in an orthographic projection don't become smaller the farther away they are. When combined with a rotational matrix, it can create an isometric view, which is used extensively in games like Simcity. Isometric views are also used heavily in 3D modeling software to represent the dimensions of an object.In a 2D environment, an orthographic projection matrix can be used to scale the screen.
 		@param left The left plane of the orthographic projection
@@ -112,7 +116,7 @@ namespace mc {
 		@return An ortographic projection matrix generated from the values.
 		@see projection(const float, const float, const float, const float)
 		*/
-		Matrix<float, 4> ortho(const float left, const float right, const float bottom, const float top, const float near, const float far);
+		Matrix<RelativeUnit, 4> ortho(const float left, const float right, const float bottom, const float top, const float near, const float far);
 
 	}//math
 
@@ -128,19 +132,19 @@ namespace mc {
 		@see translate(const float, const float, const float)
 		@see get()
 		*/
-		Vector<float, 3> translation;
+		Vector<RelativeTranslation, 3> translation;
 		/**
 		Represents this `TransformMatrix`'s rotation
 		@see rotate(const float, const float, const float)
 		@see get()
 		*/
-		Vector<float, 3> rotation;
+		Vector<RelativeRadian, 3> rotation;
 		/**
 		Represents this `TransformMatrix`'s scale
 		@see scale(const float, const float, const float)
 		@see get()
 		*/
-		Vector<float, 3> scaler;//the variable is not called scale because that conflicts with scale() function
+		Vector<RelativeScale, 3> scaler;//the variable is not called scale because that conflicts with scale() function
 
 		/**
 		Default constructor. Generates a `TransformMatrix` as an identity matrix.
@@ -156,7 +160,7 @@ namespace mc {
 		@return Itself for chaining
 		@see translate(const Matrix&, const float, const float, const float)
 		*/
-		TransformMatrix& translate(const float x, const float y, const float z);
+		TransformMatrix& translate(const RelativeTranslation x, const RelativeTranslation y, const RelativeTranslation z);
 		/**
 		Rotates this `TransformMatrix` in any 3 directions.
 		@param x How much to rotate in the X plane.
@@ -165,7 +169,7 @@ namespace mc {
 		@return Itself for chaining
 		@see rotate(const Matrix&, const float, const float, const float)
 		*/
-		TransformMatrix& rotate(const float x, const float y, const float z);
+		TransformMatrix& rotate(const RelativeRadian x, const RelativeRadian y, const RelativeRadian z);
 		/**
 		Scales this `TransformMatrix` in any 3 directions.
 		@param x How much to scale in the X plane.
@@ -174,7 +178,7 @@ namespace mc {
 		@return Itself for chaining
 		@see scale(const Matrix&, const float, const float, const float)
 		*/
-		TransformMatrix& scale(const float x, const float y, const float z);
+		TransformMatrix& scale(const RelativeScale x, const RelativeScale y, const RelativeScale z);
 		/**
 		Deletes any transformations on this `TransformMatrix`, effectively making it an identity matrix.
 		@return Itself for chaining
@@ -185,7 +189,7 @@ namespace mc {
 		Converts this `TransformMatrix` into a `Matrix` based on the stored transformations.
 		@return The transformation matrix represented by the values stored via `rotate()`, `scale()`, and `translate()`
 		*/
-		Matrix<float, 4> get() const;
+		Matrix<RelativeUnit, 4> get() const;
 
 		bool collides2D(const TransformMatrix& other) const;
 

@@ -138,7 +138,7 @@ namespace mc {
 
 		ProgressBar::ProgressBar() noexcept : ProgressBar(0, 0, 0) {}
 
-		ProgressBar::ProgressBar(const float minimum, const float maximum, const float prog) noexcept : minimumProgress(minimum), maximumProgress(maximum), progress(prog) {}
+		ProgressBar::ProgressBar(const Progress minimum, const Progress maximum, const Progress prog) noexcept : minimumProgress(minimum), maximumProgress(maximum), progress(prog) {}
 
 		void ProgressBar::setBackgroundTexture(const Texture& tex) {
 			if (backgroundTexture != tex) {
@@ -195,7 +195,7 @@ namespace mc {
 		}
 
 
-		void ProgressBar::setMinimum(const float minimum) {
+		void ProgressBar::setMinimum(const Progress minimum) {
 			if (minimumProgress != minimum) {
 				makeDirty();
 
@@ -203,15 +203,15 @@ namespace mc {
 			}
 		}
 
-		float ProgressBar::getMinimum() {
+		Progress ProgressBar::getMinimum() {
 			return minimumProgress;
 		}
 
-		const float ProgressBar::getMinimum() const {
+		const Progress ProgressBar::getMinimum() const {
 			return minimumProgress;
 		}
 
-		void ProgressBar::setMaximum(const float maximum) {
+		void ProgressBar::setMaximum(const Progress maximum) {
 			if (maximumProgress != maximum) {
 				makeDirty();
 
@@ -219,15 +219,15 @@ namespace mc {
 			}
 		}
 
-		float ProgressBar::getMaximum() {
+		Progress ProgressBar::getMaximum() {
 			return maximumProgress;
 		}
 
-		const float ProgressBar::getMaximum() const {
+		const Progress ProgressBar::getMaximum() const {
 			return maximumProgress;
 		}
 
-		void ProgressBar::setProgress(const float prog) {
+		void ProgressBar::setProgress(const Progress prog) {
 			if (progress != prog) {
 				makeDirty();
 
@@ -235,18 +235,18 @@ namespace mc {
 			}
 		}
 
-		float& ProgressBar::getProgress() {
+		Progress& ProgressBar::getProgress() {
 			makeDirty();
 
 			return progress;
 		}
 
-		const float& ProgressBar::getProgress() const {
+		const Progress& ProgressBar::getProgress() const {
 			return progress;
 		}
 
-		void ProgressBar::easeTo(const float destination, const EaseSettings settings) {
-			addComponent(std::shared_ptr<Component>(new EaseComponent([](Entity * e, float progress) {
+		void ProgressBar::easeTo(const Progress destination, const EaseSettings settings) {
+			addComponent(std::shared_ptr<Component>(new EaseComponent([](Entity * e, Progress progress) {
 				Progressable* prog = dynamic_cast<Progressable*>(e);
 
 #ifdef MACE_DEBUG_CHECK_NULLPTR
@@ -291,7 +291,7 @@ namespace mc {
 
 		Slider::Slider() noexcept : ProgressBar() {}
 
-		Slider::Slider(const float minimum, const float maximum, const float progress) noexcept : ProgressBar(minimum, maximum, progress) {}
+		Slider::Slider(const Progress minimum, const Progress maximum, const Progress progress) noexcept : ProgressBar(minimum, maximum, progress) {}
 
 		void Slider::onRender(Painter & p) {
 			ProgressBar::onRender(p);

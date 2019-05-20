@@ -8,23 +8,23 @@ See LICENSE.md for full copyright information
 #include <cmath>
 
 namespace mc {
-	Matrix<float, 4, 4> math::rotate(const float x, const float y, const float z) {
+	Matrix<RelativeUnit, 4, 4> math::rotate(const RelativeRadian x, const RelativeRadian y, const RelativeRadian z) {
 		return rotate(identity<float, 4>(), x, y, z);
 	}
-	Matrix<float, 4, 4> math::rotate(const Vector<float, 3> & v) {
+	Matrix<RelativeUnit, 4, 4> math::rotate(const Vector<RelativeRadian, 3> & v) {
 		return rotate(v[0], v[1], v[2]);
 	}
-	Matrix<float, 4, 4> math::rotate(const Matrix<float, 4, 4> & m, const Vector<float, 3> & v) {
+	Matrix<RelativeUnit, 4, 4> math::rotate(const Matrix<RelativeUnit, 4, 4> & m, const Vector<RelativeRadian, 3> & v) {
 		return rotate(m, v[0], v[1], v[2]);
 	}
-	Matrix<float, 4, 4> math::rotate(const Matrix<float, 4, 4>& m, const float x, const float y, const float z) {
+	Matrix<RelativeUnit, 4, 4> math::rotate(const Matrix<RelativeUnit, 4, 4>& m, const RelativeRadian x, const RelativeRadian y, const RelativeRadian z) {
 		//Instead of having to calculate it twice, which is quite expensive, we store it in variables.
 		const float cosZ = std::cos(z), sinZ = std::sin(z);
 		const float cosY = std::cos(y), sinY = std::sin(y);
 		const float cosX = std::cos(x), sinX = std::sin(x);
 
 
-		Matrix<float, 4, 4> out = m;
+		Matrix<RelativeUnit, 4, 4> out = m;
 		out[0][0] = cosZ * cosY;
 		out[1][1] = cosZ * cosX;
 		out[2][2] = cosX * cosY;
@@ -38,33 +38,33 @@ namespace mc {
 		return out;
 	}
 
-	Matrix<float, 4, 4> math::scale(const float x, const float y, const float z) {
+	Matrix<RelativeUnit, 4, 4> math::scale(const RelativeScale x, const RelativeScale y, const RelativeScale z) {
 		return scale(identity<float, 4>(), x, y, z);
 	}
 
-	Matrix<float, 4, 4> math::scale(const Matrix<float, 4, 4>& m, const float x, const float y, const float z) {
-		Matrix<float, 4, 4> out = m;
+	Matrix<RelativeUnit, 4, 4> math::scale(const Matrix<RelativeUnit, 4, 4>& m, const RelativeScale x, const RelativeScale y, const RelativeScale z) {
+		Matrix<RelativeUnit, 4, 4> out = m;
 		out[0][0] *= x;
 		out[1][1] *= y;
 		out[2][2] *= z;
 		return out;
 	}
-	Matrix<float, 4, 4> math::translate(const float x, const float y, const float z) {
+	Matrix<RelativeUnit, 4, 4> math::translate(const RelativeTranslation x, const RelativeTranslation y, const RelativeTranslation z) {
 		return translate(identity<float, 4>(), x, y, z);
 	}
-	Matrix<float, 4, 4> math::translate(const Matrix<float, 4, 4>& in, const float x, const float y, const float z) {
-		Matrix<float, 4, 4> m = in;
+	Matrix<RelativeUnit, 4, 4> math::translate(const Matrix<RelativeUnit, 4, 4>& in, const RelativeTranslation x, const RelativeTranslation y, const RelativeTranslation z) {
+		Matrix<RelativeUnit, 4, 4> m = in;
 		m[3][0] += x;
 		m[3][1] += y;
 		m[3][2] += z;
 		return m;
 	}
-	Matrix<float, 4, 4> math::projection(const float FOV, const float NEAR_PLANE, const float FAR_PLANE, const float aspectRatio) {
+	Matrix<RelativeUnit, 4, 4> math::projection(const float FOV, const float NEAR_PLANE, const float FAR_PLANE, const float aspectRatio) {
 		const float y_scale = (float)((1.0f / std::tan(math::toRadians(FOV / 2.0f))) * aspectRatio);
 		const float x_scale = y_scale / aspectRatio;
 		const float frustum_length = FAR_PLANE - NEAR_PLANE;
 
-		Matrix<float, 4, 4> projectionMatrix = Matrix<float, 4, 4>();
+		Matrix<RelativeUnit, 4, 4> projectionMatrix = Matrix<RelativeUnit, 4, 4>();
 		projectionMatrix[0][0] = x_scale;
 		projectionMatrix[1][1] = y_scale;
 		projectionMatrix[2][2] = -((FAR_PLANE + NEAR_PLANE) / frustum_length);
@@ -74,8 +74,8 @@ namespace mc {
 
 		return projectionMatrix;
 	}
-	Matrix<float, 4, 4> math::ortho(const float left, const float right, const float bottom, const float top, const float nearPlane, const float farPlane) {
-		Matrix<float, 4, 4> orthoMatrix;
+	Matrix<RelativeUnit, 4, 4> math::ortho(const float left, const float right, const float bottom, const float top, const float nearPlane, const float farPlane) {
+		Matrix<RelativeUnit, 4, 4> orthoMatrix;
 		orthoMatrix[0][0] = 2.0f / (right - left);
 		orthoMatrix[1][1] = 2.0f / (top - bottom);
 		orthoMatrix[2][2] = -2.0f / (farPlane - nearPlane);
@@ -95,19 +95,19 @@ namespace mc {
 
 
 	}
-	TransformMatrix & TransformMatrix::translate(const float x, const float y, const float z) {
+	TransformMatrix & TransformMatrix::translate(const RelativeTranslation x, const RelativeTranslation y, const RelativeTranslation z) {
 		translation[0] += x;
 		translation[1] += y;
 		translation[2] += z;
 		return *this;
 	}
-	TransformMatrix & TransformMatrix::rotate(const float x, const float y, const float z) {
+	TransformMatrix & TransformMatrix::rotate(const RelativeRadian x, const RelativeRadian y, const RelativeRadian z) {
 		rotation[0] += x;
 		rotation[1] += y;
 		rotation[2] += z;
 		return *this;
 	}
-	TransformMatrix & TransformMatrix::scale(const float x, const float y, const float z) {
+	TransformMatrix & TransformMatrix::scale(const RelativeScale x, const RelativeScale y, const RelativeScale z) {
 		scaler[0] *= x;
 		scaler[1] *= y;
 		scaler[2] *= z;
@@ -119,12 +119,12 @@ namespace mc {
 		rotation = { 0.0f, 0.0f, 0.0f };
 		return *this;
 	}
-	Matrix<float, 4, 4> TransformMatrix::get() const {
+	Matrix<RelativeUnit, 4, 4> TransformMatrix::get() const {
 		return math::identity<float, 4>() * math::translate(translation[0], translation[1], translation[2]) * math::rotate(rotation[0], rotation[1], rotation[2]) * math::scale(scaler[0], scaler[1], scaler[2]);
 	}
 	bool TransformMatrix::collides2D(const TransformMatrix & other) const {
-		const Vector<float, 4> thisAABB = Vector<float, 4>({ (translation[0] / 2.0f) + 0.5f, (translation[1] / 2.0f) + 0.5f, scaler[0], scaler[1] });
-		const Vector<float, 4> otherAABB = Vector<float, 4>({ (other.translation[0] / 2.0f) + 0.5f, (other.translation[1] / 2.0f) + 0.5f, other.scaler[0], other.scaler[1] });
+		const Vector<RelativeUnit, 4> thisAABB{ (translation[0] / 2.0f) + 0.5f, (translation[1] / 2.0f) + 0.5f, scaler[0], scaler[1] };
+		const Vector<RelativeUnit, 4> otherAABB{ (other.translation[0] / 2.0f) + 0.5f, (other.translation[1] / 2.0f) + 0.5f, other.scaler[0], other.scaler[1] };
 
 		if (thisAABB.x() < otherAABB.x() + otherAABB.z() &&
 			thisAABB.x() + thisAABB.z() > otherAABB.x() &&

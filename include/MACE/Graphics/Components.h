@@ -40,7 +40,7 @@ namespace mc {
 		@param d The total time of the ease in frames
 		@see EaseFunctions
 		*/
-		using EaseFunction = std::function<float(float, const float, const float, const float)>;
+		using EaseFunction = std::function<Progress(Progress, const Progress, const Progress, const Progress)>;
 
 		/**
 		Different easing functions commonly found in applications
@@ -54,7 +54,7 @@ namespace mc {
 
 			This macro is used again in Components.cpp for the actual ease function definitions
 			*/
-#define MACE__MAKE_EASE_FUNCTION(name) float name (float t, const float b, const float c, const float d)
+#define MACE__MAKE_EASE_FUNCTION(name) Progress name (Progress t, const Progress b, const Progress c, const Progress d)
 			MACE__MAKE_EASE_FUNCTION(LINEAR);
 			MACE__MAKE_EASE_FUNCTION(BACK_IN);
 			MACE__MAKE_EASE_FUNCTION(BACK_OUT);
@@ -96,23 +96,23 @@ namespace mc {
 		public:
 			virtual ~Progressable() = default;
 
-			virtual void setProgress(const float prog) = 0;
+			virtual void setProgress(const Progress prog) = 0;
 
 			/**
 			@copydoc Progressable::getProgress() const
 			@dirty
 			*/
-			virtual float& getProgress() = 0;
-			virtual const float& getProgress() const = 0;
+			virtual Progress& getProgress() = 0;
+			virtual const Progress& getProgress() const = 0;
 
-			void addProgress(const float prog);
-			void removeProgress(const float prog);
+			void addProgress(const Progress prog);
+			void removeProgress(const Progress prog);
 
-			virtual float getMinimum() = 0;
-			virtual const float getMinimum() const = 0;
+			virtual Progress getMinimum() = 0;
+			virtual const Progress getMinimum() const = 0;
 
-			virtual float getMaximum() = 0;
-			virtual const float getMaximum() const = 0;
+			virtual Progress getMaximum() = 0;
+			virtual const Progress getMaximum() const = 0;
 		};
 
 		class ComponentQueue: public Component {
@@ -186,23 +186,23 @@ namespace mc {
 
 		class EaseComponent: public Component, public Progressable {
 		public:
-			using EaseUpdateCallback = std::function<void(Entity*, float)>;
+			using EaseUpdateCallback = std::function<void(Entity*, Progress)>;
 
-			EaseComponent(const EaseUpdateCallback callback, const EaseSettings settings = EaseSettings(), const float start = 0.0f, const float dest = 1.0f);
+			EaseComponent(const EaseUpdateCallback callback, const EaseSettings settings = EaseSettings(), const Progress start = 0.0f, const Progress dest = 1.0f);
 
 			/**
 			@dirty
 			*/
-			void setProgress(const float prog) override;
+			void setProgress(const Progress prog) override;
 
-			float& getProgress() override;
-			const float& getProgress() const override;
+			Progress& getProgress() override;
+			const Progress& getProgress() const override;
 
-			float getMinimum() override;
-			const float getMinimum() const override;
+			Progress getMinimum() override;
+			const Progress getMinimum() const override;
 
-			float getMaximum() override;
-			const float getMaximum() const override;
+			Progress getMaximum() override;
+			const Progress getMaximum() const override;
 
 			bool operator==(const EaseComponent& other) const;
 			bool operator!=(const EaseComponent& other) const;
@@ -215,12 +215,12 @@ namespace mc {
 			const EaseSettings settings;
 
 			std::chrono::time_point<std::chrono::steady_clock> startTime;
-			float progress;
+			Progress progress;
 			signed long currentRepetition;
 			std::chrono::duration<float> duration;
 			const EaseUpdateCallback updateCallback;
-			const float startingProgress;
-			const float destination;
+			const Progress startingProgress;
+			const Progress destination;
 		};
 
 		class TweenComponent: public EaseComponent {
@@ -379,23 +379,23 @@ namespace mc {
 			T constraint;
 		};
 
-		class XAxisConstraintComponent final: public ConstraintComponent<float> {
+		class XAxisConstraintComponent final: public ConstraintComponent<RelativeTranslation> {
 		public:
-			XAxisConstraintComponent(const float constraint = 0.0f) : ConstraintComponent<float>(constraint, [](Metrics& met, float val) {
+			XAxisConstraintComponent(const RelativeTranslation constraint = 0.0f) : ConstraintComponent<RelativeTranslation>(constraint, [](Metrics& met, RelativeTranslation val) {
 				met.transform.translation[0] = val;
 			}) {}
 		};
 
-		class YAxisConstraintComponent final: public ConstraintComponent<float> {
+		class YAxisConstraintComponent final: public ConstraintComponent<RelativeTranslation> {
 		public:
-			YAxisConstraintComponent(const float constraint = 0.0f) : ConstraintComponent<float>(constraint, [](Metrics& met, float val) {
+			YAxisConstraintComponent(const RelativeTranslation constraint = 0.0f) : ConstraintComponent<RelativeTranslation>(constraint, [](Metrics& met, RelativeTranslation val) {
 				met.transform.translation[1] = val;
 			}) {}
 		};
 
-		class ZAxisConstraintComponent final: public ConstraintComponent<float> {
+		class ZAxisConstraintComponent final: public ConstraintComponent<RelativeTranslation> {
 		public:
-			ZAxisConstraintComponent(const float constraint = 0.0f) : ConstraintComponent<float>(constraint, [](Metrics& met, float val) {
+			ZAxisConstraintComponent(const RelativeTranslation constraint = 0.0f) : ConstraintComponent<RelativeTranslation>(constraint, [](Metrics& met, RelativeTranslation val) {
 				met.transform.translation[2] = val;
 			}) {}
 		};
@@ -404,37 +404,37 @@ namespace mc {
 		public:
 			using BoundsReachedCallback = std::function<void(Entity*, BoundsComponent*, Metrics&)>;
 
-			BoundsComponent(const Vector<float, 2> boundsX, const Vector<float, 2> boundsY,
-							const Vector<float, 2> boundsZ,
+			BoundsComponent(const Vector<RelativeTranslation, 2> boundsX, const Vector<RelativeTranslation, 2> boundsY,
+							const Vector<RelativeTranslation, 2> boundsZ,
 							const BoundsReachedCallback boundsReached = [](Entity*, BoundsComponent*, Metrics&) {});
-			BoundsComponent(const float minX = -1.0f, const float maxX = 1.0f, const float minY = -1.0f,
-							const float maxY = 1.0f, const float minZ = -1.0f, const float maxZ = 1.0f,
+			BoundsComponent(const RelativeTranslation minX = -1.0f, const RelativeTranslation maxX = 1.0f, const RelativeTranslation minY = -1.0f,
+							const RelativeTranslation maxY = 1.0f, const RelativeTranslation minZ = -1.0f, const RelativeTranslation maxZ = 1.0f,
 							const BoundsReachedCallback boundsReached = [](Entity*, BoundsComponent*, Metrics&) {});
 
 			BoundsReachedCallback getCallback();
 			const BoundsReachedCallback getCallback() const;
 			void setCallback(const BoundsReachedCallback boundsReached);
 
-			Vector<float, 2>& getBoundsX();
-			const Vector<float, 2>& getBoundsX() const;
+			Vector<RelativeTranslation, 2>& getBoundsX();
+			const Vector<RelativeTranslation, 2>& getBoundsX() const;
 			/**
 			@dirty
 			*/
-			void setBoundsX(const Vector<float, 2>& vec);
+			void setBoundsX(const Vector<RelativeTranslation, 2>& vec);
 
-			Vector<float, 2>& getBoundsY();
-			const Vector<float, 2>& getBoundsY() const;
+			Vector<RelativeTranslation, 2>& getBoundsY();
+			const Vector<RelativeTranslation, 2>& getBoundsY() const;
 			/**
 			@dirty
 			*/
-			void setBoundsY(const Vector<float, 2>& vec);
+			void setBoundsY(const Vector<RelativeTranslation, 2>& vec);
 
-			Vector<float, 2>& getBoundsZ();
-			const Vector<float, 2>& getBoundsZ() const;
+			Vector<RelativeTranslation, 2>& getBoundsZ();
+			const Vector<RelativeTranslation, 2>& getBoundsZ() const;
 			/**
 			@dirty
 			*/
-			void setBoundsZ(const Vector<float, 2>& vec);
+			void setBoundsZ(const Vector<RelativeTranslation, 2>& vec);
 
 			bool operator==(const BoundsComponent& other);
 			bool operator!=(const BoundsComponent& other);
@@ -443,7 +443,7 @@ namespace mc {
 			bool operator<(const BoundsComponent& other);
 			bool operator<=(const BoundsComponent& other);
 		private:
-			Vector<float, 2> boundsX, boundsY, boundsZ;
+			Vector<RelativeTranslation, 2> boundsX, boundsY, boundsZ;
 
 			BoundsReachedCallback callback;
 
@@ -452,14 +452,14 @@ namespace mc {
 
 		class PaddingComponent: public Component {
 		public:
-			PaddingComponent(const float top, const float right, const float bottom, const float left, const float front, const float back);
-			PaddingComponent(const float top, const float right, const float bottom, const float left, const float z);
-			PaddingComponent(const float top, const float right, const float bottom, const float left);
-			PaddingComponent(const float top, const float x, const float bottom);
-			PaddingComponent(const float y, const float x);
-			PaddingComponent(const float padding);
+			PaddingComponent(const RelativeScale top, const RelativeScale right, const RelativeScale bottom, const RelativeScale left, const RelativeScale front, const RelativeScale back);
+			PaddingComponent(const RelativeScale top, const RelativeScale right, const RelativeScale bottom, const RelativeScale left, const RelativeScale z);
+			PaddingComponent(const RelativeScale top, const RelativeScale right, const RelativeScale bottom, const RelativeScale left);
+			PaddingComponent(const RelativeScale top, const RelativeScale x, const RelativeScale bottom);
+			PaddingComponent(const RelativeScale y, const RelativeScale x);
+			PaddingComponent(const RelativeScale padding);
 		private:
-			float paddingTop, paddingBottom, paddingLeft, paddingRight, paddingFront, paddingBack;
+			RelativeScale paddingTop, paddingBottom, paddingLeft, paddingRight, paddingFront, paddingBack;
 
 			void clean(Metrics&) final;
 		};
@@ -480,16 +480,16 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			void setProgress(const float prog) override;
+			void setProgress(const Progress prog) override;
 
-			float& getProgress() override;
-			const float& getProgress() const override;
+			Progress& getProgress() override;
+			const Progress& getProgress() const override;
 
-			float getMinimum() override;
-			const float getMinimum() const override;
+			Progress getMinimum() override;
+			const Progress getMinimum() const override;
 
-			float getMaximum() override;
-			const float getMaximum() const override;
+			Progress getMaximum() override;
+			const Progress getMaximum() const override;
 
 			bool operator==(const TextureFramesComponent& other) const;
 			bool operator!=(const TextureFramesComponent& other) const;
@@ -499,7 +499,7 @@ namespace mc {
 
 			const FrameCallback callback;
 
-			float progress;
+			Progress progress;
 
 			const std::vector<Texture> frames;
 		};

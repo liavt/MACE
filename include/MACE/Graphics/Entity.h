@@ -369,15 +369,15 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			Entity& translate(float x, float y, float z = 0.0f);
+			Entity& translate(const RelativeTranslation x, const RelativeTranslation y, const RelativeTranslation z = 0.0f);
 			/**
 			@dirty
 			*/
-			Entity& rotate(float x, float y, float z = 0.0f);
+			Entity& rotate(const RelativeRadian x, const RelativeRadian y, const RelativeRadian z = 0.0f);
 			/**
 			@dirty
 			*/
-			Entity& scale(float x, float y, float z = 1.0f);
+			Entity& scale(const RelativeScale x, const RelativeScale y, const RelativeScale z = 1.0f);
 
 			/**
 			Retrieve this `Entitys` parent `Entity.`
@@ -417,71 +417,71 @@ namespace mc {
 			void addComponent(std::shared_ptr<Component> com);
 			std::vector<std::shared_ptr<Component>> getComponents();
 
-			const float& getWidth() const;
+			const RelativeScale& getWidth() const;
 			/**
 			@dirty
 			@copydoc Entity::getWidth() const
 			*/
-			float& getWidth();
+			RelativeScale& getWidth();
 			/**
 			@dirty
 			*/
-			void setWidth(const float& s);
+			void setWidth(const RelativeScale s);
 
-			const float& getHeight() const;
+			const RelativeScale& getHeight() const;
 			/**
 			@copydoc Entity::getHeight() const
 			@dirty
 			*/
-			float& getHeight();
+			RelativeScale& getHeight();
 			/**
 			@dirty
 			*/
-			void setHeight(const float& s);
+			void setHeight(const RelativeScale s);
 
-			const float& getDepth() const;
+			const RelativeScale& getDepth() const;
 			/**
 			@dirty
 			@copydoc Entity::getHeight() const
 			*/
-			float& getDepth();
+			RelativeScale& getDepth();
 			/**
 			@dirty
 			*/
-			void setDepth(const float& s);
+			void setDepth(const RelativeScale s);
 
-			const float& getX() const;
+			const RelativeTranslation& getX() const;
 			/**
 			@dirty
 			@copydoc Entity::getX() const
 			*/
-			float& getX();
+			RelativeTranslation& getX();
 			/**
 			@dirty
 			*/
-			void setX(const float& newX);
+			void setX(const RelativeTranslation newX);
 
-			const float& getY() const;
+			const RelativeTranslation& getY() const;
 			/**
 			@dirty
 			@copydoc Entity::getY() const
 			*/
-			float& getY();
+			RelativeTranslation& getY();
 			/**
 			@dirty
 			*/
-			void setY(const float& newY);
+			void setY(const RelativeTranslation newY);
 
-			const float& getZ() const;
+			const RelativeTranslation& getZ() const;
 			/**
 			@dirty
 			@copydoc Entity::getZ() const
 			*/
-			float& getZ();
+			RelativeTranslation& getZ();
 			/**
 			@dirty
 			*/
-			void setZ(const float& newY);
+			void setZ(const RelativeTranslation newY);
 
 			/**
 			Compares if 2 `Entities` have the same children, parent, and properties.
@@ -657,14 +657,7 @@ namespace mc {
 			void setParent(Entity* parent);
 		};//Entity
 
-		class Group: public Entity {
-		protected:
-			void onInit() override;
-			void onUpdate() override;
-			void onRender() override;
-			void onDestroy() override;
-
-		};//Group
+		class Group: public Entity {};//Group
 	}//gfx
 }//mc
 

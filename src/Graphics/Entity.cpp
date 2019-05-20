@@ -126,10 +126,6 @@ namespace mc {
 		}
 
 		void Entity::render() {
-			if (!getProperty(Entity::INIT)) {
-				init();
-			}
-
 			//check if we can render
 			if (!getProperty(Entity::DISABLED)) {
 				onRender();
@@ -169,6 +165,10 @@ namespace mc {
 		}
 
 		void Entity::clean() {
+			if (!getProperty(Entity::INIT)) {
+				init();
+			}
+
 			if (getProperty(Entity::DIRTY)) {
 				onClean();
 
@@ -515,7 +515,7 @@ namespace mc {
 			}
 		}
 
-		Entity& Entity::translate(float x, float y, float z) {
+		Entity& Entity::translate(const RelativeTranslation x, const RelativeTranslation y, const RelativeTranslation z) {
 			makeDirty();
 
 			transformation.translate(x, y, z);
@@ -523,7 +523,7 @@ namespace mc {
 			return *this;
 		}
 
-		Entity& Entity::rotate(float x, float y, float z) {
+		Entity& Entity::rotate(const RelativeRadian x, const RelativeRadian y, const RelativeRadian z) {
 			makeDirty();
 
 			transformation.rotate(x, y, z);
@@ -531,7 +531,7 @@ namespace mc {
 			return *this;
 		}
 
-		Entity& Entity::scale(float x, float y, float z) {
+		Entity& Entity::scale(const RelativeScale x, const RelativeScale y, const RelativeScale z) {
 			makeDirty();
 
 			transformation.scale(x, y, z);
@@ -557,25 +557,17 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		void Group::onInit() {}
-
-		void Group::onUpdate() {}
-
-		void Group::onRender() {}
-
-		void Group::onDestroy() {}
-
-		float& Entity::getWidth() {
+		RelativeScale& Entity::getWidth() {
 			makeDirty();
 
 			return transformation.scaler[0];
 		}
 
-		const float& Entity::getWidth() const {
+		const RelativeScale& Entity::getWidth() const {
 			return transformation.scaler[0];
 		}
 
-		void Entity::setWidth(const float& s) {
+		void Entity::setWidth(const RelativeScale s) {
 			if (transformation.scaler[0] != s) {
 				makeDirty();
 
@@ -583,17 +575,17 @@ namespace mc {
 			}
 		}
 
-		float& Entity::getHeight() {
+		RelativeScale& Entity::getHeight() {
 			makeDirty();
 
 			return transformation.scaler[1];
 		}
 
-		const float& Entity::getHeight() const {
+		const RelativeScale& Entity::getHeight() const {
 			return transformation.scaler[1];
 		}
 
-		void Entity::setHeight(const float& s) {
+		void Entity::setHeight(const RelativeScale s) {
 			if (transformation.scaler[1] != s) {
 				makeDirty();
 
@@ -601,17 +593,17 @@ namespace mc {
 			}
 		}
 
-		float& Entity::getDepth() {
+		RelativeScale& Entity::getDepth() {
 			makeDirty();
 
 			return transformation.scaler[2];
 		}
 
-		const float& Entity::getDepth() const {
+		const RelativeScale& Entity::getDepth() const {
 			return transformation.scaler[2];
 		}
 
-		void Entity::setDepth(const float& s) {
+		void Entity::setDepth(const RelativeScale s) {
 			if (transformation.scaler[2] != s) {
 				makeDirty();
 
@@ -619,15 +611,15 @@ namespace mc {
 			}
 		}
 
-		float& Entity::getX() {
+		RelativeTranslation& Entity::getX() {
 			makeDirty();
 
 			return transformation.translation[0];
 		}
-		const float& Entity::getX() const {
+		const RelativeTranslation& Entity::getX() const {
 			return transformation.translation[0];
 		}
-		void Entity::setX(const float& newX) {
+		void Entity::setX(const RelativeTranslation newX) {
 			if (transformation.translation[0] != newX) {
 				makeDirty();
 
@@ -635,17 +627,17 @@ namespace mc {
 			}
 		}
 
-		float& Entity::getY() {
+		RelativeTranslation& Entity::getY() {
 			makeDirty();
 
 			return transformation.translation[1];
 		}
 
-		const float& Entity::getY() const {
+		const RelativeTranslation& Entity::getY() const {
 			return transformation.translation[1];
 		}
 
-		void Entity::setY(const float& newY) {
+		void Entity::setY(const RelativeTranslation newY) {
 			if (transformation.translation[1] != newY) {
 				makeDirty();
 
@@ -653,17 +645,17 @@ namespace mc {
 			}
 		}
 
-		float& Entity::getZ() {
+		RelativeTranslation& Entity::getZ() {
 			makeDirty();
 
 			return transformation.translation[2];
 		}
 
-		const float& Entity::getZ() const {
+		const RelativeTranslation& Entity::getZ() const {
 			return transformation.translation[2];
 		}
 
-		void Entity::setZ(const float& newZ) {
+		void Entity::setZ(const RelativeTranslation newZ) {
 			if (transformation.translation[2] != newZ) {
 				makeDirty();
 

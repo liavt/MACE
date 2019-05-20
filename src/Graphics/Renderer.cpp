@@ -18,7 +18,7 @@ namespace mc {
 
 		void Renderer::setUp(gfx::WindowModule* win) {
 			if (resized) {
-				const Vector<int, 2> dimensions = win->getFramebufferSize();
+				const Vector<Pixels, 2> dimensions = win->getFramebufferSize();
 
 				resize(win, dimensions.x(), dimensions.y());
 
@@ -74,7 +74,7 @@ namespace mc {
 			resized = true;
 		}//flagResize
 
-		void Renderer::resize(WindowModule* win, const int width, const int height) {
+		void Renderer::resize(WindowModule* win, const Pixels width, const Pixels height) {
 			const gfx::WindowModule::LaunchConfig& config = context->getWindow()->getLaunchConfig();
 
 			windowRatios = {
@@ -94,7 +94,7 @@ namespace mc {
 		void Renderer::checkInput(gfx::WindowModule*) {
 			const int mouseX = gfx::Input::getMouseX(), mouseY = gfx::Input::getMouseY();
 			if (mouseX >= 0 && mouseY >= 0) {
-				GraphicsEntity* hovered = getEntityAt(static_cast<unsigned int>(mouseX), static_cast<unsigned int>(mouseY));
+				GraphicsEntity* hovered = getEntityAt(static_cast<Pixels>(mouseX), static_cast<Pixels>(mouseY));
 
 				if (hovered != nullptr && !hovered->needsRemoval()) {
 					hovered->hover();
@@ -112,33 +112,41 @@ namespace mc {
 			renderQueue.clear();
 		}//destroy()
 
-		GraphicsEntity* Renderer::getEntityAt(const float x, const float y) {
-			return getEntityAt(static_cast<unsigned int>(getWidth() * ((x * 0.5f) + 0.5f)), static_cast<unsigned int>(getHeight() * ((y * 0.5f) + 0.5f)));
+		GraphicsEntity* Renderer::getEntityAt(const RelativeTranslation x, const RelativeTranslation y) {
+			return getEntityAt(static_cast<Pixels>(getWidth() * ((x * 0.5f) + 0.5f)), static_cast<Pixels>(getHeight() * ((y * 0.5f) + 0.5f)));
 		}
 
-		const GraphicsEntity * Renderer::getEntityAt(const float x, const float y) const {
-			return getEntityAt(static_cast<unsigned int>(getWidth() * ((x * 0.5f) + 0.5f)), static_cast<unsigned int>(getHeight() * ((y * 0.5f) + 0.5f)));
+		const GraphicsEntity * Renderer::getEntityAt(const RelativeTranslation x, const RelativeTranslation y) const {
+			return getEntityAt(static_cast<Pixels>(getWidth() * ((x * 0.5f) + 0.5f)), static_cast<Pixels>(getHeight() * ((y * 0.5f) + 0.5f)));
 		}
 
-		GraphicsEntity * Renderer::getEntityAt(const unsigned int x, const unsigned int y) {
+		GraphicsEntity * Renderer::getEntityAt(const Pixels x, const Pixels y) {
+			if (x > getWidth() || y > getHeight()) {
+				return nullptr;
+			}
+
 			EntityID id = 0;
 			getEntitiesAt(x, y, 1, 1, &id);
 
 			return getEntityByID(id);
 		}
 
-		const GraphicsEntity* Renderer::getEntityAt(const unsigned int x, const unsigned int y) const {
+		const GraphicsEntity* Renderer::getEntityAt(const Pixels x, const Pixels y) const {
+			if (x > getWidth() || y > getHeight()) {
+				return nullptr;
+			}
+
 			EntityID id = 0;
 			getEntitiesAt(x, y, 1, 1, &id);
 
 			return getEntityByID(id);
 		}
 
-		Color Renderer::getPixelAt(const float x, const float y, const FrameBufferTarget target) const {
-			return getPixelAt(static_cast<unsigned int>(getWidth() * ((x * 0.5f) + 0.5f)), static_cast<unsigned int>(getHeight() * ((y * 0.5f) + 0.5f)), target);
+		Color Renderer::getPixelAt(const RelativeTranslation x, const RelativeTranslation y, const FrameBufferTarget target) const {
+			return getPixelAt(static_cast<Pixels>(getWidth() * ((x * 0.5f) + 0.5f)), static_cast<Pixels>(getHeight() * ((y * 0.5f) + 0.5f)), target);
 		}
 
-		Color Renderer::getPixelAt(const unsigned int x, const unsigned int y, const FrameBufferTarget target) const {
+		Color Renderer::getPixelAt(const Pixels x, const Pixels y, const FrameBufferTarget target) const {
 			Color out = Color();
 			getPixelsAt(x, y, 1, 1, &out, target);
 			return out;
@@ -148,12 +156,12 @@ namespace mc {
 			setRefreshColor(c.r, c.g, c.b, c.a);
 		}//setRefreshColor(Color)
 
-		int Renderer::getWidth() const {
-			return static_cast<int>(static_cast<float>(context->getWindow()->getLaunchConfig().width) * windowRatios[0]);
+		Pixels Renderer::getWidth() const {
+			return static_cast<Pixels>(static_cast<float>(context->getWindow()->getLaunchConfig().width) * windowRatios[0]);
 		}
 
-		int Renderer::getHeight() const {
-			return static_cast<int>(static_cast<float>(context->getWindow()->getLaunchConfig().width) * windowRatios[1]);
+		Pixels Renderer::getHeight() const {
+			return static_cast<Pixels>(static_cast<float>(context->getWindow()->getLaunchConfig().width) * windowRatios[1]);
 		}
 
 		unsigned int Renderer::getSamples() const {
@@ -293,7 +301,7 @@ namespace mc {
 			pop();
 		}
 
-		void Painter::blendImages(const Texture & foreground, const Texture & background, const float amount) {
+		void Painter::blendImages(const Texture & foreground, const Texture & background, const Progress amount) {
 			push();
 			setData({amount, 0, 0, 0});
 			setTexture(foreground, TextureSlot::FOREGROUND);
@@ -362,7 +370,7 @@ namespace mc {
 			draw(m, Painter::Brush::COLOR);
 		}
 
-		void Painter::fillRect(const float x, const float y, const float w, const float h) {
+		void Painter::fillRect(const RelativeTranslation x, const RelativeTranslation y, const RelativeScale w, const RelativeScale h) {
 			push();
 			translate(x, y);
 			scale(w, h);
@@ -371,11 +379,11 @@ namespace mc {
 			pop();
 		}
 
-		void Painter::fillRect(const Vector<float, 2> & pos, const Vector<float, 2> & size) {
+		void Painter::fillRect(const Vector<RelativeTranslation, 2> & pos, const Vector<RelativeScale, 2> & size) {
 			fillRect(pos.x(), pos.y(), size.x(), size.y());
 		}
 
-		void Painter::fillRect(const Vector<float, 4> & dim) {
+		void Painter::fillRect(const Vector<RelativeUnit, 4> & dim) {
 			fillRect(dim.x(), dim.y(), dim.z(), dim.w());
 		}
 
@@ -400,15 +408,15 @@ namespace mc {
 			return state.foregroundColor;
 		}
 
-		void Painter::setForegroundTransform(const Vector<float, 4> & trans) {
+		void Painter::setForegroundTransform(const Vector<RelativeUnit, 4> & trans) {
 			state.foregroundTransform = trans;
 		}
 
-		Vector<float, 4>& Painter::getForegroundTransform() {
+		Vector<RelativeUnit, 4>& Painter::getForegroundTransform() {
 			return state.foregroundTransform;
 		}
 
-		const Vector<float, 4>& Painter::getForegroundTransform() const {
+		const Vector<RelativeUnit, 4>& Painter::getForegroundTransform() const {
 			return state.foregroundTransform;
 		}
 
@@ -424,15 +432,15 @@ namespace mc {
 			return state.backgroundColor;
 		}
 
-		void Painter::setBackgroundTransform(const Vector<float, 4> & trans) {
+		void Painter::setBackgroundTransform(const Vector<RelativeUnit, 4> & trans) {
 			state.backgroundTransform = trans;
 		}
 
-		Vector<float, 4>& Painter::getBackgroundTransform() {
+		Vector<RelativeUnit, 4>& Painter::getBackgroundTransform() {
 			return state.backgroundTransform;
 		}
 
-		const Vector<float, 4>& Painter::getBackgroundTransform() const {
+		const Vector<RelativeUnit, 4>& Painter::getBackgroundTransform() const {
 			return state.backgroundTransform;
 		}
 
@@ -448,15 +456,15 @@ namespace mc {
 			return state.maskColor;
 		}
 
-		void Painter::setMaskTransform(const Vector<float, 4> & trans) {
+		void Painter::setMaskTransform(const Vector<RelativeUnit, 4> & trans) {
 			state.maskTransform = trans;
 		}
 
-		Vector<float, 4>& Painter::getMaskTransform() {
+		Vector<RelativeUnit, 4>& Painter::getMaskTransform() {
 			return state.maskTransform;
 		}
 
-		const Vector<float, 4>& Painter::getMaskTransform() const {
+		const Vector<RelativeUnit, 4>& Painter::getMaskTransform() const {
 			return state.maskTransform;
 		}
 
@@ -549,27 +557,27 @@ namespace mc {
 			impl->setTarget(target);
 		}
 
-		void Painter::translate(const Vector<float, 3> & vec) {
+		void Painter::translate(const Vector<RelativeTranslation, 3> & vec) {
 			translate(vec.x(), vec.y(), vec.z());
 		}
 
-		void Painter::translate(const float x, const float y, const float z) {
+		void Painter::translate(const RelativeTranslation x, const RelativeTranslation y, const RelativeTranslation z) {
 			state.transformation.translate(x, y, z);
 		}
 
-		void Painter::rotate(const Vector<float, 3> & vec) {
+		void Painter::rotate(const Vector<RelativeRadian, 3> & vec) {
 			rotate(vec.x(), vec.y(), vec.z());
 		}
 
-		void Painter::rotate(const float x, const float y, const float z) {
+		void Painter::rotate(const RelativeRadian x, const RelativeRadian y, const RelativeRadian z) {
 			state.transformation.rotate(x, y, z);
 		}
 
-		void Painter::scale(const Vector<float, 3> & vec) {
+		void Painter::scale(const Vector<RelativeScale, 3> & vec) {
 			scale(vec.x(), vec.y(), vec.z());
 		}
 
-		void Painter::scale(const float x, const float y, const float z) {
+		void Painter::scale(const RelativeScale x, const RelativeScale y, const RelativeScale z) {
 			state.transformation.scale(x, y, z);
 		}
 

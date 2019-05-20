@@ -347,6 +347,10 @@ namespace mc {
 	using Enum = unsigned int;
 
 	using CString = const char*;
+
+	using Progress = float;
+
+	using Pixels = unsigned int;
 }
 
 #endif//MACE_CORE_CONSTANTS_H

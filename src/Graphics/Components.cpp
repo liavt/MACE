@@ -6,7 +6,6 @@ See LICENSE.md for full copyright information
 #define MACE__COMPONENTS_EXPOSE_MAKE_EASE_FUNCTION//this macro exposes the MACE__MAKE_EASE_FUNCTION macro
 #include <MACE/Graphics/Components.h>
 #include <MACE/Graphics/Entity2D.h>
-#include <iostream>
 
 namespace mc {
 	namespace gfx {
@@ -20,67 +19,67 @@ namespace mc {
 			}
 
 			MACE__MAKE_EASE_FUNCTION(BACK_IN) {
-				const float s = 1.70158f;
-				const float postFix = t /= d;
-				return c * (postFix) * t* ((s + 1) * t - s) + b;
+				const Progress s = 1.70158f;
+				const Progress postFix = t /= d;
+				return c * (postFix) * t* ((s + 1.0f) * t - s) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(BACK_OUT) {
-				const float s = 1.70158f;
+				const Progress s = 1.70158f;
 				t /= d;
-				return c * ((t - 1) * t * ((s + 1) * t + s) + 1) + b;
+				return c * ((t - 1.0f) * t * ((s + 1.0f) * t + s) + 1.0f) + b;
 			}
 
 			//shameless resturant promotion
 			MACE__MAKE_EASE_FUNCTION(BACK_IN_OUT) {
-				const float s = 2.5949095f;
-				if ((t /= d / 2) < 1) return c / 2 * (t * t * ((s + 1) * t - s)) + b;
-				const float postFix = t -= 2;
-				return c / 2 * ((postFix) * t * ((s + 1) * t + s) + 2) + b;
+				const Progress s = 2.5949095f;
+				if ((t /= d / 2.0f) < 1.0f) return c / 2.0f * (t * t * ((s + 1.0f) * t - s)) + b;
+				const Progress postFix = t -= 2;
+				return c / 2.0f * ((postFix) * t * ((s + 1.0f) * t + s) + 2.0f) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(BOUNCE_OUT) {
 				if ((t /= d) < (1 / 2.75f)) {
 					return c * (7.5625f * t * t) + b;
 				} else if (t < (2 / 2.75f)) {
-					const float postFix = t -= (1.5f / 2.75f);
+					const Progress postFix = t -= (1.5f / 2.75f);
 					return c * (7.5625f * (postFix) * t + .75f) + b;
 				} else if (t < (2.5 / 2.75)) {
-					const float postFix = t -= (2.25f / 2.75f);
+					const Progress postFix = t -= (2.25f / 2.75f);
 					return c * (7.5625f * (postFix) * t + .9375f) + b;
 				} else {
-					const float postFix = t -= (2.625f / 2.75f);
+					const Progress postFix = t -= (2.625f / 2.75f);
 					return c * (7.5625f * (postFix) * t + .984375f) + b;
 				}
 			}
 
-			//BOUNCE_IN is defined after BOUNCE_OUT just because it requires BOUNCE_OUT to be eclared
+			//BOUNCE_IN is defined after BOUNCE_OUT just because it requires BOUNCE_OUT to be declared
 			MACE__MAKE_EASE_FUNCTION(BOUNCE_IN) {
-				return c - EaseFunctions::BOUNCE_OUT(d - t, 0, c, d) + b;
+				return c - EaseFunctions::BOUNCE_OUT(d - t, 0.0f, c, d) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(BOUNCE_IN_OUT) {
-				if (t < d / 2) return EaseFunctions::BOUNCE_IN(t * 2, 0, c, d) * .5f + b;
-				else return EaseFunctions::BOUNCE_OUT(t * 2 - d, 0, c, d) * .5f + c * .5f + b;
+				if (t < d / 2.0f) return EaseFunctions::BOUNCE_IN(t * 2.0f, 0.0f, c, d) * .5f + b;
+				else return EaseFunctions::BOUNCE_OUT(t * 2.0f - d, 0.0f, c, d) * .5f + c * .5f + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(CIRCLE_IN) {
 				t /= d;
-				return -c * (std::sqrt(1 - t * t) - 1) + b;
+				return -c * (std::sqrt(1.0f - t * t) - 1.0f) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(CIRCLE_OUT) {
 				t /= d;
-				return c * std::sqrt(1 - (t - 1) * t) + b;
+				return c * std::sqrt(1.0f - (t - 1.0f) * t) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(CIRCLE_IN_OUT) {
-				if ((t /= d / 2) < 1) {
-					return -c / 2 * (std::sqrt(1 - t * t) - 1) + b;
+				if ((t /= d / 2.0f) < 1) {
+					return -c / 2.0f * (std::sqrt(1.0f - t * t) - 1.0f) + b;
 				}
 
-				t -= 2;
-				return c / 2 * (std::sqrt(1 - t * t) + 1) + b;
+				t -= 2.0f;
+				return c / 2.0f * (std::sqrt(1.0f - t * t) + 1.0f) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(CUBIC_IN) {
@@ -90,77 +89,77 @@ namespace mc {
 
 			MACE__MAKE_EASE_FUNCTION(CUBIC_OUT) {
 				t /= d;
-				return c * ((t - 1) * t * t + 1) + b;
+				return c * ((t - 1.0f) * t * t + 1.0f) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(CUBIC_IN_OUT) {
-				if ((t /= d / 2) < 1) {
-					return c / 2 * t * t * t + b;
+				if ((t /= d / 2.0f) < 1) {
+					return c / 2.0f * t * t * t + b;
 				}
 
-				t -= 2;
-				return c / 2 * (t * t * t + 2) + b;
+				t -= 2.0f;
+				return c / 2.0f * (t * t * t + 2.0f) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(ELASTIC_IN) {
-				if (t == 0) {
+				if (t == 0.0f) {
 					return b;
-				} else if ((t /= d) == 1) {
+				} else if ((t /= d) == 1.0f) {
 					return b + c;
 				}
 
-				const float p = d * .3f;
-				const float s = p / 4;
+				const Progress p = d * .3f;
+				const Progress s = p / 4.0f;
 				--t;
-				const float postFix = c * static_cast<float>(std::pow(2, 10 * t));
-				return -static_cast<float>(postFix * static_cast<float>(std::sin((t * d - s)) * (2 * static_cast<float>(math::pi())) / p)) + b;
+				const Progress postFix = c * static_cast<Progress>(std::pow(2.0f, 10.0f * t));
+				return -static_cast<Progress>(postFix * static_cast<Progress>(std::sin((t * d - s)) * (2.0f * math::pi<Progress>()) / p)) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(ELASTIC_OUT) {
-				if (t == 0) {
+				if (t == 0.0f) {
 					return b;
-				} else if ((t /= d) == 1) {
+				} else if ((t /= d) == 1.0f) {
 					return b + c;
 				}
 
-				const float p = d * .3f;
-				const float s = p / 4;
-				return static_cast<float>(c * std::pow(2, -10 * t) * std::sin((t * d - s) * (2 * static_cast<float>(math::pi())) / p) + c + b);
+				const Progress p = d * .3f;
+				const Progress s = p / 4.0f;
+				return static_cast<Progress>(c * std::pow(2.0f, -10.0f * t) * std::sin((t * d - s) * (2.0f * math::pi<Progress>()) / p) + c + b);
 			}
 
 			MACE__MAKE_EASE_FUNCTION(ELASTIC_IN_OUT) {
-				if (t == 0) {
+				if (t == 0.0f) {
 					return b;
-				} else if ((t /= d / 2) == 2) {
+				} else if ((t /= d / 2.0f) == 2.0f) {
 					return b + c;
 				}
 
-				const float p = d * (.3f * 1.5f);
-				const float s = p / 4;
+				const Progress p = d * (.3f * 1.5f);
+				const Progress s = p / 4.0f;
 
-				if (t < 1) {
+				if (t < 1.0f) {
 					--t;
-					const float postFix = c * static_cast<float>(std::pow(2, 10 * t));
-					return -.5f * (postFix * static_cast<float>(std::sin((t * d - s) * (2 * static_cast<float>(math::pi())) / p))) + b;
+					const Progress postFix = c * static_cast<Progress>(std::pow(2.0f, 10.0f * t));
+					return -.5f * (postFix * static_cast<Progress>(std::sin((t * d - s) * (2.0f * math::pi<Progress>()) / p))) + b;
 				}
 				--t;
-				const float postFix = c * static_cast<float>(std::pow(2, -10 * (t)));
-				return postFix * std::sin((t * d - s) * (2 * static_cast<float>(math::pi())) / p) * 0.5f + c + b;
+				const Progress postFix = c * static_cast<Progress>(std::pow(2.0f, -10.0f * (t)));
+				return postFix * std::sin((t * d - s) * (2.0f * math::pi<Progress>()) / p) * 0.5f + c + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(EXPONENTIAL_IN) {
-				return (t == 0) ? b : c * static_cast<float>(std::pow(2, 10 * (t / d - 1))) + b;
+				return (t == 0.0f) ? b : c * static_cast<Progress>(std::pow(2.0f, 10.0f * (t / d - 1.0f))) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(EXPONENTIAL_OUT) {
-				return (t == d) ? b + c : c * static_cast<float>(-std::pow(2, -10 * t / d) + 1) + b;
+				return (t == d) ? b + c : c * static_cast<Progress>(-std::pow(2.0f, -10.0f * t / d) + 1.0f) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(EXPONENTIAL_IN_OUT) {
-				if (t == 0) return b;
+				if (t == 0.0f) return b;
 				if (t == d) return b + c;
-				if ((t /= d / 2) < 1) return c / 2 * static_cast<float>(std::pow(2, 10 * (t - 1))) + b;
-				return c / 2 * static_cast<float>(-std::pow(2, -10 * --t) + 2) + b;
+				if ((t /= d / 2.0f) < 1.0f) return c / 2 * static_cast<Progress>(std::pow(2.0f, 10.0f * (t - 1.0f))) + b;
+				return c / 2.0f * static_cast<Progress>(-std::pow(2.0f, -10.0f * --t) + 2.0f) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(QUADRATIC_IN) {
@@ -170,13 +169,13 @@ namespace mc {
 
 			MACE__MAKE_EASE_FUNCTION(QUADRATIC_OUT) {
 				t /= d;
-				return -c * t * (t - 2) + b;
+				return -c * t * (t - 2.0f) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(QUADRATIC_IN_OUT) {
-				if ((t /= d / 2) < 1) return ((c / 2) * (t * t)) + b;
+				if ((t /= d / 2.0f) < 1.0f) return ((c / 2.0f) * (t * t)) + b;
 				--t;
-				return -c / 2 * (((t - 1) * (t)) - 1) + b;
+				return -c / 2.0f * (((t - 1.0f) * (t)) - 1.0f) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(QUARTIC_IN) {
@@ -186,15 +185,15 @@ namespace mc {
 
 			MACE__MAKE_EASE_FUNCTION(QUARTIC_OUT) {
 				t /= d;
-				return -c * ((t - 1) * t * t * t - 1) + b;
+				return -c * ((t - 1.0f) * t * t * t - 1.0f) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(QUARTIC_IN_OUT) {
 				t /= d;
-				if ((t / 2) < 1) {
-					return c / 2 * t * t * t * t + b;
+				if ((t / 2.0f) < 1.0f) {
+					return c / 2.0f * t * t * t * t + b;
 				}
-				return -c / 2 * (t * t * t * t - 2) + b;
+				return -c / 2.0f * (t * t * t * t - 2.0f) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(QUINTIC_IN) {
@@ -204,36 +203,36 @@ namespace mc {
 
 			MACE__MAKE_EASE_FUNCTION(QUINTIC_OUT) {
 				t /= d;
-				return c * ((t - 1) * t * t * t * t + 1) + b;
+				return c * ((t - 1.0f) * t * t * t * t + 1.0f) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(QUINTIC_IN_OUT) {
 				t /= d;
-				if ((t / 2) < 1) {
-					return c / 2 * t * t * t * t * t + b;
+				if ((t / 2.0f) < 1.0f) {
+					return c / 2.0f * t * t * t * t * t + b;
 				}
-				t -= 2;
-				return c / 2 * (t * t * t * t * t + 2) + b;
+				t -= 2.0f;
+				return c / 2.0f * (t * t * t * t * t + 2.0f) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(SINUSOIDAL_IN) {
-				return -c * std::cos(t / d * (static_cast<float>(math::pi()) / 2)) + c + b;
+				return -c * std::cos(t / d * (math::pi<Progress>() / 2.0f)) + c + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(SINUSOIDAL_OUT) {
-				return c * std::sin(t / d * (static_cast<float>(math::pi()) / 2)) + b;
+				return c * std::sin(t / d * (math::pi<Progress>() / 2.0f)) + b;
 			}
 
 			MACE__MAKE_EASE_FUNCTION(SINUSOIDAL_IN_OUT) {
-				return -c / 2 * (std::cos(static_cast<float>(math::pi()) * t / d) - 1) + b;
+				return -c / 2.0f * (std::cos(math::pi<Progress>() * t / d) - 1.0f) + b;
 			}
 		}
 
-		void Progressable::addProgress(const float prog) {
+		void Progressable::addProgress(const Progress prog) {
 			setProgress(getProgress() + prog);
 		}
 
-		void Progressable::removeProgress(const float prog) {
+		void Progressable::removeProgress(const Progress prog) {
 			setProgress(getProgress() - prog);
 		}
 
@@ -286,7 +285,7 @@ namespace mc {
 		}
 
 		void AlignmentComponent::clean(Metrics & metrics) {
-			const float width = metrics.transform.scaler[0], height = metrics.transform.scaler[1];
+			const RelativeScale width = metrics.transform.scaler[0], height = metrics.transform.scaler[1];
 
 			switch (horzAlign) {
 			default:
@@ -315,12 +314,12 @@ namespace mc {
 			}
 		}
 
-		EaseComponent::EaseComponent(const EaseUpdateCallback callback, const EaseSettings easeSettings, const float start, const float dest)
+		EaseComponent::EaseComponent(const EaseUpdateCallback callback, const EaseSettings easeSettings, const Progress start, const Progress dest)
 			: Component(), settings(easeSettings)
 			, duration(std::chrono::milliseconds(easeSettings.ms) / std::chrono::seconds(1)),
 			updateCallback(callback), startingProgress(start), progress(start), destination(dest), currentRepetition(0) {}
 
-		void EaseComponent::setProgress(const float prog) {
+		void EaseComponent::setProgress(const Progress prog) {
 			if (progress != prog) {
 				if (getParent() != nullptr) {
 					getParent()->makeDirty();
@@ -331,27 +330,27 @@ namespace mc {
 			//b(startingProgress), c(destination)
 		}
 
-		float& EaseComponent::getProgress() {
+		Progress& EaseComponent::getProgress() {
 			return progress;
 		}
 
-		const float& EaseComponent::getProgress() const {
+		const Progress& EaseComponent::getProgress() const {
 			return progress;
 		}
 
-		float EaseComponent::getMinimum() {
+		Progress EaseComponent::getMinimum() {
 			return startingProgress;
 		}
 
-		const float EaseComponent::getMinimum() const {
+		const Progress EaseComponent::getMinimum() const {
 			return startingProgress;
 		}
 
-		float EaseComponent::getMaximum() {
+		Progress EaseComponent::getMaximum() {
 			return destination;
 		}
 
-		const float EaseComponent::getMaximum() const {
+		const Progress EaseComponent::getMaximum() const {
 			return destination;
 		}
 
@@ -523,7 +522,7 @@ namespace mc {
 
 		TextureFramesComponent::TextureFramesComponent(const std::vector<Texture> & tex, const FrameCallback call) : callback(call), frames(tex), progress(0) {}
 
-		void TextureFramesComponent::setProgress(const float prog) {
+		void TextureFramesComponent::setProgress(const Progress prog) {
 			if (progress != prog) {
 				if (getParent() != nullptr) {
 					getParent()->makeDirty();
@@ -533,28 +532,28 @@ namespace mc {
 			}
 		}
 
-		float& TextureFramesComponent::getProgress() {
+		Progress& TextureFramesComponent::getProgress() {
 			return progress;
 		}
 
-		const float& TextureFramesComponent::getProgress() const {
+		const Progress& TextureFramesComponent::getProgress() const {
 			return progress;
 		}
 
-		float TextureFramesComponent::getMinimum() {
+		Progress TextureFramesComponent::getMinimum() {
 			return 0;
 		}
 
-		const float TextureFramesComponent::getMinimum() const {
+		const Progress TextureFramesComponent::getMinimum() const {
 			return 0;
 		}
 
-		float TextureFramesComponent::getMaximum() {
-			return static_cast<float>(frames.size());
+		Progress TextureFramesComponent::getMaximum() {
+			return static_cast<Progress>(frames.size());
 		}
 
-		const float TextureFramesComponent::getMaximum() const {
-			return static_cast<float>(frames.size());
+		const Progress TextureFramesComponent::getMaximum() const {
+			return static_cast<Progress>(frames.size());
 		}
 
 		void TextureFramesComponent::init() {
@@ -575,10 +574,10 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		BoundsComponent::BoundsComponent(const Vector<float, 2> x, const Vector<float, 2> y, const Vector<float, 2> z, const BoundsReachedCallback boundsReached)
+		BoundsComponent::BoundsComponent(const Vector<RelativeTranslation, 2> x, const Vector<RelativeTranslation, 2> y, const Vector<RelativeTranslation, 2> z, const BoundsReachedCallback boundsReached)
 			: boundsX(x), boundsY(y), boundsZ(z), callback(boundsReached) {}
 
-		BoundsComponent::BoundsComponent(const float minX, const float maxX, const float minY, const float maxY, const float minZ, const float maxZ, const BoundsReachedCallback boundsReached)
+		BoundsComponent::BoundsComponent(const RelativeTranslation minX, const RelativeTranslation maxX, const RelativeTranslation minY, const RelativeTranslation maxY, const RelativeTranslation minZ, const RelativeTranslation maxZ, const BoundsReachedCallback boundsReached)
 			: BoundsComponent({minX, maxX}, {minY, maxY}, {minZ, maxZ}, boundsReached) {}
 
 		BoundsComponent::BoundsReachedCallback BoundsComponent::getCallback() {
@@ -593,15 +592,15 @@ namespace mc {
 			callback = boundsReached;
 		}
 
-		Vector<float, 2>& BoundsComponent::getBoundsX() {
+		Vector<RelativeTranslation, 2>& BoundsComponent::getBoundsX() {
 			return boundsX;
 		}
 
-		const Vector<float, 2>& BoundsComponent::getBoundsX() const {
+		const Vector<RelativeTranslation, 2>& BoundsComponent::getBoundsX() const {
 			return boundsX;
 		}
 
-		void BoundsComponent::setBoundsX(const Vector<float, 2> & vec) {
+		void BoundsComponent::setBoundsX(const Vector<RelativeTranslation, 2> & vec) {
 			if (boundsX != vec) {
 				if (getParent() != nullptr) {
 					getParent()->makeDirty();
@@ -611,15 +610,15 @@ namespace mc {
 			}
 		}
 
-		Vector<float, 2>& BoundsComponent::getBoundsY() {
+		Vector<RelativeTranslation, 2>& BoundsComponent::getBoundsY() {
 			return boundsY;
 		}
 
-		const Vector<float, 2>& BoundsComponent::getBoundsY() const {
+		const Vector<RelativeTranslation, 2>& BoundsComponent::getBoundsY() const {
 			return boundsY;
 		}
 
-		void BoundsComponent::setBoundsY(const Vector<float, 2> & vec) {
+		void BoundsComponent::setBoundsY(const Vector<RelativeTranslation, 2> & vec) {
 			if (boundsY != vec) {
 				if (getParent() != nullptr) {
 					getParent()->makeDirty();
@@ -629,15 +628,15 @@ namespace mc {
 			}
 		}
 
-		Vector<float, 2>& BoundsComponent::getBoundsZ() {
+		Vector<RelativeTranslation, 2>& BoundsComponent::getBoundsZ() {
 			return boundsZ;
 		}
 
-		const Vector<float, 2>& BoundsComponent::getBoundsZ() const {
+		const Vector<RelativeTranslation, 2>& BoundsComponent::getBoundsZ() const {
 			return boundsZ;
 		}
 
-		void BoundsComponent::setBoundsZ(const Vector<float, 2> & vec) {
+		void BoundsComponent::setBoundsZ(const Vector<RelativeTranslation, 2> & vec) {
 			if (boundsZ != vec) {
 				if (getParent() != nullptr) {
 					getParent()->makeDirty();
@@ -673,8 +672,8 @@ namespace mc {
 
 		void BoundsComponent::clean(Metrics & metrics) {
 			TransformMatrix& transform = metrics.transform;
-			float& x = transform.translation.x(), y = transform.translation.y(), z = transform.translation.z();
-			const float& width = transform.scaler.x(), height = transform.scaler.y(), depth = transform.scaler.z();
+			RelativeTranslation& x = transform.translation.x(), y = transform.translation.y(), z = transform.translation.z();
+			const RelativeScale& width = transform.scaler.x(), height = transform.scaler.y(), depth = transform.scaler.z();
 			if (x - width < boundsX.x()) {
 				x = boundsX.x() + width;
 				callback(parent, this, metrics);
@@ -807,21 +806,21 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		PaddingComponent::PaddingComponent(const float top, const float right, const float bottom, const float left, const float front, const float back) : paddingTop(top), paddingBottom(bottom), paddingRight(right), paddingLeft(left), paddingFront(front), paddingBack(back) {}
+		PaddingComponent::PaddingComponent(const RelativeScale top, const RelativeScale right, const RelativeScale bottom, const RelativeScale left, const RelativeScale front, const RelativeScale back) : paddingTop(top), paddingBottom(bottom), paddingRight(right), paddingLeft(left), paddingFront(front), paddingBack(back) {}
 
-		PaddingComponent::PaddingComponent(const float top, const float right, const float bottom, const float left, const float z) : PaddingComponent(top, right, bottom, left, z, z) {}
+		PaddingComponent::PaddingComponent(const RelativeScale top, const RelativeScale right, const RelativeScale bottom, const RelativeScale left, const RelativeScale z) : PaddingComponent(top, right, bottom, left, z, z) {}
 
-		PaddingComponent::PaddingComponent(const float top, const float right, const float bottom, const float left) : PaddingComponent(top, right, bottom, left, 0.0f) {}
+		PaddingComponent::PaddingComponent(const RelativeScale top, const RelativeScale right, const RelativeScale bottom, const RelativeScale left) : PaddingComponent(top, right, bottom, left, 0.0f) {}
 
-		PaddingComponent::PaddingComponent(const float top, const float x, const float bottom) : PaddingComponent(top, x, bottom, x) {}
+		PaddingComponent::PaddingComponent(const RelativeScale top, const RelativeScale x, const RelativeScale bottom) : PaddingComponent(top, x, bottom, x) {}
 
-		PaddingComponent::PaddingComponent(const float y, const float x) : PaddingComponent(y, x, y) {}
+		PaddingComponent::PaddingComponent(const RelativeScale y, const RelativeScale x) : PaddingComponent(y, x, y) {}
 
-		PaddingComponent::PaddingComponent(const float padding) : PaddingComponent(padding, padding) {}
+		PaddingComponent::PaddingComponent(const RelativeScale padding) : PaddingComponent(padding, padding) {}
 
 		void PaddingComponent::clean(Metrics & metrics) {
-			Vector<float, 3>& translation = metrics.transform.scaler;
-			Vector<float, 3>& scaler = metrics.transform.scaler;
+			Vector<RelativeScale, 3>& translation = metrics.transform.scaler;
+			Vector<RelativeScale, 3>& scaler = metrics.transform.scaler;
 
 			translation.x() -= paddingLeft - paddingRight;
 			scaler.x() += paddingLeft + paddingRight;

@@ -19,9 +19,12 @@ namespace mc {
 		namespace ogl33 {
 			class OGL33Painter;
 
+
 			class OGL33Renderer: public Renderer {
 				friend class OGL33Painter;
 			public:
+				using ProtocolHash = unsigned short;
+
 				struct RenderProtocol {
 					ogl33::ShaderProgram program;
 
@@ -35,7 +38,7 @@ namespace mc {
 				OGL33Renderer();
 				~OGL33Renderer() noexcept override = default;
 
-				void onResize(gfx::WindowModule* win, const int width, const int height) override;
+				void onResize(gfx::WindowModule* win, const Pixels width, const Pixels height) override;
 				void onInit(gfx::WindowModule* win) override;
 				void onSetUp(gfx::WindowModule* win) override;
 				void onTearDown(gfx::WindowModule* win) override;
@@ -44,8 +47,8 @@ namespace mc {
 
 				void setRefreshColor(const float r, const float g, const float b, const float a = 1.0f) override;
 
-				void getEntitiesAt(const unsigned int x, const unsigned int y, const unsigned int w, const unsigned int h, EntityID* arr) const override;
-				void getPixelsAt(const unsigned int x, const unsigned int y, const unsigned int w, const unsigned int h, Color* arr, const FrameBufferTarget target) const override;
+				void getEntitiesAt(const Pixels x, const Pixels y, const Pixels w, const Pixels h, EntityID* arr) const override;
+				void getPixelsAt(const Pixels x, const Pixels y, const Pixels w, const Pixels h, Color* arr, const FrameBufferTarget target) const override;
 
 				std::shared_ptr<PainterImpl> createPainterImpl() override;
 
@@ -55,13 +58,13 @@ namespace mc {
 
 				Color clearColor = Colors::BLACK;
 
-				std::unordered_map<unsigned short, OGL33Renderer::RenderProtocol> protocols{};
+				std::unordered_map<ProtocolHash, OGL33Renderer::RenderProtocol> protocols{};
 
-				unsigned short currentProtocol = 0;
+				ProtocolHash currentProtocol = 0;
 
 				FrameBufferTarget currentTarget = FrameBufferTarget::COLOR;
 
-				void generateFramebuffer(const int width, const int height);
+				void generateFramebuffer(const Pixels width, const Pixels height);
 
 				void bindProtocol(OGL33Painter* painter, const std::pair<Painter::Brush, Painter::RenderFeatures> settings);
 

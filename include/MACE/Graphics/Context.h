@@ -301,7 +301,7 @@ namespace mc {
 			/**
 			@rendercontext
 			*/
-			static Texture createFromFile(const char* file, const ImageFormat format = ImageFormat::DONT_CARE, const TextureDesc::Wrap wrap = TextureDesc::Wrap::CLAMP);
+			static Texture createFromFile(const CString file, const ImageFormat format = ImageFormat::DONT_CARE, const TextureDesc::Wrap wrap = TextureDesc::Wrap::CLAMP);
 			/**
 			@rendercontext
 			*/
@@ -423,9 +423,9 @@ namespace mc {
 			const Color & getHue() const;
 			void setHue(const Color & col);
 
-			Vector<float, 4> & getTransform();
-			const Vector<float, 4> & getTransform() const;
-			void setTransform(const Vector<float, 4> & trans);
+			Vector<RelativeUnit, 4> & getTransform();
+			const Vector<RelativeUnit, 4> & getTransform() const;
+			void setTransform(const Vector<RelativeUnit, 4> & trans);
 
 			/**
 			@rendercontext
@@ -483,7 +483,7 @@ namespace mc {
 
 			Color hue = Colors::INVISIBLE;
 
-			Vector<float, 4> transform{0.0f, 0.0f, 1.0f, 1.0f};
+			Vector<RelativeUnit, 4> transform{0.0f, 0.0f, 1.0f, 1.0f};
 
 			Texture(const std::shared_ptr<TextureImpl> tex, const Color & col = Color(0.0f, 0.0f, 0.0f, 0.0f));
 	};//Texture

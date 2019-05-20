@@ -76,13 +76,13 @@ namespace mc {
 
 				using WindowCallback = std::function<void(WindowModule&)>;
 				using ScrollCallback = std::function<void(WindowModule&, double, double)>;
-				using MouseMoveCallback = std::function<void(WindowModule&, int, int)>;
+				using MouseMoveCallback = std::function<void(WindowModule&, Pixels, Pixels)>;
 
-				LaunchConfig(const int w, const int h, const char* t) MACE_EXPECTS(t != nullptr && !t.empty());
+				LaunchConfig(const Pixels w, const Pixels h, CString t) MACE_EXPECTS(t != nullptr && !t.empty());
 
-				const char* title;
-				const int width;
-				const int height;
+				CString title;
+				const Pixels width;
+				const Pixels height;
 
 				unsigned int fps = 30;
 
@@ -91,7 +91,7 @@ namespace mc {
 				WindowCallback onCreate = [](WindowModule&) {};
 				WindowCallback onClose = [](WindowModule&) {};
 				ScrollCallback onScroll = [](WindowModule&, double, double) {};
-				MouseMoveCallback onMouseMove = [](WindowModule&, int, int) {};
+				MouseMoveCallback onMouseMove = [](WindowModule&, Pixels, Pixels) {};
 
 				/**
 				Whether this window should terminate the MACE loop when destroyed
@@ -133,7 +133,7 @@ namespace mc {
 
 			bool isDestroyed() const;
 
-			Vector<int, 2> getFramebufferSize() const;
+			Vector<Pixels, 2> getFramebufferSize() const;
 
 			Vector<float, 2> getContentScale() const;
 
@@ -152,7 +152,7 @@ namespace mc {
 
 			Monitor getMonitor();
 		private:
-			enum Properties{
+			enum Properties {
 				DESTROYED = 0,
 			};
 
@@ -190,9 +190,9 @@ namespace mc {
 		class VideoMode {
 			friend class Monitor;
 		public:
-			int getWidth() const;
+			Pixels getWidth() const;
 
-			int getHeight() const;
+			Pixels getHeight() const;
 
 			int getRedBits() const;
 
@@ -224,25 +224,25 @@ namespace mc {
 			friend Monitor getPrimaryMonitor();
 			friend class WindowModule;
 		public:
-			Vector<int, 2> getSizeMM() const;
+			Vector<unsigned int, 2> getSizeMM() const;
 
-			Vector<int, 2> getSizeInches() const;
+			Vector<unsigned int, 2> getSizeInches() const;
 
-			Vector<int, 2> getDPI() const;
+			Vector<unsigned int, 2> getDPI() const;
 
 			Vector<float, 2> getContentScale() const;
 
-			const char* getName() const;
+			CString getName() const;
 
 			Vector<int, 4> getWorkArea() const;
 
-			Vector<int, 2> getVirtualPosition() const;
+			Vector<Pixels, 2> getVirtualPosition() const;
 
 			std::vector<VideoMode> getVideoModes() const;
 
 			VideoMode getCurrentVideoMode() const;
 
-			Vector<int, 2> getResolution() const;
+			Vector<Pixels, 2> getResolution() const;
 
 #ifdef MACE_EXPOSE_GLFW
 
@@ -317,6 +317,9 @@ namespace mc {
 #endif
 
 		namespace Input {
+			//it is a short int to save memory as no value exceeds MAX_SHORT_INT
+			using KeyCode = short int;
+
 			/*
 			the reason we are using not-strong enums is because we want it to expand to a number for GLFW
 			Normally, this should be a macro, but those don't follow scope. Weak enums are very similar to macros
@@ -332,8 +335,7 @@ namespace mc {
 				MODIFIER_SUPER = 0x40
 			};//Action
 
-			//it is a short int to save memory as no value exceeds MAX_SHORT_INT
-			enum Key: short int {
+			enum Key: KeyCode {
 				UNKNOWN = -1,
 
 				MOUSE_1 = 1,
@@ -617,11 +619,11 @@ namespace mc {
 				FIRST = SPACE
 			};//Key
 
-			const Byte& getKey(const short int key);
+			const Byte& getKey(const KeyCode key);
 
-			bool isKeyDown(const short int key);
-			bool isKeyRepeated(const short int key);
-			bool isKeyReleased(const short int key);
+			bool isKeyDown(const KeyCode key);
+			bool isKeyRepeated(const KeyCode key);
+			bool isKeyReleased(const KeyCode key);
 
 			int getMouseX() noexcept;
 			int getMouseY() noexcept;

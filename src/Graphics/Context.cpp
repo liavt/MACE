@@ -180,7 +180,7 @@ namespace mc {
 
 			texture.resetPixelStorage();
 
-			const size_t newSize = static_cast<size_t>(width) * static_cast<size_t>(height);
+			const Size newSize = static_cast<Size>(width) * static_cast<Size>(height);
 			std::vector<unsigned int> data = std::vector<unsigned int>();
 			data.reserve(newSize);
 			for (Index i = 0; i < newSize; ++i) {
@@ -195,7 +195,7 @@ namespace mc {
 			return Texture::createFromFile(file.c_str(), format, wrap);
 		}
 
-		Texture Texture::createFromFile(const char* file, const ImageFormat imgFormat, const TextureDesc::Wrap wrap) {
+		Texture Texture::createFromFile(const CString file, const ImageFormat imgFormat, const TextureDesc::Wrap wrap) {
 			Texture tex = Texture();
 
 			int width, height, actualComponents;
@@ -469,15 +469,15 @@ namespace mc {
 			hue = col;
 		}
 
-		Vector<float, 4>& Texture::getTransform() {
+		Vector<RelativeUnit, 4>& Texture::getTransform() {
 			return transform;
 		}
 
-		const Vector<float, 4>& Texture::getTransform() const {
+		const Vector<RelativeUnit, 4>& Texture::getTransform() const {
 			return transform;
 		}
 
-		void Texture::setTransform(const Vector<float, 4> & trans) {
+		void Texture::setTransform(const Vector<RelativeUnit, 4> & trans) {
 			transform = trans;
 		}
 

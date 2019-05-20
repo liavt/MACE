@@ -153,7 +153,7 @@ namespace mc {
 			}
 
 			void FreetypeFont::calculateMetricsForSize(const FontSize height) {
-				const Vector<int, 2> dpi = getCurrentWindow()->getMonitor().getDPI();
+				const Vector<unsigned int, 2> dpi = getCurrentWindow()->getMonitor().getDPI();
 
 				checkFreetypeError(FT_Set_Char_Size(face, 0, height << 6, dpi[0], dpi[1]), "Failed to change char size", __LINE__, __FILE__);
 			}

@@ -230,15 +230,15 @@ namespace mc {
 					ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating uniform buffer for RenderProtocol ShaderProgram");
 				}
 
-				unsigned short hashSettings(const std::pair<Painter::Brush, Painter::RenderFeatures>& settings) {
-					unsigned short j;
+				OGL33Renderer::ProtocolHash hashSettings(const std::pair<Painter::Brush, Painter::RenderFeatures>& settings) {
+					OGL33Renderer::ProtocolHash j;
 					/*
 					endianness doesn't really matter, since the only purpose for this hash is
 					for unordered_map. so as long as it's consisent at runtime, its good.
 					*/
-					j = static_cast<unsigned short>(settings.first);
+					j = static_cast<OGL33Renderer::ProtocolHash>(settings.first);
 					j <<= 8;
-					j |= static_cast<unsigned short>(settings.second);
+					j |= static_cast<OGL33Renderer::ProtocolHash>(settings.second);
 					return j;
 				}
 
@@ -386,7 +386,7 @@ namespace mc {
 				ogl33::forceCheckGLError(__LINE__, __FILE__, "An OpenGL error occurred during a rendering frame");
 			}
 
-			void OGL33Renderer::onResize(gfx::WindowModule*, const int width, const int height) {
+			void OGL33Renderer::onResize(gfx::WindowModule*, const Pixels width, const Pixels height) {
 				frameBuffer.destroy();
 				{
 					Object* renderBuffers[] = {
@@ -401,9 +401,9 @@ namespace mc {
 
 				//if the window is iconified, width and height will be 0. we cant create a framebuffer of size 0, so we make it 1 instead
 
-				ogl33::setViewport(0, 0, math::max(1, width), math::max(1, height));
+				ogl33::setViewport(0, 0, math::max<Pixels>(1, width), math::max<Pixels>(1, height));
 
-				generateFramebuffer(math::max(1, width), math::max(1, height));
+				generateFramebuffer(math::max<Pixels>(1, width), math::max<Pixels>(1, height));
 
 				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error resizing framebuffer for renderer");
 			}
@@ -438,7 +438,7 @@ namespace mc {
 				clearColor = Color(r, g, b, a);
 			}
 
-			void OGL33Renderer::generateFramebuffer(const int width, const int height) {
+			void OGL33Renderer::generateFramebuffer(const Pixels width, const Pixels height) {
 				{
 					Object* renderBuffers[] = {
 						&sceneBuffer,
@@ -530,10 +530,10 @@ namespace mc {
 					("Internal Error: OGL33Renderer: Error resizing framebuffer for width " + std::to_string(width) + " and height " + std::to_string(height)).c_str());
 			}
 
-			void OGL33Renderer::getEntitiesAt(const unsigned int x, const unsigned int y, const unsigned int w, const unsigned int h, EntityID * arr) const {
+			void OGL33Renderer::getEntitiesAt(const Pixels x, const Pixels y, const Pixels w, const Pixels h, EntityID * arr) const {
 				frameBuffer.bind();
 
-				const Vector<int, 2> framebufferSize = getContext()->getWindow()->getFramebufferSize();
+				const Vector<Pixels, 2> framebufferSize = getContext()->getWindow()->getFramebufferSize();
 
 				ogl33::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
 				ogl33::FrameBuffer::setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
@@ -541,10 +541,10 @@ namespace mc {
 				frameBuffer.readPixels(x, framebufferSize.y() - y, w, h, GL_RED_INTEGER, GL_UNSIGNED_INT, arr);
 			}
 
-			void OGL33Renderer::getPixelsAt(const unsigned int x, const unsigned int y, const unsigned int w, const unsigned int h, Color * arr, const FrameBufferTarget target) const {
+			void OGL33Renderer::getPixelsAt(const Pixels x, const Pixels y, const Pixels w, const Pixels h, Color * arr, const FrameBufferTarget target) const {
 				frameBuffer.bind();
 
-				const Vector<int, 2> framebufferSize = getContext()->getWindow()->getFramebufferSize();
+				const Vector<Pixels, 2> framebufferSize = getContext()->getWindow()->getFramebufferSize();
 
 				Enum colorAttachment;
 				switch (target) {
@@ -568,7 +568,7 @@ namespace mc {
 			}
 
 			void OGL33Renderer::bindProtocol(OGL33Painter * painter, const std::pair<Painter::Brush, Painter::RenderFeatures> settings) {
-				const unsigned short hash = hashSettings(settings);
+				const OGL33Renderer::ProtocolHash hash = hashSettings(settings);
 				//its a pointer so that we dont do a copy operation on assignment here
 				RenderProtocol& protocol = protocols[hash];
 
@@ -657,7 +657,7 @@ namespace mc {
 				inherited.translation.flatten(entityDataBuffer + 12);
 				inherited.rotation.flatten(entityDataBuffer + 16);
 				inherited.scaler.flatten(entityDataBuffer + 20);
-				//this crazy line puts a GLuint directly into a float, as GLSL expects a uint instead of a float
+				//this crazy line puts a float directly into a GLuint, as GLSL expects a uint instead of a float
 				*reinterpret_cast<GLuint*>(entityDataBuffer + 24) = static_cast<GLuint>(painter->getID());
 
 				uniformBuffers.entityData.setData(MACE__ENTITY_DATA_BUFFER_SIZE, entityDataBuffer, MACE__ENTITY_DATA_USAGE);
