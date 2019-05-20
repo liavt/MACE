@@ -31,12 +31,10 @@ namespace mc {
 					desc.magFilter = TextureDesc::Filter::LINEAR;
 
 					Texture out = Texture(desc);
-					out.bind();
 
-					out.resetPixelStorage();
-					out.setUnpackStorageHint(gfx::PixelStorage::ALIGNMENT, 1);
-
-					out.setData(bitmap->buffer);
+					PixelStorageHints hints{};
+					hints.alignment = 1;
+					out.setData(bitmap->buffer, 0, hints);
 
 					return out;
 				}
@@ -51,7 +49,7 @@ namespace mc {
 					there is no way to do that using FreeType's built in error
 					X-Macro as you can't do conditional macros
 					*/
-#define MACE__FREETYPE_ERROR_CASE_TYPE(err, msg, type) case FT_Err_##err: throw MACE__GET_ERROR_NAME(type)(message + ": Status " + std::to_string(status) + ": " + msg, line, file); break;
+#define MACE__FREETYPE_ERROR_CASE_TYPE(err, msg, type) case FT_Err_##err: MACE__THROW_CUSTOM_LINE(type, std::to_string(status) + ": " + MACE_STRINGIFY(err) + ": " + msg, line, file); break;
 #define MACE__FREETYPE_ERROR_CASE(err, msg) MACE__FREETYPE_ERROR_CASE_TYPE(err, msg, Font)
 					switch (status) {
 						MACE__FREETYPE_ERROR_CASE(Ok, "No error (invalid internal call to throwFreetypeError)")
@@ -110,7 +108,7 @@ namespace mc {
 			void FreetypeFont::fillGlyph(Glyph& out, const wchar_t character) const {
 				checkFreetypeError(FT_Load_Char(face, character, FT_LOAD_RENDER | FT_LOAD_PEDANTIC | FT_LOAD_TARGET_LCD), "Failed to load glyph", __LINE__, __FILE__);
 
-				const WindowModule* window = gfx::getCurrentWindow();
+				const WindowModule * window = gfx::getCurrentWindow();
 
 				const FT_GlyphSlot glyph = face->glyph;
 				const FT_Glyph_Metrics & gMetrics = glyph->metrics;

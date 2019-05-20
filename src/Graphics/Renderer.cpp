@@ -340,7 +340,7 @@ namespace mc {
 		}
 
 		void Painter::setTexture(const Texture & t, const TextureSlot slot) {
-			t.bind(slot);
+			t.bindTextureSlot(slot);
 			switch (slot) {
 			case TextureSlot::FOREGROUND:
 				setForegroundColor(t.getHue());

@@ -40,36 +40,6 @@ namespace mc {
 		Beginable * obj;
 	};
 
-	class MACE_NOVTABLE Bindable {
-	public:
-		virtual ~Bindable() = default;
-
-		virtual void bind() const = 0;
-
-		virtual void unbind() const = 0;
-	};
-
-	class Binder {
-	public:
-		Binder(Bindable& o);
-		Binder(Bindable* o);
-		~Binder();
-
-		Bindable* get();
-		const Bindable* get() const;
-
-		Bindable* operator->();
-		const Bindable* operator->() const;
-
-		Bindable* operator*();
-		const Bindable* operator*() const;
-
-		bool operator==(const Binder& other) const;
-		bool operator!=(const Binder& other) const;
-	private:
-		Bindable * obj;
-	};
-
 	class Initializer;
 
 	class MACE_NOVTABLE Initializable {

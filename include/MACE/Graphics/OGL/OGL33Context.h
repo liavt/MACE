@@ -23,8 +23,7 @@ namespace mc {
 				OGL33Model();
 				~OGL33Model();
 
-				void bind() const override;
-				void unbind() const override;
+				void bind() const;
 
 				void draw() const override;
 
@@ -38,16 +37,11 @@ namespace mc {
 				OGL33Texture(const TextureDesc& desc);
 				~OGL33Texture() override;
 
-				void bind() const override;
-				void bind(const TextureSlot slot) const override;
-				void unbind() const override;
+				void setData(const void* data, const int mipmap, const PixelStorageHints hints) override;
 
-				void setUnpackStorageHint(const gfx::PixelStorage hint, const int value) override;
-				void setPackStorageHint(const gfx::PixelStorage hint, const int value) override;
+				void readPixels(void* data, const PixelStorageHints hints) const override;
 
-				void setData(const void* data, const int mipmap = 0) override;
-
-				void readPixels(void* data) const override;
+				void bindTextureSlot(const TextureSlot slot) const override;
 			};
 
 			class OGL33Context: public gfx::GraphicsContext {

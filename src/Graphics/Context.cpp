@@ -111,18 +111,6 @@ namespace mc {
 			model.reset();
 		}
 
-		void Model::bind() const {
-			MACE__VERIFY_MODEL_INIT();
-
-			model->bind();
-		}
-
-		void Model::unbind() const {
-			MACE__VERIFY_MODEL_INIT();
-
-			model->unbind();
-		}
-
 		void Model::createTextureCoordinates(const unsigned int dataSize, const float* data) {
 			MACE__VERIFY_MODEL_INIT();
 
@@ -169,7 +157,7 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		Texture Texture::create(const Color& col, const unsigned int width, const unsigned int height) {
+		Texture Texture::create(const Color& col, const Pixels width, const Pixels height) {
 			TextureDesc desc = TextureDesc(width, height, TextureDesc::Format::RGBA);
 			desc.minFilter = TextureDesc::Filter::NEAREST;
 			desc.magFilter = TextureDesc::Filter::NEAREST;
@@ -177,8 +165,6 @@ namespace mc {
 			desc.internalFormat = TextureDesc::InternalFormat::RGBA;
 
 			Texture texture = Texture(desc);
-
-			texture.resetPixelStorage();
 
 			const Size newSize = static_cast<Size>(width) * static_cast<Size>(height);
 			std::vector<unsigned int> data = std::vector<unsigned int>();
@@ -245,7 +231,6 @@ namespace mc {
 				desc.magFilter = TextureDesc::Filter::NEAREST;
 				tex.init(desc);
 
-				tex.resetPixelStorage();
 				tex.setData(image);
 			} catch (const std::exception & e) {
 				stbi_image_free(image);
@@ -275,8 +260,6 @@ namespace mc {
 				desc.magFilter = TextureDesc::Filter::NEAREST;
 				texture.init(desc);
 
-				texture.resetPixelStorage();
-
 				texture.setData(image);
 			} catch (const std::exception & e) {
 				stbi_image_free(image);
@@ -287,66 +270,6 @@ namespace mc {
 
 			return texture;
 		}
-
-		/*
-		Texture Texture::createGradient(const GradientDesc & gradDesc) {
-			unsigned int colorComponents = 0;
-			TextureDesc desc = TextureDesc(gradDesc.width, gradDesc.height);
-			switch (gradDesc.colorSetting) {
-				case GradientDesc::ColorSetting::R:
-					desc.format = TextureDesc::Format::LUMINANCE;
-					desc.internalFormat = TextureDesc::InternalFormat::RED;
-					colorComponents = 1;
-					break;
-				case GradientDesc::ColorSetting::RA:
-					desc.format = TextureDesc::Format::LUMINANCE_ALPHA;
-					desc.internalFormat = TextureDesc::InternalFormat::RG;
-					colorComponents = 2;
-					break;
-				case GradientDesc::ColorSetting::RG:
-					desc.format = TextureDesc::Format::RG;
-					desc.internalFormat = TextureDesc::InternalFormat::RG;
-					colorComponents = 2;
-					break;
-				case GradientDesc::ColorSetting::RGB:
-					desc.format = TextureDesc::Format::RGB;
-					desc.internalFormat = TextureDesc::InternalFormat::RGB;
-					colorComponents = 3;
-					break;
-				case GradientDesc::ColorSetting::RGBA:
-					MACE_FALLTHROUGH;
-				default:
-					desc.format = TextureDesc::Format::RGBA;
-					desc.internalFormat = TextureDesc::InternalFormat::RGBA;
-					colorComponents = 4;
-					break;
-			}
-			desc.type = TextureDesc::Type::FLOAT;
-			desc.minFilter = TextureDesc::Filter::LINEAR;
-			desc.magFilter = TextureDesc::Filter::NEAREST;
-			Texture texture = Texture(desc);
-
-			texture.resetPixelStorage();
-
-			std::vector<float> data;
-			data.resize(gradDesc.width * gradDesc.height * colorComponents);
-			for (unsigned int x = 0; x < gradDesc.width; ++x) {
-				for (unsigned int y = 0; y < gradDesc.height; ++y) {
-					const float progressX = static_cast<float>(x) / static_cast<float>(gradDesc.width),
-						progressY = static_cast<float>(y) / static_cast<float>(gradDesc.height);
-					for (unsigned int i = 0; i < colorComponents; ++i) {
-						const float valueLeft = (gradDesc.topLeft[i] * progressY) + (gradDesc.botLeft[i] * (1.0f - progressY));
-						const float value = valueLeft;
-						data[((x * gradDesc.height) + y) * (i + 1)] = 1.0f;
-					}
-					std::cout << std::endl;
-				}
-			}
-
-			texture.setData(data.data());
-			return texture;
-		}
-		*/
 
 		Texture& Texture::getSolidColor() {
 			GraphicsContext* context = gfx::getCurrentWindow()->getContext();
@@ -361,8 +284,6 @@ namespace mc {
 					desc.internalFormat = TextureDesc::InternalFormat::RED;
 
 					Texture texture = Texture(desc);
-
-					texture.resetPixelStorage();
 
 					MACE_CONSTEXPR const float data[] = {1.0f};
 					texture.setData(data);
@@ -387,9 +308,6 @@ namespace mc {
 					desc.minFilter = TextureDesc::Filter::LINEAR;
 					desc.magFilter = TextureDesc::Filter::NEAREST;
 					Texture texture = Texture(desc);
-
-					texture.resetPixelStorage();
-
 
 					float data[MACE__RESOURCE_GRADIENT_HEIGHT];
 					for (unsigned int i = 0; i < MACE__RESOURCE_GRADIENT_HEIGHT; ++i) {
@@ -440,19 +358,19 @@ namespace mc {
 			return texture->desc;
 		}
 
-		unsigned int Texture::getWidth() {
+		Pixels Texture::getWidth() {
 			return texture == nullptr ? 0 : texture->desc.width;
 		}
 
-		const unsigned int Texture::getWidth() const {
+		const Pixels Texture::getWidth() const {
 			return texture == nullptr ? 0 : texture->desc.width;
 		}
 
-		unsigned int Texture::getHeight() {
+		Pixels Texture::getHeight() {
 			return texture == nullptr ? 0 : texture->desc.height;
 		}
 
-		const unsigned int Texture::getHeight() const {
+		const Pixels Texture::getHeight() const {
 			return texture == nullptr ? 0 : texture->desc.height;
 		}
 
@@ -481,56 +399,24 @@ namespace mc {
 			transform = trans;
 		}
 
-		void Texture::bind() const {
+		void Texture::setData(const void* data, const int mipmap, const PixelStorageHints hints) {
 			MACE__VERIFY_TEXTURE_INIT();
 
-			texture->bind();
+			texture->setData(data, mipmap, hints);
 		}
 
-		void Texture::bind(const TextureSlot slot) const {
+		void Texture::readPixels(void* data, const PixelStorageHints hints) const {
 			MACE__VERIFY_TEXTURE_INIT();
 
-			texture->bind(slot);
+			texture->readPixels(data, hints);
 		}
 
-		void Texture::unbind() const {
+		void Texture::bindTextureSlot(const TextureSlot slot) const {
 			MACE__VERIFY_TEXTURE_INIT();
 
-			texture->unbind();
+			texture->bindTextureSlot(slot);
 		}
 
-		void Texture::resetPixelStorage() {
-			MACE__VERIFY_TEXTURE_INIT();
-
-			setPackStorageHint(PixelStorage::ALIGNMENT, 4);
-			setUnpackStorageHint(PixelStorage::ALIGNMENT, 4);
-			setPackStorageHint(PixelStorage::ROW_LENGTH, 0);
-			setUnpackStorageHint(PixelStorage::ROW_LENGTH, 0);
-		}
-
-		void Texture::setData(const void* data, const int mipmap) {
-			MACE__VERIFY_TEXTURE_INIT();
-
-			texture->setData(data, mipmap);
-		}
-
-		void Texture::setUnpackStorageHint(const PixelStorage hint, const int value) {
-			MACE__VERIFY_TEXTURE_INIT();
-
-			texture->setUnpackStorageHint(hint, value);
-		}
-
-		void Texture::setPackStorageHint(const PixelStorage hint, const int value) {
-			MACE__VERIFY_TEXTURE_INIT();
-
-			texture->setPackStorageHint(hint, value);
-		}
-
-		void Texture::readPixels(void* data) const {
-			MACE__VERIFY_TEXTURE_INIT();
-
-			texture->readPixels(data);
-		}
 
 		bool Texture::operator==(const Texture & other) const {
 			return transform == other.transform && hue == other.hue && texture == other.texture;

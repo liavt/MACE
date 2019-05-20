@@ -137,7 +137,7 @@ namespace mc {
 			@see Buffer
 			@see https://www.opengl.org/wiki/OpenGL_Object
 			*/
-			class MACE_NOVTABLE Object: public Initializable, public Bindable {
+			class MACE_NOVTABLE Object: public Initializable {
 			public:
 				/**
 				Virtual destructor for subclasses and safety
@@ -170,13 +170,13 @@ namespace mc {
 				@see Object::unbind() const
 				@throws GL_INVALID_OPERATION If this `Object` has not been created yet
 				*/
-				virtual void bind() const override;
+				virtual void bind() const;
 				/**
 				Unbinds this `Object` which is equivalent to binding ID 0.
 				@rendercontext
 				@see Object::bind() const
 				*/
-				virtual void unbind() const override;
+				virtual void unbind() const;
 
 				/**
 				Queries OpenGL whether this Object's ID is a valid object.
@@ -408,18 +408,18 @@ namespace mc {
 				@rendercontext
 				@see https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glPixelStore.xhtml
 				*/
-				void setPixelStorage(const Enum alignment, const int number);
+				void setPixelStorage(const Enum alignment, const int number) const;
 
 				/**
 				@copydoc Texture2D::setPixelStorage(const Enum, const int)
 				*/
-				void setPixelStorage(const Enum alignment, const float number);
+				void setPixelStorage(const Enum alignment, const float number) const;
 
 
 				/**
 				@copydoc Texture2D::setPixelStorage(const Enum, const int)
 				*/
-				void setPixelStorage(const Enum alignment, const bool value);
+				void setPixelStorage(const Enum alignment, const bool value) const;
 
 				/**
 				@rendercontext

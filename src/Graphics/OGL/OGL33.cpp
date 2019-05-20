@@ -407,15 +407,15 @@ namespace mc {
 				glTexImage2DMultisample(target, samples, internalFormat, width, height, fixedSamples);
 			}
 
-			void Texture2D::setPixelStorage(const Enum alignment, const int number) {
+			void Texture2D::setPixelStorage(const Enum alignment, const int number) const {
 				glPixelStorei(alignment, number);
 			}
 
-			void Texture2D::setPixelStorage(const Enum alignment, const bool value) {
+			void Texture2D::setPixelStorage(const Enum alignment, const bool value) const {
 				setPixelStorage(alignment, value ? 1 : 0);
 			}
 
-			void Texture2D::setPixelStorage(const Enum alignment, const float number) {
+			void Texture2D::setPixelStorage(const Enum alignment, const float number) const {
 				glPixelStoref(alignment, number);
 			}
 
@@ -1019,7 +1019,7 @@ namespace mc {
 				bindUniformBuffers(buffer, 1);
 			}
 
-			void ShaderProgram::bindUniformBuffers(const UniformBuffer* bufs[], const Size size) {
+			void ShaderProgram::bindUniformBuffers(const UniformBuffer * bufs[], const Size size) {
 				for (Index i = 0; i < size; ++i) {
 					const UniformBufferData& bufferData = getUniformBuffer(*bufs[i]);
 					glBindBufferBase(GL_UNIFORM_BUFFER, bufferData.index, bufs[i]->getID());

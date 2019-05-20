@@ -767,7 +767,6 @@ namespace mc {
 			}
 
 			void OGL33Painter::draw(const Model & m, const Painter::Brush brush) {
-				m.bind();
 				renderer->bindProtocol(this, {brush, savedState.renderFeatures});
 
 				m.draw();

@@ -230,48 +230,12 @@ namespace mc {
 				ogl33::Texture2D::destroy();
 			}
 
-			void OGL33Texture::bind() const {
+			void OGL33Texture::setData(const void* data, const int mipmap, const PixelStorageHints hints) {
 				ogl33::Texture2D::bind();
-			}
 
-			void OGL33Texture::bind(const TextureSlot slot) const {
-				ogl33::Texture2D::bind(static_cast<unsigned int>(slot));
-			}
+				setPixelStorage(GL_UNPACK_ALIGNMENT, hints.alignment);
+				setPixelStorage(GL_UNPACK_ROW_LENGTH, hints.rowLength);
 
-			void OGL33Texture::unbind() const {
-				ogl33::Texture2D::unbind();
-			}
-
-			void OGL33Texture::setUnpackStorageHint(const PixelStorage hint, const int value) {
-				ogl33::Texture2D::bind();
-				switch (hint) {
-				case PixelStorage::ALIGNMENT:
-					setPixelStorage(GL_UNPACK_ALIGNMENT, value);
-					break;
-				case PixelStorage::ROW_LENGTH:
-					setPixelStorage(GL_UNPACK_ROW_LENGTH, value);
-					break;
-				default:
-					MACE__THROW(UnsupportedRenderer, "Specified hint is unavailable for OpenGL: " + std::to_string(static_cast<Byte>(hint)));
-				}
-			}
-
-			void OGL33Texture::setPackStorageHint(const PixelStorage hint, const int value) {
-				ogl33::Texture2D::bind();
-				switch (hint) {
-				case PixelStorage::ALIGNMENT:
-					setPixelStorage(GL_PACK_ALIGNMENT, value);
-					break;
-				case PixelStorage::ROW_LENGTH:
-					setPixelStorage(GL_PACK_ROW_LENGTH, value);
-					break;
-				default:
-					MACE__THROW(UnsupportedRenderer, "Specified hint is unavailable for OpenGL: " + std::to_string(static_cast<Byte>(hint)));
-				}
-			}
-
-			void OGL33Texture::setData(const void* data, const int mipmap) {
-				ogl33::Texture2D::bind();
 				ogl33::Texture2D::setData(data, desc.width, desc.height, getType(desc.type), getFormat(desc.format), getInternalFormat(desc.internalFormat), mipmap);
 
 				if (desc.minFilter == TextureDesc::Filter::MIPMAP_LINEAR || desc.minFilter == TextureDesc::Filter::MIPMAP_NEAREST) {
@@ -279,9 +243,17 @@ namespace mc {
 				}
 			}
 
-			void OGL33Texture::readPixels(void* data) const {
+			void OGL33Texture::readPixels(void* data, const PixelStorageHints hints) const {
 				ogl33::Texture2D::bind();
+
+				setPixelStorage(GL_PACK_ALIGNMENT, hints.alignment);
+				setPixelStorage(GL_PACK_ROW_LENGTH, hints.rowLength);
+
 				ogl33::Texture2D::getImage(getFormat(desc.format), getType(desc.type), data);
+			}
+
+			void OGL33Texture::bindTextureSlot(const TextureSlot slot) const {
+				ogl33::Texture2D::bind(static_cast<unsigned int>(slot));
 			}
 
 			OGL33Model::OGL33Model() {
@@ -304,11 +276,9 @@ namespace mc {
 				}
 			}
 
-			void OGL33Model::unbind() const {
-				ogl33::VertexArray::unbind();
-			}
-
 			void OGL33Model::draw() const {
+				bind();
+
 				if (indices.getIndiceNumber() > 0) {
 					glDrawElements(lookupPrimitiveType(primitiveType), indices.getIndiceNumber(), GL_UNSIGNED_INT, nullptr);
 				} else {
@@ -317,14 +287,20 @@ namespace mc {
 			}
 
 			void OGL33Model::loadTextureCoordinates(const unsigned int dataSize, const float* data) {
+				bind();
+
 				ogl33::VertexArray::storeDataInAttributeList(dataSize * sizeof(float), data, MACE__VAO_DEFAULT_TEXTURE_COORD_LOCATION, 2);
 			}
 
 			void OGL33Model::loadVertices(const unsigned int verticeSize, const float* vertices) {
+				bind();
+
 				ogl33::VertexArray::loadVertices(verticeSize, vertices, MACE__VAO_DEFAULT_VERTICES_LOCATION, 3);
 			}
 
 			void OGL33Model::loadIndices(const unsigned int indiceNum, const unsigned int* indiceData) {
+				bind();
+
 				ogl33::VertexArray::loadIndices(indiceNum, indiceData);
 			}
 

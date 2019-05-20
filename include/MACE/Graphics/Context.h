@@ -34,11 +34,6 @@ namespace mc {
 		*/
 		MACE__DECLARE_ERROR(BadFormat);
 
-		enum class PixelStorage: Byte {
-			ALIGNMENT,
-			ROW_LENGTH
-		};
-
 		enum class ImageFormat: Byte {
 			//each enum is equal to how many components in that type of image
 			//the image load/save functions use swizzle masks to differentiate
@@ -73,13 +68,10 @@ namespace mc {
 			MASK = 2
 		};
 
-		class MACE_NOVTABLE ModelImpl: public Bindable {
+		class MACE_NOVTABLE ModelImpl {
 			friend class Model;
 		public:
 			virtual ~ModelImpl() = default;
-
-			virtual void bind() const override = 0;
-			virtual void unbind() const override = 0;
 
 			virtual void draw() const = 0;
 
@@ -93,7 +85,7 @@ namespace mc {
 			PrimitiveType primitiveType = PrimitiveType::TRIANGLES;
 		};
 
-		class Model: public Initializable, public Bindable {
+		class Model: public Initializable {
 		public:
 			static Model& getQuad();
 
@@ -109,15 +101,6 @@ namespace mc {
 			@rendercontext
 			*/
 			void destroy() override;
-
-			/**
-			@rendercontext
-			*/
-			void bind() const override;
-			/**
-			@rendercontext
-			*/
-			void unbind() const override;
 
 			/**
 			@rendercontext
@@ -253,7 +236,7 @@ namespace mc {
 			};
 
 			TextureDesc() = default;
-			TextureDesc(const unsigned int w, const unsigned int h, const Format form = Format::RGBA);
+			TextureDesc(const Pixels w, const Pixels h, const Format form = Format::RGBA);
 
 			Filter minFilter = Filter::LINEAR;
 			Filter magFilter = Filter::LINEAR;
@@ -261,39 +244,40 @@ namespace mc {
 			Format format = Format::RGBA;
 			InternalFormat internalFormat = InternalFormat::RGBA;
 
-			unsigned int width = 0, height = 0;
+			Pixels width = 0, height = 0;
 
 			Wrap wrapS = Wrap::CLAMP;
 			Wrap wrapT = Wrap::CLAMP;
 			Color borderColor = Colors::INVISIBLE;
 		};
 
-		class MACE_NOVTABLE TextureImpl: public Bindable {
+		struct PixelStorageHints {
+			int alignment = 4;
+			int rowLength = 0;
+		};
+
+		class MACE_NOVTABLE TextureImpl {
 			friend class Texture;
 		public:
 			TextureImpl(const TextureDesc& t);
 			virtual ~TextureImpl() = default;
 
-			virtual void bind() const override = 0;
-			virtual void bind(const TextureSlot slot) const = 0;
-			virtual void unbind() const override = 0;
+			virtual void bindTextureSlot(const TextureSlot slot) const = 0;
 
-			virtual void setData(const void* data, const int mipmap) = 0;
+			virtual void setData(const void* data, const int mipmap, const PixelStorageHints hints) = 0;
 
-			virtual void setUnpackStorageHint(const PixelStorage hint, const int value) = 0;
-			virtual void setPackStorageHint(const PixelStorage hint, const int value) = 0;
-
-			virtual void readPixels(void* data) const = 0;
+			virtual void readPixels(void* data, const PixelStorageHints hints) const = 0;
 		protected:
 			const TextureDesc desc;
 		};
 
-		class Texture: public Bindable {
+		class Texture {
+			friend class Painter;
 		public:
 			/**
 			@rendercontext
 			*/
-			static Texture create(const Color& col, const unsigned int width = 1, const unsigned int height = 1);
+			static Texture create(const Color& col, const Pixels width = 1, const Pixels height = 1);
 			/**
 			@rendercontext
 			*/
@@ -337,11 +321,11 @@ namespace mc {
 
 			const TextureDesc& getDesc() const;
 
-			unsigned int getWidth();
-			const unsigned int getWidth() const;
+			Pixels getWidth();
+			const Pixels getWidth() const;
 
-			unsigned int getHeight();
-			const unsigned int getHeight() const;
+			Pixels getHeight();
+			const Pixels getHeight() const;
 
 			//this needs to be defined in the header file to prevent linker conflicts, because Entity.cpp does not have opencv included ever.
 #			ifdef MACE_OPENCV
@@ -382,11 +366,11 @@ namespace mc {
 
 				init(desc);
 
-				resetPixelStorage();
-				setPackStorageHint(PixelStorage::ALIGNMENT, (mat.step & 3) ? 1 : 4);
-				setPackStorageHint(PixelStorage::ROW_LENGTH, static_cast<int>(mat.step / mat.elemSize()));
+				PixelStorageHints hints{};
+				hints.alignment = (mat.step & 3) ? 1 : 4;
+				hints.rowLength = static_cast<int>(mat.step / mat.elemSize());
 
-				setData(mat.ptr());
+				setData(mat.ptr(), 0, hints);
 			}
 
 			/**
@@ -395,55 +379,35 @@ namespace mc {
 			cv::Mat toMat() {
 				cv::Mat img(getHeight(), getWidth(), CV_8UC3);
 
-				resetPixelStorage();
-				setPackStorageHint(PixelStorage::ALIGNMENT, (img.step & 3) ? 1 : 4);
-				setPackStorageHint(PixelStorage::ROW_LENGTH, static_cast<int>(img.step / img.elemSize()));
+				PixelStorageHints hints{};
+				hints.alignment = (mat.step & 3) ? 1 : 4;
+				hints.rowLength = static_cast<int>(mat.step / mat.elemSize());
 
-				bind();
-
-				readPixels(img.data);
+				readPixels(img.data, hints);
 
 				cv::flip(img, img, 0);
 
 				return img;
-		}
+			}
 #			endif//MACE_OPENCV
 
 			Color & getHue();
-			const Color & getHue() const;
+			const Color& getHue() const;
 			void setHue(const Color & col);
 
-			Vector<RelativeUnit, 4> & getTransform();
-			const Vector<RelativeUnit, 4> & getTransform() const;
+			Vector<RelativeUnit, 4>& getTransform();
+			const Vector<RelativeUnit, 4>& getTransform() const;
 			void setTransform(const Vector<RelativeUnit, 4> & trans);
 
 			/**
 			@rendercontext
 			*/
-			void bind() const override;
+			void setData(const void* data, const int mipmap = 0, const PixelStorageHints hints = PixelStorageHints());
 			/**
 			@rendercontext
 			*/
-			void bind(const TextureSlot slot) const;
-			/**
-			@rendercontext
-			*/
-			void unbind() const override;
-
-			/**
-			@rendercontext
-			*/
-			void resetPixelStorage();
-
-			/**
-			@rendercontext
-			*/
-			void setData(const void* data, const int mipmap = 0);
-			/**
-			@rendercontext
-			*/
-			template<typename T, unsigned int W, unsigned int H>
-			void setData(const T(&data)[W][H], const int mipmap = 0) {
+			template<typename T, Pixels W, Pixels H>
+			void setData(const T(&data)[W][H], const int mipmap = 0, const PixelStorageHints hints = PixelStorageHints()) {
 				MACE_STATIC_ASSERT(W != 0, "Width of Texture can not be 0!");
 				MACE_STATIC_ASSERT(H != 0, "Height of Texture can not be 0!");
 
@@ -451,20 +415,12 @@ namespace mc {
 					MACE__THROW(AssertionFailed, "Input data is not equal to Texture width and height");
 				}
 
-				setData(static_cast<const void*>(data[0]), mipmap);
+				setData(static_cast<const void*>(data[0]), mipmap, hints);
 			}
 			/**
 			@rendercontext
 			*/
-			void setUnpackStorageHint(const PixelStorage hint, const int value);
-			/**
-			@rendercontext
-			*/
-			void setPackStorageHint(const PixelStorage hint, const int value);
-			/**
-			@rendercontext
-			*/
-			void readPixels(void* data) const;
+			void readPixels(void* data, const PixelStorageHints hints = PixelStorageHints()) const;
 
 			bool operator==(const Texture & other) const;
 			bool operator!=(const Texture & other) const;
@@ -476,11 +432,13 @@ namespace mc {
 			Vector<RelativeUnit, 4> transform{0.0f, 0.0f, 1.0f, 1.0f};
 
 			Texture(const std::shared_ptr<TextureImpl> tex, const Color & col = Color(0.0f, 0.0f, 0.0f, 0.0f));
-	};//Texture
+
+			void bindTextureSlot(const TextureSlot slot) const;
+		};//Texture
 
 		struct RenderTargetDesc {
 		public:
-			unsigned int width = 128, height = 128;
+			Pixels width = 128, height = 128;
 		};
 
 		class MACE_NOVTABLE RenderTargetImpl: public Initializable {
@@ -566,7 +524,7 @@ namespace mc {
 			std::map<std::string, Texture> textures{};
 			std::map<std::string, Model> models{};
 		};
-}
+	}
 }//mc
 
 #endif//MACE__GRAPHICS_CONTEXT_H
