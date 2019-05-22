@@ -666,60 +666,6 @@ namespace mc {
 				return !operator==(other);
 			}
 
-			CopyReadBuffer::CopyReadBuffer() noexcept : Buffer(GL_COPY_READ_BUFFER) {}
-
-			CopyWriteBuffer::CopyWriteBuffer() noexcept : Buffer(GL_COPY_WRITE_BUFFER) {}
-
-			void QueryObject::begin(const Enum target) {
-				glBeginQuery(target, id);
-			}
-
-			void QueryObject::end(const Enum target) {
-				glEndQuery(target);
-			}
-
-			void QueryObject::get(const Enum name, int* data) const {
-				glGetQueryObjectiv(id, name, data);
-			}
-
-			void QueryObject::get(const Enum name, unsigned int* data) const {
-				glGetQueryObjectuiv(id, name, data);
-			}
-
-			void QueryObject::get(const Enum name, int64_t * data) const {
-				glGetQueryObjecti64v(id, name, data);
-			}
-
-			void QueryObject::get(const Enum name, uint64_t * data) const {
-				glGetQueryObjectui64v(id, name, data);
-			}
-
-			void QueryObject::counter() {
-				glQueryCounter(id, GL_TIMESTAMP);
-			}
-
-			bool QueryObject::isCreated() const {
-				return glIsQuery(id) == 1;
-			}
-
-			void QueryObject::bind() const {}
-
-			void QueryObject::unbind() const {}
-
-			void QueryObject::bindIndex(const GLuint) const {}
-
-			void QueryObject::initIndices(GLuint ids[], const GLsizei length) const {
-				glGenQueries(length, ids);
-			}
-
-			void QueryObject::destroyIndices(const GLuint ids[], const GLsizei length) const {
-				glDeleteQueries(length, ids);
-			}
-
-			PixelUnpackBuffer::PixelUnpackBuffer() noexcept : Buffer(GL_PIXEL_UNPACK_BUFFER) {}
-
-			PixelPackBuffer::PixelPackBuffer() noexcept : Buffer(GL_PIXEL_PACK_BUFFER) {}
-
 			Shader::Shader() noexcept : Shader(GL_FALSE) {}
 
 			Shader::Shader(const Enum shaderType) noexcept : type(shaderType) {}

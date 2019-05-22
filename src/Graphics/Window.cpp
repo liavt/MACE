@@ -183,6 +183,15 @@ namespace mc {
 			void onWindowDamaged(GLFWwindow * window) {
 				convertGLFWWindowToModule(window)->makeDirty();
 			}
+
+			VideoMode createVideoMode(const GLFWvidmode * mode){
+				VideoMode out{};
+				out.width = mode->width;
+				out.height = mode->height;
+				out.channelBits = Color(mode->redBits, mode->greenBits, mode->blueBits);
+				out.refreshRate = mode->refreshRate;
+				return out;
+			}
 		}//anon namespace
 
 		WindowModule::WindowModule(const LaunchConfig & c) : config(c), properties(0), window(nullptr) {}
@@ -651,49 +660,18 @@ namespace mc {
 			int count = 0;
 			const GLFWvidmode* modes = glfwGetVideoModes(monitor, &count);
 			for (int i = 0; i < count; ++i) {
-				out.push_back(VideoMode(&modes[i]));
+				out.push_back(createVideoMode(&modes[i]));
 			}
 			return out;
 		}
 
 		VideoMode Monitor::getCurrentVideoMode()  const {
-			return VideoMode(glfwGetVideoMode(monitor));
+			return createVideoMode(glfwGetVideoMode(monitor));
 		}
 
 		Vector<Pixels, 2> Monitor::getResolution() const {
 			VideoMode mode = getCurrentVideoMode();
-			return {mode.getWidth(), mode.getHeight()};
+			return {mode.width, mode.height};
 		}
-
-		VideoMode::VideoMode(const GLFWvidmode * const mod) : mode(mod) {}
-
-		Pixels VideoMode::getWidth() const {
-			return static_cast<Pixels>(mode->width);
-		}
-
-		Pixels VideoMode::getHeight() const {
-			return static_cast<Pixels>(mode->height);
-		}
-
-		int VideoMode::getRedBits() const {
-			return mode->redBits;
-		}
-
-		int VideoMode::getGreenBits() const {
-			return mode->greenBits;
-		}
-
-		int VideoMode::getBlueBits() const {
-			return mode->blueBits;
-		}
-
-		Color VideoMode::getChannelBits() const {
-			return Color(getRedBits(), getGreenBits(), getBlueBits());
-		}
-
-		int VideoMode::getRefreshRate() const {
-			return mode->refreshRate;
-		}
-
 	}//os
 }//mc

@@ -380,8 +380,8 @@ namespace mc {
 				cv::Mat img(getHeight(), getWidth(), CV_8UC3);
 
 				PixelStorageHints hints{};
-				hints.alignment = (mat.step & 3) ? 1 : 4;
-				hints.rowLength = static_cast<int>(mat.step / mat.elemSize());
+				hints.alignment = (img.step & 3) ? 1 : 4;
+				hints.rowLength = static_cast<int>(img.step / img.elemSize());
 
 				readPixels(img.data, hints);
 

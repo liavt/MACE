@@ -74,4 +74,4 @@ namespace mc {
 	};//Initializer
 }//mc
 
-#endif//MACE_CORE_INTERFACES_H
+#endif//MACE__CORE_INTERFACES_H

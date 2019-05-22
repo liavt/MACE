@@ -320,20 +320,23 @@ namespace mc {
 				generateFramebuffer(config.width, config.height);
 
 				ogl33::forceCheckGLError(__LINE__, __FILE__, "An OpenGL error occured initializing OGL33Renderer");
+
+				frameBuffer.bind();
 			}
 
 			void OGL33Renderer::onSetUp(gfx::WindowModule*) {
 				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: An error occured before onSetUp");
 
-				frameBuffer.bind();
-
 				ogl33::resetBlending();
+
+				frameBuffer.bind();
 
 				MACE_CONSTEXPR const Enum buffers[] = {
 					GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX,
 					GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX,
 					GL_COLOR_ATTACHMENT0 + MACE__DATA_ATTACHMENT_INDEX
 				};
+
 				frameBuffer.setDrawBuffers(3, buffers);
 
 				glClearBufferfi(GL_DEPTH_STENCIL, 0, 0.0f, 0);
@@ -538,6 +541,8 @@ namespace mc {
 				ogl33::FrameBuffer::setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
 				//opengl y-axis is inverted from window coordinates
 				frameBuffer.readPixels(x, framebufferSize.y() - y, w, h, GL_RED_INTEGER, GL_UNSIGNED_INT, arr);
+
+				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error getting Entity from index buffer");
 			}
 
 			void OGL33Renderer::getPixelsAt(const Pixels x, const Pixels y, const Pixels w, const Pixels h, Color * arr, const FrameBufferTarget target) const {

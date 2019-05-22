@@ -267,13 +267,15 @@ namespace mc {
 			void OGL33Model::bind() const {
 				ogl33::VertexArray::bind();
 
-				for (Index i = 0; i < buffers.size(); ++i) {
-					buffers[i].bind();
-				}
+				// not sure if we need to rebind all the VBO's in the VAO, or whether just binding the VAO will do
 
-				if (indices.getIndiceNumber() > 0) {
-					indices.bind();
-				}
+				//for (Index i = 0; i < buffers.size(); ++i) {
+				//	buffers[i].bind();
+				//}
+
+				//if (indices.getIndiceNumber() > 0) {
+				//	indices.bind();
+				//}
 			}
 
 			void OGL33Model::draw() const {

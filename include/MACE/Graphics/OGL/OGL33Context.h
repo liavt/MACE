@@ -17,6 +17,7 @@ See LICENSE.md for full copyright information
 namespace mc {
 	namespace gfx {
 		namespace ogl33 {
+
 			class OGL33Model: public ModelImpl, private ogl33::VertexArray {
 				friend class OGL33Renderer;
 			public:
@@ -27,6 +28,9 @@ namespace mc {
 
 				void draw() const override;
 
+				/*
+				@bug these functions will create a NEW buffer each time you call them, instead of reusing them
+				*/
 				void loadTextureCoordinates(const unsigned int dataSize, const float* data) override;
 				void loadVertices(const unsigned int verticeSize, const float* vertices) override;
 				void loadIndices(const unsigned int indiceNum, const unsigned int* indiceData) override;

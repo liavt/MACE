@@ -249,96 +249,6 @@ namespace mc {
 			};
 
 			/**
-			Special object that is used for asynchronous queries of information from the GPU.
-			<p>
-			Even though it extends `Object` it does not implement the Object::bind() const or `unbind()` functions.
-			Instead, the `QueryObject` uses the QueryObject::begin(const Enum) and QueryObject::end(const Enum)
-			functions.
-			@see https://www.opengl.org/wiki/Query_Object
-			*/
-			class QueryObject: public Object {
-			public:
-				/**
-				This `QueryObject` will begin querying data for a specified target.
-				<p>
-				Replacement for the Object::bind() const function.
-				<p>
-				The results can be queried with one of the `QueryObject::get` funcitons.
-				@param target THe kind of data to query. Can not be GL_TIMESTAMP.
-				@see https://www.opengl.org/wiki/GLAPI/glBeginQuery
-				@see QueryObject::counter()
-				@attention When you use this function make sure to also call QueryObject::end(const Enum) eventually
-				@rendercontext
-				*/
-				void begin(const Enum target);
-				/**
-				Stops querying data for a certain target.
-				<p>
-				Replacement for the Object::unbind() const function
-				<p>
-				The results can be queried with one of the `QueryObject::get` funcitons.
-				@param target The kind of data being queried. Can not be GL_TIMESTAMP
-				@see https://www.opengl.org/wiki/GLAPI/glBeginQuery
-				@throws GL_INVALID_OPERATION If QueryObject::begin(const Enum was never called)
-				@rendercontext
-				*/
-				void end(const Enum target);
-
-				/**
-				Retrieves data from a begin/end pair.
-				@param name The name of the results you want to retrieve. Must be GL_QUERY_RESULT, GL_QUERY_RESULT_NO_WAIT​, or GL_QUERY_RESULT_AVAILABLE
-				@param data Where to put the data into.
-				@see QueryObject::begin(const Enum)
-				@see QueryObject::end(const Enum)
-				@see QueryObject::counter()
-				@see https://www.opengl.org/wiki/GLAPI/glGetQueryObject
-				@rendercontext
-				*/
-				void get(const Enum name, int* data) const;
-
-				/**
-				@copydoc get(const Enum, int* data) const
-				*/
-				void get(const Enum name, unsigned int* data) const;
-
-				/**
-				@copydoc get(const Enum, int* data) const
-				*/
-				void get(const Enum name, int64_t* data) const;
-				/**
-				@copydoc get(const Enum, int* data) const
-				*/
-				void get(const Enum name, uint64_t* data) const;
-
-				/**
-				Records the current GPU time into this `QueryObject.` This returns immediately.
-				<p>
-				Can be used in conjunction with QueryObject::begin(const Enum) with a target of
-				`GL_TIME_ELAPSED`
-				@see QueryObject::end(const Enum)
-				@see QueryObject::get(const Enum, uint64_t*) const
-				@see https://www.opengl.org/wiki/GLAPI/glQueryCounter
-				@rendercontext
-				*/
-				void counter();
-
-				bool isCreated() const override final;
-
-				using Object::operator==;
-				using Object::operator!=;
-
-			private:
-				//queryobjects cant be bound or unbound according to the opengl spec
-				void bind() const override final;
-				void unbind() const override final;
-
-				void bindIndex(const GLuint id) const override final;
-
-				void initIndices(GLuint id[], const GLsizei length) const override final;
-				void destroyIndices(const GLuint id[], const GLsizei length) const override final;
-			};//QueryObject
-
-			/**
 			Represents a render buffer for use with a `FrameBuffer.` Instead of using a `Texture2D` target, you can attach a `RenderBuffer` instead
 			and accomplish a similar effect. A `RenderBuffer` supports anti-aliasing natively but you can not access or modify it's data. It also
 			represents a single image, similar to a texture.
@@ -633,7 +543,7 @@ namespace mc {
 			@see UniformBuffer
 			@see ElementBuffer
 			*/
-			class Buffer: public Object {
+			class MACE_NOVTABLE Buffer: public Object {
 			public:
 				virtual ~Buffer() = default;
 
@@ -780,32 +690,6 @@ namespace mc {
 				void initIndices(GLuint id[], const GLsizei length) const override;
 				void destroyIndices(const GLuint id[], const GLsizei length) const override;
 			};//Buffer
-
-			/**
-			Special buffer that excels at asynchronous pixel transfer operations. The `PixelUnpackBuffer` is fast at reading
-			pixels while the `PixelPackBuffer` is fast at writing pixels.
-			<p>
-			Not to be confused with a `FrameBuffer` or `Texture2D.`
-			@see https://www.opengl.org/wiki/Pixel_Buffer_Object
-			*/
-			class PixelUnpackBuffer: public Buffer {
-			public:
-				PixelUnpackBuffer() noexcept;
-
-				using Buffer::operator==;
-				using Buffer::operator!=;
-			};//PixelUnpackBuffer
-
-			/**
-			@copydoc PixelUnpackBuffer
-			*/
-			class PixelPackBuffer: public Buffer {
-			public:
-				PixelPackBuffer() noexcept;
-
-				using Buffer::operator==;
-				using Buffer::operator!=;
-			};//PixelPackBuffer
 
 			/**
 			Stores vertex data for a `VertexArray.` This is absolutely crucial for any rendering in `OpenGL.`
@@ -1014,42 +898,14 @@ namespace mc {
 				void destroyIndices(const GLuint id[], const GLsizei length) const override;
 			};//VertexArray
 
-			/**
-			Special Buffer with no extra semantics to be used as a proxy in copying. Instead of using an existing Buffer with data to copy data,
-			this Buffer can be used easily.
-
-			@see https://www.opengl.org/wiki/Buffer_Object::Copying
-			@see Buffer::copyData(Buffer, ptrdiff_t, Index, Index);
-			@see CopyWriteBuffer
-			@see Buffer
-			*/
-			class CopyReadBuffer: public Buffer {
-			public:
-				CopyReadBuffer() noexcept;
-
-				using Buffer::operator==;
-				using Buffer::operator!=;
-			};//CopyReadBuffer
 
 			/**
-			@copydoc CopyReadBuffer
-			@see CopyReadBuffer
+			Stores uniform data for a shader in the form of a Buffer. Can be used to share data between multiple shaders or quickly change between
+			sets of uniforms in one program.
+			@see https://www.opengl.org/wiki/Uniform_Buffer_Object
+			@see VertexBuffer
+			@see ShaderProgram
 			*/
-			class CopyWriteBuffer: public Buffer {
-			public:
-				CopyWriteBuffer() noexcept;
-
-				using Buffer::operator==;
-				using Buffer::operator!=;
-			};//CopyWriteBuffer
-
-			  /**
-			  Stores uniform data for a shader in the form of a Buffer. Can be used to share data between multiple shaders or quickly change between
-			  sets of uniforms in one program.
-			  @see https://www.opengl.org/wiki/Uniform_Buffer_Object
-			  @see VertexBuffer
-			  @see ShaderProgram
-			  */
 			class UniformBuffer: public Buffer {
 			public:
 				UniformBuffer() noexcept;

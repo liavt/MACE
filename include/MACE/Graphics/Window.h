@@ -10,6 +10,7 @@ See LICENSE.md for full copyright information
 #include <MACE/Core/Instance.h>
 #include <MACE/Core/Constants.h>
 #include <MACE/Graphics/Entity.h>
+#include <MACE/Utility/Color.h>
 
 #include <thread>
 #include <string>
@@ -173,26 +174,10 @@ namespace mc {
 
 		class Monitor;
 
-		class VideoMode {
-			friend class Monitor;
-		public:
-			Pixels getWidth() const;
-
-			Pixels getHeight() const;
-
-			int getRedBits() const;
-
-			int getGreenBits() const;
-
-			int getBlueBits() const;
-
-			Color getChannelBits() const;
-
-			int getRefreshRate() const;
-		private:
-			VideoMode(const GLFWvidmode* const mode);
-
-			const GLFWvidmode* const mode;
+		struct VideoMode {
+			Pixels width, height;
+			Color channelBits;
+			int refreshRate;
 		};
 
 		Monitor getPrimaryMonitor();
