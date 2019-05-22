@@ -246,17 +246,7 @@ namespace mc {
 		}
 
 		void ProgressBar::easeTo(const Progress destination, const EaseSettings settings) {
-			addComponent(std::shared_ptr<Component>(new EaseComponent([](Entity * e, Progress progress) {
-				Progressable* prog = dynamic_cast<Progressable*>(e);
-
-#ifdef MACE_DEBUG_CHECK_NULLPTR
-				if (prog == nullptr) {
-					MACE__THROW(NullPointer, "Internal Error: Progressable in EaseComponent is nullptr");
-				}
-#endif
-
-				prog->setProgress(progress);
-			}, settings, getProgress(), destination)));
+			addComponent(std::shared_ptr<Component>(new EaseComponent(this, settings, getProgress(), destination)));
 		}
 
 		bool ProgressBar::operator==(const ProgressBar& other) const {

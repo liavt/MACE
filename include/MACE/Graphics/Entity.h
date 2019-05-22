@@ -415,7 +415,6 @@ namespace mc {
 			@param com The SmartPointer of an `Entity`. Ownership of the pointer will change meaning this parameter cannot be marked `const`
 			*/
 			void addComponent(std::shared_ptr<Component> com);
-			std::vector<std::shared_ptr<Component>> getComponents();
 
 			const RelativeScale& getWidth() const;
 			/**

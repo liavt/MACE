@@ -189,6 +189,7 @@ namespace mc {
 			using EaseUpdateCallback = std::function<void(Entity*, Progress)>;
 
 			EaseComponent(const EaseUpdateCallback callback, const EaseSettings settings = EaseSettings(), const Progress start = 0.0f, const Progress dest = 1.0f);
+			EaseComponent(Progressable* progressable, const EaseSettings settings = EaseSettings(), const Progress start = 0.0f, const Progress dest = 1.0f);
 
 			/**
 			@dirty

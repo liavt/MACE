@@ -263,7 +263,7 @@ namespace mc {
 				MODIFIER_CONTROL = 0x10,
 				MODIFIER_ALT = 0x20,
 				MODIFIER_SUPER = 0x40
-	};//Action
+			};//Action
 
 			enum Key: KeyCode {
 				UNKNOWN = -1,
@@ -560,7 +560,7 @@ namespace mc {
 
 			double getScrollVertical() noexcept;
 			double getScrollHorizontal() noexcept;
-}//Input
+		}//Input
 	}//os
 }//mc
 

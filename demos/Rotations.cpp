@@ -69,7 +69,7 @@ void create(gfx::WindowModule&) {
 
 			entity->getPainter().setOpacity(0.5f);
 
-			entity->addComponent(std::shared_ptr<gfx::Component>(new TestComponent()));
+			entity->addComponent(std::shared_ptr<TestComponent>(new TestComponent()));
 
 			if (x >= elementNum / 2) {
 				if (y >= elementNum / 2) {
@@ -120,10 +120,10 @@ int main() {
 		topRight.setX(0.5f);
 		topRight.setY(0.5f);
 
-		botLeft.addComponent(std::shared_ptr<gfx::Component>(new RotationComponent()));
-		botRight.addComponent(std::shared_ptr<gfx::Component>(new RotationComponent()));
-		topLeft.addComponent(std::shared_ptr<gfx::Component>(new RotationComponent()));
-		topRight.addComponent(std::shared_ptr<gfx::Component>(new RotationComponent()));
+		botLeft.addComponent(std::shared_ptr<RotationComponent>(new RotationComponent()));
+		botRight.addComponent(std::shared_ptr<RotationComponent>(new RotationComponent()));
+		topLeft.addComponent(std::shared_ptr<RotationComponent>(new RotationComponent()));
+		topRight.addComponent(std::shared_ptr<RotationComponent>(new RotationComponent()));
 
 		module.addChild(botLeft);
 		module.addChild(botRight);

@@ -319,6 +319,10 @@ namespace mc {
 			, duration(std::chrono::milliseconds(easeSettings.ms) / std::chrono::seconds(1)),
 			updateCallback(callback), startingProgress(start), progress(start), destination(dest), currentRepetition(0) {}
 
+		EaseComponent::EaseComponent(Progressable * progressable, const EaseSettings settings, const Progress start, const Progress dest) : EaseComponent([progressable](Entity*, Progress prog) {
+			progressable->setProgress(prog);
+		}, settings, start, dest) {}
+
 		void EaseComponent::setProgress(const Progress prog) {
 			if (progress != prog) {
 				if (getParent() != nullptr) {

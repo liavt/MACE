@@ -128,6 +128,10 @@ namespace mc {
 		void Entity::render() {
 			//check if we can render
 			if (!getProperty(Entity::DISABLED)) {
+				for (Index i = 0; i < components.size(); ++i) {
+					components[i]->render();
+				}
+
 				onRender();
 
 				for (Index i = 0; i < children.size(); ++i) {
@@ -135,10 +139,6 @@ namespace mc {
 					if (child != nullptr) {
 						child->render();
 					}
-				}
-
-				for (Index i = 0; i < components.size(); ++i) {
-					components[i]->render();
 				}
 			}
 
@@ -380,10 +380,6 @@ namespace mc {
 			components.back()->init();
 
 			makeDirty();
-		}
-
-		std::vector<std::shared_ptr<Component>> Entity::getComponents() {
-			return components;
 		}
 
 		void Entity::update() {

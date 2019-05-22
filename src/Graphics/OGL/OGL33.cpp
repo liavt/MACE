@@ -642,7 +642,7 @@ namespace mc {
 				return !operator==(other);
 			}
 
-			ElementBuffer::ElementBuffer() noexcept : Buffer(0) {}
+			ElementBuffer::ElementBuffer() noexcept : ElementBuffer(0) {}
 
 			ElementBuffer::ElementBuffer(const int indiceNum) noexcept : Buffer(GL_ELEMENT_ARRAY_BUFFER), indiceNumber(indiceNum) {}
 
