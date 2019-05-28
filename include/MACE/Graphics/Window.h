@@ -65,9 +65,13 @@ namespace mc {
 			struct LaunchConfig {
 				/**
 				Hints to the `WindowModule` which `GraphicsContext` to create.
+				<p>
+				If `ContextType::CUSTOM`, then the pointer pointed to by `customContext`
+				will be used as the `GraphicsContext`.
 
 				@remark Some contexes are not available on certain platforms. An `UnsupportedRendererError` is thrown in these cases.
 				@see NoRendererContextError
+				@see LaunchConfig::customContext
 				*/
 				enum class ContextType {
 					AUTOMATIC,

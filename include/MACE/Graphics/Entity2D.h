@@ -18,17 +18,18 @@ See LICENSE.md for full copyright information
 namespace mc {
 	namespace gfx {
 
-		class Entity2D: public GraphicsEntity {
+		class MACE_NOVTABLE Entity2D: public GraphicsEntity {
 		public:
 			Entity2D();
+			virtual ~Entity2D() noexcept override = default;
 
 			bool operator==(const Entity2D& other) const;
 			bool operator!=(const Entity2D& other) const;
 		};//Entity2D
 
-		class Selectable {
+		class MACE_NOVTABLE Selectable {
 		public:
-			virtual ~Selectable() = default;
+			virtual ~Selectable() noexcept = default;
 
 			bool isClicked() const;
 			bool isDisabled() const;
@@ -59,9 +60,9 @@ namespace mc {
 			void doHover();
 		};
 
-		class TexturedEntity2D: public Entity2D {
+		class MACE_NOVTABLE TexturedEntity2D: public Entity2D {
 		public:
-			virtual ~TexturedEntity2D() = default;
+			virtual ~TexturedEntity2D() noexcept = default;
 
 			/**
 			@dirty
@@ -102,11 +103,11 @@ namespace mc {
 
 		/**
 		*/
-		class ProgressBar: public Entity2D, public Progressable {
+		class SimpleProgressBar: public Entity2D, public Progressable {
 		public:
-			ProgressBar() noexcept;
-			ProgressBar(const Progress minimum, const Progress maximum, const Progress progress = 0) noexcept;
-			virtual ~ProgressBar() = default;
+			SimpleProgressBar() noexcept;
+			SimpleProgressBar(const Progress minimum, const Progress maximum, const Progress progress = 0) noexcept;
+			virtual ~SimpleProgressBar() = default;
 
 			/**
 			@dirty
@@ -169,8 +170,8 @@ namespace mc {
 
 			void easeTo(const Progress progress, const EaseSettings settings);
 
-			bool operator==(const ProgressBar& other) const;
-			bool operator!=(const ProgressBar& other) const;
+			bool operator==(const SimpleProgressBar& other) const;
+			bool operator!=(const SimpleProgressBar& other) const;
 		protected:
 			virtual void onRender(Painter& p) override;
 			void onDestroy() override final;
@@ -180,17 +181,17 @@ namespace mc {
 			Texture backgroundTexture;
 			Texture foregroundTexture;
 			Texture selectionTexture;
-		};//ProgressBar
+		};//SimpleProgressBar
 
-		class Slider: public ProgressBar, public Selectable {
+		class SimpleSlider: public SimpleProgressBar, public Selectable {
 		public:
-			Slider() noexcept;
-			Slider(const Progress minimum, const Progress maximum, const Progress progress = 0) noexcept;
+			SimpleSlider() noexcept;
+			SimpleSlider(const Progress minimum, const Progress maximum, const Progress progress = 0) noexcept;
 		private:
 			void onRender(Painter& p) override;
 			void onClick() override;
 			void onHover() override;
-		};//Slider
+		};//SimpleSlider
 
 		//TEXT IS UP AHEAD
 
@@ -286,7 +287,7 @@ namespace mc {
 			Texture texture;
 		};//Text
 
-		class Button: public TexturedEntity2D, public Selectable {
+		class SimpleButton: public TexturedEntity2D, public Selectable {
 		public:
 			void setTexture(const Texture& c) override;
 			const Texture& getTexture() const override;
@@ -294,7 +295,7 @@ namespace mc {
 
 			const Texture& getHoverTexture() const;
 			/**
-			@copydoc Button::getHoverTexture() const
+			@copydoc SimpleButton::getHoverTexture() const
 			@dirty
 			*/
 			Texture& getHoverTexture();
@@ -305,7 +306,7 @@ namespace mc {
 
 			const Texture& getClickedTexture() const;
 			/**
-			@copydoc Button::getClickedTexture() const
+			@copydoc SimpleButton::getClickedTexture() const
 			@dirty
 			*/
 			Texture& getClickedTexture();
@@ -316,7 +317,7 @@ namespace mc {
 
 			const Texture& getDisabledTexture() const;
 			/**
-			@copydoc Button::getDisabledTexture() const
+			@copydoc SimpleButton::getDisabledTexture() const
 			@dirty
 			*/
 			Texture& getDisabledTexture();

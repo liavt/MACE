@@ -446,6 +446,7 @@ namespace mc {
 		};//RenderTargetImpl
 
 		//forward declare
+
 		struct FontDesc;
 		class FontImpl;
 
@@ -512,9 +513,9 @@ namespace mc {
 			semantic because near impossible. Because multiple Model objects
 			may have to own the same pointer to data, they have to use std::shared_ptr
 			*/
-			virtual std::shared_ptr<ModelImpl> createModelImpl() = 0;
-			virtual std::shared_ptr<TextureImpl> createTextureImpl(const TextureDesc& desc) = 0;
-			virtual std::shared_ptr<FontImpl> createFontImpl(const FontDesc& desc) = 0;
+			MACE_NODISCARD virtual std::shared_ptr<ModelImpl> createModelImpl() = 0;
+			MACE_NODISCARD virtual std::shared_ptr<TextureImpl> createTextureImpl(const TextureDesc& desc) = 0;
+			MACE_NODISCARD virtual std::shared_ptr<FontImpl> createFontImpl(const FontDesc& desc) = 0;
 
 			virtual void onInit(gfx::WindowModule* win) = 0;
 			virtual void onRender(gfx::WindowModule* win) = 0;

@@ -184,7 +184,7 @@ namespace mc {
 				convertGLFWWindowToModule(window)->makeDirty();
 			}
 
-			VideoMode createVideoMode(const GLFWvidmode * mode){
+			VideoMode createVideoMode(const GLFWvidmode * mode) {
 				VideoMode out{};
 				out.width = mode->width;
 				out.height = mode->height;
@@ -210,8 +210,11 @@ namespace mc {
 
 			switch (config.contextType) {
 			case LaunchConfig::ContextType::AUTOMATIC:
+				MACE_FALLTHROUGH
 			case LaunchConfig::ContextType::BEST_OGL:
+				MACE_FALLTHROUGH
 			case LaunchConfig::ContextType::OGL33:
+				MACE_FALLTHROUGH
 			default:
 				context = std::unique_ptr<gfx::GraphicsContext>(new gfx::ogl33::OGL33Context(this));
 
@@ -268,7 +271,7 @@ namespace mc {
 			if (window == nullptr) {
 				MACE__THROW(InitializationFailed, "OpenGL context was unable to be created. This graphics card may not be supported or the graphics drivers are installed incorrectly");
 			}
-		}//create 
+			}//create 
 
 		void WindowModule::configureThread() {
 			glfwMakeContextCurrent(window);
@@ -673,5 +676,5 @@ namespace mc {
 			VideoMode mode = getCurrentVideoMode();
 			return {mode.width, mode.height};
 		}
-	}//os
-}//mc
+		}//os
+	}//mc

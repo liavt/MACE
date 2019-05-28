@@ -7,15 +7,15 @@ See LICENSE.md for full copyright information
 
 using namespace mc;
 
-gfx::Slider circleBar, rectangleBar;
+gfx::SimpleSlider circleBar, rectangleBar;
 
 class TestComponent: public gfx::Component {
 	void init(gfx::Entity* e) {};
 	bool update(gfx::Entity* e) {
 		if( gfx::Input::isKeyDown(gfx::Input::UP) ) {
-			dynamic_cast<gfx::ProgressBar*>(e)->addProgress(1);
+			dynamic_cast<gfx::Progressable*>(e)->addProgress(1);
 		} else if( gfx::Input::isKeyDown(gfx::Input::DOWN) ) {
-			dynamic_cast<gfx::ProgressBar*>(e)->addProgress(-1);
+			dynamic_cast<gfx::Progressable*>(e)->addProgress(-1);
 		}
 		return false;
 	};
@@ -26,7 +26,7 @@ class TestComponent: public gfx::Component {
 TestComponent r = TestComponent();
 
 void create(gfx::WindowModule& win) {
-	circleBar = gfx::Slider(100, 255, 20);
+	circleBar = gfx::SimpleSlider(100, 255, 20);
 	circleBar.setBackgroundTexture(gfx::Texture(gfx::Texture::createFromFile(std::string(MACE_DEMO_ASSETS) + "/star.png", gfx::ImageFormat::DONT_CARE), Color(Colors::DARK_GRAY, 0.5f)));
 	circleBar.setForegroundTexture(Colors::GREEN);
 	circleBar.setSelectionTexture(gfx::Texture::createFromFile(std::string(MACE_DEMO_ASSETS) + "/starGradient.png", gfx::ImageFormat::DONT_CARE));
@@ -42,7 +42,7 @@ void create(gfx::WindowModule& win) {
 
 	win.addChild(circleBar);
 
-	rectangleBar = gfx::Slider(0, 255, 50);
+	rectangleBar = gfx::SimpleSlider(0, 255, 50);
 	rectangleBar.setBackgroundTexture(Colors::RED);
 	rectangleBar.setForegroundTexture(gfx::Texture(gfx::Texture::getGradient(), Color(0.0f, 1.0f, 0.0f, 0.5f)));
 	rectangleBar.setSelectionTexture(gfx::Texture::getGradient());

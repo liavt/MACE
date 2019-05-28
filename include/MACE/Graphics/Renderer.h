@@ -415,7 +415,7 @@ namespace mc {
 		public:
 			GraphicsEntity() noexcept;
 
-			virtual ~GraphicsEntity() noexcept override;
+			virtual ~GraphicsEntity() noexcept override = default;
 
 			/**
 			@dirty

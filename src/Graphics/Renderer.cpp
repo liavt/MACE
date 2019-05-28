@@ -647,8 +647,6 @@ namespace mc {
 
 		GraphicsEntity::GraphicsEntity() noexcept : Entity(), painter(this, 0, nullptr) {}
 
-		GraphicsEntity::~GraphicsEntity() noexcept {}
-
 		void GraphicsEntity::init() {
 			gfx::getCurrentWindow()->getContext()->getRenderer()->queue(this, painter);
 			painter.init();

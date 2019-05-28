@@ -25,19 +25,19 @@ namespace mc {
 		Beginner(Beginable* o);
 		~Beginner();
 
-		Beginable* get();
-		const Beginable* get() const;
+		MACE_NODISCARD Beginable* get();
+		MACE_NODISCARD const Beginable* get() const;
 
-		Beginable* operator->();
-		const Beginable* operator->() const;
+		MACE_NODISCARD Beginable* operator->();
+		MACE_NODISCARD const Beginable* operator->() const;
 
-		Beginable* operator*();
-		const Beginable* operator*() const;
+		MACE_NODISCARD Beginable* operator*();
+		MACE_NODISCARD const Beginable* operator*() const;
 
 		bool operator==(const Beginner& other) const;
 		bool operator!=(const Beginner& other) const;
 	private:
-		Beginable * obj;
+		Beginable* obj;
 	};
 
 	class Initializer;
@@ -58,19 +58,19 @@ namespace mc {
 		Initializer(Initializable& o);
 		~Initializer();
 
-		Initializable* get();
-		const Initializable* get() const;
+		MACE_NODISCARD Initializable* get();
+		MACE_NODISCARD const Initializable* get() const;
 
-		Initializable* operator->();
-		const Initializable* operator->() const;
+		MACE_NODISCARD Initializable* operator->();
+		MACE_NODISCARD const Initializable* operator->() const;
 
-		Initializable* operator*();
-		const Initializable* operator*() const;
+		MACE_NODISCARD Initializable* operator*();
+		MACE_NODISCARD const Initializable* operator*() const;
 
 		bool operator==(const Initializer& other) const;
 		bool operator!=(const Initializer& other) const;
 	private:
-		Initializable * obj;
+		Initializable* obj;
 	};//Initializer
 }//mc
 

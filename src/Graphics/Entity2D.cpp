@@ -136,11 +136,11 @@ namespace mc {
 
 		//PROGRESS BAR
 
-		ProgressBar::ProgressBar() noexcept : ProgressBar(0, 0, 0) {}
+		SimpleProgressBar::SimpleProgressBar() noexcept : SimpleProgressBar(0, 0, 0) {}
 
-		ProgressBar::ProgressBar(const Progress minimum, const Progress maximum, const Progress prog) noexcept : minimumProgress(minimum), maximumProgress(maximum), progress(prog) {}
+		SimpleProgressBar::SimpleProgressBar(const Progress minimum, const Progress maximum, const Progress prog) noexcept : minimumProgress(minimum), maximumProgress(maximum), progress(prog) {}
 
-		void ProgressBar::setBackgroundTexture(const Texture& tex) {
+		void SimpleProgressBar::setBackgroundTexture(const Texture& tex) {
 			if (backgroundTexture != tex) {
 				makeDirty();
 
@@ -148,17 +148,17 @@ namespace mc {
 			}
 		}
 
-		Texture& ProgressBar::getBackgroundTexture() {
+		Texture& SimpleProgressBar::getBackgroundTexture() {
 			makeDirty();
 
 			return backgroundTexture;
 		}
 
-		const Texture& ProgressBar::getBackgroundTexture() const {
+		const Texture& SimpleProgressBar::getBackgroundTexture() const {
 			return backgroundTexture;
 		}
 
-		void ProgressBar::setForegroundTexture(const Texture& tex) {
+		void SimpleProgressBar::setForegroundTexture(const Texture& tex) {
 			if (foregroundTexture != tex) {
 				makeDirty();
 
@@ -166,17 +166,17 @@ namespace mc {
 			}
 		}
 
-		Texture& ProgressBar::getForegroundTexture() {
+		Texture& SimpleProgressBar::getForegroundTexture() {
 			makeDirty();
 
 			return foregroundTexture;
 		}
 
-		const Texture& ProgressBar::getForegroundTexture() const {
+		const Texture& SimpleProgressBar::getForegroundTexture() const {
 			return foregroundTexture;
 		}
 
-		void ProgressBar::setSelectionTexture(const Texture& tex) {
+		void SimpleProgressBar::setSelectionTexture(const Texture& tex) {
 			if (selectionTexture != tex) {
 				makeDirty();
 
@@ -184,18 +184,18 @@ namespace mc {
 			}
 		}
 
-		Texture& ProgressBar::getSelectionTexture() {
+		Texture& SimpleProgressBar::getSelectionTexture() {
 			makeDirty();
 
 			return selectionTexture;
 		}
 
-		const Texture& ProgressBar::getSelectionTexture() const {
+		const Texture& SimpleProgressBar::getSelectionTexture() const {
 			return selectionTexture;
 		}
 
 
-		void ProgressBar::setMinimum(const Progress minimum) {
+		void SimpleProgressBar::setMinimum(const Progress minimum) {
 			if (minimumProgress != minimum) {
 				makeDirty();
 
@@ -203,15 +203,15 @@ namespace mc {
 			}
 		}
 
-		Progress ProgressBar::getMinimum() {
+		Progress SimpleProgressBar::getMinimum() {
 			return minimumProgress;
 		}
 
-		const Progress ProgressBar::getMinimum() const {
+		const Progress SimpleProgressBar::getMinimum() const {
 			return minimumProgress;
 		}
 
-		void ProgressBar::setMaximum(const Progress maximum) {
+		void SimpleProgressBar::setMaximum(const Progress maximum) {
 			if (maximumProgress != maximum) {
 				makeDirty();
 
@@ -219,15 +219,15 @@ namespace mc {
 			}
 		}
 
-		Progress ProgressBar::getMaximum() {
+		Progress SimpleProgressBar::getMaximum() {
 			return maximumProgress;
 		}
 
-		const Progress ProgressBar::getMaximum() const {
+		const Progress SimpleProgressBar::getMaximum() const {
 			return maximumProgress;
 		}
 
-		void ProgressBar::setProgress(const Progress prog) {
+		void SimpleProgressBar::setProgress(const Progress prog) {
 			if (progress != prog) {
 				makeDirty();
 
@@ -235,36 +235,36 @@ namespace mc {
 			}
 		}
 
-		Progress& ProgressBar::getProgress() {
+		Progress& SimpleProgressBar::getProgress() {
 			makeDirty();
 
 			return progress;
 		}
 
-		const Progress& ProgressBar::getProgress() const {
+		const Progress& SimpleProgressBar::getProgress() const {
 			return progress;
 		}
 
-		void ProgressBar::easeTo(const Progress destination, const EaseSettings settings) {
+		void SimpleProgressBar::easeTo(const Progress destination, const EaseSettings settings) {
 			addComponent(std::shared_ptr<Component>(new EaseComponent(this, settings, getProgress(), destination)));
 		}
 
-		bool ProgressBar::operator==(const ProgressBar& other) const {
+		bool SimpleProgressBar::operator==(const SimpleProgressBar& other) const {
 			return Entity2D::operator==(other) && maximumProgress == other.maximumProgress && minimumProgress == other.minimumProgress && progress == other.progress && backgroundTexture == other.backgroundTexture && foregroundTexture == other.foregroundTexture && selectionTexture == other.selectionTexture;
 		}
 
-		bool ProgressBar::operator!=(const ProgressBar& other) const {
+		bool SimpleProgressBar::operator!=(const SimpleProgressBar& other) const {
 			return !operator==(other);
 		}
 
-		void ProgressBar::onRender(Painter& p) {
+		void SimpleProgressBar::onRender(Painter& p) {
 			p.enableRenderFeatures(Painter::RenderFeatures::FILTER | Painter::RenderFeatures::DISCARD_INVISIBLE);
 			p.conditionalMaskImages(foregroundTexture, backgroundTexture, selectionTexture,
 									minimumProgress / maximumProgress,
 									(progress - minimumProgress) / (maximumProgress - minimumProgress));
 		}
 
-		void ProgressBar::onDestroy() {
+		void SimpleProgressBar::onDestroy() {
 			if (backgroundTexture.isCreated()) {
 				backgroundTexture.destroy();
 			}
@@ -279,18 +279,18 @@ namespace mc {
 		}
 
 
-		Slider::Slider() noexcept : ProgressBar() {}
+		SimpleSlider::SimpleSlider() noexcept : SimpleProgressBar() {}
 
-		Slider::Slider(const Progress minimum, const Progress maximum, const Progress progress) noexcept : ProgressBar(minimum, maximum, progress) {}
+		SimpleSlider::SimpleSlider(const Progress minimum, const Progress maximum, const Progress progress) noexcept : SimpleProgressBar(minimum, maximum, progress) {}
 
-		void Slider::onRender(Painter & p) {
-			ProgressBar::onRender(p);
+		void SimpleSlider::onRender(Painter & p) {
+			SimpleProgressBar::onRender(p);
 
 			p.setTarget(FrameBufferTarget::DATA);
 			p.drawImage(selectionTexture);
 		}
 
-		void Slider::onClick() {
+		void SimpleSlider::onClick() {
 			const Renderer* renderer = getCurrentWindow()->getContext()->getRenderer();
 
 			const int mouseX = gfx::Input::getMouseX(), mouseY = gfx::Input::getMouseY();
@@ -301,7 +301,7 @@ namespace mc {
 			}
 		}
 
-		void Slider::onHover() {
+		void SimpleSlider::onHover() {
 			doHover();
 		}
 
@@ -534,17 +534,17 @@ namespace mc {
 			}
 		}
 
-		const Texture& Button::getTexture() const {
+		const Texture& SimpleButton::getTexture() const {
 			return texture;
 		}
 
-		Texture& Button::getTexture() {
+		Texture& SimpleButton::getTexture() {
 			makeDirty();
 
 			return texture;
 		}
 
-		void Button::setTexture(const Texture & c) {
+		void SimpleButton::setTexture(const Texture & c) {
 			if (texture != c) {
 				makeDirty();
 
@@ -552,17 +552,17 @@ namespace mc {
 			}
 		}
 
-		const Texture& Button::getHoverTexture() const {
+		const Texture& SimpleButton::getHoverTexture() const {
 			return hoverTexture;
 		}
 
-		Texture& Button::getHoverTexture() {
+		Texture& SimpleButton::getHoverTexture() {
 			makeDirty();
 
 			return hoverTexture;
 		}
 
-		void Button::setHoverTexture(const Texture & c) {
+		void SimpleButton::setHoverTexture(const Texture & c) {
 			if (hoverTexture != c) {
 				makeDirty();
 
@@ -570,17 +570,17 @@ namespace mc {
 			}
 		}
 
-		const Texture& Button::getClickedTexture() const {
+		const Texture& SimpleButton::getClickedTexture() const {
 			return clickedTexture;
 		}
 
-		Texture& Button::getClickedTexture() {
+		Texture& SimpleButton::getClickedTexture() {
 			makeDirty();
 
 			return clickedTexture;
 		}
 
-		void Button::setClickedTexture(const Texture & c) {
+		void SimpleButton::setClickedTexture(const Texture & c) {
 			if (clickedTexture != c) {
 				makeDirty();
 
@@ -588,17 +588,17 @@ namespace mc {
 			}
 		}
 
-		const Texture& Button::getDisabledTexture() const {
+		const Texture& SimpleButton::getDisabledTexture() const {
 			return disabledTexture;
 		}
 
-		Texture& Button::getDisabledTexture() {
+		Texture& SimpleButton::getDisabledTexture() {
 			makeDirty();
 
 			return disabledTexture;
 		}
 
-		void Button::setDisabledTexture(const Texture & c) {
+		void SimpleButton::setDisabledTexture(const Texture & c) {
 			if (disabledTexture != c) {
 				makeDirty();
 
@@ -606,7 +606,7 @@ namespace mc {
 			}
 		}
 
-		void Button::onRender(Painter & p) {
+		void SimpleButton::onRender(Painter & p) {
 			p.drawImage(texture);
 			if (isDisabled()) {
 				p.drawImage(disabledTexture);
@@ -620,11 +620,11 @@ namespace mc {
 			}
 		}
 
-		void Button::onHover() {
+		void SimpleButton::onHover() {
 			doHover();
 		}
 
-		void Button::onDestroy() {
+		void SimpleButton::onDestroy() {
 			if (texture.isCreated()) {
 				texture.destroy();
 			}

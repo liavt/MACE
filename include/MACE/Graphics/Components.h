@@ -470,6 +470,37 @@ namespace mc {
 			UninheritScaleComponent();
 		private:
 			void clean(Metrics&) override final;
+		};//UninheritScaleComponent
+
+		struct NineSliceDesc {
+			Texture topLeft, top, topRight, right, bottomRight, bottom, bottomLeft, left, center;
+
+			bool operator==(const NineSliceDesc& other) const;
+			bool operator!=(const NineSliceDesc& other) const;
+		};
+
+		class NineSliceComponent: public Component {
+		public:
+			NineSliceComponent(const NineSliceDesc& desc);
+
+			/**
+			@dirty
+			*/
+			NineSliceDesc& getDesc();
+			const NineSliceDesc& getDesc() const;
+			/**
+			@desc
+			*/
+			void setDesc(const NineSliceDesc& desc);
+		private:
+			NineSliceDesc desc;
+			GraphicsEntity* en;
+
+			void init() override;
+
+			void render() override;
+
+			void clean(Metrics& metrics) override;
 		};
 
 		class TextureFramesComponent: public Component, public Progressable {
