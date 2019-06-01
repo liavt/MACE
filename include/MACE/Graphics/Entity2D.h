@@ -235,8 +235,15 @@ namespace mc {
 		*/
 		class Text: public TexturedEntity2D {
 		public:
-			Text(const std::string& t, const Font& f = Font());
-			Text(const std::wstring& t = L"", const Font& f = Font());
+			Text() noexcept;
+			/**
+			@rendercontext
+			*/
+			Text(const std::string& t, const Font& f = Fonts::CODE);
+			/**
+			@rendercontext
+			*/
+			Text(const std::wstring& t, const Font& f = Fonts::CODE);
 			~Text() = default;
 
 			/**

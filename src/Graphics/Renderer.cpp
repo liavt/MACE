@@ -397,7 +397,6 @@ namespace mc {
 
 		void Painter::setForegroundColor(const Color & col) {
 			state.foregroundColor = col;
-
 		}
 
 		Color& Painter::getForegroundColor() {

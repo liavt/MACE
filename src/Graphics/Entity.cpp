@@ -431,11 +431,16 @@ namespace mc {
 				}
 				child->init();
 			}
+
+			//Component::init is called on addComponent, so it doesn't need to be called here
+
 			onInit();
 			setProperty(Entity::INIT, true);
 		}
 
 		void Entity::destroy() {
+			//Component::destroy is called in reset() before components.clear()
+
 			if (getProperty(Entity::INIT)) {
 				setProperty(Entity::DEAD, true);
 				for (Index i = 0; i < children.size(); ++i) {
@@ -446,6 +451,7 @@ namespace mc {
 				}
 				onDestroy();
 			}
+			//in order to notify the root that it became dirty
 			makeDirty();
 			reset();
 		}

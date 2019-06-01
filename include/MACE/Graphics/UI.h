@@ -8,10 +8,15 @@ See LICENSE.md for full copyright information
 #define MACE__GRAPHICS_UI_H
 
 #include <MACE/Graphics/Entity.h>
-#include <MACE/Graphics/Components.h>
+#include <MACE/Graphics/Entity2D.h>
 
 namespace mc {
 	namespace gfx {
+		class UIButton: public Selectable, public Entity2D {
+		private:
+			void onInit() override final;
+			void onRender(Painter& p) override final;
+		};
 	}//gfx
 }//mc
 

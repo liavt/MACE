@@ -349,6 +349,8 @@ namespace mc {
 
 		void Letter::onClean() {}
 
+		Text::Text() noexcept : TexturedEntity2D(), text(), font() {}
+
 		Text::Text(const std::string & s, const Font & f) : Text(os::toWideString(s), f) {}
 
 		Text::Text(const std::wstring & t, const Font & f) : TexturedEntity2D(), text(t), font(f) {}

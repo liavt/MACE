@@ -532,7 +532,7 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		NineSliceComponent::NineSliceComponent(const NineSliceDesc & desc) : desc(desc), en(nullptr) {}
+		NineSliceComponent::NineSliceComponent(const NineSliceDesc & desc) : desc(desc), en(nullptr), cornerWidth(0.0f), cornerHeight(0.0f) {}
 
 		NineSliceDesc& NineSliceComponent::getDesc() {
 			parent->makeDirty();
@@ -559,20 +559,60 @@ namespace mc {
 				MACE__THROW(InvalidType, "NineSliceComponent added to a non-graphical Entity");
 			}
 #endif
+
+			if (desc.topLeft.getDimensions() != desc.bottomRight.getDimensions()
+				|| desc.topLeft.getDimensions() != desc.bottomLeft.getDimensions()
+				|| desc.topLeft.getDimensions() != desc.topRight.getDimensions()) {
+				MACE__THROW(AssertionFailed, "NineSliceDesc must contain 4 corners of equal size");
+			}
 		}
 
 		void NineSliceComponent::render() {
 			Painter& painter = en->getPainter();
+			TransformMatrix& transform = painter.getTransformation();
+			const float flipSides = desc.flipSides ? -1.0f : 1.0f;
+
 			const Beginner beginner(&painter);
 			painter.push();
 			painter.reset();
 			painter.disableRenderFeatures(Painter::RenderFeatures::FILTER);
 			painter.enableRenderFeatures(Painter::RenderFeatures::DISCARD_INVISIBLE | Painter::RenderFeatures::STORE_ID);
+			transform.scaler = {1.0f - (cornerWidth * 2.0f), 1.0f - (cornerHeight * 2.0f), 1.0f};
 			painter.drawImage(desc.center);
+			transform.translation.x() = -1.0f + cornerWidth;
+			transform.scaler.x() = cornerWidth * flipSides;
+			painter.drawImage(desc.left);
+			transform.translation.x() *= -1.0f;
+			transform.scaler.x() *= flipSides;
+			painter.drawImage(desc.right);
+			transform.scaler.y() = cornerHeight * flipSides;
+			transform.translation.y() = -1.0f + cornerHeight;
+			painter.drawImage(desc.bottomRight);
+			transform.scaler.y() *= flipSides;
+			transform.translation.y() *= -1.0f;
+			painter.drawImage(desc.topRight);
+			transform.scaler.x() *= flipSides;
+			transform.translation.x() *= -1.0f;
+			painter.drawImage(desc.topLeft);
+			transform.scaler.y() *= flipSides;
+			transform.translation.y() *= -1.0f;
+			painter.drawImage(desc.bottomLeft);
+			transform.translation.x() = 0.0f;
+			transform.scaler.x() = (1.0f - (cornerWidth * 2.0f)) * flipSides;
+			painter.drawImage(desc.bottom);
+			transform.translation.y() *= -1.0f;
+			transform.translation.x() *= flipSides;
+			painter.drawImage(desc.top);
 			painter.pop();
 		}
 
-		void NineSliceComponent::clean(Metrics & metrics) {}
+		void NineSliceComponent::clean(Metrics & metrics) {
+			const WindowModule* window = gfx::getCurrentWindow();
+			const Vector<float, 2> windowRatios = window->getContext()->getRenderer()->getWindowRatios();
+			const Vector<float, 3> scale = metrics.transform.scaler * metrics.inherited.scaler;
+			cornerWidth = window->convertPixelsToRelativeXCoordinates(desc.topLeft.getWidth()) / scale.x() * windowRatios.x();
+			cornerHeight = window->convertPixelsToRelativeYCoordinates(desc.topLeft.getHeight()) / scale.y() * windowRatios.y();
+		}
 
 		TextureFramesComponent::TextureFramesComponent(const std::vector<Texture> & tex, const FrameCallback call) : callback(call), frames(tex), progress(0) {}
 

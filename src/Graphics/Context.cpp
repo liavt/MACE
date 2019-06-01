@@ -242,11 +242,11 @@ namespace mc {
 			return tex;
 		}
 
-		Texture Texture::createFromMemory(const unsigned char* c, const int size) {
+		Texture Texture::createFromMemory(const unsigned char* c, const Size size) {
 			Texture texture = Texture();
 			int width, height, componentSize;
 
-			Byte* image = stbi_load_from_memory(c, size, &width, &height, &componentSize, STBI_rgb_alpha);
+			Byte* image = stbi_load_from_memory(c, static_cast<int>(size), &width, &height, &componentSize, STBI_rgb_alpha);
 
 			try {
 				if (image == nullptr || width == 0 || height == 0 || componentSize == 0) {
@@ -323,13 +323,15 @@ namespace mc {
 
 		Texture::Texture() : texture(nullptr), hue(0.0f, 0.0f, 0.0f, 0.0f) {}
 
-		Texture::Texture(const TextureDesc & d) {
+		Texture::Texture(const TextureDesc & d) : Texture() {
 			init(d);
 		}
 
 		Texture::Texture(const std::shared_ptr<TextureImpl> tex, const Color & col) : texture(tex), hue(col) {}
 
-		Texture::Texture(const Texture & tex, const Color & col) : texture(tex.texture), hue(col) {}
+		Texture::Texture(const Texture & tex) : texture(tex.texture), hue(tex.hue), transform(tex.transform) {}
+
+		Texture::Texture(const Texture & tex, const Color & col) : texture(tex.texture), transform(tex.transform), hue(col) {}
 
 		Texture::Texture(const Color & col) : Texture(Texture::getSolidColor(), col) {}
 
@@ -372,6 +374,14 @@ namespace mc {
 
 		const Pixels Texture::getHeight() const {
 			return texture == nullptr ? 0 : texture->desc.height;
+		}
+
+		Vector<Pixels, 2> mc::gfx::Texture::getDimensions() {
+			return {getWidth(), getHeight()};
+		}
+
+		const Vector<Pixels, 2> mc::gfx::Texture::getDimensions() const {
+			return {getWidth(), getHeight()};
 		}
 
 

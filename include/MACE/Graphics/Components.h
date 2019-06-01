@@ -474,6 +474,12 @@ namespace mc {
 
 		struct NineSliceDesc {
 			Texture topLeft, top, topRight, right, bottomRight, bottom, bottomLeft, left, center;
+			/**
+			If true, the `NineSliceComponent` will render the corners and sides to be flipped
+			vertically or horizontally depending on the orientation. Use this property to reuse
+			textures for the sides and corners
+			*/
+			bool flipSides = false;
 
 			bool operator==(const NineSliceDesc& other) const;
 			bool operator!=(const NineSliceDesc& other) const;
@@ -495,6 +501,7 @@ namespace mc {
 		private:
 			NineSliceDesc desc;
 			GraphicsEntity* en;
+			float cornerWidth, cornerHeight;
 
 			void init() override;
 

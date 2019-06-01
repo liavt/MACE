@@ -510,6 +510,7 @@ namespace mc {
 			<p>
 			If this `Entity` does not have any parent, returns `this`
 			@return The root `Entity` of which this `Entity` belongs to.
+			@note For deep heirarchies, this function could be slower.
 			*/
 			const Entity* getRoot() const;
 			/**
@@ -549,12 +550,6 @@ namespace mc {
 			*/
 			void makeDirty();
 		protected:
-			/**
-			`std::vector` of this `Entity\'s` children. Use of this variable directly is unrecommended. Use `addChild()` or `removeChild()` instead.
-			@internal
-			*/
-			std::vector<std::shared_ptr<Entity>> children = std::vector<std::shared_ptr<Entity>>();
-
 			/**
 			Should be called a by `Entity` when `MACE.update()` is called. Calls `onUpdate()`.
 			<p>
@@ -630,6 +625,11 @@ namespace mc {
 			*/
 			virtual void onHover();
 		private:
+			/**
+			`std::vector` of this `Entity\'s` children. Use of this variable directly is unrecommended. Use `addChild()` or `removeChild()` instead.
+			@internal
+			*/
+			std::vector<std::shared_ptr<Entity>> children = std::vector<std::shared_ptr<Entity>>();
 			std::vector<std::shared_ptr<Component>> components = std::vector<std::shared_ptr<Component>>();
 
 			EntityProperties properties = Entity::DEFAULT_PROPERTIES;

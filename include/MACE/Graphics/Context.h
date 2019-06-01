@@ -289,7 +289,14 @@ namespace mc {
 			/**
 			@rendercontext
 			*/
-			static Texture createFromMemory(const unsigned char* c, const int size);
+			static Texture createFromMemory(const unsigned char* c, const Size size);
+			/**
+			@copydoc createFromMemory(const unsigned char*, const int)
+			*/
+			template<const Size N>
+			static Texture createFromMemory(const unsigned char c[N]) {
+				return createFromMemory(c, static_cast<int>(N));
+			}
 			/**
 			@rendercontext
 			*/
@@ -306,7 +313,8 @@ namespace mc {
 			Texture();
 			Texture(const TextureDesc& d);
 			Texture(const Color& col);
-			Texture(const Texture& tex, const Color& col = Color(0.0, 0.0f, 0.0f, 0.0f));
+			Texture(const Texture& tex);
+			Texture(const Texture& tex, const Color& col);
 
 			/**
 			@rendercontext
@@ -326,6 +334,9 @@ namespace mc {
 
 			Pixels getHeight();
 			const Pixels getHeight() const;
+
+			Vector<Pixels, 2> getDimensions();
+			const Vector<Pixels, 2> getDimensions() const;
 
 			//this needs to be defined in the header file to prevent linker conflicts, because Entity.cpp does not have opencv included ever.
 #			ifdef MACE_OPENCV

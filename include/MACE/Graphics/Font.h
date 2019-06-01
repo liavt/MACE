@@ -116,7 +116,7 @@ namespace mc {
 			Font(const FontDesc& desc, const FontSize size = 12);
 			Font(const Font& other);
 			Font(const Font& other, const FontSize size);
-			Font(const Fonts font, const FontSize soze = 12);
+			Font(const Fonts font, const FontSize size = 12);
 			~Font() = default;
 
 			/**

@@ -8,7 +8,7 @@ layout(location = MACE_ID_ATTACHMENT_INDEX) out uint _mc_OutID;
 in highp vec2 _mcTextureCoord;
 
 vec4 _mcGetTexture(const in sampler2D mc_Sampler, const in _mc_TextureAttachment mc_Tex){
-	vec4 mc_Fragment = texture(mc_Sampler, _mcTextureCoord * mc_Tex.mc_TextureTransform.wz + mc_Tex.mc_TextureTransform.xy);
+	vec4 mc_Fragment = texture(mc_Sampler, mc_Tex.mc_TextureTransform.xy + mc_Tex.mc_TextureTransform.zw * fract(_mcTextureCoord));
 	
 	return vec4(mix(mc_Tex.mc_Color.rgb, mc_Fragment.rgb, 1.0f - mc_Tex.mc_Color.a), mc_Fragment.a);;
 }
