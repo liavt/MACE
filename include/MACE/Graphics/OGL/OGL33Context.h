@@ -41,7 +41,7 @@ namespace mc {
 				OGL33Texture(const TextureDesc& desc);
 				~OGL33Texture() override;
 
-				void setData(const void* data, const int mipmap, const PixelStorageHints hints) override;
+				void setData(const void* data, const int x, const int y, const Pixels w, const Pixels h, const int mipmap, const PixelStorageHints hints) override;
 
 				void readPixels(void* data, const PixelStorageHints hints) const override;
 

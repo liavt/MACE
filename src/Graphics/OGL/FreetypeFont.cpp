@@ -16,7 +16,7 @@ namespace mc {
 					switch (bitmap->pixel_mode) {
 					case FT_PIXEL_MODE_GRAY:
 						desc.format = TextureDesc::Format::LUMINANCE;
-						desc.internalFormat = TextureDesc::InternalFormat::RED;
+						desc.internalFormat = TextureDesc::InternalFormat::R8;
 						break;
 					case FT_PIXEL_MODE_LCD:
 						desc.width /= 3;

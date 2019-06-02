@@ -54,32 +54,26 @@ namespace mc {
 
 				GLenum getInternalFormat(const TextureDesc::InternalFormat format) {
 					switch (format) {
-					case TextureDesc::InternalFormat::DEPTH:
-						return GL_DEPTH_COMPONENT;
-					case TextureDesc::InternalFormat::DEPTH_STENCIL:
-						return GL_DEPTH_STENCIL;
-					case TextureDesc::InternalFormat::RED:
-						return GL_RED;
-					case TextureDesc::InternalFormat::RG:
-						return GL_RG;
-					case TextureDesc::InternalFormat::RGB:
-						return GL_RGB;
-					case TextureDesc::InternalFormat::RGBA:
-						return GL_RGBA;
+					case TextureDesc::InternalFormat::DEPTH24:
+						return GL_DEPTH_COMPONENT24;
+					case TextureDesc::InternalFormat::DEPTH24_STENCIL8:
+						return GL_DEPTH24_STENCIL8;
 					case TextureDesc::InternalFormat::R8:
 						return GL_R8;
 					case TextureDesc::InternalFormat::R16:
 						return GL_R16;
+					case TextureDesc::InternalFormat::RG8:
+						return GL_RG8;
+					case TextureDesc::InternalFormat::RG16:
+						return GL_RG16;
 					case TextureDesc::InternalFormat::RGB8:
 						return GL_RGB8;
 					case TextureDesc::InternalFormat::RGBA8:
 						return GL_RGBA8;
-					case TextureDesc::InternalFormat::SRGB:
-						return GL_SRGB;
 					case TextureDesc::InternalFormat::SRGB8:
 						return GL_SRGB8;
-					case TextureDesc::InternalFormat::SRGB_ALPHA:
-						return GL_SRGB_ALPHA;
+					case TextureDesc::InternalFormat::SRGB8_ALPHA8:
+						return GL_SRGB8_ALPHA8;
 						default MACE_UNLIKELY:
 						MACE__THROW(BadFormat, "Unsupported internal format by OpenGL");
 					}
@@ -224,19 +218,19 @@ namespace mc {
 				}
 				*/
 				glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, desc.borderColor.begin());
+
+				ogl33::Texture2D::createStorage(desc.width, desc.height, getType(desc.type), getFormat(desc.format), getInternalFormat(desc.internalFormat), desc.mipmapLevels);
 			}
 
 			OGL33Texture::~OGL33Texture() {
 				ogl33::Texture2D::destroy();
 			}
 
-			void OGL33Texture::setData(const void* data, const int mipmap, const PixelStorageHints hints) {
-				ogl33::Texture2D::bind();
-
+			void OGL33Texture::setData(const void* data, const int x, const int y, const Pixels w, const Pixels h, const int mipmap, const PixelStorageHints hints) {
 				setPixelStorage(GL_UNPACK_ALIGNMENT, hints.alignment);
 				setPixelStorage(GL_UNPACK_ROW_LENGTH, hints.rowLength);
 
-				ogl33::Texture2D::setData(data, desc.width, desc.height, getType(desc.type), getFormat(desc.format), getInternalFormat(desc.internalFormat), mipmap);
+				ogl33::Texture2D::setSubdata(data, x, y, w, h, getType(desc.type), getFormat(desc.format), mipmap);
 
 				if (desc.minFilter == TextureDesc::Filter::MIPMAP_LINEAR || desc.minFilter == TextureDesc::Filter::MIPMAP_NEAREST) {
 					ogl33::Texture2D::generateMipmap();
@@ -244,8 +238,6 @@ namespace mc {
 			}
 
 			void OGL33Texture::readPixels(void* data, const PixelStorageHints hints) const {
-				ogl33::Texture2D::bind();
-
 				setPixelStorage(GL_PACK_ALIGNMENT, hints.alignment);
 				setPixelStorage(GL_PACK_ROW_LENGTH, hints.rowLength);
 

@@ -24,7 +24,7 @@ endif()
 
 message("MACE project added")
 
-#On unix systems this line is requied to compile GLFW and GLEW
+#On unix systems this line is requied to compile GLFW
 enable_language(C)
 
 set(CMAKE_MODULE_PATH "${CMAKE_ROOT}/Modules" "${PROJECT_SOURCE_DIR}/cmake-modules")
@@ -75,9 +75,9 @@ set(OPENAL_SOURCE_VERSION "1.19.1")
 set(OPENAL_SOURCE_NAME "openal-soft-openal-soft-${OPENAL_SOURCE_VERSION}")
 set(OPENAL_URL "https://github.com/kcat/openal-soft/archive/openal-soft-${OPENAL_SOURCE_VERSION}.tar.gz")
 
-set(GLEW_SOURCE_VERSION "2.1.0")
-set(GLEW_SOURCE_NAME "glew-${GLEW_SOURCE_VERSION}")
-set(GLEW_URL "https://sourceforge.net/projects/glew/files/glew/${GLEW_SOURCE_VERSION}/${GLEW_SOURCE_NAME}.tgz/download")
+set(GLAD_SOURCE_VERSION "0.1.30")
+set(GLAD_SOURCE_NAME "glad-${GLAD_SOURCE_VERSION}")
+set(GLAD_URL "https://github.com/Dav1dde/glad/archive/v${GLAD_SOURCE_VERSION}.tar.gz")
 
 set(FREETYPE_SOURCE_VERSION "2.10.0")
 set(FREETYPE_SOURCE_NAME "freetype-${FREETYPE_SOURCE_VERSION}")
@@ -96,7 +96,6 @@ set(STB_IMAGE_DOWNLOAD_PATH "${MACE_OUTPUT_INCLUDE_DIR}")
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 find_package(OpenGL REQUIRED)
-find_package(GLEW ${GLEW_SOURCE_VERSION})
 find_package(GLFW ${GLFW_SOURCE_VERSION})
 find_package(Freetype ${FREETYPE_SOURCE_VERSION})
 find_package(OpenAL)
@@ -332,24 +331,25 @@ if(NOT ${GLFW_FOUND})
 	endif()
 endif()
 
-if(NOT ${GLEW_FOUND})
+if(NOT EXISTS "${CMAKE_BINARY_DIR}/${GLAD_SOURCE_NAME}")
 	if(NOT MACE_DOWNLOAD_DEPENDENCIES)
-		message(FATAL_ERROR "GLEW not found!")
+		message(FATAL_ERROR "GLAD not found! Please put the glad directory in the project binary directory")
 	else()
-		download_library(${GLEW_SOURCE_NAME} ${GLEW_URL})
-		add_subdirectory(${CMAKE_BINARY_DIR}/${GLEW_SOURCE_NAME}/build/cmake ${CMAKE_BINARY_DIR}/${GLEW_SOURCE_NAME})
-		
-		set(GLEW_LIBRARY glew_s)
-		
-		if(BUILD_SHARED_LIBS)
-			add_definitions(-DGLEW_BUILD)
-		else()
-			add_definitions(-DGLEW_STATIC)
-		endif()
-		
-		set(GLEW_INCLUDE_DIR ${CMAKE_BINARY_DIR}/${GLEW_SOURCE_NAME}/include)
+		download_library(${GLAD_SOURCE_NAME} ${GLAD_URL})
 	endif()
 endif()
+
+set(GLAD_PROFILE "core" CACHE STRING "" FORCE)
+set(GLAD_API "gl=3.3" CACHE STRING "" FORCE)
+set(GLAD_GENERATOR "c-debug" CACHE STRING "" FORCE)
+set(GLAD_SPEC "gl" CACHE STRING "" FORCE)
+set(GLAD_EXTENSIONS "GL_ARB_buffer_storage,GL_ARB_texture_storage,GL_ARB_clear_buffer_object,GL_ARB_direct_state_access,GL_ARB_multi_bind,GL_EXT_direct_state_access" CACHE STRING "" FORCE)
+set(GLAD_REPRODUCIBLE ON CACHE BOOL "" FORCE)
+set(GLAD_NO_LOADER ON CACHE BOOL "" FORCE)
+set(GLAD_EXPORT ON CACHE BOOL "" FORCE)
+set(GLAD_INSTALL ON CACHE BOOL "" FORCE)
+
+add_subdirectory(${CMAKE_BINARY_DIR}/${GLAD_SOURCE_NAME})
 
 if(NOT ${FREETYPE_FOUND})
 	if(NOT MACE_DOWNLOAD_DEPENDENCIES)
@@ -399,7 +399,7 @@ if(MACE_TESTS OR MACE_DEMOS)
 endif()
 
 target_include_directories(MACE PUBLIC ${GLFW_INCLUDE_DIR})
-target_include_directories(MACE PUBLIC ${GLEW_INCLUDE_DIR})
+target_include_directories(MACE PUBLIC ${GLAD_INCLUDE_DIRS})
 target_include_directories(MACE PUBLIC ${FREETYPE_INCLUDE_DIR_ft2build})
 target_include_directories(MACE PUBLIC ${FREETYPE_INCLUDE_DIR_freetype2})
 target_include_directories(MACE PUBLIC ${OPENAL_INCLUDE_DIR})
@@ -410,7 +410,7 @@ target_link_libraries(MACE LINK_PUBLIC ${FREETYPE_LIBRARY})
 target_link_libraries(MACE LINK_PUBLIC ${GLFW_LIBRARY})
 target_link_libraries(MACE LINK_PUBLIC ${OPENAL_LIBRARY})
 target_link_libraries(MACE LINK_PUBLIC ${OPENGL_LIBRARY})
-target_link_libraries(MACE LINK_PUBLIC ${GLEW_LIBRARY})
+target_link_libraries(MACE LINK_PUBLIC ${GLAD_LIBRARIES})
 
 if(UNIX AND NOT APPLE)#glfw requires this
 	find_package(X11 REQUIRED)
@@ -460,7 +460,7 @@ target_include_directories(MACE PUBLIC "${MACE_OUTPUT_INCLUDE_DIR}")
 #COTIRE configuration
 set_target_properties(MACE PROPERTIES COTIRE_UNITY_TARGET_NAME "MACE-Unity"
 								COTIRE_ADD_UNITY_BUILD FALSE
-								COTIRE_PREFIX_HEADER_INCLUDE_PATH "${GLEW_INCLUDE_DIR};${GLFW_INCLUDE_DIR};${MACE_INCLUDES}/MACE/Core/Constants.h;${MACE_OUTPUT_INCLUDE_DIR}/MACE"
-								COTIRE_PREFIX_HEADER_INCLUDE_PRIORITY_PATH "${GLEW_INCLUDE_DIR};${GLFW_INCLUDE_DIR}"
+								COTIRE_PREFIX_HEADER_INCLUDE_PATH "${GLAD_INCLUDE_DIRS};${GLFW_INCLUDE_DIR};${MACE_INCLUDES}/MACE/Core/Constants.h;${MACE_OUTPUT_INCLUDE_DIR}/MACE"
+								COTIRE_PREFIX_HEADER_INCLUDE_PRIORITY_PATH "${GLAD_INCLUDE_DIRS};${GLFW_INCLUDE_DIR}"
 								COTIRE_PREFIX_HEADER_IGNORE_PATH "${CMAKE_SOURCE_DIR};${CMAKE_BINARY_DIR};${OPENGL_INCLUDE_DIR};")
 cotire(MACE CONFIGURATIONS Release MinSizeRel)

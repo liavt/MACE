@@ -201,19 +201,16 @@ namespace mc {
 			};
 
 			enum class InternalFormat: Enum {
-				DEPTH,
-				DEPTH_STENCIL,
-				RED,
-				RG,
-				RGB,
-				RGBA,
+				DEPTH24,
+				DEPTH24_STENCIL8,
 				R8,
 				R16,
+				RG8,
+				RG16,
 				RGB8,
 				RGBA8,
-				SRGB,
 				SRGB8,
-				SRGB_ALPHA
+				SRGB8_ALPHA8
 			};
 
 			enum class Filter: Byte {
@@ -240,9 +237,10 @@ namespace mc {
 
 			Filter minFilter = Filter::LINEAR;
 			Filter magFilter = Filter::LINEAR;
+			int mipmapLevels = 1;
 			Type type = Type::FLOAT;
 			Format format = Format::RGBA;
-			InternalFormat internalFormat = InternalFormat::RGBA;
+			InternalFormat internalFormat = InternalFormat::RGBA8;
 
 			Pixels width = 0, height = 0;
 
@@ -264,7 +262,7 @@ namespace mc {
 
 			virtual void bindTextureSlot(const TextureSlot slot) const = 0;
 
-			virtual void setData(const void* data, const int mipmap, const PixelStorageHints hints) = 0;
+			virtual void setData(const void* data, const int x, const int y, const Pixels w, const Pixels h, const int mipmap, const PixelStorageHints hints) = 0;
 
 			virtual void readPixels(void* data, const PixelStorageHints hints) const = 0;
 		protected:
@@ -410,6 +408,7 @@ namespace mc {
 			const Vector<RelativeUnit, 4>& getTransform() const;
 			void setTransform(const Vector<RelativeUnit, 4> & trans);
 
+			void setData(const void* data, const int x, const int y, const Pixels width, const Pixels height, const int mipmapLevel = 0, const PixelStorageHints hints = PixelStorageHints());
 			/**
 			@rendercontext
 			*/

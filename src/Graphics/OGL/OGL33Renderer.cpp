@@ -39,13 +39,13 @@ namespace mc {
 #define MACE__ENTITY_DATA_BUFFER_SIZE sizeof(float) * 28
 			//which binding location the uniform buffer goes to
 #define MACE__ENTITY_DATA_LOCATION 0
-#define MACE__ENTITY_DATA_USAGE GL_DYNAMIC_DRAW
+#define MACE__ENTITY_DATA_STORAGE_FLAGS GL_DYNAMIC_STORAGE_BIT
 			//the definition is later stringified. cant be a string because this gets added to the shader via a macro (see createShader)
 #define MACE__ENTITY_DATA_NAME _mc_EntityData
 
 #define MACE__PAINTER_DATA_BUFFER_SIZE sizeof(float) * 56
 #define MACE__PAINTER_DATA_LOCATION 1
-#define MACE__PAINTER_DATA_USAGE GL_DYNAMIC_DRAW
+#define MACE__PAINTER_DATA_STORAGE_FLAGS GL_DYNAMIC_STORAGE_BIT
 #define MACE__PAINTER_DATA_NAME _mc_PainterData
 
 #define MACE__SCENE_ATTACHMENT_INDEX 0
@@ -269,37 +269,13 @@ namespace mc {
 			OGL33Renderer::OGL33Renderer() {}
 
 			void OGL33Renderer::onInit(gfx::WindowModule* win) {
-				glewExperimental = true;
-				const GLenum result = glewInit();
-				if (result != GLEW_OK) {
-					std::ostringstream errorMessage;
-					errorMessage << "OpenGL failed to initialize: ";
-					//to convert from GLubyte* to string, we can use the << in ostream. For some reason the
-					//+ operater in std::string can not handle this conversion.
-					errorMessage << glewGetErrorString(result);
-					errorMessage << ": ";
-					if (result == GLEW_ERROR_NO_GL_VERSION) {
-						errorMessage << "NO_GL_VERSION: There was no OpenGL version found on this system";
-					} else if (result == GLEW_ERROR_GL_VERSION_10_ONLY) {
-						errorMessage << "GL_VERSION_10_ONLY: The version of OpenGL found on this system is outdated: OpenGL 1.0 found, OpenGL 1.1+ required";
-					}
-
-					MACE__THROW(UnsupportedRenderer, errorMessage.str());
-				}
-
-				if (!GLEW_VERSION_3_3) {
+				const int version = gladLoadGLLoader(( GLADloadproc) glfwGetProcAddress);
+				if (version == 0) {
 					std::ostringstream errorMessage;
 					errorMessage << "This system (OpenGL " << glGetString(GL_VERSION) << ")";
 					errorMessage << " does not support the required OpenGL version required by this renderer, ";
 					errorMessage << "OpenGL 3.3";
 					MACE__THROW(UnsupportedRenderer, errorMessage.str());
-				}
-
-				try {
-					gfx::ogl33::forceCheckGLError(__LINE__, __FILE__, "Internal Error: This should be ignored silently, it is a bug with glew");
-				} catch (...) {
-					//glew sometimes throws errors that can be ignored (GL_INVALID_ENUM)
-					//see https://www.khronos.org/opengl/wiki/OpenGL_Loading_Library (section GLEW) saying to ignore a GLEW error immediatevely after glewInit()
 				}
 
 #ifdef MACE_DEBUG_OPENGL
@@ -312,8 +288,35 @@ namespace mc {
 				std::cout << os::consoleColor(os::ConsoleColor::GREEN) << glGetString(GL_RENDERER) << std::endl;
 				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "Shader version: " << std::endl << "\t";
 				std::cout << os::consoleColor(os::ConsoleColor::GREEN) << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
+				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "Supported extensions: " << std::endl;
+				std::cout << os::consoleColor(os::ConsoleColor::GREEN);
+#define MACE__DEBUG_OUTPUT_EXTENSION(ext) if(GLAD_##ext){std::cout << "\t* " << #ext << std::endl;}
+				MACE__DEBUG_OUTPUT_EXTENSION(GL_ARB_buffer_storage)
+					MACE__DEBUG_OUTPUT_EXTENSION(GL_ARB_texture_storage);
+				MACE__DEBUG_OUTPUT_EXTENSION(GL_ARB_clear_buffer_object);
+				MACE__DEBUG_OUTPUT_EXTENSION(GL_ARB_multi_bind);
+				MACE__DEBUG_OUTPUT_EXTENSION(GL_ARB_direct_state_access);
+				MACE__DEBUG_OUTPUT_EXTENSION(GL_EXT_direct_state_access);
+#undef MACE__DEBUG_OUTPUT_EXTENSION
 				std::cout << os::consoleColor();
-#endif
+#ifdef GLAD_DEBUG
+				glad_set_pre_callback([](const char*, void*, int, ...) {
+					//do nothing
+				});
+				glad_set_post_callback([](const char* name, void*, int, ...) {
+					ogl33::checkGLError(__LINE__, __FILE__, name);
+				});
+#endif//GLAD_DEBUG
+#else
+#ifdef GLAD_DEBUG
+				glad_set_pre_callback([](const char*, void*, int, ...) {
+					//do nothing
+				});
+				glad_set_post_callback([](const char*, void*, int, ...) {
+					//do nothing
+				});
+#endif//GLAD_DEBUG
+#endif//MACE_DEBUG_OPENGL
 
 				const WindowModule::LaunchConfig& config = win->getLaunchConfig();
 
@@ -322,12 +325,17 @@ namespace mc {
 				ogl33::forceCheckGLError(__LINE__, __FILE__, "An OpenGL error occured initializing OGL33Renderer");
 
 				frameBuffer.bind();
+
+				ogl33::enable(GL_BLEND);
+				ogl33::enable(GL_MULTISAMPLE);
 			}
 
 			void OGL33Renderer::onSetUp(gfx::WindowModule*) {
 				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: An error occured before onSetUp");
 
 				ogl33::resetBlending();
+
+				frameBuffer.unbind();
 
 				frameBuffer.bind();
 
@@ -373,12 +381,22 @@ namespace mc {
 
 				const Vector<Pixels, 2> size = win->getWindowSize();
 
-				glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-				glBindFramebuffer(GL_READ_FRAMEBUFFER, frameBuffer.getID());
-				ogl33::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
-				ogl33::FrameBuffer::setDrawBuffer(GL_FRONT);
+				if (false && GLAD_GL_ARB_direct_state_access) {
+					glNamedFramebufferReadBuffer(frameBuffer.getID(), GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
+					//glNamedFramebufferDrawBuffer(frameBuffer.getID(), GL_COLOR_ATTACHMENT0 + MACE__DATA_ATTACHMENT_INDEX);
+					glNamedFramebufferDrawBuffer(0, GL_FRONT);
 
-				glBlitFramebuffer(0, 0, size[0], size[1], 0, 0, size[0], size[1], GL_COLOR_BUFFER_BIT, GL_NEAREST);
+					glBlitNamedFramebuffer(frameBuffer.getID(), 0, 0, 0, size[0], size[1], 0, 0, size[0], size[1], GL_COLOR_BUFFER_BIT, GL_NEAREST);
+				} else {
+					glBindFramebuffer(GL_READ_FRAMEBUFFER, frameBuffer.getID());
+					ogl33::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
+
+					glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+					ogl33::FrameBuffer::setDrawBuffer(GL_FRONT);
+
+					glBlitFramebuffer(0, 0, size[0], size[1], 0, 0, size[0], size[1], GL_COLOR_BUFFER_BIT, GL_NEAREST);
+				}
+
 				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to tear down renderer");
 
 				//glfwSwapBuffers(win->getGLFWWindow());
@@ -452,22 +470,18 @@ namespace mc {
 					RenderBuffer::init(renderBuffers, 4);
 				}
 
-				depthStencilBuffer.bind();
 				depthStencilBuffer.setStorage(GL_DEPTH_STENCIL, width, height);
 
 				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating depth buffers for renderer");
 
-				sceneBuffer.bind();
 				sceneBuffer.setStorage(GL_RGBA, width, height);
 
 				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating scene texture for renderer");
 
-				idBuffer.bind();
 				idBuffer.setStorage(GL_R32UI, width, height);
 
 				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating id texture for renderer");
 
-				dataBuffer.bind();
 				dataBuffer.setStorage(GL_RGBA, width, height);
 
 				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating data texture for renderer");
@@ -522,17 +536,13 @@ namespace mc {
 
 				ogl33::setViewport(0, 0, width, height);
 
-				//gl states
-				ogl33::enable(GL_BLEND);
 				ogl33::resetBlending();
-
-				ogl33::enable(GL_MULTISAMPLE);
 
 				ogl33::forceCheckGLError(__LINE__, __FILE__,
 					("Internal Error: OGL33Renderer: Error resizing framebuffer for width " + std::to_string(width) + " and height " + std::to_string(height)).c_str());
 			}
 
-			void OGL33Renderer::getEntitiesAt(const Pixels x, const Pixels y, const Pixels w, const Pixels h, EntityID * arr) const {
+			void OGL33Renderer::getEntitiesAt(const Pixels x, const Pixels y, const Pixels w, const Pixels h, EntityID* arr) const {
 				frameBuffer.bind();
 
 				const Vector<Pixels, 2> framebufferSize = getContext()->getWindow()->getFramebufferSize();
@@ -545,7 +555,7 @@ namespace mc {
 				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error getting Entity from index buffer");
 			}
 
-			void OGL33Renderer::getPixelsAt(const Pixels x, const Pixels y, const Pixels w, const Pixels h, Color * arr, const FrameBufferTarget target) const {
+			void OGL33Renderer::getPixelsAt(const Pixels x, const Pixels y, const Pixels w, const Pixels h, Color* arr, const FrameBufferTarget target) const {
 				frameBuffer.bind();
 
 				const Vector<Pixels, 2> framebufferSize = getContext()->getWindow()->getFramebufferSize();
@@ -571,7 +581,7 @@ namespace mc {
 				return std::shared_ptr<PainterImpl>(new OGL33Painter(this));
 			}
 
-			void OGL33Renderer::bindProtocol(OGL33Painter * painter, const std::pair<Painter::Brush, Painter::RenderFeatures> settings) {
+			void OGL33Renderer::bindProtocol(OGL33Painter* painter, const std::pair<Painter::Brush, Painter::RenderFeatures> settings) {
 				const OGL33Renderer::ProtocolHash hash = hashSettings(settings);
 				//its a pointer so that we dont do a copy operation on assignment here
 				RenderProtocol& protocol = protocols[hash];
@@ -617,7 +627,7 @@ namespace mc {
 				checkGLError(__LINE__, __FILE__, "Internal Error: An error occured binding the RenderProtocol");
 			}
 
-			void OGL33Renderer::setTarget(const FrameBufferTarget & target) {
+			void OGL33Renderer::setTarget(const FrameBufferTarget& target) {
 				if (target != currentTarget) {
 					currentTarget = target;
 					bindCurrentTarget();
@@ -628,7 +638,7 @@ namespace mc {
 				frameBuffer.setDrawBuffers(protocols[currentProtocol].multitarget ? 2 : 1, lookupFramebufferTarget(currentTarget));
 			}
 
-			OGL33Painter::OGL33Painter(OGL33Renderer * const r) : renderer(r) {}
+			OGL33Painter::OGL33Painter(OGL33Renderer* const r) : renderer(r) {}
 
 			void OGL33Painter::init() {
 				Object* buffers[] = {
@@ -647,8 +657,6 @@ namespace mc {
 
 				savedMetrics = painter->getEntity()->getMetrics();
 
-				uniformBuffers.entityData.bind();
-
 				const TransformMatrix& transform = savedMetrics.transform;
 				const TransformMatrix& inherited = savedMetrics.inherited;
 
@@ -664,15 +672,13 @@ namespace mc {
 				//this crazy line puts a float directly into a GLuint, as GLSL expects a uint instead of a float
 				*reinterpret_cast<GLuint*>(entityDataBuffer + 24) = static_cast<GLuint>(painter->getID());
 
-				uniformBuffers.entityData.setData(MACE__ENTITY_DATA_BUFFER_SIZE, entityDataBuffer, MACE__ENTITY_DATA_USAGE);
+				uniformBuffers.entityData.createStorage(MACE__ENTITY_DATA_BUFFER_SIZE, entityDataBuffer, MACE__ENTITY_DATA_STORAGE_FLAGS);
 
 				uniformBuffers.entityData.setName(MACE_STRINGIFY_DEFINITION(MACE__ENTITY_DATA_NAME));
 			}
 
 			void OGL33Painter::createPainterData() {
 				savedState = painter->getState();//create default state
-
-				uniformBuffers.painterData.bind();
 
 				float painterDataBuffer[MACE__PAINTER_DATA_BUFFER_SIZE / sizeof(float)] = {0};
 
@@ -688,7 +694,7 @@ namespace mc {
 				savedState.maskTransform.flatten(painterDataBuffer + 36);
 				savedState.filter.flatten(painterDataBuffer + 40);
 
-				uniformBuffers.painterData.setData(MACE__PAINTER_DATA_BUFFER_SIZE, painterDataBuffer, MACE__PAINTER_DATA_USAGE);
+				uniformBuffers.painterData.createStorage(MACE__PAINTER_DATA_BUFFER_SIZE, painterDataBuffer, MACE__PAINTER_DATA_STORAGE_FLAGS);
 
 				uniformBuffers.painterData.setName(MACE_STRINGIFY_DEFINITION(MACE__PAINTER_DATA_NAME));
 			}
@@ -702,15 +708,11 @@ namespace mc {
 				UniformBuffer::destroy(buffers, 2);
 			}
 
-			void OGL33Painter::begin() {
-				uniformBuffers.entityData.bind();
-
-				uniformBuffers.painterData.bind();
-			}
+			void OGL33Painter::begin() {}
 
 			void OGL33Painter::end() {}
 
-			void OGL33Painter::setTarget(const FrameBufferTarget & target) {
+			void OGL33Painter::setTarget(const FrameBufferTarget& target) {
 				renderer->setTarget(target);
 			}
 
@@ -747,7 +749,7 @@ namespace mc {
 				checkGLError(__LINE__, __FILE__, "Internal Error: Failed to update GPU-side buffer in Entity clean");
 			}
 
-			void OGL33Painter::loadSettings(const Painter::State & state) {
+			void OGL33Painter::loadSettings(const Painter::State& state) {
 				if (state == savedState) {
 					return;
 				}
@@ -771,7 +773,7 @@ namespace mc {
 				savedState = state;
 			}
 
-			void OGL33Painter::draw(const Model & m, const Painter::Brush brush) {
+			void OGL33Painter::draw(const Model& m, const Painter::Brush brush) {
 				renderer->bindProtocol(this, {brush, savedState.renderFeatures});
 
 				m.draw();

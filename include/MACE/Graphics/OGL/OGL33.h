@@ -17,7 +17,7 @@ See LICENSE.md for full copyright information
 #include <MACE/Utility/Color.h>
 #include <MACE/Graphics/Renderer.h>
 
-#include <GL/glew.h>
+#include <glad/glad.h>
 
 #include <unordered_map>
 #include <vector>
@@ -292,6 +292,7 @@ namespace mc {
 
 			/**
 			@see https://www.opengl.org/wiki/Texture
+			@note Must be used as immutable storage (even if the extension isn't supported!)
 			*/
 			class Texture2D: public Object {
 			public:
@@ -304,15 +305,16 @@ namespace mc {
 
 				/**
 				@rendercontext
+				@see https://www.opengl.org/wiki/GLAPI/glTexStorage2D
 				@see https://www.opengl.org/wiki/GLAPI/glTexImage2D
 				*/
-				void setData(const void* data, GLsizei width, GLsizei height, Enum type, Enum format, Enum internalFormat, GLint mipmapLevel);
+				void createStorage(GLsizei width, GLsizei height, Enum type, Enum format, Enum internalFormat, GLint mipmapLevels);
 
 				/**
 				@rendercontext
-				@see https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glTexImage2DMultisample.xhtml
+				@see https://www.opengl.org/wiki/GLAPI/glTexSubImage2D
 				*/
-				void setMultisampledData(const GLsizei samples, const GLsizei width, const GLsizei height, const Enum internalFormat, const bool fixedSamples = true);
+				void setSubdata(const void* data, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, Enum type, Enum format, GLint mipmapLevel);
 
 				/**
 				@rendercontext
@@ -566,18 +568,7 @@ namespace mc {
 
 				bool isCreated() const override;
 
-				/**
-				Creates and initalizes the data store for this `Buffer`
-
-				@param dataSize Size of the Buffer, measured in bytes.
-				@param data Pointer to the actual data. Using `nullptr` or `NULL` will create an empty Buffer.
-				@param drawType Expected usage pattern for the data. GL_DYNAMIC_DRAW by default
-				@see Buffer::setDataRange(const Index, const ptrdiff_t, const void*)
-				@see Buffer::copyData(Buffer&, const ptrdiff_t&, const Index, const Index)
-				@see https://www.opengl.org/wiki/GLAPI/glBufferData
-				@rendercontext
-				*/
-				void setData(const ptrdiff_t& dataSize, const void* data, const Enum drawType = GL_DYNAMIC_DRAW);
+				void createStorage(const GLsizeiptr size, const void* data, const GLbitfield flags);
 				/**
 				Sets data in a range of the Buffer.
 				<p>
@@ -657,14 +648,6 @@ namespace mc {
 
 				GLint64 getMapLength() const;
 				GLint64 getMapOffset() const;
-
-				bool isImmutable() const;
-
-				Enum getAccess() const;
-				Enum getAccessFlags() const;
-
-				Enum getStorageFlags() const;
-				Enum getUsage() const;
 
 				/**
 				Retrieves the buffer type for this Buffer. This is based on the class.
@@ -1180,23 +1163,6 @@ namespace mc {
 				void setUniform(const char* name, const mc::Matrix<float, 3, 4>& m);
 				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 4, 3>& m);
 				void setUniform(const char* name, const mc::Matrix<float, 4, 3>& m);
-				//setUniform with double matrices
-				void setUniform(const char* name, const bool transpose, const mc::Matrix<double, 2, 2>& m);
-				void setUniform(const char* name, const mc::Matrix<double, 2, 2>& m);
-				void setUniform(const char* name, const bool transpose, const mc::Matrix<double, 3, 3>& m);
-				void setUniform(const char* name, const mc::Matrix<double, 3, 3>& m);
-				void setUniform(const char* name, const bool transpose, const mc::Matrix<double, 4, 4>& m);
-				void setUniform(const char* name, const mc::Matrix<double, 4, 4>& m);
-				void setUniform(const char* name, const bool transpose, const mc::Matrix<double, 2, 3>& m);
-				void setUniform(const char* name, const mc::Matrix<double, 2, 3>& m);
-				void setUniform(const char* name, const bool transpose, const mc::Matrix<double, 3, 2>& m);
-				void setUniform(const char* name, const mc::Matrix<double, 3, 2>& m);
-				void setUniform(const char* name, const bool transpose, const mc::Matrix<double, 2, 4>& m);
-				void setUniform(const char* name, const mc::Matrix<double, 2, 4>& m);
-				void setUniform(const char* name, const bool transpose, const mc::Matrix<double, 3, 4>& m);
-				void setUniform(const char* name, const mc::Matrix<double, 3, 4>& m);
-				void setUniform(const char* name, const bool transpose, const mc::Matrix<double, 4, 3>& m);
-				void setUniform(const char* name, const mc::Matrix<double, 4, 3>& m);
 
 				//setUniform with float
 				void setUniform(const char* name, const float a);
@@ -1209,17 +1175,6 @@ namespace mc {
 				void setUniform(const char* name, const mc::Vector<float, 2> v);
 				void setUniform(const char* name, const mc::Vector<float, 3> v);
 				void setUniform(const char* name, const mc::Vector<float, 4> v);
-				//setUniform with double
-				void setUniform(const char* name, const double a);
-				void setUniform(const char* name, const double a, const double b);
-				void setUniform(const char* name, const double a, const double b, const double c);
-				void setUniform(const char* name, const double a, const double b, const double c, const double d);
-				void setUniform(const char* name, const GLsizei arraySize, const double* a);
-				void setUniform(const char* name, const GLsizei componentSize, const GLsizei arraySize, const double* a);
-				void setUniform(const char* name, const mc::Vector<double, 1> v);
-				void setUniform(const char* name, const mc::Vector<double, 2> v);
-				void setUniform(const char* name, const mc::Vector<double, 3> v);
-				void setUniform(const char* name, const mc::Vector<double, 4> v);
 				//setUniform with int
 				void setUniform(const char* name, const int a);
 				void setUniform(const char* name, const int a, const int b);

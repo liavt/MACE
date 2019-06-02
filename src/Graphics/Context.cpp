@@ -162,7 +162,7 @@ namespace mc {
 			desc.minFilter = TextureDesc::Filter::NEAREST;
 			desc.magFilter = TextureDesc::Filter::NEAREST;
 			desc.type = TextureDesc::Type::UNSIGNED_INT;
-			desc.internalFormat = TextureDesc::InternalFormat::RGBA;
+			desc.internalFormat = TextureDesc::InternalFormat::RGBA8;
 
 			Texture texture = Texture(desc);
 
@@ -207,20 +207,20 @@ namespace mc {
 					} else {
 						desc.format = TextureDesc::Format::RED;
 					}
-					desc.internalFormat = TextureDesc::InternalFormat::RED;
+					desc.internalFormat = TextureDesc::InternalFormat::R8;
 				} else if (outputComponents == 2) {
 					if (imgFormat == ImageFormat::LUMINANCE_ALPHA) {
 						desc.format = TextureDesc::Format::LUMINANCE_ALPHA;
 					} else {
 						desc.format = TextureDesc::Format::RG;
 					}
-					desc.internalFormat = TextureDesc::InternalFormat::RG;
+					desc.internalFormat = TextureDesc::InternalFormat::RG8;
 				} else if (outputComponents == 3) {
 					desc.format = TextureDesc::Format::RGB;
-					desc.internalFormat = TextureDesc::InternalFormat::RGB;
+					desc.internalFormat = TextureDesc::InternalFormat::RGB8;
 				} else if (outputComponents == 4) {
 					desc.format = TextureDesc::Format::RGBA;
-					desc.internalFormat = TextureDesc::InternalFormat::RGBA;
+					desc.internalFormat = TextureDesc::InternalFormat::RGBA8;
 				} else MACE_UNLIKELY{
 					MACE__THROW(BadImage, "Internal Error: createFromFile: outputComponents is not 1-4");
 				}
@@ -255,7 +255,7 @@ namespace mc {
 
 				TextureDesc desc = TextureDesc(width, height, TextureDesc::Format::RGBA);
 				desc.type = TextureDesc::Type::UNSIGNED_BYTE;
-				desc.internalFormat = TextureDesc::InternalFormat::RGBA;
+				desc.internalFormat = TextureDesc::InternalFormat::RGBA8;
 				desc.minFilter = TextureDesc::Filter::MIPMAP_LINEAR;
 				desc.magFilter = TextureDesc::Filter::NEAREST;
 				texture.init(desc);
@@ -281,7 +281,7 @@ namespace mc {
 					desc.minFilter = TextureDesc::Filter::NEAREST;
 					desc.magFilter = TextureDesc::Filter::NEAREST;
 					desc.type = TextureDesc::Type::FLOAT;
-					desc.internalFormat = TextureDesc::InternalFormat::RED;
+					desc.internalFormat = TextureDesc::InternalFormat::R8;
 
 					Texture texture = Texture(desc);
 
@@ -304,7 +304,7 @@ namespace mc {
 					TextureDesc desc = TextureDesc(1, MACE__RESOURCE_GRADIENT_HEIGHT);
 					desc.format = TextureDesc::Format::LUMINANCE;
 					desc.type = TextureDesc::Type::FLOAT;
-					desc.internalFormat = TextureDesc::InternalFormat::RED;
+					desc.internalFormat = TextureDesc::InternalFormat::R8;
 					desc.minFilter = TextureDesc::Filter::LINEAR;
 					desc.magFilter = TextureDesc::Filter::NEAREST;
 					Texture texture = Texture(desc);
@@ -409,10 +409,14 @@ namespace mc {
 			transform = trans;
 		}
 
-		void Texture::setData(const void* data, const int mipmap, const PixelStorageHints hints) {
+		void mc::gfx::Texture::setData(const void* data, const int x, const int y, const Pixels width, const Pixels height, const int mipmapLevel, const PixelStorageHints hints) {
 			MACE__VERIFY_TEXTURE_INIT();
 
-			texture->setData(data, mipmap, hints);
+			texture->setData(data, x, y, width, height, mipmapLevel, hints);
+		}
+
+		void Texture::setData(const void* data, const int mipmap, const PixelStorageHints hints) {
+			setData(data, 0, 0, texture->desc.width, texture->desc.height, mipmap, hints);
 		}
 
 		void Texture::readPixels(void* data, const PixelStorageHints hints) const {
