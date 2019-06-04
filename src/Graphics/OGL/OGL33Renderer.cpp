@@ -291,9 +291,9 @@ namespace mc {
 				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "Supported extensions: " << std::endl;
 				std::cout << os::consoleColor(os::ConsoleColor::GREEN);
 #define MACE__DEBUG_OUTPUT_EXTENSION(ext) if(GLAD_##ext){std::cout << "\t* " << #ext << std::endl;}
-				MACE__DEBUG_OUTPUT_EXTENSION(GL_ARB_buffer_storage)
-					MACE__DEBUG_OUTPUT_EXTENSION(GL_ARB_texture_storage);
-				MACE__DEBUG_OUTPUT_EXTENSION(GL_ARB_clear_buffer_object);
+				MACE__DEBUG_OUTPUT_EXTENSION(GL_ARB_buffer_storage);
+				MACE__DEBUG_OUTPUT_EXTENSION(GL_ARB_texture_storage);
+				MACE__DEBUG_OUTPUT_EXTENSION(GL_ARB_invalidate_subdata);
 				MACE__DEBUG_OUTPUT_EXTENSION(GL_ARB_multi_bind);
 				MACE__DEBUG_OUTPUT_EXTENSION(GL_ARB_direct_state_access);
 				MACE__DEBUG_OUTPUT_EXTENSION(GL_EXT_direct_state_access);
@@ -334,8 +334,6 @@ namespace mc {
 				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: An error occured before onSetUp");
 
 				ogl33::resetBlending();
-
-				frameBuffer.unbind();
 
 				frameBuffer.bind();
 
@@ -381,9 +379,12 @@ namespace mc {
 
 				const Vector<Pixels, 2> size = win->getWindowSize();
 
-				if (false && GLAD_GL_ARB_direct_state_access) {
+				if (GLAD_GL_ARB_direct_state_access) {
 					glNamedFramebufferReadBuffer(frameBuffer.getID(), GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
 					//glNamedFramebufferDrawBuffer(frameBuffer.getID(), GL_COLOR_ATTACHMENT0 + MACE__DATA_ATTACHMENT_INDEX);
+					//glNamedFramebufferDrawBuffer(0, GL_FRONT);
+
+					glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 					glNamedFramebufferDrawBuffer(0, GL_FRONT);
 
 					glBlitNamedFramebuffer(frameBuffer.getID(), 0, 0, 0, size[0], size[1], 0, 0, size[0], size[1], GL_COLOR_BUFFER_BIT, GL_NEAREST);
@@ -400,6 +401,21 @@ namespace mc {
 				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to tear down renderer");
 
 				//glfwSwapBuffers(win->getGLFWWindow());
+
+				if (GLAD_GL_ARB_invalidate_subdata) {
+					MACE_CONSTEXPR const Enum buffers[] = {
+						GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX,
+						GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX,
+						GL_COLOR_ATTACHMENT0 + MACE__DATA_ATTACHMENT_INDEX
+					};
+
+					if (GLAD_GL_ARB_direct_state_access) {
+						glInvalidateNamedFramebufferData(frameBuffer.getID(), os::getArraySize<GLsizei>(buffers), buffers);
+					} else {
+						//our framebuffer was bound to GL_READ_FRAMEBUFFER in the previous if statement for blitting
+						glInvalidateFramebuffer(GL_READ_FRAMEBUFFER, os::getArraySize<GLsizei>(buffers), buffers);
+					}
+				}
 
 				glFlush();
 

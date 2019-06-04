@@ -52,7 +52,7 @@ namespace mc {
 		char* ctime(char* buffer, std::size_t bufSize, const std::time_t* time) MACE_EXPECTS(buffer != nullptr && time != nullptr) MACE_ENSURES(ret, ret != nullptr);
 		char* asctime(char* buffer, std::size_t bufSize, const std::tm* time) MACE_EXPECTS(buffer != nullptr && time != nullptr) MACE_ENSURES(ret, ret != nullptr);
 
-		FILE* fopen(FILE** result, const char* filename, const char* mode) MACE_EXPECTS(result != nullptr && filename != nullptr && mode != nullptr) MACE_ENSURES(ret, ret != nullptr);
+		FILE* fopen(FILE** result, const char* MACE_RESTRICT filename, const char* MACE_RESTRICT mode) MACE_EXPECTS(result != nullptr && filename != nullptr && mode != nullptr) MACE_ENSURES(ret, ret != nullptr);
 
 		std::size_t mbsrtowcs(std::size_t* returnValue, wchar_t* wcstr, std::size_t sizeInWords, const char** mbstr, std::size_t count, mbstate_t* mbstate) MACE_EXPECTS(returnValue != nullptr && wcstr != nullptr && mbstr != nullptr && mbstate != nullptr);
 		std::size_t wcstombs(std::size_t* returnValue, char* dst, std::size_t sizeInWords, const wchar_t* src, const std::size_t length) MACE_EXPECTS(returnValue != nullptr && dst != nullptr && src != nullptr);
@@ -72,11 +72,11 @@ namespace mc {
 #endif
 		}
 
-		std::wstring toWideString(const std::string & s);
-		std::string toNarrowString(const std::wstring & s);
+		std::wstring toWideString(const std::string& s);
+		std::string toNarrowString(const std::wstring& s);
 
-		template<class T, Size N>
-		inline MACE_CONSTEXPR Size getArraySize(const T(&)[N]) {
+		template<typename SizeType = Size, class T, SizeType N>
+		inline MACE_CONSTEXPR SizeType getArraySize(const T(&)[N]) noexcept {
 			return N;
 		}
 
@@ -110,7 +110,7 @@ namespace mc {
 		/**
 		@bug Background doesn't work on windows
 		*/
-		MACE_NODISCARD std::string consoleColor(const ConsoleColor & foreground = ConsoleColor::DEFAULT, const ConsoleColor & background = ConsoleColor::DEFAULT);
+		MACE_NODISCARD std::string consoleColor(const ConsoleColor& foreground = ConsoleColor::DEFAULT, const ConsoleColor& background = ConsoleColor::DEFAULT);
 	}//os
 }//mc
 

@@ -134,6 +134,14 @@ See LICENSE.md for full copyright information
 #	endif
 #endif
 
+#ifndef MACE_RESTRICT
+#	if defined(MACE_MSVC) || defined(MACE_GNU)
+#		define MACE_RESTRICT __restrict
+#	else
+#		define MACE_RESTRICT
+#	endif
+#endif
+
 //used to mark a function or variable thats deprecated
 #ifndef MACE_DEPRECATED
 #	if MACE_HAS_ATTRIBUTE(deprecated)

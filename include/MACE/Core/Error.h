@@ -24,21 +24,21 @@ namespace mc {
 		/**
 		Stops MACE and prints an exception to console accordingly. This should be used every time a fatal exception is thrown.
 		*/
-		static void handleError MACE_NORETURN (const std::exception& e, Instance* i = nullptr);// i is not const because requestStop() will be called
+		static void handleError MACE_NORETURN(const std::exception& e, Instance* i = nullptr);// i is not const because requestStop() will be called
 
 		/**
 		@copydoc Error::handleError(const std::exception& e, Instance*)
 		*/
-		static void handleError MACE_NORETURN (const std::exception& e, Instance& i);
+		static void handleError MACE_NORETURN(const std::exception& e, Instance& i);
 
 		Error(const char* message, const unsigned int line, const std::string file);
 		Error(const std::string message, const unsigned int line, const std::string file);
-		Error(const char* message, const unsigned int line, const char* file);
+		Error(const char* MACE_RESTRICT message, const unsigned int line, const char* MACE_RESTRICT file);
 		Error(const std::string message, const unsigned int line = 0, const char* file = "No file reported");
 		Error() noexcept = default;
 		~Error() noexcept = default;
 
-		void handle MACE_NORETURN ();
+		void handle MACE_NORETURN();
 
 		const unsigned int getLine() const;
 		const char* getFile() const;

@@ -130,8 +130,8 @@ namespace mc {
 			void fillModel(const Model& m);
 
 			void fillRect(const RelativeTranslation x = 0.0f, const RelativeTranslation y = 0.0f, const RelativeScale w = 1.0f, const RelativeScale h = 1.0f);
-			void fillRect(const Vector<RelativeTranslation, 2>& pos, const Vector<RelativeScale, 2>& size);
-			void fillRect(const Vector<RelativeUnit, 4>& dim);
+			void fillRect(const Vector<RelativeTranslation, 2> & pos, const Vector<RelativeScale, 2> & size);
+			void fillRect(const Vector<RelativeUnit, 4> & dim);
 
 			void drawImage(const Texture& img);
 
@@ -152,25 +152,25 @@ namespace mc {
 			Color& getForegroundColor();
 			const Color& getForegroundColor() const;
 
-			void setForegroundTransform(const Vector<RelativeUnit, 4>& trans);
-			Vector<RelativeUnit, 4>& getForegroundTransform();
-			const Vector<RelativeUnit, 4>& getForegroundTransform() const;
+			void setForegroundTransform(const Vector<RelativeUnit, 4> & trans);
+			Vector<RelativeUnit, 4> & getForegroundTransform();
+			const Vector<RelativeUnit, 4> & getForegroundTransform() const;
 
 			void setBackgroundColor(const Color& col);
 			Color& getBackgroundColor();
 			const Color& getBackgroundColor() const;
 
-			void setBackgroundTransform(const Vector<RelativeUnit, 4>& trans);
-			Vector<RelativeUnit, 4>& getBackgroundTransform();
-			const Vector<RelativeUnit, 4>& getBackgroundTransform() const;
+			void setBackgroundTransform(const Vector<RelativeUnit, 4> & trans);
+			Vector<RelativeUnit, 4> & getBackgroundTransform();
+			const Vector<RelativeUnit, 4> & getBackgroundTransform() const;
 
 			void setMaskColor(const Color& col);
 			Color& getMaskColor();
 			const Color& getMaskColor() const;
 
-			void setMaskTransform(const Vector<RelativeUnit, 4>& trans);
-			Vector<RelativeUnit, 4>& getMaskTransform();
-			const Vector<RelativeUnit, 4>& getMaskTransform() const;
+			void setMaskTransform(const Vector<RelativeUnit, 4> & trans);
+			Vector<RelativeUnit, 4> & getMaskTransform();
+			const Vector<RelativeUnit, 4> & getMaskTransform() const;
 
 			void enableRenderFeatures(const RenderFeatures feature);
 			void disableRenderFeatures(const RenderFeatures feature);
@@ -179,15 +179,15 @@ namespace mc {
 			const RenderFeatures& getRenderFeatures() const;
 
 			void setFilter(const float r, const float g, const float b, const float a = 1.0f);
-			void setFilter(const Vector<float, 4>& col);
-			void setFilter(const Matrix<float, 4, 4>& col);
-			Matrix<float, 4, 4>& getFilter();
-			const Matrix<float, 4, 4>& getFilter() const;
+			void setFilter(const Vector<float, 4> & col);
+			void setFilter(const Matrix<float, 4, 4> & col);
+			Matrix<float, 4, 4> & getFilter();
+			const Matrix<float, 4, 4> & getFilter() const;
 
 			void setData(const float a, const float b, const float c, const float d);
-			void setData(const Vector<float, 4>& col);
-			Vector<float, 4>& getData();
-			const Vector<float, 4>& getData() const;
+			void setData(const Vector<float, 4> & col);
+			Vector<float, 4> & getData();
+			const Vector<float, 4> & getData() const;
 
 			void setTransformation(const TransformMatrix& trans);
 			TransformMatrix& getTransformation();
@@ -199,13 +199,13 @@ namespace mc {
 
 			void setTarget(const FrameBufferTarget& target);
 
-			void translate(const Vector<RelativeTranslation, 3>& vec);
+			void translate(const Vector<RelativeTranslation, 3> & vec);
 			void translate(const RelativeTranslation x, const RelativeTranslation y, const RelativeTranslation z = 0.0f);
 
-			void rotate(const Vector<RelativeRadian, 3>& vec);
+			void rotate(const Vector<RelativeRadian, 3> & vec);
 			void rotate(const RelativeRadian x, const RelativeRadian y, const RelativeRadian z);
 
-			void scale(const Vector<RelativeScale, 3>& vec);
+			void scale(const Vector<RelativeScale, 3> & vec);
 			void scale(const RelativeScale x, const RelativeScale y, const RelativeScale z = 1.0f);
 
 			void resetTransform();
@@ -252,11 +252,11 @@ namespace mc {
 			return static_cast<Painter::RenderFeatures>(static_cast<Byte>(left) | static_cast<Byte>(right));
 		}
 
-		MACE_CONSTEXPR inline Painter::RenderFeatures operator&(const Painter::RenderFeatures & left, const Painter::RenderFeatures & right) {
+		MACE_CONSTEXPR inline Painter::RenderFeatures operator&(const Painter::RenderFeatures& left, const Painter::RenderFeatures& right) {
 			return static_cast<Painter::RenderFeatures>(static_cast<Byte>(left) & static_cast<Byte>(right));
 		}
 
-		MACE_CONSTEXPR inline Painter::RenderFeatures operator~(const Painter::RenderFeatures & r) {
+		MACE_CONSTEXPR inline Painter::RenderFeatures operator~(const Painter::RenderFeatures& r) {
 			return static_cast<Painter::RenderFeatures>(~static_cast<Byte>(r));
 		}
 
@@ -305,7 +305,7 @@ namespace mc {
 
 			virtual void getEntitiesAt(const Pixels x, const Pixels y, const Pixels w, const Pixels h, EntityID* arr) const = 0;
 			template<Size W, Size H>
-			void getEntitiesAt(const Pixels x, const Pixels y, EntityID arr[W][H]) const {
+			inline void getEntitiesAt(const Pixels x, const Pixels y, EntityID arr[W][H]) const {
 				getEntitiesAt(x, y, W, H, arr);
 			}
 
@@ -316,9 +316,10 @@ namespace mc {
 
 			Color getPixelAt(const RelativeTranslation x, const RelativeTranslation y, const FrameBufferTarget target = FrameBufferTarget::COLOR) const;
 			Color getPixelAt(const Pixels x, const Pixels y, const FrameBufferTarget target = FrameBufferTarget::COLOR) const;
+
 			virtual void getPixelsAt(const Pixels x, const Pixels y, const Pixels w, const Pixels h, Color* arr, const FrameBufferTarget target = FrameBufferTarget::COLOR) const = 0;
 			template<Pixels W, Pixels H>
-			void getPixelsAt(const Pixels x, const Pixels y, Color arr[W][H], const FrameBufferTarget target = FrameBufferTarget::COLOR) const {
+			inline void getPixelsAt(const Pixels x, const Pixels y, Color arr[W][H], const FrameBufferTarget target = FrameBufferTarget::COLOR) const {
 				getPixelsAt(x, y, W, H, arr, target);
 			}
 
@@ -422,30 +423,6 @@ namespace mc {
 			*/
 			Painter& getPainter();
 			const Painter& getPainter() const;
-
-			/**
-			Tween this `GraphicsEntity`'s transformation
-
-			@dirty
-			@param start The start of the tween
-			@param dest The destination of the tween
-			@param settings What easing settings to use during the tween
-			@see `TweenComponent`
-			*/
-			//Function overloading would require the EaseSettings constructor, which means we have to include the entire header instead of forward declaring.
-			void tween(const TransformMatrix start, const TransformMatrix dest, const EaseSettings settings);
-			/**
-			@copydoc #tween(const TransformMatrix, const TransformMatrix, const EaseSettings)
-			*/
-			void tween(const TransformMatrix start, const TransformMatrix dest);
-			/**
-			@copydoc #tween(const TransformMatrix, const TransformMatrix, const EaseSettings)
-			*/
-			void tween(const TransformMatrix dest, const EaseSettings settings);
-			/**
-			@copydoc #tween(const TransformMatrix, const TransformMatrix, const EaseSettings)
-			*/
-			void tween(const TransformMatrix dest);
 
 			bool operator==(const GraphicsEntity& other) const noexcept;
 			bool operator!=(const GraphicsEntity& other) const noexcept;

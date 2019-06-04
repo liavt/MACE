@@ -22,6 +22,7 @@ namespace mc {
 		class Texture;
 		class Painter;
 		class ComponentQueue;
+		struct EaseSettings;
 
 		struct Metrics {
 			TransformMatrix transform{};
@@ -234,7 +235,7 @@ namespace mc {
 			@see Entity::getChild(Index)
 			@see Entity::indexOf(const Entity&) const
 			*/
-			Entity& operator[](Index i);//get children via [i]
+			Entity& operator[](const Index i);//get children via [i]
 
 			/**
 			`const` version of {@link #operator[](Index i)}
@@ -243,7 +244,7 @@ namespace mc {
 			@see Entity::getChild(Index) const
 			@see Entity::indexOf(const Entity&) const
 			*/
-			const Entity& operator[](Index i) const;//get children via [i]
+			const Entity& operator[](const Index i) const;//get children via [i]
 
 			/**
 
@@ -254,7 +255,7 @@ namespace mc {
 			@see Entity::operator[]
 			@see Entity::indexOf(const Entity&) const
 			*/
-			Entity& getChild(Index i);
+			Entity& getChild(const Index i);
 			/**
 			`const` version of {@link #getChild(Index)}
 
@@ -264,7 +265,7 @@ namespace mc {
 			@see Entity::operator[]
 			@see Entity::indexOf(const Entity&) const
 			*/
-			const Entity& getChild(Index i) const;
+			const Entity& getChild(const Index i) const;
 
 			/**
 			Finds the location of an `Entity` in this `Entity`
@@ -329,7 +330,7 @@ namespace mc {
 			@see Entity::setProperty(Index, bool)
 			@dirty
 			*/
-			void setProperties(EntityProperties& b);
+			void setProperties(const EntityProperties& b);
 
 			/**
 			Retrieve the value of a property.
@@ -364,7 +365,7 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			void setTransformation(TransformMatrix& trans);
+			void setTransformation(const TransformMatrix& trans);
 
 			/**
 			@dirty
@@ -407,14 +408,14 @@ namespace mc {
 			/**
 			@copydoc Entity::addChild(Entity&)
 			*/
-			void addChild(std::shared_ptr<Entity> ent);
+			void addChild(std::shared_ptr<Entity> ent) MACE_EXPECTS(ent != nullptr);
 
 			void addComponent(Component& com);
 			void addComponent(Component* com);
 			/**
 			@param com The SmartPointer of an `Entity`. Ownership of the pointer will change meaning this parameter cannot be marked `const`
 			*/
-			void addComponent(std::shared_ptr<Component> com);
+			void addComponent(std::shared_ptr<Component> com) MACE_EXPECTS(com != nullptr);
 
 			const RelativeScale& getWidth() const;
 			/**
@@ -549,6 +550,31 @@ namespace mc {
 			@dirty
 			*/
 			void makeDirty();
+
+			/**
+			Tween this `Entity`'s transformation
+
+			@dirty
+			@param start The start of the tween
+			@param dest The destination of the tween
+			@param settings What easing settings to use during the tween
+			@see `TweenComponent`
+			*/
+			//Function overloading would require the EaseSettings constructor, which means we have to include the entire header instead of forward declaring.
+			void tween(const TransformMatrix start, const TransformMatrix dest, const EaseSettings settings);
+			/**
+			@copydoc #tween(const TransformMatrix, const TransformMatrix, const EaseSettings)
+			*/
+			void tween(const TransformMatrix start, const TransformMatrix dest);
+			/**
+			@copydoc #tween(const TransformMatrix, const TransformMatrix, const EaseSettings)
+			*/
+			void tween(const TransformMatrix dest, const EaseSettings settings);
+			/**
+			@copydoc #tween(const TransformMatrix, const TransformMatrix, const EaseSettings)
+			*/
+			void tween(const TransformMatrix dest);
+
 		protected:
 			/**
 			Should be called a by `Entity` when `MACE.update()` is called. Calls `onUpdate()`.

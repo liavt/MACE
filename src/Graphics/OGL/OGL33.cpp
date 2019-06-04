@@ -535,9 +535,15 @@ namespace mc {
 						glBufferStorage(bufferType, size, data, flags);
 					}
 				} else {
-					bind();
+					if (GLAD_GL_ARB_direct_state_access) {
+						glNamedBufferData(id, size, data, GL_DYNAMIC_DRAW);
+					} else if (GLAD_GL_EXT_direct_state_access) {
+						glNamedBufferDataEXT(id, size, data, GL_DYNAMIC_DRAW);
+					} else {
+						bind();
 
-					glBufferData(bufferType, size, data, GL_DYNAMIC_DRAW);
+						glBufferData(bufferType, size, data, GL_DYNAMIC_DRAW);
+					}
 				}
 			}
 
@@ -1017,7 +1023,7 @@ namespace mc {
 						ids.push_back(bufs[i]->getID());
 					}
 
-					glBindBuffersBase(GL_UNIFORM_BUFFER, 0, size, ids.data());
+					glBindBuffersBase(GL_UNIFORM_BUFFER, 0, static_cast<GLsizei>(size), ids.data());
 				} else {
 					for (Index i = 0; i < size; ++i) {
 						const UniformBufferData& bufferData = getUniformBuffer(*bufs[i]);

@@ -6,6 +6,7 @@ See LICENSE.md for full copyright information
 #include <MACE/Graphics/Entity.h>
 #include <MACE/Graphics/Renderer.h>
 #include <MACE/Graphics/Context.h>
+#include <MACE/Graphics/Components.h>
 #include <MACE/Core/Constants.h>
 #include <MACE/Core/System.h>
 #include <MACE/Core/Error.h>
@@ -61,7 +62,7 @@ namespace mc {
 		void Entity::makeChildrenDirty() {
 			setProperty(Entity::DIRTY, true);
 
-			for (std::shared_ptr<Entity> e : children) {
+			for (auto e : children) {
 				e->makeChildrenDirty();
 			}
 		}
@@ -115,7 +116,7 @@ namespace mc {
 				}
 		}
 
-		void Entity::removeChild(const std::vector<std::shared_ptr<Entity>>::iterator & iter) {
+		void Entity::removeChild(const std::vector<std::shared_ptr<Entity>>::iterator& iter) {
 #ifdef MACE_DEBUG_CHECK_ARGS
 			if (children.empty()) {
 				MACE__THROW(OutOfBounds, "Can\'t remove a child from an empty entity!");
@@ -135,10 +136,7 @@ namespace mc {
 				onRender();
 
 				for (Index i = 0; i < children.size(); ++i) {
-					std::shared_ptr<Entity> child = children[i];
-					if (child != nullptr) {
-						child->render();
-					}
+					children[i]->render();
 				}
 			}
 
@@ -175,8 +173,8 @@ namespace mc {
 				metrics.transform = transformation;
 
 				metrics.inherited = TransformMatrix();
-				if (hasParent()) {
-					const Entity* par = getParent();
+				if (hasParent()) MACE_LIKELY{
+					const Entity * par = getParent();
 
 					const Metrics& parentMetrics = par->getMetrics();
 
@@ -186,33 +184,19 @@ namespace mc {
 				}
 
 				for (Index i = 0; i < components.size(); ++i) {
-#ifdef MACE_DEBUG_CHECK_NULLPTR
-					if (components[i].get() == nullptr) {
-						MACE__THROW(NullPointer, "One of the components in an entity was nullptr");
-					}
-#endif
-
 					components[i]->clean(metrics);
 				}
 
 				for (Size i = 0; i < children.size(); ++i) {
 					std::shared_ptr<Entity> child = children[i];
-					if (child == nullptr) {
-						removeChild(i--);//to account for the entity beng removed
-					} else if (child->getProperty(Entity::INIT)) {
-						child->setProperty(Entity::DIRTY, true);
-						child->clean();
-					}
+					child->setProperty(Entity::DIRTY, true);
+					child->clean();
 				}
 
 				setProperty(Entity::DIRTY, false);
 			} else {
 				for (Size i = 0; i < children.size(); ++i) {
-					if (children[i]->getProperty(Entity::INIT)) {
-						if (children[i] != nullptr) {
-							children[i]->clean();
-						}
-					}
+					children[i]->clean();
 				}
 			}
 		}
@@ -248,9 +232,7 @@ namespace mc {
 			transformation.reset();
 
 			for (Index i = 0; i < components.size(); ++i) {
-				if (components[i].get() != nullptr) {
-					components[i]->destroy();
-				}
+				components[i]->destroy();
 			}
 			components.clear();
 			setParent(nullptr);
@@ -272,7 +254,7 @@ namespace mc {
 
 		void Entity::onHover() {}
 
-		void Entity::setParent(Entity * par) {
+		void Entity::setParent(Entity* par) {
 			makeDirty();
 
 			this->parent = par;
@@ -294,23 +276,23 @@ namespace mc {
 			return getProperty(Entity::DEAD) || !hasParent();
 		}
 
-		Entity& Entity::operator[](Index i) {
+		Entity& Entity::operator[](const Index i) {
 			return *children[i].get();
 		}
 
-		const Entity& Entity::operator[](Index i) const {
+		const Entity& Entity::operator[](const Index i) const {
 			return *children[i].get();
 		}
 
-		Entity& Entity::getChild(Index i) {
+		Entity& Entity::getChild(const Index i) {
 			return *children.at(i).get();
 		}
 
-		const Entity& Entity::getChild(Index i) const {
+		const Entity& Entity::getChild(const Index i) const {
 			return *children.at(i).get();
 		}
 
-		Index Entity::indexOf(const Entity & e) const {
+		Index Entity::indexOf(const Entity& e) const {
 			for (Index i = 0; i < children.size(); ++i) {
 				if (children[i].get() == &e) {
 					return i;
@@ -358,23 +340,29 @@ namespace mc {
 			makeDirty();
 		}
 
-		void Entity::addChild(Entity * e) {
+		void Entity::addChild(Entity* e) {
 			addChild(std::shared_ptr<Entity>(e, [](Entity*) {}));
 		}
 
-		void Entity::addChild(Entity & e) {
+		void Entity::addChild(Entity& e) {
 			addChild(&e);
 		}
 
-		void Entity::addComponent(Component & com) {
+		void Entity::addComponent(Component& com) {
 			addComponent(&com);
 		}
 
-		void Entity::addComponent(Component * com) {
+		void Entity::addComponent(Component* com) {
 			addComponent(std::shared_ptr<Component>(com, [](Component*) {}));
 		}
 
 		void Entity::addComponent(std::shared_ptr<Component> com) {
+#ifdef MACE_DEBUG_CHECK_NULLPTR
+			if (com == nullptr) {
+				MACE__THROW(NullPointer, "Inputted Component to addComponent() was nullptr");
+			}
+#endif
+
 			components.push_back(com);
 			components.back()->parent = this;
 			components.back()->init();
@@ -389,12 +377,7 @@ namespace mc {
 				//update the components of this entity
 				for (Index i = 0; i < components.size(); ++i) {
 					std::shared_ptr<Component> a = components.at(i);
-#ifdef MACE_DEBUG_CHECK_NULLPTR
-					if (a.get() == nullptr) {
-						MACE__THROW(NullPointer, "A component located at index " + std::to_string(i) + " was nullptr");
-					}
-#endif
-					if (a->update()) {
+					if (a->update()) MACE_UNLIKELY{
 						a->destroy();
 						components.erase(components.begin() + i--);//update the index after a removal, so we dont get an exception for accessing deleted memory
 					}
@@ -405,10 +388,8 @@ namespace mc {
 				//call update() on children
 				for (Index i = 0; i < children.size(); ++i) {
 					std::shared_ptr<Entity> child = children[i];
-					if (child == nullptr || child->needsRemoval()) {
-						if (child != nullptr) {
-							child->kill();
-						}
+					if (child->needsRemoval()) MACE_UNLIKELY{
+						child->kill();
 						removeChild(i--);//update the index after the removal of an element, dont want an error
 						continue;
 					}
@@ -425,7 +406,7 @@ namespace mc {
 			makeDirty();
 			for (Index i = 0; i < children.size(); ++i) {
 				std::shared_ptr<Entity> child = children[i];
-				if (child == nullptr || child->needsRemoval()) {
+				if (child->needsRemoval()) MACE_UNLIKELY{
 					removeChild(i--);//update the index after the removal of an element
 					continue;
 				}
@@ -444,10 +425,7 @@ namespace mc {
 			if (getProperty(Entity::INIT)) {
 				setProperty(Entity::DEAD, true);
 				for (Index i = 0; i < children.size(); ++i) {
-					std::shared_ptr<Entity> child = children[i];
-					if (child != nullptr) {
-						child->destroy();
-					}
+					children[i]->destroy();
 				}
 				onDestroy();
 			}
@@ -473,7 +451,7 @@ namespace mc {
 			return properties;
 		}
 
-		void Entity::setProperties(EntityProperties & b) {
+		void Entity::setProperties(const EntityProperties& b) {
 			if (b != properties) {
 				makeDirty();
 				properties = b;
@@ -509,7 +487,7 @@ namespace mc {
 		}
 
 		//we are trans-supportive here!
-		void Entity::setTransformation(TransformMatrix & trans) {
+		void Entity::setTransformation(const TransformMatrix& trans) {
 			if (transformation != trans) {
 				makeDirty();
 
@@ -541,7 +519,7 @@ namespace mc {
 			return *this;
 		}
 
-		bool Entity::operator==(const Entity & other) const noexcept {
+		bool Entity::operator==(const Entity& other) const noexcept {
 			if (other.properties != properties) {
 				return false;
 			} else if (other.parent != parent) {
@@ -555,7 +533,7 @@ namespace mc {
 			return children == other.children;
 		}
 
-		bool Entity::operator!=(const Entity & other) const noexcept {
+		bool Entity::operator!=(const Entity& other) const noexcept {
 			return !operator==(other);
 		}
 
@@ -665,11 +643,27 @@ namespace mc {
 			}
 		}
 
-		bool Metrics::operator==(const Metrics & other) const {
+		void Entity::tween(const TransformMatrix start, const TransformMatrix dest, const EaseSettings settings) {
+			addComponent(std::shared_ptr<Component>(new TweenComponent(this, start, dest, settings)));
+		}
+
+		void Entity::tween(const TransformMatrix start, const TransformMatrix dest) {
+			tween(start, dest, EaseSettings());
+		}
+
+		void Entity::tween(const TransformMatrix dest, const EaseSettings settings) {
+			tween(getTransformation(), dest, settings);
+		}
+
+		void Entity::tween(const TransformMatrix dest) {
+			tween(dest, EaseSettings());
+		}
+
+		bool Metrics::operator==(const Metrics& other) const {
 			return transform == other.transform && inherited == other.inherited;
 		}
 
-		bool Metrics::operator!=(const Metrics & other) const {
+		bool Metrics::operator!=(const Metrics& other) const {
 			return !operator==(other);
 		}
 

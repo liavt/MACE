@@ -65,12 +65,12 @@ namespace mc {
 			*/
 			MACE__DECLARE_ERROR(Framebuffer);
 
-			void forceCheckGLError(const unsigned int line, const char* file, const char* message);
+			void forceCheckGLError(const unsigned int line, const char* MACE_RESTRICT file, const char* MACE_RESTRICT message);
 
 			/**
 			@rendercontext
 			*/
-			inline void checkGLError(const unsigned int line = 0, const char* file = "Unknown file", const char* message = "No message specified") {
+			inline void checkGLError(const unsigned int line = 0, const char* MACE_RESTRICT file = "Unknown file", const char* MACE_RESTRICT message = "No message specified") {
 #ifdef MACE_DEBUG_OPENGL
 				forceCheckGLError(line, file, message);
 #endif
