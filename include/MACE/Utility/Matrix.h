@@ -107,17 +107,18 @@ namespace mc {
 			Matrix2i mat = {{1,2}, {3, 4}};
 		}
 		@param args What to create this `Matrix` with
+		@todo Make initializer list size check compile time instead of run time
 		@throws IndexOutOfBoundsException If the amount of arguments provided is not the same size as the `Matrix`
 		*/
 		//this is for aggregate initializaition
 		Matrix(const std::initializer_list<const std::initializer_list<T>> args) : Matrix() MACE_EXPECTS(args.size() == W) {
-			MACE_IF_CONSTEXPR(args.size() != W) {
+			if (args.size() != W) {
 				MACE__THROW(OutOfBounds, "The width of the argument must be equal to to the height of the Matrix!");
 			}
 
 			Index counterX = 0, counterY = 0;
 			for (const std::initializer_list<T>& elemX : args) {
-				MACE_IF_CONSTEXPR(elemX.size() != H) {
+				if (elemX.size() != H) {
 					MACE__THROW(OutOfBounds, "The height of the argument must be equal to to the height of the Matrix!");
 				}
 
@@ -195,7 +196,7 @@ namespace mc {
 		@see #set(Index, Index, T)
 		@see #operator[]
 		*/
-		const T& get(const Index x, const Index y) const MACE_EXPECTS(x < W && y < H) {
+		const T& get(const Index x, const Index y) const MACE_EXPECTS(x < W&& y < H) {
 			MACE_IF_CONSTEXPR(x >= W) {
 				MACE__THROW(OutOfBounds, std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
 			} else MACE_IF_CONSTEXPR(y >= H) {
@@ -215,7 +216,7 @@ namespace mc {
 		@see #operator[]
 		@see #get(Index, Index)
 		*/
-		void set(const Index x, const Index y, const T & value) MACE_EXPECTS(x < W && y < H) {
+		void set(const Index x, const Index y, const T& value) MACE_EXPECTS(x < W&& y < H) {
 			MACE_IF_CONSTEXPR(x >= W) {
 				MACE__THROW(OutOfBounds, std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
 			} else MACE_IF_CONSTEXPR(y >= H) {
@@ -303,7 +304,7 @@ namespace mc {
 		@see Matrix for an explanation of `Vector` and `Matrix` math
 		@pre The Matrix's width must not be larger than the height
 		*/
-		Vector<T, H> operator+(const Vector<T, H> & right) const {
+		Vector<T, H> operator+(const Vector<T, H>& right) const {
 			MACE_STATIC_ASSERT(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
 			T arr[H];
 			for (Index x = 0; x < W; ++x) {
@@ -325,7 +326,7 @@ namespace mc {
 		@see Matrix for an explanation of `Vector` and `Matrix` math
 		@pre The Matrix's width must not be larger than the height
 		*/
-		Vector<T, H> operator-(const Vector<T, H> & right) const {
+		Vector<T, H> operator-(const Vector<T, H>& right) const {
 			MACE_STATIC_ASSERT(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
 			T arr[H];
 			for (Index x = 0; x < W; ++x) {
@@ -347,7 +348,7 @@ namespace mc {
 		@see Matrix for an explanation of `Vector` and `Matrix` math
 		@pre The Matrix's width must not be larger than the height
 		*/
-		Vector<T, H> operator*(const Vector<T, H> & right) const {
+		Vector<T, H> operator*(const Vector<T, H>& right) const {
 			MACE_STATIC_ASSERT(W <= H, "When doing Matrix by Vector math, the Matrix's width must not be larger than the height.");
 			T arr[H];
 			for (Index x = 0; x < W; ++x) {
@@ -368,7 +369,7 @@ namespace mc {
 		@see Matrix for an explanation of `Matrix` math
 		@pre Both Matrices' width and height must be equal to each other
 		*/
-		Matrix<T, W, H> operator+(const Matrix<T, W, H> & right) const {
+		Matrix<T, W, H> operator+(const Matrix<T, W, H>& right) const {
 			MACE_STATIC_ASSERT(W == H, "In order to do Matrix math, the width and height of both Matrices have to be be equal.");
 
 			T arr[W][H];
@@ -390,7 +391,7 @@ namespace mc {
 		@see Matrix for an explanation of `Matrix` math
 		@pre Both Matrices' width and height must be equal to each other
 		*/
-		Matrix<T, W, H> operator-(const Matrix<T, W, H> & right) const {
+		Matrix<T, W, H> operator-(const Matrix<T, W, H>& right) const {
 			MACE_STATIC_ASSERT(W == H, "In order to do Matrix math, the width and height of both Matrices have to be be equal.");
 			T arr[W][H];
 			for (Index x = 0; x < W; ++x) {
@@ -411,7 +412,7 @@ namespace mc {
 		@see operator*(const T&) const
 		@pre Both Matrices' width and height must be equal to each other
 		*/
-		Matrix<T, W, H> operator*(const Matrix<T, W, H> & right) const {
+		Matrix<T, W, H> operator*(const Matrix<T, W, H>& right) const {
 			MACE_STATIC_ASSERT(W == H, "In order to multiply matrices, the width must equal to the height.");
 			T arr[W][H];
 			for (Index x = 0; x < W; ++x) {
@@ -435,7 +436,7 @@ namespace mc {
 		@see Matrix for an explanation of `Matrix` math
 		@pre Both Matrices' width and height must be equal to each other
 		*/
-		Matrix<T, W, H> operator*(const T & scalar) const {
+		Matrix<T, W, H> operator*(const T& scalar) const {
 			T arr[W][H];
 			for (Index x = 0; x < W; ++x) {
 #pragma omp simd
@@ -455,7 +456,7 @@ namespace mc {
 		@pre Both Matrices' width and height must be equal to each other
 		@bug Not finished
 		*/
-		Matrix<T, W, H> operator/(const Matrix<T, W, H> & right) const {
+		Matrix<T, W, H> operator/(const Matrix<T, W, H>& right) const {
 			MACE_STATIC_ASSERT(W == H, "In order to divide matrices, the width must equal to the height.");
 			return this->operator*(math::inverse(right));
 		}
@@ -467,7 +468,7 @@ namespace mc {
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Matrix` math
 		*/
-		void operator+=(const Matrix<T, W, H> & right) {
+		void operator+=(const Matrix<T, W, H>& right) {
 			content = operator+(right).content;
 		}
 
@@ -478,7 +479,7 @@ namespace mc {
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Matrix` math
 		*/
-		void operator-=(const Matrix<T, W, H> & right) {
+		void operator-=(const Matrix<T, W, H>& right) {
 			content = operator-(right).content;
 		}
 
@@ -489,7 +490,7 @@ namespace mc {
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Matrix` math
 		*/
-		void operator*=(Matrix<T, W, H> & right) {
+		void operator*=(Matrix<T, W, H>& right) {
 			content = operator*(right).content;
 		}
 
@@ -500,7 +501,7 @@ namespace mc {
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Matrix` math
 		*/
-		void operator*=(const T & scalar) {
+		void operator*=(const T& scalar) {
 			content = operator*(scalar).content;
 		}
 
@@ -511,7 +512,7 @@ namespace mc {
 		@see Vector for an explanation of `Vector` math
 		@see Matrix for an explanation of `Matrix` math
 		*/
-		void operator/=(const Matrix<T, W, H> & right) {
+		void operator/=(const Matrix<T, W, H>& right) {
 			content = operator/(right).content;
 		}
 	protected:
@@ -519,12 +520,12 @@ namespace mc {
 	};//Matrix
 
 	template<typename T, Size N>
-	inline Vector<T, N> operator*=(const Vector<T, N> & v, const Matrix<T, N> & m) {
+	inline Vector<T, N> operator*=(const Vector<T, N>& v, const Matrix<T, N>& m) {
 		return m * v;
 	}
 
 	template<typename T, Size N>
-	inline Vector<T, N> operator*(const Vector<T, N> & v, const Matrix<T, N> & m) {
+	inline Vector<T, N> operator*(const Vector<T, N>& v, const Matrix<T, N>& m) {
 		return m * v;
 	}
 
@@ -555,7 +556,7 @@ namespace mc {
 		@tparam T Type of the `Matrix`
 		*/
 		template<typename T>
-		inline T det(const Matrix<T, 2>& matrix) {
+		inline T det(const Matrix<T, 2> & matrix) {
 			return (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]);
 		}
 

@@ -290,7 +290,7 @@ namespace mc {
 	@see Size
 	*/
 #ifdef MACE_MSVC
-	//we know that c++ platforms have 8 bit chars, so avoid the include by manually defining it
+	//we know that c++ windows platforms always have 8 bit chars, so avoid the include by manually defining it
 	using Byte = unsigned char;
 #else
 	using Byte = std::uint8_t;

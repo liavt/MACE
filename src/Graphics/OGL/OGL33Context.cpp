@@ -74,7 +74,7 @@ namespace mc {
 						return GL_SRGB8;
 					case TextureDesc::InternalFormat::SRGB8_ALPHA8:
 						return GL_SRGB8_ALPHA8;
-						default MACE_UNLIKELY:
+					MACE_UNLIKELY default:
 						MACE__THROW(BadFormat, "Unsupported internal format by OpenGL");
 					}
 				}
@@ -119,7 +119,7 @@ namespace mc {
 						return GL_UNSIGNED_INT_10_10_10_2;
 					case TextureDesc::Type::UNSIGNED_INT_2_10_10_10_REV:
 						return GL_UNSIGNED_INT_2_10_10_10_REV;
-					default:
+					MACE_UNLIKELY default:
 						MACE__THROW(BadFormat, "Unsupported type by OpenGL");
 					}
 				}
@@ -312,7 +312,7 @@ namespace mc {
 				freetype.destroy();
 			}
 
-			OGL33Context::OGL33Context(gfx::WindowModule * win) : GraphicsContext(win) {}
+			OGL33Context::OGL33Context(gfx::WindowModule* win) : GraphicsContext(win) {}
 
 			Renderer* OGL33Context::getRenderer() const {
 				return renderer.get();
@@ -322,10 +322,10 @@ namespace mc {
 				return std::unique_ptr<ModelImpl>(new OGL33Model());
 			}
 
-			std::shared_ptr<TextureImpl> OGL33Context::createTextureImpl(const TextureDesc & desc) {
+			std::shared_ptr<TextureImpl> OGL33Context::createTextureImpl(const TextureDesc& desc) {
 				return std::unique_ptr<TextureImpl>(new OGL33Texture(desc));
 			}
-			std::shared_ptr<FontImpl> OGL33Context::createFontImpl(const FontDesc & desc) {
+			std::shared_ptr<FontImpl> OGL33Context::createFontImpl(const FontDesc& desc) {
 				return std::shared_ptr<FontImpl>(new fty::FreetypeFont(desc, freetype));
 			}
 		}//ogl33

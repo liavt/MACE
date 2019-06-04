@@ -1008,26 +1008,19 @@ namespace mc {
 				buf.setDataRange(bufferData.fields.at(name).offset, size, data);
 			}
 
-			void ShaderProgram::bindUniformBuffer(const UniformBuffer& buf) {
-				const UniformBuffer* buffer[] = {
-					&buf
-				};
-
-				bindUniformBuffers(buffer, 1);
-			}
-
 			void ShaderProgram::bindUniformBuffers(const UniformBuffer* bufs[], const Size size) {
-				if (false && GLAD_GL_ARB_multi_bind) {
+				if (GLAD_GL_ARB_multi_bind) {
 					std::vector<GLuint> ids = std::vector<GLuint>(size);
 					for (Index i = 0; i < size; ++i) {
-						ids.push_back(bufs[i]->getID());
+						const UniformBufferData& data = getUniformBuffer(*bufs[i]);
+						ids[data.index] = bufs[i]->getID();
 					}
 
 					glBindBuffersBase(GL_UNIFORM_BUFFER, 0, static_cast<GLsizei>(size), ids.data());
 				} else {
 					for (Index i = 0; i < size; ++i) {
-						const UniformBufferData& bufferData = getUniformBuffer(*bufs[i]);
-						glBindBufferBase(GL_UNIFORM_BUFFER, bufferData.index, bufs[i]->getID());
+						const UniformBufferData& data = getUniformBuffer(*bufs[i]);
+						glBindBufferBase(GL_UNIFORM_BUFFER, data.index, bufs[i]->getID());
 					}
 				}
 			}

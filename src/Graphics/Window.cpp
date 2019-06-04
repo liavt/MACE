@@ -91,7 +91,7 @@ namespace mc {
 				}
 			}
 
-			void onWindowClose(GLFWwindow * window) {
+			void onWindowClose(GLFWwindow* window) {
 				WindowModule* mod = convertGLFWWindowToModule(window);
 				mod->makeDirty();
 
@@ -158,7 +158,7 @@ namespace mc {
 				pushKeyEvent(static_cast<Input::KeyCode>(button) + Input::MOUSE_FIRST, actions);
 			}
 
-			void onWindowCursorPosition(GLFWwindow * window, double xpos, double ypos) {
+			void onWindowCursorPosition(GLFWwindow* window, double xpos, double ypos) {
 				mouseX = static_cast<int>(mc::math::floor(xpos));
 				mouseY = static_cast<int>(mc::math::floor(ypos));
 
@@ -166,7 +166,7 @@ namespace mc {
 				win->getLaunchConfig().onMouseMove(*win, mouseX, mouseY);
 			}
 
-			void onWindowScrollWheel(GLFWwindow * window, double xoffset, double yoffset) {
+			void onWindowScrollWheel(GLFWwindow* window, double xoffset, double yoffset) {
 				scrollY = yoffset;
 				scrollX = xoffset;
 
@@ -174,17 +174,17 @@ namespace mc {
 				win->getLaunchConfig().onScroll(*win, scrollX, scrollY);
 			}
 
-			void onWindowFramebufferResized(GLFWwindow * window, int, int) {
+			void onWindowFramebufferResized(GLFWwindow* window, int, int) {
 				WindowModule* win = convertGLFWWindowToModule(window);
 				win->getContext()->getRenderer()->flagResize();
 				win->makeChildrenDirty();
 			}
 
-			void onWindowDamaged(GLFWwindow * window) {
+			void onWindowDamaged(GLFWwindow* window) {
 				convertGLFWWindowToModule(window)->makeDirty();
 			}
 
-			VideoMode createVideoMode(const GLFWvidmode * mode) {
+			VideoMode createVideoMode(const GLFWvidmode* mode) {
 				VideoMode out{};
 				out.width = mode->width;
 				out.height = mode->height;
@@ -194,7 +194,7 @@ namespace mc {
 			}
 		}//anon namespace
 
-		WindowModule::WindowModule(const LaunchConfig & c) : config(c), properties(0), window(nullptr) {}
+		WindowModule::WindowModule(const LaunchConfig& c) : config(c), properties(0), window(nullptr) {}
 
 		void WindowModule::create() {
 			glfwSetErrorCallback(&onGLFWError);
@@ -210,11 +210,11 @@ namespace mc {
 
 			switch (config.contextType) {
 			case LaunchConfig::ContextType::AUTOMATIC:
-				MACE_FALLTHROUGH
+				MACE_FALLTHROUGH;
 			case LaunchConfig::ContextType::BEST_OGL:
-				MACE_FALLTHROUGH
+				MACE_FALLTHROUGH;
 			case LaunchConfig::ContextType::OGL33:
-				MACE_FALLTHROUGH
+				MACE_FALLTHROUGH;
 			default:
 				context = std::unique_ptr<gfx::GraphicsContext>(new gfx::ogl33::OGL33Context(this));
 
@@ -271,7 +271,7 @@ namespace mc {
 			if (window == nullptr) {
 				MACE__THROW(InitializationFailed, "OpenGL context was unable to be created. This graphics card may not be supported or the graphics drivers are installed incorrectly");
 			}
-			}//create 
+		}//create 
 
 		void WindowModule::configureThread() {
 			glfwMakeContextCurrent(window);
@@ -315,7 +315,7 @@ namespace mc {
 			return config;
 		}
 
-		void WindowModule::setTitle(const std::string & newTitle) {
+		void WindowModule::setTitle(const std::string& newTitle) {
 			if (!getProperty(gfx::Entity::INIT)) {
 				MACE__THROW(InvalidState, "WindowModule not initialized! Must call MACE::init() first!");
 			}
@@ -355,7 +355,7 @@ namespace mc {
 					}
 
 					os::clearError(__LINE__, __FILE__);
-				} catch (const std::exception & e) {
+				} catch (const std::exception& e) {
 					Error::handleError(e, instance);
 				} catch (...) {
 					MACE__THROW(Unknown, "An unknown error has occured trying to initalize MACE");
@@ -384,7 +384,7 @@ namespace mc {
 							os::clearError(__LINE__, __FILE__);
 							break; // while (!MACE::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false.that way, we only read it, and we dont need to always lock it
 						}
-					} catch (const std::exception & e) {
+					} catch (const std::exception& e) {
 						Error::handleError(e, instance);
 						break;
 					} catch (...) {
@@ -413,14 +413,14 @@ namespace mc {
 					glfwMakeContextCurrent(nullptr);
 
 					os::checkError(__LINE__, __FILE__, "A system error occurred destroying the window");
-				} catch (const std::exception & e) {
+				} catch (const std::exception& e) {
 					Error::handleError(e, instance);
 				} catch (...) {
 					MACE__THROW(Unknown, "An unknown error occured trying to destroy the rendering thread");
 				}
 
 				os::checkError(__LINE__, __FILE__, "A system error occured while running MACE");
-			} catch (const std::exception & e) {
+			} catch (const std::exception& e) {
 				Error::handleError(e, instance);
 			} catch (...) {
 				Error::handleError(MACE__GET_ERROR_NAME(Unknown) ("An unknown error occured while running MACE", __LINE__, __FILE__), instance);
@@ -577,7 +577,7 @@ namespace mc {
 
 		WindowModule::LaunchConfig::LaunchConfig(const Pixels w, const Pixels h, CString t) : title(t), width(w), height(h) {}
 
-		bool WindowModule::LaunchConfig::operator==(const LaunchConfig & other) const {
+		bool WindowModule::LaunchConfig::operator==(const LaunchConfig& other) const {
 			return title == other.title && width == other.width && height == other.height
 				&& fps == other.fps && contextType == other.contextType
 				&& terminateOnClose == other.terminateOnClose
@@ -585,11 +585,11 @@ namespace mc {
 				&& resizable == other.resizable && vsync == other.vsync;
 		}
 
-		bool WindowModule::LaunchConfig::operator!=(const LaunchConfig & other) const {
+		bool WindowModule::LaunchConfig::operator!=(const LaunchConfig& other) const {
 			return !operator==(other);
 		}
 
-		Monitor::Monitor(GLFWmonitor * const mon) : monitor(mon) {}
+		Monitor::Monitor(GLFWmonitor* const mon) : monitor(mon) {}
 
 		WindowModule* getCurrentWindow() {
 			WindowModule* win = getCurrentWindowOrNull();
@@ -676,5 +676,5 @@ namespace mc {
 			VideoMode mode = getCurrentVideoMode();
 			return {mode.width, mode.height};
 		}
-		}//os
-	}//mc
+	}//os
+}//mc

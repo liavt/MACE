@@ -91,7 +91,7 @@ namespace mc {
 
 				impl = sourceSerifPro.impl;
 				break;
-				default MACE_UNLIKELY:
+			MACE_UNLIKELY default:
 				//should never be reached, but just to be safe
 				MACE__THROW(Font, "Unknown Fonts enum constant");
 			}

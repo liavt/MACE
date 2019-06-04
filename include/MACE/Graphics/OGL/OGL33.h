@@ -1133,10 +1133,6 @@ namespace mc {
 				/**
 				@rendercontext
 				*/
-				void bindUniformBuffer(const UniformBuffer& buf);
-				/**
-				@rendercontext
-				*/
 				void bindUniformBuffers(const UniformBuffer* buf[], const Size size);
 
 				int getUniformLocation(const std::string& name) const;

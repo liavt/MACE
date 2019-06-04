@@ -143,7 +143,6 @@ namespace mc {
 
 		void ErrorModule::init() {
 			oldTerminate = std::set_terminate(&onTerminate);
-			oldUnexpected = std::set_unexpected(&onUnexpected);
 
 			SignalModule::init();
 		}
@@ -156,7 +155,6 @@ namespace mc {
 			SignalModule::destroy();
 
 			std::set_terminate(oldTerminate);
-			std::set_unexpected(oldUnexpected);
 		}
 
 		std::string ErrorModule::getName() const {

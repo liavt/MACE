@@ -264,6 +264,8 @@ endif()
 
 message("Configuring target compilation features")
 target_compile_features(MACE PRIVATE cxx_std_11 cxx_constexpr cxx_final cxx_lambdas cxx_noexcept cxx_long_long_type cxx_nullptr cxx_override cxx_range_for cxx_raw_string_literals cxx_static_assert cxx_strong_enums cxx_unicode_literals cxx_variadic_macros)
+set_property(TARGET MACE PROPERTY CXX_STANDARD 20)
+set_property(TARGET MACE PROPERTY CXX_STANDARD_REQUIRED OFF)
 
 if(MACE_ALL_WARNINGS)
 	if(MSVC)

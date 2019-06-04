@@ -539,11 +539,11 @@ namespace mc {
 				case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS:
 					MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_LAYER_TARGETS: Any framebuffer attachment is layered, and any populated attachment is not layered, or if all populated color attachments are not from textures of the same target. ");
 					break;
-					case GL_FRAMEBUFFER_COMPLETE MACE_LIKELY :
-						MACE_FALLTHROUGH;
-					default:
-						//success
-						break;
+				MACE_LIKELY case GL_FRAMEBUFFER_COMPLETE:
+					MACE_FALLTHROUGH;
+				default:
+					//success
+					break;
 				}
 
 				setTarget(FrameBufferTarget::COLOR);
@@ -559,12 +559,15 @@ namespace mc {
 			}
 
 			void OGL33Renderer::getEntitiesAt(const Pixels x, const Pixels y, const Pixels w, const Pixels h, EntityID* arr) const {
-				frameBuffer.bind();
-
 				const Vector<Pixels, 2> framebufferSize = getContext()->getWindow()->getFramebufferSize();
 
-				ogl33::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
-				ogl33::FrameBuffer::setDrawBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
+				if (GLAD_GL_ARB_direct_state_access) {
+					glNamedFramebufferReadBuffer(frameBuffer.getID(), GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
+				} else {
+					frameBuffer.bind();
+
+					ogl33::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
+				}
 				//opengl y-axis is inverted from window coordinates
 				frameBuffer.readPixels(x, framebufferSize.y() - y, w, h, GL_RED_INTEGER, GL_UNSIGNED_INT, arr);
 
@@ -572,8 +575,6 @@ namespace mc {
 			}
 
 			void OGL33Renderer::getPixelsAt(const Pixels x, const Pixels y, const Pixels w, const Pixels h, Color* arr, const FrameBufferTarget target) const {
-				frameBuffer.bind();
-
 				const Vector<Pixels, 2> framebufferSize = getContext()->getWindow()->getFramebufferSize();
 
 				Enum colorAttachment;
@@ -587,8 +588,15 @@ namespace mc {
 					colorAttachment = GL_COLOR_ATTACHMENT0 + MACE__DATA_ATTACHMENT_INDEX;
 					break;
 				}
-				ogl33::FrameBuffer::setReadBuffer(colorAttachment);
-				ogl33::FrameBuffer::setDrawBuffer(colorAttachment);
+
+				if (GLAD_GL_ARB_direct_state_access) {
+					glNamedFramebufferReadBuffer(frameBuffer.getID(), colorAttachment);
+				} else {
+					frameBuffer.bind();
+
+					ogl33::FrameBuffer::setReadBuffer(colorAttachment);
+				}
+
 				//opengl y-axis is inverted from window coordinates
 				frameBuffer.readPixels(x, framebufferSize.y() - y, w, h, GL_RGBA, GL_FLOAT, arr);
 			}

@@ -123,10 +123,12 @@ namespace mc {
 		}
 		@param args What to create this `Vector` with
 		@todo Make this MACE_CONSTEXPR
+		@todo Make initializer list size check compile time check instead of run time
 		@throws IndexOutOfBoundsException If the amount of arguments in the initializer is not equal to the amount of objects this `Vector` holds
 		*/
 		VectorBase(const std::initializer_list<T> args) : VectorBase() {//this is for aggregate initializaition
-			MACE_IF_CONSTEXPR(args.size() != N) {
+			//TODO find a way to make this a compile time error, not runtime error
+			if (args.size() != N) {
 				MACE__THROW(OutOfBounds, "The number of arguments MUST be equal to the size of the Vector");
 			}
 
@@ -265,7 +267,7 @@ namespace mc {
 			return content + (sizeof(T) * (N - 1));
 		}
 
-		const T * end() const {
+		const T* end() const {
 			return content + (sizeof(T) * (N - 1));
 		}
 
@@ -275,7 +277,7 @@ namespace mc {
 		@return The data at `i`
 		@see operator[](Index) const
 		*/
-		T & operator[](Index i) MACE_EXPECTS(i < size()) {
+		T& operator[](Index i) MACE_EXPECTS(i < size()) {
 			return content[i];
 		};
 		/**
@@ -320,7 +322,7 @@ namespace mc {
 		@return A `Vector` that was created by adding 2 `Vectors` together
 		@see Vector for an explanation of `Vector` math
 		*/
-		Child operator+(const Child & right) const {
+		Child operator+(const Child& right) const {
 			Child out = Child(content);
 			out += right;
 			return out;
@@ -334,7 +336,7 @@ namespace mc {
 		@return A `Vector` that was created by subtracting 2 `Vectors` together
 		@see Vector for an explanation of `Vector` math
 		*/
-		Child operator-(const Child & right) const {
+		Child operator-(const Child& right) const {
 			Child out = Child(content);
 			out -= right;
 			return out;
@@ -349,7 +351,7 @@ namespace mc {
 		@return The product of the multiplication
 		@see Vector for an explanation of `Vector` math
 		*/
-		Child operator*(const Child & right) const {
+		Child operator*(const Child& right) const {
 			Child out = Child(content);
 			out *= right;
 			return out;
@@ -364,7 +366,7 @@ namespace mc {
 		@return The quotient of 2 `Vectors`
 		@see Vector for an explanation of `Vector` math
 		*/
-		Child operator/(const Child & right) const {
+		Child operator/(const Child& right) const {
 			Child out = Child(content);
 			out /= right;
 			return out;
@@ -431,7 +433,7 @@ namespace mc {
 		@param right A `Vector` to add
 		@see operator+(const Vector<T,N>&) const
 		*/
-		void operator+= (const Child & right) {
+		void operator+= (const Child& right) {
 #pragma omp simd
 			for (Index i = 0; i < N; ++i) {
 				operator[](i) += right[i];
@@ -443,7 +445,7 @@ namespace mc {
 		@param right A `Vector` to subtract
 		@see operator-(const Vector<T,N>&) const
 		*/
-		void operator-= (const Child & right) {
+		void operator-= (const Child& right) {
 #pragma omp simd
 			for (Index i = 0; i < N; ++i) {
 				operator[](i) -= right[i];
@@ -455,7 +457,7 @@ namespace mc {
 		@param right A `Vector` to multiply
 		@see operator+(const Vector<T,N>&) const
 		*/
-		void operator*= (const Child & right) {
+		void operator*= (const Child& right) {
 #pragma omp simd
 			for (Index i = 0; i < N; ++i) {
 				operator[](i) *= right[i];
@@ -467,7 +469,7 @@ namespace mc {
 		@param right A `Vector` to divide
 		@see operator+(const Vector<T,N>&) const
 		*/
-		void operator/= (const Child & right) {
+		void operator/= (const Child& right) {
 #pragma omp simd
 			for (Index i = 0; i < N; ++i) {
 				operator[](i) /= right[i];
@@ -481,7 +483,7 @@ namespace mc {
 		@see operator*(const Vector<T,3>&) const
 		@see operator*(const T&) const
 		*/
-		void operator+= (const T & scalar) {
+		void operator+= (const T& scalar) {
 #pragma omp simd
 			for (Index i = 0; i < N; ++i) {
 				operator[](i) += scalar;
@@ -494,7 +496,7 @@ namespace mc {
 		@see operator*(const Vector<T,3>&) const
 		@see operator*(const T&) const
 		*/
-		void operator-= (const T & scalar) {
+		void operator-= (const T& scalar) {
 #pragma omp simd
 			for (Index i = 0; i < N; ++i) {
 				operator[](i) -= scalar;
@@ -507,7 +509,7 @@ namespace mc {
 		@see operator*(const Vector<T,3>&) const
 		@see operator*(const T&) const
 		*/
-		void operator*= (const T & scalar) {
+		void operator*= (const T& scalar) {
 #pragma omp simd
 			for (Index i = 0; i < N; ++i) {
 				operator[](i) *= scalar;
@@ -520,7 +522,7 @@ namespace mc {
 		@see operator*(const Vector<T,3>&) const
 		@see operator*(const T&) const
 		*/
-		void operator/= (const T & scalar) {
+		void operator/= (const T& scalar) {
 #pragma omp simd
 			for (Index i = 0; i < N; ++i) {
 				operator[](i) /= scalar;
@@ -539,7 +541,7 @@ namespace mc {
 		@see operator<=(const Vector&) const
 		@see operator>(const Vector&) const
 		*/
-		bool operator==(const Child & other) const {
+		bool operator==(const Child& other) const {
 			for (Index i = 0; i < N; ++i) {
 				if (operator[](i) != other[i]) {
 					return false;
@@ -560,7 +562,7 @@ namespace mc {
 		@see operator<=(const Vector&) const
 		@see operator>(const Vector&) const
 		*/
-		bool operator!=(const Child & other) const {
+		bool operator!=(const Child& other) const {
 			return !operator==(other);
 		};
 
@@ -576,7 +578,7 @@ namespace mc {
 		@see operator==(const Vector&) const
 		@see operator!=(const Vector&) const
 		*/
-		bool operator>(const Child & other) const {
+		bool operator>(const Child& other) const {
 			for (Index i = 0; i < N; ++i) {
 				if (operator[](i) <= other[i]) {
 					return false;
@@ -597,7 +599,7 @@ namespace mc {
 		@see operator==(const Vector&) const
 		@see operator!=(const Vector&) const
 		*/
-		bool operator>=(const Child & other) const {
+		bool operator>=(const Child& other) const {
 			return operator>(other) || operator==(other);
 		}
 
@@ -613,7 +615,7 @@ namespace mc {
 		@see operator==(const Vector&) const
 		@see operator!=(const Vector&) const
 		*/
-		bool operator<(const Child & other) const {
+		bool operator<(const Child& other) const {
 			return !operator>=(other);
 		}
 
@@ -627,7 +629,7 @@ namespace mc {
 		@see operator==(const Vector&) const
 		@see operator!=(const Vector&) const
 		*/
-		bool operator<=(const Child & other) const {
+		bool operator<=(const Child& other) const {
 			return !operator>(other);
 		}
 
@@ -639,8 +641,8 @@ namespace mc {
 		@param v `Matrix` which will be printed
 		@return `output` for chaining
 		*/
-		friend std::ostream& operator<<(std::ostream & output,
-										const Child & v) {
+		friend std::ostream& operator<<(std::ostream& output,
+										const Child& v) {
 			output << '[' << ' ';//why not just "[ "? well, that needs std::string to be included, and thats more compiliation time. this way doesnt need that.
 			for (Index x = 0; x < N; ++x) {
 				output << v[x];
@@ -800,7 +802,7 @@ namespace mc {
 		@tparam T Type of the `Vectors` being calculated. This does not need to be explicitely set.
 		*/
 		template<typename T>
-		Vector<T, 3> cross(const Vector<T, 3>& a, const  Vector<T, 3>& b) {
+		Vector<T, 3> cross(const Vector<T, 3> & a, const  Vector<T, 3> & b) {
 			//i though of more than one pun for this one, so here is a list:
 
 			//the cross of jesus or the cross of cris? these are important questions

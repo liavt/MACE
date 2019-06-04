@@ -54,7 +54,6 @@ namespace mc {
 
 			std::string getName() const override;
 		private:
-			std::unexpected_handler oldUnexpected = nullptr;
 			std::terminate_handler oldTerminate = nullptr;
 		};
 	}//os

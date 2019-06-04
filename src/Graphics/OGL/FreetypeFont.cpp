@@ -94,7 +94,7 @@ namespace mc {
 				case FontLoadType::MEMORY:
 					checkFreetypeError(FT_New_Memory_Face(library, desc.input.memory.data, static_cast<FT_Long>(desc.input.memory.size), 0, &face), "Failed to create face", __LINE__, __FILE__);
 					break;
-					default MACE_UNLIKELY:
+				MACE_UNLIKELY default:
 					MACE__THROW(Font, "Unknown FontLoadType");
 				}
 
@@ -108,11 +108,11 @@ namespace mc {
 			void FreetypeFont::fillGlyph(Glyph& out, const wchar_t character) const {
 				checkFreetypeError(FT_Load_Char(face, character, FT_LOAD_RENDER | FT_LOAD_PEDANTIC | FT_LOAD_TARGET_LCD), "Failed to load glyph", __LINE__, __FILE__);
 
-				const WindowModule * window = gfx::getCurrentWindow();
+				const WindowModule* window = gfx::getCurrentWindow();
 
 				const FT_GlyphSlot glyph = face->glyph;
-				const FT_Glyph_Metrics & gMetrics = glyph->metrics;
-				const FT_Vector & advance = glyph->advance;
+				const FT_Glyph_Metrics& gMetrics = glyph->metrics;
+				const FT_Vector& advance = glyph->advance;
 				out.metrics.width = window->convertPixelsToRelativeXCoordinates(gMetrics.width >> 6);
 				out.metrics.height = window->convertPixelsToRelativeYCoordinates(gMetrics.height >> 6);
 				out.metrics.bearingX = window->convertPixelsToRelativeXCoordinates(gMetrics.horiBearingY >> 6);
@@ -134,7 +134,7 @@ namespace mc {
 					using new FT_Bitmap here instead of making a stack variable because FT_Bitmap_Done is called
 					in a destructor after the stack unwinds
 					*/
-					std::unique_ptr<FT_Bitmap, std::function<void(FT_Bitmap*)>> bitmapPtr = std::unique_ptr<FT_Bitmap, std::function<void(FT_Bitmap*)>>(new FT_Bitmap(), [&](FT_Bitmap * ptr) {
+					std::unique_ptr<FT_Bitmap, std::function<void(FT_Bitmap*)>> bitmapPtr = std::unique_ptr<FT_Bitmap, std::function<void(FT_Bitmap*)>>(new FT_Bitmap(), [&](FT_Bitmap* ptr) {
 						// not calling checkFreetypeError here since this is a destructor and destructor's shouldn't throw
 						// if the deallocation fails, then just ignore it
 						FT_Bitmap_Done(library, ptr);
