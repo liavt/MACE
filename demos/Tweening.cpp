@@ -19,7 +19,7 @@ void create(gfx::WindowModule& win) {
 
 	std::shared_ptr<gfx::ComponentQueue> queue = std::shared_ptr<gfx::ComponentQueue>(new gfx::ComponentQueue());
 
-	TransformMatrix dest1 = TransformMatrix();
+	Transformation dest1 = Transformation();
 	dest1.scaler = { 0.2f, 0.2f, 0.0f };
 	dest1.translation = { 0.5f, 0.5f, 0.0f };
 	dest1.rotation = { 0.0f, 0.0f, 0.5f };
@@ -31,7 +31,7 @@ void create(gfx::WindowModule& win) {
 	settings.reverseOnRepeat = false;
 	queue->addComponent(std::shared_ptr<gfx::Component>(new gfx::TweenComponent(&square, dest1, settings)));
 
-	TransformMatrix dest2 = TransformMatrix(dest1);
+	Transformation dest2 = Transformation(dest1);
 	dest2.scaler = { 0.5f, 0.5f, 0.0f };
 	dest2.translation = { 0.5f, -0.5f, 0.0f };
 	dest2.rotation = { 0.0f, 0.0f, 1.5f };
@@ -42,7 +42,7 @@ void create(gfx::WindowModule& win) {
 	settings.reverseOnRepeat = true;
 	queue->addComponent(std::shared_ptr<gfx::Component>(new gfx::TweenComponent(&square, dest1, dest2, settings)));
 
-	TransformMatrix dest3 = TransformMatrix(dest2);
+	Transformation dest3 = Transformation(dest2);
 	dest3.scaler = { 0.05f, 0.05f, 0.0f };
 	dest3.translation = { -0.5f, -0.5f, 0.0f };
 	dest3.rotation = { 0.0f, 0.0f, 6.0f };

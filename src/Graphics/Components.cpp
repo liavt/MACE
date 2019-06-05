@@ -569,7 +569,7 @@ namespace mc {
 
 		void NineSliceComponent::render() {
 			Painter& painter = en->getPainter();
-			TransformMatrix& transform = painter.getTransformation();
+			Transformation& transform = painter.getTransformation();
 			const float flipSides = desc.flipSides ? -1.0f : 1.0f;
 
 			const Beginner beginner(&painter);
@@ -765,7 +765,7 @@ namespace mc {
 		}
 
 		void BoundsComponent::clean(Metrics & metrics) {
-			TransformMatrix& transform = metrics.transform;
+			Transformation& transform = metrics.transform;
 			RelativeTranslation& x = transform.translation.x(), y = transform.translation.y(), z = transform.translation.z();
 			const RelativeScale& width = transform.scaler.x(), height = transform.scaler.y(), depth = transform.scaler.z();
 			if (x - width < boundsX.x()) {
@@ -793,10 +793,10 @@ namespace mc {
 			}
 		}
 
-		TweenComponent::TweenComponent(Entity * const en, const TransformMatrix dest, const EaseSettings settings) : TweenComponent(en, en->getTransformation(), dest, settings) {}
+		TweenComponent::TweenComponent(Entity * const en, const Transformation dest, const EaseSettings settings) : TweenComponent(en, en->getTransformation(), dest, settings) {}
 
-		TweenComponent::TweenComponent(Entity * const en, const TransformMatrix start, const TransformMatrix dest, const EaseSettings settings) : EaseComponent([start, dest, en](Entity*, float prog) {
-			TransformMatrix current = TransformMatrix();
+		TweenComponent::TweenComponent(Entity * const en, const Transformation start, const Transformation dest, const EaseSettings settings) : EaseComponent([start, dest, en](Entity*, float prog) {
+			Transformation current = Transformation();
 			current.translation = math::lerp(start.translation, dest.translation, prog);
 			current.rotation = math::lerp(start.rotation, dest.rotation, prog);
 			current.scaler = math::lerp(start.scaler, dest.scaler, prog);

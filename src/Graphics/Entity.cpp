@@ -172,7 +172,7 @@ namespace mc {
 
 				metrics.transform = transformation;
 
-				metrics.inherited = TransformMatrix();
+				metrics.inherited = Transformation();
 				if (hasParent()) MACE_LIKELY{
 					const Entity * par = getParent();
 
@@ -476,18 +476,18 @@ namespace mc {
 			}
 		}
 
-		TransformMatrix& Entity::getTransformation() {
+		Transformation& Entity::getTransformation() {
 			makeDirty();
 
 			return transformation;
 		}
 
-		const TransformMatrix& Entity::getTransformation() const {
+		const Transformation& Entity::getTransformation() const {
 			return transformation;
 		}
 
 		//we are trans-supportive here!
-		void Entity::setTransformation(const TransformMatrix& trans) {
+		void Entity::setTransformation(const Transformation& trans) {
 			if (transformation != trans) {
 				makeDirty();
 
@@ -643,19 +643,19 @@ namespace mc {
 			}
 		}
 
-		void Entity::tween(const TransformMatrix start, const TransformMatrix dest, const EaseSettings settings) {
+		void Entity::tween(const Transformation start, const Transformation dest, const EaseSettings settings) {
 			addComponent(std::shared_ptr<Component>(new TweenComponent(this, start, dest, settings)));
 		}
 
-		void Entity::tween(const TransformMatrix start, const TransformMatrix dest) {
+		void Entity::tween(const Transformation start, const Transformation dest) {
 			tween(start, dest, EaseSettings());
 		}
 
-		void Entity::tween(const TransformMatrix dest, const EaseSettings settings) {
+		void Entity::tween(const Transformation dest, const EaseSettings settings) {
 			tween(getTransformation(), dest, settings);
 		}
 
-		void Entity::tween(const TransformMatrix dest) {
+		void Entity::tween(const Transformation dest) {
 			tween(dest, EaseSettings());
 		}
 

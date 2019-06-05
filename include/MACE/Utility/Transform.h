@@ -125,111 +125,111 @@ namespace mc {
 	<p>
 	This should not be confused with the `Matrix` class, which allows for the arbitrary storage of data in a matrix-like fashion
 	*/
-	struct TransformMatrix {
+	struct Transformation {
 
 		/**
-		Represents this `TransformMatrix`'s translation
+		Represents this `Transformation`'s translation
 		@see translate(const float, const float, const float)
 		@see get()
 		*/
 		Vector<RelativeTranslation, 3> translation;
 		/**
-		Represents this `TransformMatrix`'s rotation
+		Represents this `Transformation`'s rotation
 		@see rotate(const float, const float, const float)
 		@see get()
 		*/
 		Vector<RelativeRadian, 3> rotation;
 		/**
-		Represents this `TransformMatrix`'s scale
+		Represents this `Transformation`'s scale
 		@see scale(const float, const float, const float)
 		@see get()
 		*/
 		Vector<RelativeScale, 3> scaler;//the variable is not called scale because that conflicts with scale() function
 
 		/**
-		Default constructor. Generates a `TransformMatrix` as an identity matrix.
+		Default constructor. Generates a `Transformation` as an identity matrix.
 		@see reset()
 		*/
-		TransformMatrix();
+		Transformation();
 
 		/**
-		Translates this `TransformMatrix` in any 3 directions.
+		Translates this `Transformation` in any 3 directions.
 		@param x How much to translate in the X plane.
 		@param y How much to translate in the Y plane.
 		@param z How much to translate in the Z plane.
 		@return Itself for chaining
 		@see translate(const Matrix&, const float, const float, const float)
 		*/
-		TransformMatrix& translate(const RelativeTranslation x, const RelativeTranslation y, const RelativeTranslation z);
+		Transformation& translate(const RelativeTranslation x, const RelativeTranslation y, const RelativeTranslation z);
 		/**
-		Rotates this `TransformMatrix` in any 3 directions.
+		Rotates this `Transformation` in any 3 directions.
 		@param x How much to rotate in the X plane.
 		@param y How much to rotate in the Y plane.
 		@param z How much to rotate in the Z plane.
 		@return Itself for chaining
 		@see rotate(const Matrix&, const float, const float, const float)
 		*/
-		TransformMatrix& rotate(const RelativeRadian x, const RelativeRadian y, const RelativeRadian z);
+		Transformation& rotate(const RelativeRadian x, const RelativeRadian y, const RelativeRadian z);
 		/**
-		Scales this `TransformMatrix` in any 3 directions.
+		Scales this `Transformation` in any 3 directions.
 		@param x How much to scale in the X plane.
 		@param y How much to scale in the Y plane.
 		@param z How much to scale in the Z plane.
 		@return Itself for chaining
 		@see scale(const Matrix&, const float, const float, const float)
 		*/
-		TransformMatrix& scale(const RelativeScale x, const RelativeScale y, const RelativeScale z);
+		Transformation& scale(const RelativeScale x, const RelativeScale y, const RelativeScale z);
 		/**
-		Deletes any transformations on this `TransformMatrix`, effectively making it an identity matrix.
+		Deletes any transformations on this `Transformation`, effectively making it an identity matrix.
 		@return Itself for chaining
 		*/
-		TransformMatrix& reset();
+		Transformation& reset();
 
 		/**
-		Converts this `TransformMatrix` into a `Matrix` based on the stored transformations.
+		Converts this `Transformation` into a `Matrix` based on the stored transformations.
 		@return The transformation matrix represented by the values stored via `rotate()`, `scale()`, and `translate()`
 		*/
 		Matrix<RelativeUnit, 4> get() const;
 
-		bool collides2D(const TransformMatrix& other) const;
+		bool collides2D(const Transformation& other) const;
 
 		/**
-		Checks if the values represented by 2 `TransformMatrix` are the same
+		Checks if the values represented by 2 `Transformation` are the same
 		@param other What to compare to
 		@return Whether `this` and `other` are equal
 		*/
-		bool operator==(const TransformMatrix& other) const;
+		bool operator==(const Transformation& other) const;
 		/**
-		Checks if the values represented by 2 `TransformMatrix` are not the same
+		Checks if the values represented by 2 `Transformation` are not the same
 		@param other What to compare to
 		@return Whether `this` and `other` are different
 		*/
-		bool operator!=(const TransformMatrix& other) const;
+		bool operator!=(const Transformation& other) const;
 		/**
-		Checks whether a `TransformMatrix` is larger than another
+		Checks whether a `Transformation` is larger than another
 		@param other What to compare to
 		@return whether `this` is larger than `other`, based on `translation`, `rotation`, and `scaler`
 		*/
-		bool operator>(const TransformMatrix& other) const;
+		bool operator>(const Transformation& other) const;
 		/**
-		Checks whether a `TransformMatrix` is larger than or equal to another
+		Checks whether a `Transformation` is larger than or equal to another
 		@param other What to compare to
 		@return whether `this` is larger than or equal to `other`, based on `translation`, `rotation`, and `scaler`
 		*/
-		bool operator>=(const TransformMatrix& other) const;
+		bool operator>=(const Transformation& other) const;
 		/**
-		Checks whether a `TransformMatrix` is smaller than another
+		Checks whether a `Transformation` is smaller than another
 		@param other What to compare to
 		@return whether `this` is smaller than `other`, based on `translation`, `rotation`, and `scaler`
 		*/
-		bool operator<(const TransformMatrix& other) const;
+		bool operator<(const Transformation& other) const;
 		/**
-		Checks whether a `TransformMatrix` is small than or equal to another
+		Checks whether a `Transformation` is small than or equal to another
 		@param other What to compare to
 		@return whether `this` is smaller than or equal to `other`, based on `translation`, `rotation`, and `scaler`
 		*/
-		bool operator<=(const TransformMatrix& other) const;
-	};//TransformMatrix
+		bool operator<=(const Transformation& other) const;
+	};//Transformation
 }//mc
 
 #endif

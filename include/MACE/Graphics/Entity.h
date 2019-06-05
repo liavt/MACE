@@ -25,8 +25,8 @@ namespace mc {
 		struct EaseSettings;
 
 		struct Metrics {
-			TransformMatrix transform{};
-			TransformMatrix inherited{};
+			Transformation transform{};
+			Transformation inherited{};
 
 			bool operator==(const Metrics& other) const;
 			bool operator!=(const Metrics& other) const;
@@ -360,12 +360,12 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			TransformMatrix& getTransformation();
-			const TransformMatrix& getTransformation() const;
+			Transformation& getTransformation();
+			const Transformation& getTransformation() const;
 			/**
 			@dirty
 			*/
-			void setTransformation(const TransformMatrix& trans);
+			void setTransformation(const Transformation& trans);
 
 			/**
 			@dirty
@@ -561,19 +561,19 @@ namespace mc {
 			@see `TweenComponent`
 			*/
 			//Function overloading would require the EaseSettings constructor, which means we have to include the entire header instead of forward declaring.
-			void tween(const TransformMatrix start, const TransformMatrix dest, const EaseSettings settings);
+			void tween(const Transformation start, const Transformation dest, const EaseSettings settings);
 			/**
-			@copydoc #tween(const TransformMatrix, const TransformMatrix, const EaseSettings)
+			@copydoc #tween(const Transformation, const Transformation, const EaseSettings)
 			*/
-			void tween(const TransformMatrix start, const TransformMatrix dest);
+			void tween(const Transformation start, const Transformation dest);
 			/**
-			@copydoc #tween(const TransformMatrix, const TransformMatrix, const EaseSettings)
+			@copydoc #tween(const Transformation, const Transformation, const EaseSettings)
 			*/
-			void tween(const TransformMatrix dest, const EaseSettings settings);
+			void tween(const Transformation dest, const EaseSettings settings);
 			/**
-			@copydoc #tween(const TransformMatrix, const TransformMatrix, const EaseSettings)
+			@copydoc #tween(const Transformation, const Transformation, const EaseSettings)
 			*/
-			void tween(const TransformMatrix dest);
+			void tween(const Transformation dest);
 
 		protected:
 			/**
@@ -665,7 +665,7 @@ namespace mc {
 			/**
 			@internal
 			*/
-			TransformMatrix transformation;
+			Transformation transformation;
 
 			/**
 			@internal

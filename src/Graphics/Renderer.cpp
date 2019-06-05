@@ -528,15 +528,15 @@ namespace mc {
 			return state.data;
 		}
 
-		void Painter::setTransformation(const TransformMatrix & trans) {
+		void Painter::setTransformation(const Transformation & trans) {
 			state.transformation = trans;
 		}
 
-		TransformMatrix& Painter::getTransformation() {
+		Transformation& Painter::getTransformation() {
 			return state.transformation;
 		}
 
-		const TransformMatrix& Painter::getTransformation() const {
+		const Transformation& Painter::getTransformation() const {
 			return state.transformation;
 		}
 

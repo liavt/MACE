@@ -21,7 +21,7 @@ namespace mc {
 		}
 
 		TEST_CASE("Testing transformation class", "[utility][vector]") {
-			TransformMatrix t = TransformMatrix();
+			Transformation t = Transformation();
 			SECTION("Testing default values") {
 				Vector<float, 4> v = { 5,-1,0,1 };
 				REQUIRE(t.get()*v == v);

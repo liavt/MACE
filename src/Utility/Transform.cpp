@@ -88,41 +88,41 @@ namespace mc {
 
 		return orthoMatrix;
 	}
-	TransformMatrix::TransformMatrix() {
+	Transformation::Transformation() {
 		translation = { 0,0,0 };
 		rotation = { 0,0,0 };
 		scaler = { 1,1,1 };
 
 
 	}
-	TransformMatrix & TransformMatrix::translate(const RelativeTranslation x, const RelativeTranslation y, const RelativeTranslation z) {
+	Transformation & Transformation::translate(const RelativeTranslation x, const RelativeTranslation y, const RelativeTranslation z) {
 		translation[0] += x;
 		translation[1] += y;
 		translation[2] += z;
 		return *this;
 	}
-	TransformMatrix & TransformMatrix::rotate(const RelativeRadian x, const RelativeRadian y, const RelativeRadian z) {
+	Transformation & Transformation::rotate(const RelativeRadian x, const RelativeRadian y, const RelativeRadian z) {
 		rotation[0] += x;
 		rotation[1] += y;
 		rotation[2] += z;
 		return *this;
 	}
-	TransformMatrix & TransformMatrix::scale(const RelativeScale x, const RelativeScale y, const RelativeScale z) {
+	Transformation & Transformation::scale(const RelativeScale x, const RelativeScale y, const RelativeScale z) {
 		scaler[0] *= x;
 		scaler[1] *= y;
 		scaler[2] *= z;
 		return *this;
 	}
-	TransformMatrix & TransformMatrix::reset() {
+	Transformation & Transformation::reset() {
 		scaler = { 1.0f, 1.0f, 1.0f };
 		translation = { 0.0f, 0.0f, 0.0f };
 		rotation = { 0.0f, 0.0f, 0.0f };
 		return *this;
 	}
-	Matrix<RelativeUnit, 4, 4> TransformMatrix::get() const {
+	Matrix<RelativeUnit, 4, 4> Transformation::get() const {
 		return math::identity<float, 4>() * math::translate(translation[0], translation[1], translation[2]) * math::rotate(rotation[0], rotation[1], rotation[2]) * math::scale(scaler[0], scaler[1], scaler[2]);
 	}
-	bool TransformMatrix::collides2D(const TransformMatrix & other) const {
+	bool Transformation::collides2D(const Transformation & other) const {
 		const Vector<RelativeUnit, 4> thisAABB{ (translation[0] / 2.0f) + 0.5f, (translation[1] / 2.0f) + 0.5f, scaler[0], scaler[1] };
 		const Vector<RelativeUnit, 4> otherAABB{ (other.translation[0] / 2.0f) + 0.5f, (other.translation[1] / 2.0f) + 0.5f, other.scaler[0], other.scaler[1] };
 
@@ -136,22 +136,22 @@ namespace mc {
 		return false;
 	}
 
-	bool TransformMatrix::operator==(const TransformMatrix & other) const {
+	bool Transformation::operator==(const Transformation & other) const {
 		return other.translation == translation && other.rotation == rotation && other.scaler == scaler;
 	}
-	bool TransformMatrix::operator!=(const TransformMatrix & other) const {
+	bool Transformation::operator!=(const Transformation & other) const {
 		return !operator==(other);
 	}
-	bool TransformMatrix::operator>(const TransformMatrix & other) const {
+	bool Transformation::operator>(const Transformation & other) const {
 		return translation > other.translation && rotation > other.rotation && scaler > other.scaler;
 	}
-	bool TransformMatrix::operator>=(const TransformMatrix & other) const {
+	bool Transformation::operator>=(const Transformation & other) const {
 		return operator>(other) || operator==(other);
 	}
-	bool TransformMatrix::operator<(const TransformMatrix & other) const {
+	bool Transformation::operator<(const Transformation & other) const {
 		return !(operator>(other) || operator==(other));
 	}
-	bool TransformMatrix::operator<=(const TransformMatrix & other) const {
+	bool Transformation::operator<=(const Transformation & other) const {
 		return !operator>(other) || operator==(other);
 	}
 }

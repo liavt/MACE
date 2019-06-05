@@ -115,7 +115,7 @@ namespace mc {
 
 				Vector<float, 4> data;
 
-				TransformMatrix transformation;
+				Transformation transformation;
 
 				Matrix<float, 4, 4> filter = math::identity<float, 4>();
 
@@ -189,9 +189,9 @@ namespace mc {
 			Vector<float, 4> & getData();
 			const Vector<float, 4> & getData() const;
 
-			void setTransformation(const TransformMatrix& trans);
-			TransformMatrix& getTransformation();
-			const TransformMatrix& getTransformation() const;
+			void setTransformation(const Transformation& trans);
+			Transformation& getTransformation();
+			const Transformation& getTransformation() const;
 
 			void setOpacity(const float opacity);
 			float getOpacity();

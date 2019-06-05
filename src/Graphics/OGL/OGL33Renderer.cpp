@@ -681,8 +681,8 @@ namespace mc {
 
 				savedMetrics = painter->getEntity()->getMetrics();
 
-				const TransformMatrix& transform = savedMetrics.transform;
-				const TransformMatrix& inherited = savedMetrics.inherited;
+				const Transformation& transform = savedMetrics.transform;
+				const Transformation& inherited = savedMetrics.inherited;
 
 				float entityDataBuffer[MACE__ENTITY_DATA_BUFFER_SIZE / sizeof(float)] = {};
 
@@ -753,8 +753,8 @@ namespace mc {
 					return;
 				}
 
-				const TransformMatrix& transform = metrics.transform;
-				const TransformMatrix& inherited = metrics.inherited;
+				const Transformation& transform = metrics.transform;
+				const Transformation& inherited = metrics.inherited;
 
 				//now we set the data defining the transformations of the entity
 				uniformBuffers.entityData.bind();

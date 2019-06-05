@@ -226,8 +226,8 @@ namespace mc {
 
 		class TweenComponent: public EaseComponent {
 		public:
-			TweenComponent(Entity* const en, const TransformMatrix dest, const EaseSettings settings);
-			TweenComponent(Entity* const en, const TransformMatrix start, const TransformMatrix dest, const EaseSettings settings);
+			TweenComponent(Entity* const en, const Transformation dest, const EaseSettings settings);
+			TweenComponent(Entity* const en, const Transformation start, const Transformation dest, const EaseSettings settings);
 
 			Entity* const getEntity();
 			const Entity* const getEntity() const;
