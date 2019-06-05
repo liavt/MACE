@@ -10,16 +10,17 @@ See LICENSE.md for full copyright information
 #include <MACE/Core/Constants.h>
 #include <MACE/Core/Interfaces.h>
 #include <string>
-#include <vector>
+#include <unordered_map>
+#include <memory>
 
 namespace mc {
 	//forward declaration for Module class
 	class Instance;
-	
+
 	/**
 	Abstract class used for doing a task in MACE. Plugged into {@link Instance} via {@link Instance#addModule(Module&) addModule().}
 	*/
-	class MACE_NOVTABLE Module: public Initializable{
+	class MACE_NOVTABLE Module: public Initializable {
 		friend class Instance;
 	public:
 		virtual ~Module() = default;
@@ -61,6 +62,11 @@ namespace mc {
 	protected:
 		Instance* instance = nullptr;
 	};
+
+	/**
+	A pointer to a `Module` that automatically manages pointer lifecycle
+	*/
+	using ModulePtr = std::shared_ptr<Module>;
 
 	/**
 	Core class of MACE, managing `Modules`. To start running MACE, simply call `mc::MACE::start(const long long ups)`
@@ -111,72 +117,50 @@ namespace mc {
 		};
 
 		/**
+		@copydoc addModule(std::shared_ptr<Module>)
+		*/
+		void addModule(Module& m);
+
+		/**
+		@copydoc addModule(std::shared_ptr<Module>)
+		*/
+		void addModule(Module* m) MACE_EXPECTS(m != nullptr);
+
+		/**
 		Register a {@link Module}.
 		<p>
-		Registered `Modules` will have `update(), init(),` and `destroy()` are respectivaly called when `MACE.update(), MACE.init(),` and `MACE.destroy()` are called.
-		@param m Reference to a `Module.` If the `Module` referenced leaves scope or gets deallocated, a `read access violation will occur.`
-		@return Location of the `Module` in the sslBuffer. This index can be used in various other methods.
+		Registered `Modules` will have `update(), init(),` and `destroy()` are respectively called when `MACE.update(), MACE.init(),` and `MACE.destroy()` are called.
+		@param m Selected `Module` to add.
+		@throws AlreadyExistsError If a `Module` with the same name already exists
+		@throws InvalidStateError If the input to this function is already associated with an `Instance`
+		@throws NullPointerError If the input is `nullptr`
 		*/
-		Index addModule(Module& m) MACE_ENSURES(ret, ret >= 0);
+		void addModule(ModulePtr m) MACE_EXPECTS(m != nullptr);
 		/**
-		Remove a `Module` by reference. This is generally more safe than `removeModule(std::string)` as this checks by reference, not by name.
-		@param m Reference to Module in the sslBuffer.
-		@throws ObjectNotFoundInArray if the referenced `Module` doesn't exist.
-		*/
-		void removeModule(const Module& m);
-		/**
-		Remove a `Module` by name.
-		<p>
-		It will find the `Module` based on their {@link Module#getName() getName()} function, so if there are multiple `Modules` with the same name, this function may produce unexpected behavior.
+		Remove a `Module`
 		@param module Name of a `Module`
-		@throws ObjectNotFoundInArray if a `Module` with the given name doesn't exist.
 		*/
-		void removeModule(const std::string module) MACE_EXPECTS(!module.empty());
-		/**
-		Remove a `Module` by it's index. The index is provided from MACE::addModule(Module&) or MACE::indexOf(Module&)
-		@throw IndexOutOfBounds if `i<0` or `i>numberOfModules()`
-		@param i Index of a `Module` to delete
-		*/
-		void removeModule(const Index i) MACE_EXPECTS(i >= 0 && i < size());
+		void removeModule(const std::string& module) MACE_EXPECTS(!module.empty());
 		/**
 		Retrieve a pointer to a `Module` with the specified name.
 		<p>
-		It will find the `Module` based on their {@link Module#getName() getName()} function, so if there are multiple `Modules` with the same name, this function may produce unexpected behavior.
-		@return A `Module` whose `getName()` function returns the specified keyword
+		It will find the `Module` based on their {@link Module#getName() getName()} function in O(1) time
+		@return The found `Module`. If no `Module` with the specified name exists, returns a `std::shared_ptr` holding `nullptr`
 		@param keyword Name to look for
-		@see #getModule(Index)
 		*/
-		Module* getModule(const std::string keyword) MACE_EXPECTS(!keyword.empty());
-		/**
-		Retrieves the `Module` at a certain index.
-		@return A pointer to a `Module` at the specified location
-		@param i Valid index to a `Module`
-		@throw IndexOutOfBounds if `i<0` or `i>numberOfModules()`
-		*/
-		Module* getModule(const Index i) MACE_EXPECTS(i >= 0 && i < size());
+		ModulePtr getModule(const std::string& keyword) MACE_EXPECTS(!keyword.empty());
 
 		/**
-		@copydoc MACEInstance::getModule(const std::string)
+		@copydoc Instance::getModule(const std::string)
 		*/
-		const Module* getModule(const std::string keyword) const MACE_EXPECTS(!keyword.empty());
-		/**
-		@copydoc MACEInstance::getModule(const Index)
-		*/
-		const Module* getModule(const Index i) const MACE_EXPECTS(i >= 0 && i < size());
+		const ModulePtr getModule(const std::string& keyword) const MACE_EXPECTS(!keyword.empty());
 
 		/**
 		Checks whether a `Module` exists via it's `getName()` function.
 		@param module Name to search for
 		@return `true` if there is a `Module` with the specified name, `false` otherwise.
 		*/
-		bool moduleExists(const std::string module) const MACE_EXPECTS(!module.empty());
-
-		/**
-		Checks whether a `Module` exists via a pointer.
-		@param module `Module` to search for
-		@return `true` if the `Module` exists, `false` otherwise.
-		*/
-		bool moduleExists(const Module* module) const MACE_EXPECTS(module != nullptr);
+		bool hasModule(const std::string& module) const MACE_EXPECTS(!module.empty());
 		/**
 		Retrieves the amount of `Module` currently being updated by `MACE`
 		@return `Size` of the internal `Module` buffer
@@ -187,39 +171,6 @@ namespace mc {
 		@return `size()` == 0
 		*/
 		bool empty() const;
-		/**
-		Retrieves the location of a `Module` in the buffer.
-		<p>
-		Equivalent to calling {@code
-			indexOf(m.getName());
-		}
-		@param m Module to find the index of.
-		@return Location of the `Module,` or `-1` if it doesnt exist.
-		@see indexOf(Module&)
-		*/
-		int indexOf(const Module& m) const;
-		/**
-		Find a `Module` with the specified name.
-		@param name Name to search for
-		@return Location of a `Module` whose `getName()` function returns `name,` or `-1` if wasn't found
-		*/
-		int indexOf(const std::string name) const MACE_EXPECTS(!name.empty());
-
-		/**
-		Require that a `Module` with the specified name exists, or throw an exception.
-		<p>
-		If your `Module` depends on another `Module,` use this function to require your dependencies.
-		@param module Name to assertion
-		@param errorMessage What to print if the assertion fails
-		@throw AssertionError if there isn't a `Module` with the requested name.
-		*/
-		void assertModule(const std::string module, const std::string errorMessage) const MACE_EXPECTS(!module.empty() && !errorMessage.empty()) ;
-		/**
-		Overloads {@link #assertModule(std::string,std::string)} with `errorMessage` being `The specified Module does not exist!`
-		@param module Name of a `Module` to assertion
-		@see #assertModule(std::string,std::string)
-		*/
-		void assertModule(const std::string module) const MACE_EXPECTS(!module.empty());
 
 		void start(const long long ups = 30L);
 
@@ -284,13 +235,15 @@ namespace mc {
 		*/
 		void reset() MACE_ENSURES(ret, empty());
 
+		const std::unordered_map<std::string, ModulePtr>& getModules() const;
+
 		bool operator==(const Instance& other) const;
 		bool operator!=(const Instance& other) const;
 	private:
 		/**
 		All of the `Modules` registered
 		*/
-		std::vector<Module*> modules;
+		std::unordered_map<std::string, ModulePtr> modules;
 
 		/**
 		Stores various flags for the MACE, like whether it is running, or a close is requested.

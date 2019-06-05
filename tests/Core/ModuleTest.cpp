@@ -9,7 +9,7 @@ See LICENSE.md for full copyright information
 namespace mc {
 	class TestModule:public mc::Module {
 	public:
-		TestModule() : mc::Module() {};
+		TestModule(const int id) : mc::Module(), identifier(id) {};
 
 		int updates = 0;
 		bool isInit = false;
@@ -26,8 +26,10 @@ namespace mc {
 			isInit = false;
 		};
 		std::string getName() const {
-			return "Test";
+			return "Test" + identifier;
 		};
+	private:
+		int identifier;
 	};
 
 	TEST_CASE("Testing reset() and numberOfModules()") {
@@ -39,34 +41,34 @@ namespace mc {
 
 		REQUIRE(MACE.size() == 0);
 
-		TestModule m = TestModule();
-		TestModule m1 = TestModule();
-		TestModule m2 = TestModule();
-		
+		TestModule m = TestModule(0);
+		TestModule m1 = TestModule(1);
+		TestModule m2 = TestModule(2);
+
 		MACE.addModule(m);
 
 		SECTION("Testing with 1 module") {
-			REQUIRE(MACE.moduleExists(&m));
-			REQUIRE_FALSE(MACE.moduleExists(&m1));
-			REQUIRE_FALSE(MACE.moduleExists(&m2));
+			REQUIRE(MACE.hasModule(m.getName()));
+			REQUIRE_FALSE(MACE.hasModule(m1.getName()));
+			REQUIRE_FALSE(MACE.hasModule(m2.getName()));
 			REQUIRE(MACE.size() == 1);
 		}
 
 		MACE.addModule(m1);
 
 		SECTION("Testing with 2 modules") {
-			REQUIRE(MACE.moduleExists(&m));
-			REQUIRE(MACE.moduleExists(&m1));
-			REQUIRE_FALSE(MACE.moduleExists(&m2));
+			REQUIRE(MACE.hasModule(m.getName()));
+			REQUIRE(MACE.hasModule(m1.getName()));
+			REQUIRE_FALSE(MACE.hasModule(m2.getName()));
 			REQUIRE(MACE.size() == 2);
 		}
 
 		MACE.addModule(m2);
 
 		SECTION("Testing with 3 modules") {
-			REQUIRE(MACE.moduleExists(&m));
-			REQUIRE(MACE.moduleExists(&m1));
-			REQUIRE(MACE.moduleExists(&m2));
+			REQUIRE(MACE.hasModule(m.getName()));
+			REQUIRE(MACE.hasModule(m1.getName()));
+			REQUIRE(MACE.hasModule(m2.getName()));
 			REQUIRE(MACE.size() == 3);
 		}
 
@@ -74,9 +76,10 @@ namespace mc {
 
 		SECTION("Testing reset()") {
 			REQUIRE(MACE.size() == 0);
-			REQUIRE_FALSE(MACE.moduleExists(&m));
-			REQUIRE_FALSE(MACE.moduleExists(&m1));
-			REQUIRE_FALSE(MACE.moduleExists(&m2));
+			REQUIRE(MACE.empty());
+			REQUIRE_FALSE(MACE.hasModule(m.getName()));
+			REQUIRE_FALSE(MACE.hasModule(m1.getName()));
+			REQUIRE_FALSE(MACE.hasModule(m2.getName()));
 
 			REQUIRE_FALSE(MACE.getFlag(MACE.INIT));
 			REQUIRE_FALSE(MACE.getFlag(MACE.DESTROYED));
@@ -88,14 +91,14 @@ namespace mc {
 	TEST_CASE("Testing modules", "[module][system]") {
 		Instance MACE = Instance();
 
-		TestModule m = TestModule();
-		TestModule m2 = TestModule();
+		TestModule m = TestModule(0);
+		TestModule m2 = TestModule(1);
 
 		MACE.addModule(m2);
 
 		SECTION("Testing moduleExists()") {
-			REQUIRE(MACE.moduleExists(&m2));
-			REQUIRE_FALSE(MACE.moduleExists(&m));
+			REQUIRE(MACE.hasModule(m2.getName()));
+			REQUIRE_FALSE(MACE.hasModule(m.getName()));
 
 			REQUIRE(MACE.getModule("") == nullptr);
 		}
@@ -103,32 +106,32 @@ namespace mc {
 		MACE.addModule(m);
 
 		SECTION("Testing init() and update() with modules") {
-			REQUIRE(MACE.moduleExists(m.getName()));
-			REQUIRE(MACE.moduleExists(&m));
-			REQUIRE(MACE.moduleExists(&m2));
-			REQUIRE(MACE.moduleExists(m2.getName()));
+			REQUIRE(MACE.hasModule(m.getName()));
+			REQUIRE(MACE.hasModule(m.getName()));
+			REQUIRE(MACE.hasModule(m2.getName()));
+			REQUIRE(MACE.hasModule(m2.getName()));
 
 			mc::Initializer i(MACE);
 
-			REQUIRE(MACE.moduleExists(m2.getName()));
-			REQUIRE(MACE.moduleExists(&m2));
+			REQUIRE(MACE.hasModule(m2.getName()));
+			REQUIRE(MACE.hasModule(m2.getName()));
 			MACE.update();
 		}
 
-		MACE.removeModule(m);
+		MACE.removeModule(m.getName());
 
 		SECTION("Testing moduleExists()") {
-			REQUIRE_FALSE(MACE.moduleExists(&m));
-			REQUIRE(MACE.moduleExists(&m2));
+			REQUIRE_FALSE(MACE.hasModule(m.getName()));
+			REQUIRE(MACE.hasModule(m2.getName()));
 		}
 
-		MACE.removeModule(m2);
+		MACE.removeModule(m2.getName());
 	}
 
 	TEST_CASE("Testing flags") {
 		Instance MACE = Instance();
 
-		TestModule m = TestModule();
+		TestModule m = TestModule(0);
 
 		MACE.addModule(m);
 		SECTION("Testing with module") {
@@ -140,7 +143,7 @@ namespace mc {
 				REQUIRE_FALSE(MACE.getFlag(MACE.STOP_REQUESTED));
 
 
-				for( Index i = 0; i < 10; i++ ) {
+				for (Index i = 0; i < 10; i++) {
 					REQUIRE(m.updates == i);
 					MACE.update();
 					REQUIRE(MACE.isRunning());
@@ -161,12 +164,12 @@ namespace mc {
 			}
 		}
 
-		MACE.removeModule(m);
+		MACE.removeModule(m.getName());
 	}
 
 	TEST_CASE("Modules getting updated", "[module][system]") {
 		Instance MACE = Instance();
-		TestModule m = TestModule();
+		TestModule m = TestModule(0);
 
 
 		REQUIRE(MACE.size() == 0);
@@ -184,7 +187,7 @@ namespace mc {
 				REQUIRE(m.isInit);
 				REQUIRE(m.updates == 0);
 
-				for( Index i = 0; i < 10; i++ ) {
+				for (Index i = 0; i < 10; i++) {
 					REQUIRE(m.updates == i);
 					MACE.update();
 				}
@@ -197,7 +200,7 @@ namespace mc {
 			}
 		}
 
-		MACE.removeModule(m);
+		MACE.removeModule(m.getName());
 
 	}
 }

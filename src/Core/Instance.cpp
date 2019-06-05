@@ -9,72 +9,51 @@ See LICENSE.md for full copyright information
 #include <memory>
 
 namespace mc {
-	Index Instance::addModule(Module& m) {
-		if (m.getInstance() != nullptr) MACE_UNLIKELY{
-			MACE__THROW(AlreadyExists, "Can\'t add a Module to 2 Instance\'s!");
+	void Instance::addModule(Module& m) {
+		addModule(&m);
+	}
+
+	void Instance::addModule(Module* m) {
+		addModule(std::shared_ptr<Module>(m, [](Module*) {}));
+	}
+
+	void Instance::addModule(ModulePtr m) {
+		if (m == nullptr) MACE_UNLIKELY{
+			MACE__THROW(NullPointer, "Input to addModule() was nullptr");
+		} else if (m->getInstance() != nullptr) MACE_UNLIKELY{
+			MACE__THROW(InvalidState, "Can\'t add a Module to 2 Instance\'s!");
+		} else if (hasModule(m->getName())) {
+			MACE__THROW(AlreadyExists, "Module with name " + m->getName() + " already exists in this Instance");
 		}
 
-		m.instance = this;
-		modules.push_back(&m);
-		return static_cast<Index>(modules.size() - 1);
+		m->instance = this;
+		modules.emplace(m->getName(), m);
 	}
 
-	void Instance::removeModule(const Module& m) {
-		const int location = indexOf(m);
-		if (location < 0) {
-			MACE__THROW(ObjectNotFound, "Module by name of " + m.getName() + " not found! Can\'t remove!");
+	void Instance::removeModule(const std::string& key) {
+		modules.erase(key);
+	}
+
+	ModulePtr Instance::getModule(const std::string& keyword) {
+		auto result = modules.find(keyword);
+		if (result == modules.end()) {
+			return std::shared_ptr<Module>(nullptr);
 		}
-		removeModule(static_cast<Index>(location));
+
+		return result->second;
 	}
 
-	void Instance::removeModule(const std::string module) {
-		const int location = indexOf(module);
-		if (location < 0) {
-			MACE__THROW(ObjectNotFound, "Module by name of " + module + " not found! Can\'t remove!");
+	const ModulePtr Instance::getModule(const std::string& keyword) const {
+		auto result = modules.find(keyword);
+		if (result == modules.end()) {
+			return std::shared_ptr<Module>(nullptr);
 		}
-		removeModule(static_cast<Index>(location));
+
+		return result->second;
 	}
 
-	void Instance::removeModule(const Index i) {
-		if (i >= size()) MACE_UNLIKELY{
-			MACE__THROW(ObjectNotFound, "Input is greater than the amount of modules!");
-		}
-		modules[i]->instance = nullptr;
-		modules.erase(modules.begin() + i);
-	}
-
-	Module * Instance::getModule(const std::string keyword) {
-		//this line duplicates the getModule() (const version)
-		return const_cast<Module*>(static_cast<const Instance*>(this)->getModule(keyword));
-	}
-
-	Module * Instance::getModule(const Index i) {
-		//this line duplicates the getModule() (const version)
-		return const_cast<Module*>(static_cast<const Instance*>(this)->getModule(i));
-	}
-
-
-	const Module * Instance::getModule(const std::string keyword) const {
-		const int location = indexOf(keyword);
-		if (location < 0) {
-			return nullptr;
-		}
-		return modules[static_cast<Index>(location)];
-	}
-
-	const Module * Instance::getModule(const Index i) const {
-		if (i >= size()) MACE_UNLIKELY{
-			MACE__THROW(ObjectNotFound, "Input is not a valid index!");
-		}
-		return modules[i];
-	}
-
-	bool Instance::moduleExists(const std::string module) const {
-		return indexOf(module) >= 0;
-	}
-
-	bool Instance::moduleExists(const Module * module) const {
-		return module->getInstance() == this && indexOf(*module) >= 0;
+	bool Instance::hasModule(const std::string& mod) const {
+		return getModule(mod) != nullptr;
 	}
 
 	Size Instance::size() const {
@@ -82,19 +61,8 @@ namespace mc {
 		return static_cast<Size>(modules.size());
 	}
 
-	bool mc::Instance::empty() const
-	{
+	bool mc::Instance::empty() const {
 		return size() == 0;
-	}
-
-	void Instance::assertModule(const std::string module, const std::string errorMessage) const {
-		if (!moduleExists(module)) {
-			MACE__THROW(AssertionFailed, errorMessage);
-		}
-	}
-
-	void Instance::assertModule(const std::string module) const {
-		assertModule(module, "\'" + module + "\' module has not been registered!");
 	}
 
 	void Instance::start(const long long ups) {
@@ -107,24 +75,6 @@ namespace mc {
 		}
 	}
 
-	int Instance::indexOf(const Module& m) const {
-		for (Index i = 0; i < modules.size(); ++i) {
-			if (modules[i] == &m) {
-				return static_cast<int>(i);
-			}
-		}
-		return -1;
-	}
-
-	int Instance::indexOf(const std::string name) const {
-		for (Index i = 0; i < modules.size(); ++i) {
-			if (modules[i]->getName() == name) {
-				return static_cast<int>(i);
-			}
-		}
-		return -1;
-	}
-
 	void Instance::init() {
 		if (modules.empty()) {
 			MACE__THROW(InitializationFailed, "Must add a Module via Instance::addModule!");
@@ -133,8 +83,8 @@ namespace mc {
 		flags &= ~Instance::DESTROYED;
 		flags |= Instance::INIT;
 
-		for (Index i = 0; i < modules.size(); ++i) {
-			modules[i]->init();
+		for (auto val : modules) {
+			val.second->init();
 		}
 	}
 
@@ -147,19 +97,19 @@ namespace mc {
 		flags &= ~Instance::INIT;
 		flags &= ~Instance::STOP_REQUESTED;
 
-		for (Index i = 0; i < modules.size(); ++i) {
-			modules[i]->destroy();
+		for (auto val : modules) {
+			val.second->destroy();
 		}
+
+		modules.clear();
 	}
 
 	void Instance::update() {
-		os::clearError(__LINE__, __FILE__);
-
 		if (!(flags & Instance::INIT)) {
 			MACE__THROW(InitializationFailed, "init() must be called!");
 		}
-		for (Index i = 0; i < modules.size(); ++i) {
-			modules[i]->update();
+		for (auto val : modules) {
+			val.second->update();
 		}
 	}
 
@@ -180,19 +130,23 @@ namespace mc {
 		flags = 0;
 	}
 
-	bool Instance::operator==(const Instance & other) const {
+	const std::unordered_map<std::string, ModulePtr>& Instance::getModules() const {
+		return modules;
+	}
+
+	bool Instance::operator==(const Instance& other) const {
 		return modules == other.modules && flags == other.flags;
 	}
 
-	bool Instance::operator!=(const Instance & other) const {
+	bool Instance::operator!=(const Instance& other) const {
 		return !operator==(other);
 	}
 
-	Instance * Module::getInstance() {
+	Instance* Module::getInstance() {
 		return instance;
 	}
 
-	const Instance * Module::getInstance() const {
+	const Instance* Module::getInstance() const {
 		return instance;
 	}
 }//mc

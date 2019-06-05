@@ -349,7 +349,7 @@ set(GLAD_EXTENSIONS "GL_ARB_buffer_storage,GL_ARB_texture_storage,GL_ARB_invalid
 set(GLAD_REPRODUCIBLE ON CACHE BOOL "" FORCE)
 set(GLAD_NO_LOADER ON CACHE BOOL "" FORCE)
 set(GLAD_EXPORT ON CACHE BOOL "" FORCE)
-set(GLAD_INSTALL ON CACHE BOOL "" FORCE)
+set(GLAD_INSTALL OFF CACHE BOOL "" FORCE)
 
 add_subdirectory(${CMAKE_BINARY_DIR}/${GLAD_SOURCE_NAME})
 
@@ -358,7 +358,7 @@ if(NOT ${FREETYPE_FOUND})
 		message(FATAL_ERROR "Freetype not found!")
 	else()
 		download_library(${FREETYPE_SOURCE_NAME} ${FREETYPE_URL})
-		set(WITH_HarfBuzz OFF)
+		set(WITH_HarfBuzz OFF CACHE BOOL "" FORCE)
 		add_subdirectory(${CMAKE_BINARY_DIR}/${FREETYPE_SOURCE_NAME} ${CMAKE_BINARY_DIR}/${FREETYPE_SOURCE_NAME}/build)
 		
 		set(FREETYPE_LIBRARY freetype)

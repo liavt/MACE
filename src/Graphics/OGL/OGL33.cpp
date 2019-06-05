@@ -47,7 +47,7 @@ namespace mc {
 				Enum result = GL_NO_ERROR;
 				//have to use glad_glGetError instead of glGetError to prevent stack overflow
 				//see GLAD docs about the post- and pre- callbacks
-				while ((result = glad_glGetError()) != GL_NO_ERROR) {
+				while ((result = glad_glGetError()) != GL_NO_ERROR && errors.size() < 10) {
 					switch (result) {
 					case GL_INVALID_ENUM:
 						errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_INVALID_ENUM: An unacceptable value is specified for an enumerated argument", line, file));
@@ -64,7 +64,6 @@ namespace mc {
 					case GL_OUT_OF_MEMORY:
 						errors.push_back(MACE__GET_ERROR_NAME(OutOfMemory) (std::string(message) + ": GL_OUT_OF_MEMORY: There is not enough memory left to execute the command", line, file));
 						break;
-
 					default:
 						errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": OpenGL has errored with an error code of " + std::to_string(result), line, file));
 						break;

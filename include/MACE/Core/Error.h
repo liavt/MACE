@@ -70,6 +70,7 @@ namespace mc {
 
 	/**
 	Thrown when a resource already exists and you are attempting to recreate it
+	@see Instance
 	*/
 	MACE__DECLARE_ERROR(AlreadyExists);
 

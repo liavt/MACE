@@ -15,7 +15,7 @@ See LICENSE.md for full copyright information
 #include <cstring>
 
 namespace mc {
-	void Error::handleError(const std::exception & e, Instance* instance) {
+	void Error::handleError(const std::exception& e, Instance* instance) {
 		if (instance != nullptr && instance->getFlag(Instance::VERBOSE_ERRORS)) {
 			std::cerr << Error::getErrorDump(e);
 		} else {
@@ -43,7 +43,7 @@ namespace mc {
 
 			instance->requestStop();
 		}
-		
+
 #ifdef MACE_DEBUG
 		throw e;
 #else
@@ -51,7 +51,7 @@ namespace mc {
 #endif
 	}
 
-	void Error::handleError(const std::exception & e, Instance& instance) {
+	void Error::handleError(const std::exception& e, Instance& instance) {
 		handleError(e, &instance);
 	}
 
@@ -59,7 +59,7 @@ namespace mc {
 		Error::handleError(*this);
 	}
 
-	std::string Error::getErrorDump(const std::exception & e, const Instance* instance) {
+	std::string Error::getErrorDump(const std::exception& e, const Instance* instance) {
 		std::stringstream dump;
 		dump << "At ";
 
@@ -90,8 +90,8 @@ namespace mc {
 			dump << "====MACE DETAILS====" << std::endl;
 			dump << "Instance Size:" << std::endl << '\t' << instance->size() << std::endl;
 			dump << "Modules:";
-			for (Index i = 0; i < instance->size(); ++i) {
-				const Module* m = instance->getModule(i);
+			for (auto val : instance->getModules()) {
+				const ModulePtr m = val.second;
 
 				dump << std::endl << '\t' << m->getName() << " (" << typeid(*m).name() << ')';
 			}
@@ -197,23 +197,23 @@ namespace mc {
 		return dump.str();
 	}
 
-	Error::Error(const char * message, const unsigned int line, const std::string file) : Error(message, line, file.c_str()) {}
+	Error::Error(const char* message, const unsigned int line, const std::string file) : Error(message, line, file.c_str()) {}
 
 	Error::Error(const std::string message, const unsigned int line, const std::string file) : Error(message, line, file.c_str()) {}
 
-	Error::Error(const char * message, const unsigned int l, const char * f) : std::runtime_error(message), line(l), file(f) {}
+	Error::Error(const char* message, const unsigned int l, const char* f) : std::runtime_error(message), line(l), file(f) {}
 
-	Error::Error(const std::string message, const unsigned int l, const char * f) : std::runtime_error(message), line(l), file(f) {}
+	Error::Error(const std::string message, const unsigned int l, const char* f) : std::runtime_error(message), line(l), file(f) {}
 
 	const unsigned int Error::getLine() const {
 		return line;
 	}
 
-	const char * Error::getFile() const {
+	const char* Error::getFile() const {
 		return file;
 	}
 
-	MultipleErrors::MultipleErrors(const Error errs[], const std::size_t errorSize, const unsigned int line, const char * file)
+	MultipleErrors::MultipleErrors(const Error errs[], const std::size_t errorSize, const unsigned int line, const char* file)
 		: Error("", line, file), message("Multiple errors occured:\n") {
 		if (errs == nullptr) {
 			//normally we would throw an error, but we cant throw an error from an error! that would cause all sorts of crazy memory corruption!
@@ -225,7 +225,7 @@ namespace mc {
 		}
 	}
 
-	const char * MultipleErrors::what() const noexcept {
+	const char* MultipleErrors::what() const noexcept {
 		return message.c_str();
 	}
 }
