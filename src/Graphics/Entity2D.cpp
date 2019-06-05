@@ -246,7 +246,7 @@ namespace mc {
 		}
 
 		void SimpleProgressBar::easeTo(const Progress destination, const EaseSettings settings) {
-			addComponent(std::shared_ptr<Component>(new EaseComponent(this, settings, getProgress(), destination)));
+			addComponent(ComponentPtr(new EaseComponent(this, settings, getProgress(), destination)));
 		}
 
 		bool SimpleProgressBar::operator==(const SimpleProgressBar& other) const {
@@ -283,7 +283,7 @@ namespace mc {
 
 		SimpleSlider::SimpleSlider(const Progress minimum, const Progress maximum, const Progress progress) noexcept : SimpleProgressBar(minimum, maximum, progress) {}
 
-		void SimpleSlider::onRender(Painter & p) {
+		void SimpleSlider::onRender(Painter& p) {
 			SimpleProgressBar::onRender(p);
 
 			p.setTarget(FrameBufferTarget::DATA);
@@ -318,11 +318,11 @@ namespace mc {
 			return glyphMetrics;
 		}
 
-		bool Letter::operator==(const Letter & other) const {
+		bool Letter::operator==(const Letter& other) const {
 			return Entity2D::operator==(other) && texture == other.texture && glyph == other.glyph && glyphMetrics == other.glyphMetrics;
 		}
 
-		bool Letter::operator!=(const Letter & other) const {
+		bool Letter::operator!=(const Letter& other) const {
 			return !operator==(other);
 		}
 
@@ -330,7 +330,7 @@ namespace mc {
 
 		void Letter::onUpdate() {}
 
-		void Letter::onRender(Painter & p) {
+		void Letter::onRender(Painter& p) {
 			p.disableRenderFeatures(Painter::RenderFeatures::DISCARD_INVISIBLE | Painter::RenderFeatures::FILTER | Painter::RenderFeatures::STORE_ID);
 			p.setTexture(texture, TextureSlot::FOREGROUND);
 			p.setTexture(glyph, TextureSlot::BACKGROUND);
@@ -351,15 +351,15 @@ namespace mc {
 
 		Text::Text() noexcept : TexturedEntity2D(), text(), font() {}
 
-		Text::Text(const std::string & s, const Font & f) : Text(os::toWideString(s), f) {}
+		Text::Text(const std::string& s, const Font& f) : Text(os::toWideString(s), f) {}
 
-		Text::Text(const std::wstring & t, const Font & f) : TexturedEntity2D(), text(t), font(f) {}
+		Text::Text(const std::wstring& t, const Font& f) : TexturedEntity2D(), text(t), font(f) {}
 
-		void mc::gfx::Text::setText(const std::string & newText) {
+		void mc::gfx::Text::setText(const std::string& newText) {
 			setText(os::toWideString(newText));
 		}
 
-		void Text::setText(const std::wstring & newText) {
+		void Text::setText(const std::wstring& newText) {
 			if (text != newText) {
 				makeDirty();
 
@@ -377,7 +377,7 @@ namespace mc {
 			return text;
 		}
 
-		void Text::setFont(const Font & f) {
+		void Text::setFont(const Font& f) {
 			if (font != f) {
 				makeDirty();
 
@@ -399,7 +399,7 @@ namespace mc {
 			return letters;
 		}
 
-		void Text::setTexture(const Texture & tex) {
+		void Text::setTexture(const Texture& tex) {
 			if (tex != texture) {
 				makeDirty();
 
@@ -417,11 +417,11 @@ namespace mc {
 			return texture;
 		}
 
-		bool Text::operator==(const Text & other) const {
+		bool Text::operator==(const Text& other) const {
 			return Entity2D::operator==(other) && letters == other.letters && text == other.text && texture == other.texture;
 		}
 
-		bool Text::operator!=(const Text & other) const {
+		bool Text::operator!=(const Text& other) const {
 			return !operator==(other);
 		}
 
@@ -429,7 +429,7 @@ namespace mc {
 
 		void Text::onUpdate() {}
 
-		void Text::onRender(Painter & p) {
+		void Text::onRender(Painter& p) {
 			p.setForegroundColor(Colors::BLACK);
 			p.fillRect();
 		}
@@ -451,7 +451,7 @@ namespace mc {
 			}
 			while (letters.size() < text.length()) {
 				std::shared_ptr<Letter> letter = std::shared_ptr<Letter>(new Letter());
-				letter->addComponent(std::shared_ptr<UninheritScaleComponent>(new UninheritScaleComponent()));
+				letter->addComponent(ComponentPtr(new UninheritScaleComponent()));
 				letters.push_back(letter);
 				addChild(letter);
 			}
@@ -546,7 +546,7 @@ namespace mc {
 			return texture;
 		}
 
-		void SimpleButton::setTexture(const Texture & c) {
+		void SimpleButton::setTexture(const Texture& c) {
 			if (texture != c) {
 				makeDirty();
 
@@ -564,7 +564,7 @@ namespace mc {
 			return hoverTexture;
 		}
 
-		void SimpleButton::setHoverTexture(const Texture & c) {
+		void SimpleButton::setHoverTexture(const Texture& c) {
 			if (hoverTexture != c) {
 				makeDirty();
 
@@ -582,7 +582,7 @@ namespace mc {
 			return clickedTexture;
 		}
 
-		void SimpleButton::setClickedTexture(const Texture & c) {
+		void SimpleButton::setClickedTexture(const Texture& c) {
 			if (clickedTexture != c) {
 				makeDirty();
 
@@ -600,7 +600,7 @@ namespace mc {
 			return disabledTexture;
 		}
 
-		void SimpleButton::setDisabledTexture(const Texture & c) {
+		void SimpleButton::setDisabledTexture(const Texture& c) {
 			if (disabledTexture != c) {
 				makeDirty();
 
@@ -608,7 +608,7 @@ namespace mc {
 			}
 		}
 
-		void SimpleButton::onRender(Painter & p) {
+		void SimpleButton::onRender(Painter& p) {
 			p.drawImage(texture);
 			if (isDisabled()) {
 				p.drawImage(disabledTexture);

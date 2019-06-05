@@ -98,6 +98,15 @@ namespace mc {
 		};//Component
 
 		/**
+		A pointer to a `Component` that automatically manages pointer lifecycle
+		*/
+		using ComponentPtr = std::shared_ptr<Component>;
+		/**
+		A pointer to a `Entity` that automatically manages pointer lifecycle
+		*/
+		using EntityPtr = std::shared_ptr<Entity>;
+
+		/**
 		Abstract superclass for all graphical objects. Contains basic information like position, and provides a standard interface for communicating with graphical objects.
 		<p>
 		Prefer using `Component` instead of extending this class for one-time functionality.
@@ -166,7 +175,7 @@ namespace mc {
 			Gets all of this `Entity's` children.
 			@return an `std::vector` with all children of this `Entity`
 			*/
-			const std::vector<std::shared_ptr<Entity>>& getChildren() const;
+			const std::vector<EntityPtr>& getChildren() const;
 			/**
 			Removes a child.
 			<p>
@@ -180,6 +189,8 @@ namespace mc {
 
 			/**
 			@copydoc Entity::removeChild(const Entity&)
+			<p>
+			The passed pointer does not have it's lifecycle managed by this `Entity`
 			@throws NullPointerError if the argument is `nullptr`
 			*/
 			void removeChild(const Entity* e);
@@ -187,7 +198,7 @@ namespace mc {
 			/**
 			@copydoc Entity::removeChild(const Entity*)
 			*/
-			void removeChild(std::shared_ptr<Entity> ent);
+			void removeChild(EntityPtr ent);
 
 			/**
 			Removes a child via location.
@@ -197,12 +208,12 @@ namespace mc {
 			@see Entity::removeChild(const Entity&)
 			@dirty
 			*/
-			void removeChild(Index index);
+			void removeChild(const Index index);
 
 			/**
 			@copydoc removeChild(Index)
 			*/
-			void removeChild(const std::vector<std::shared_ptr<Entity>>::iterator& iter);
+			void removeChild(const std::vector<EntityPtr>::iterator& iter);
 
 			/**
 			Checks to see if this `Entity` contains an `Entity`
@@ -288,14 +299,14 @@ namespace mc {
 			@see Entity::end()
 			@see Entity::size()
 			*/
-			std::vector<std::shared_ptr<Entity>>::iterator begin();
+			std::vector<EntityPtr>::iterator begin();
 			/**
 			Retrieves the end of the children of this `Entity`
 			@return End of the last `Entity`
 			@see Entity::begin()
 			@see Entity::size()
 			*/
-			std::vector<std::shared_ptr<Entity>>::iterator end();
+			std::vector<EntityPtr>::iterator end();
 
 			/**
 			Calculates the amount of children this `Entity` has.
@@ -408,14 +419,14 @@ namespace mc {
 			/**
 			@copydoc Entity::addChild(Entity&)
 			*/
-			void addChild(std::shared_ptr<Entity> ent) MACE_EXPECTS(ent != nullptr);
+			void addChild(EntityPtr ent) MACE_EXPECTS(ent != nullptr);
 
 			void addComponent(Component& com);
 			void addComponent(Component* com);
 			/**
 			@param com The SmartPointer of an `Entity`. Ownership of the pointer will change meaning this parameter cannot be marked `const`
 			*/
-			void addComponent(std::shared_ptr<Component> com) MACE_EXPECTS(com != nullptr);
+			void addComponent(ComponentPtr com) MACE_EXPECTS(com != nullptr);
 
 			const RelativeScale& getWidth() const;
 			/**
@@ -655,8 +666,8 @@ namespace mc {
 			`std::vector` of this `Entity\'s` children. Use of this variable directly is unrecommended. Use `addChild()` or `removeChild()` instead.
 			@internal
 			*/
-			std::vector<std::shared_ptr<Entity>> children = std::vector<std::shared_ptr<Entity>>();
-			std::vector<std::shared_ptr<Component>> components = std::vector<std::shared_ptr<Component>>();
+			std::vector<EntityPtr> children = std::vector<EntityPtr>();
+			std::vector<ComponentPtr> components = std::vector<ComponentPtr>();
 
 			EntityProperties properties = Entity::DEFAULT_PROPERTIES;
 

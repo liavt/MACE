@@ -67,7 +67,7 @@ namespace mc {
 			}
 		}
 
-		const std::vector<std::shared_ptr<Entity>>& Entity::getChildren() const {
+		const std::vector<EntityPtr>& Entity::getChildren() const {
 			return this->children;
 		}
 
@@ -97,11 +97,11 @@ namespace mc {
 			MACE__THROW(ObjectNotFound, "Specified argument to removeChild is not a valid object in the array!");
 		}
 
-		void Entity::removeChild(std::shared_ptr<Entity> ent) {
+		void Entity::removeChild(EntityPtr ent) {
 			removeChild(ent.get());
 		}
 
-		void Entity::removeChild(Index index) {
+		void Entity::removeChild(const Index index) {
 			makeDirty();
 
 #ifdef MACE_DEBUG_CHECK_ARGS
@@ -116,7 +116,7 @@ namespace mc {
 				}
 		}
 
-		void Entity::removeChild(const std::vector<std::shared_ptr<Entity>>::iterator& iter) {
+		void Entity::removeChild(const std::vector<EntityPtr>::iterator& iter) {
 #ifdef MACE_DEBUG_CHECK_ARGS
 			if (children.empty()) {
 				MACE__THROW(OutOfBounds, "Can\'t remove a child from an empty entity!");
@@ -305,11 +305,11 @@ namespace mc {
 			return size() == 0;
 		}
 
-		std::vector<std::shared_ptr<Entity>>::iterator Entity::begin() {
+		std::vector<EntityPtr>::iterator Entity::begin() {
 			return children.begin();
 		}
 
-		std::vector<std::shared_ptr<Entity>>::iterator Entity::end() {
+		std::vector<EntityPtr>::iterator Entity::end() {
 			return children.end();
 		}
 
@@ -322,7 +322,7 @@ namespace mc {
 			destroy();
 		}
 
-		void Entity::addChild(std::shared_ptr<Entity> e) {
+		void Entity::addChild(EntityPtr e) {
 #ifdef MACE_DEBUG_CHECK_NULLPTR
 			if (e == nullptr) {
 				MACE__THROW(NullPointer, "Inputted Entity to addChild() was nullptr");
@@ -341,7 +341,7 @@ namespace mc {
 		}
 
 		void Entity::addChild(Entity* e) {
-			addChild(std::shared_ptr<Entity>(e, [](Entity*) {}));
+			addChild(EntityPtr(e, [](Entity*) {}));
 		}
 
 		void Entity::addChild(Entity& e) {
@@ -353,10 +353,10 @@ namespace mc {
 		}
 
 		void Entity::addComponent(Component* com) {
-			addComponent(std::shared_ptr<Component>(com, [](Component*) {}));
+			addComponent(ComponentPtr(com, [](Component*) {}));
 		}
 
-		void Entity::addComponent(std::shared_ptr<Component> com) {
+		void Entity::addComponent(ComponentPtr com) {
 #ifdef MACE_DEBUG_CHECK_NULLPTR
 			if (com == nullptr) {
 				MACE__THROW(NullPointer, "Inputted Component to addComponent() was nullptr");
@@ -376,7 +376,7 @@ namespace mc {
 
 				//update the components of this entity
 				for (Index i = 0; i < components.size(); ++i) {
-					std::shared_ptr<Component> a = components.at(i);
+					ComponentPtr a = components.at(i);
 					if (a->update()) MACE_UNLIKELY{
 						a->destroy();
 						components.erase(components.begin() + i--);//update the index after a removal, so we dont get an exception for accessing deleted memory
@@ -387,7 +387,7 @@ namespace mc {
 
 				//call update() on children
 				for (Index i = 0; i < children.size(); ++i) {
-					std::shared_ptr<Entity> child = children[i];
+					EntityPtr child = children[i];
 					if (child->needsRemoval()) MACE_UNLIKELY{
 						child->kill();
 						removeChild(i--);//update the index after the removal of an element, dont want an error
@@ -405,7 +405,7 @@ namespace mc {
 
 			makeDirty();
 			for (Index i = 0; i < children.size(); ++i) {
-				std::shared_ptr<Entity> child = children[i];
+				EntityPtr child = children[i];
 				if (child->needsRemoval()) MACE_UNLIKELY{
 					removeChild(i--);//update the index after the removal of an element
 					continue;
@@ -644,7 +644,7 @@ namespace mc {
 		}
 
 		void Entity::tween(const Transformation start, const Transformation dest, const EaseSettings settings) {
-			addComponent(std::shared_ptr<Component>(new TweenComponent(this, start, dest, settings)));
+			addComponent(ComponentPtr(new TweenComponent(this, start, dest, settings)));
 		}
 
 		void Entity::tween(const Transformation start, const Transformation dest) {
