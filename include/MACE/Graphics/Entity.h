@@ -16,9 +16,26 @@ See LICENSE.md for full copyright information
 namespace mc {
 	namespace gfx {
 		using EntityProperties = Byte;
+		/**
+		A 32-Bit integer representing an identifier for an `Entity`.
+		<p>
+		Each `Entity` is assigned a unique `EntityID` from 1 to `MAX_INT - 1` by it's `RootEntity`.
+		No two `Entity`'s will share the same `EntityID` at the same time.
+		<p>
+		`0` is reserved as an identifier for an uninitialized `Entity` and will
+		never be used as a valid `EntityID`.
+		<p>
+		`EntityID`'s may be reused throughout the lifetime of the program
+		if `Entity`'s are being destroyed. However, no two `Entity`'s will
+		use the same `EntityID` at the same time.
+
+		@note An `EntityID` uses a 32-Bit integer in order to allow a `Renderer` to store an `EntityID` Z-buffer
+		*/
+		using EntityID = unsigned int;
 
 		//forward-defining dependencies
 		class Entity;
+		class RootEntity;
 		class Texture;
 		class Painter;
 		class ComponentQueue;
@@ -115,6 +132,8 @@ namespace mc {
 		@see Component
 		*/
 		class MACE_NOVTABLE Entity: public Initializable {
+			friend class Component;
+			friend class RootEntity;
 		public:
 			//values defining which bit in a byte every propety is, or how much to bit shift it
 			enum EntityProperty: Byte {
@@ -184,6 +203,7 @@ namespace mc {
 			@param e an `Entity` to remove
 			@see Entity::removeChild(Index)
 			@dirty
+			@rendercontext
 			*/
 			void removeChild(const Entity& e);
 
@@ -192,6 +212,9 @@ namespace mc {
 			<p>
 			The passed pointer does not have it's lifecycle managed by this `Entity`
 			@throws NullPointerError if the argument is `nullptr`
+			@dirty
+			@rendercontext
+			@todo Make this function not have to be called in a render context by moving the destroy() call to render() and set a flag
 			*/
 			void removeChild(const Entity* e);
 
@@ -207,6 +230,7 @@ namespace mc {
 			@see Entity::indexOf(const Entity&) const
 			@see Entity::removeChild(const Entity&)
 			@dirty
+			@rendercontext
 			*/
 			void removeChild(const Index index);
 
@@ -524,11 +548,11 @@ namespace mc {
 			@return The root `Entity` of which this `Entity` belongs to.
 			@note For deep heirarchies, this function could be slower.
 			*/
-			const Entity* getRoot() const;
+			const RootEntity* getRoot() const;
 			/**
 			@copydoc Entity::getRoot() const
 			*/
-			Entity* getRoot();
+			RootEntity* getRoot();
 
 			/**
 			@rendercontext
@@ -550,6 +574,7 @@ namespace mc {
 
 			/**
 			@dirty
+			@rendercontext
 			*/
 			void reset();
 
@@ -672,6 +697,8 @@ namespace mc {
 			EntityProperties properties = Entity::DEFAULT_PROPERTIES;
 
 			Entity* parent = nullptr;
+			RootEntity* root = nullptr;
+			EntityID id = 0;
 
 			/**
 			@internal
@@ -689,9 +716,68 @@ namespace mc {
 			@see getParent()
 			*/
 			void kill();
-
-			void setParent(Entity* parent);
 		};//Entity
+
+		class IDManager {
+			friend class Entity;
+		private:
+			struct Node {
+				const EntityID id;
+				std::unique_ptr<Node> next;
+			};
+
+			/*
+			There are two requirements that the IDManager needed to fulfill:
+			1. Be able to generate unique identifiers for new Entity's
+			2. Be able to reuse identifiers from previously destroyed Entity's
+
+			In order to do this, it uses a singly linked list containing Nodes.
+			Each Node contains an EntityID and the IDManager contains a pointer
+			to the front of the list.
+
+			Whenever a new EntityID is needed, the id at the front of the list
+			is returned and popped.
+
+			If the popped Node was the only Node in the list, a new Node is
+			created that is the same as what is returned but incremented. This
+			makes sure to fulfill requirement 1. in the case taht no Entity's
+			are destroyed and sequentially assigns new ID's.
+
+			If an ID is "deleted" (aka needs to be reclaimed by the IDManager),
+			a new Node is created with the deleted ID and put at the front of
+			the list. When a new ID is requested, this Node will be popped
+			(meaning it will fulfill requirement 2.) and the next Node will be
+			pushed to the front.
+
+			This system means that all operations are performed in O(1) time
+			with minimal memory usage.
+			*/
+			std::unique_ptr<Node> first = std::unique_ptr<Node>(new Node{1, nullptr});
+
+			MACE_NODISCARD EntityID generateID();
+
+			void deleteID(const EntityID id);
+		};//IDManager
+
+		class MACE_NOVTABLE RootEntity: public Entity {
+			friend class Entity;
+		public:
+			virtual ~RootEntity() override = default;
+		protected:
+			virtual void init() override;
+			virtual void destroy() override;
+		private:
+			/*
+			needs to be shared_ptr instead of unique_ptr in order to allowed RootEntity to be Moveable
+
+			the reasoning behind this is that every other Entity is Moveable and by requiring
+			RootEntity to have no move constructor this puts an unneccessary contract on
+			whatever subclasses RootEntity (such as a WindowModule or EntityModule)
+			*/
+			std::shared_ptr<IDManager> idManager;
+
+
+		};//RootEntity
 
 		class Group: public Entity {};//Group
 	}//gfx

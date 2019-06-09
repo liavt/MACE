@@ -46,8 +46,24 @@ namespace mc {
 			desc.bottomRight = desc.topLeft;
 
 			desc.flipSides = true;
-			addComponent(std::shared_ptr<gfx::NineSliceComponent>(new NineSliceComponent(desc)));
+			nineSlice.setDesc(desc);
+			addComponent(nineSlice);
 		}
+
+		void UIButton::onHover() {
+			NineSliceDesc& desc = nineSlice.getDesc();
+			desc.center = Colors::BLUE;
+			desc.top = desc.center;
+			desc.left = desc.center;
+			desc.right = desc.center;
+			desc.bottom = desc.center;
+
+			desc.topLeft = Texture(desc.topLeft, Colors::BLUE);
+			desc.topRight = desc.topLeft;
+			desc.bottomLeft = desc.topLeft;
+			desc.bottomRight = desc.topLeft;
+		}
+
 		void UIButton::onRender(Painter&) {
 			//do nothing, but has to override this function for inheritence reasons
 

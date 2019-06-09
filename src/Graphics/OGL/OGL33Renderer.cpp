@@ -11,7 +11,6 @@ See LICENSE.md for full copyright information
 #	pragma warning( disable: 4996 ) 
 #endif 
 
-#define MACE_EXPOSE_GLFW
 #include <MACE/Graphics/OGL/OGL33Renderer.h>
 #include <MACE/Graphics/Context.h>
 #include <MACE/Core/System.h>

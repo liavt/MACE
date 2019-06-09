@@ -348,7 +348,7 @@ namespace mc {
 
 					configureThread();
 
-					Entity::init();
+					RootEntity::init();
 
 					if (config.fps != 0) {
 						windowDelay = Duration(std::chrono::seconds(1)) / static_cast<long long>(config.fps);
@@ -372,8 +372,8 @@ namespace mc {
 							Renderer* const renderer = context->getRenderer();
 							renderer->setUp(this);
 							setProperty(Entity::DIRTY, false);
-							Entity::clean();
-							Entity::render();
+							RootEntity::clean();
+							RootEntity::render();
 							renderer->tearDown(this);
 						}
 
@@ -405,7 +405,7 @@ namespace mc {
 				try {
 					const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
 
-					Entity::destroy();
+					RootEntity::destroy();
 
 					context->destroy();
 
@@ -448,7 +448,7 @@ namespace mc {
 
 			glfwPollEvents();
 
-			Entity::update();
+			RootEntity::update();
 		}//update
 
 		void WindowModule::destroy() {

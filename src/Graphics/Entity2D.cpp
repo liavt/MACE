@@ -425,14 +425,13 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		void Text::onInit() {}
+		void Text::onInit() {
+			addComponent(ComponentPtr(new UninheritScaleComponent()));
+		}
 
 		void Text::onUpdate() {}
 
-		void Text::onRender(Painter& p) {
-			p.setForegroundColor(Colors::BLACK);
-			p.fillRect();
-		}
+		void Text::onRender(Painter& p) {}
 
 		void Text::onDestroy() {
 			if (font.isCreated()) {

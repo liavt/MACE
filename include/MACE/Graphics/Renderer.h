@@ -34,8 +34,6 @@ namespace mc {
 		};
 		//if the container we use is ever going to be changed, we typedef
 		using RenderQueue = std::deque<RendererEntry>;
-		//cant be size_t - opengl has to use to uints so the EntityID must be unsigned int
-		using EntityID = unsigned int;
 
 		enum class FrameBufferTarget: int {
 			COLOR = 0,

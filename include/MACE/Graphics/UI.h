@@ -14,7 +14,10 @@ namespace mc {
 	namespace gfx {
 		class UIButton: public Selectable, public Entity2D {
 		private:
+			NineSliceComponent nineSlice;
+
 			void onInit() override final;
+			void onHover() override final;
 			void onRender(Painter& p) override final;
 		};
 	}//gfx

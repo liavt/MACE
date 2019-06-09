@@ -13,6 +13,10 @@ See LICENSE.md for full copyright information
 #	error A C++ compiler is required!
 #endif//__cplusplus
 
+#ifndef __cpp_rtti
+#	error C++ RTTI must be supported!
+#endif
+
 #define MACE_MAKE_VERSION_NUMBER(major,minor,patch) (((major % 100) * 10000000) + ((minor % 100) * 100000) + (patch % 100000))
 #define MACE_MAKE_VERSION_STRING(major, minor, patch) major##.##minor##.##patch
 
@@ -70,19 +74,19 @@ See LICENSE.md for full copyright information
 
 //checks for a C++ attribute in the form of [[attribute]]
 #ifndef MACE_HAS_ATTRIBUTE
-#	ifndef __has_cpp_attribute
-#		define MACE_HAS_ATTRIBUTE(attr) (0)
-#	else
+#	if defined(__cpp_attributes) && defined(__has_cpp_attribute)
 #		define MACE_HAS_ATTRIBUTE(attr) __has_cpp_attribute(attr)
+#	else
+#		define MACE_HAS_ATTRIBUTE(attr) (0)
 #	endif
 #endif
 
 //whether the specificed include is available
 #ifndef MACE_HAS_INCLUDE
-#	ifndef __has_include
-#		define MACE_HAS_INCLUDE(incl) (0)
-#	else
+#	if defined(__has_include)
 #		define MACE_HAS_INCLUDE(incl) __has_include(incl)
+#	else
+#		define MACE_HAS_INCLUDE(incl) (0)
 #	endif
 #endif
 
@@ -231,7 +235,7 @@ See LICENSE.md for full copyright information
 #endif
 
 #ifndef MACE_IF_CONSTEXPR
-#	ifdef __cpp_if_constexpr
+#	if defined(__cpp_if_constexpr) && __cpp_if_constexpr >= 201606
 #		define MACE_IF_CONSTEXPR(expr) if constexpr(expr)
 #	else
 #		define MACE_IF_CONSTEXPR(expr) if(expr)
@@ -247,11 +251,42 @@ See LICENSE.md for full copyright information
 #	endif
 #endif
 
+//concepts
+#ifndef MACE_CONCEPTS
+#	if defined(__cpp_concepts) && __cpp_concepts >= 201507
+#		define MACE_CONCEPTS true
+#	else
+#		define MACE_CONCEPTS false
+#	endif
+#endif
+
+#ifndef MACE_REQUIRES
+#	if MACE_CONCEPTS
+#		define MACE_REQUIRES(conc) requires conc
+#	else
+#		define MACE_REQUIRES(conf)
+#	endif
+#endif
 
 //static assert
 //allows users to use a different static assert (such as boost's static asssert)
 #ifndef MACE_STATIC_ASSERT
-#	define MACE_STATIC_ASSERT(cond, message) static_assert( cond , message )
+#	if defined(__cpp_static_assert) && __cpp_static_assert >= 200410
+#		define MACE_STATIC_ASSERT(cond, message) static_assert( cond , message )
+#	else
+#		define MACE_STATIC_ASSERT(cond, message)
+#	endif
+#endif
+
+//breakpoint programmaticaly
+#ifndef MACE_BREAKPOINT
+#	ifdef MACE_MSVC
+#		define MACE_BREAKPOINT do{__debugbreak();}while(0)
+#	elif defined(asm)
+#		define MACE_BREAKPOINT do{asm("int $3");}while(0)
+#	else
+#		define MACE_BREAKPOINT do{} while(0)
+#	endif
 #endif
 
 #define MACE_STRINGIFY(name) #name

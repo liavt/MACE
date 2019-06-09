@@ -60,7 +60,7 @@ namespace mc {
 		/**
 		@todo fix fps timer
 		*/
-		class WindowModule: public Module, public gfx::Entity {
+		class WindowModule: public Module, public gfx::RootEntity {
 		public:
 			struct LaunchConfig {
 				/**

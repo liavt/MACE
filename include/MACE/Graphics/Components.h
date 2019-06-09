@@ -416,26 +416,26 @@ namespace mc {
 			const BoundsReachedCallback getCallback() const;
 			void setCallback(const BoundsReachedCallback boundsReached);
 
-			Vector<RelativeTranslation, 2>& getBoundsX();
-			const Vector<RelativeTranslation, 2>& getBoundsX() const;
+			Vector<RelativeTranslation, 2> & getBoundsX();
+			const Vector<RelativeTranslation, 2> & getBoundsX() const;
 			/**
 			@dirty
 			*/
-			void setBoundsX(const Vector<RelativeTranslation, 2>& vec);
+			void setBoundsX(const Vector<RelativeTranslation, 2> & vec);
 
-			Vector<RelativeTranslation, 2>& getBoundsY();
-			const Vector<RelativeTranslation, 2>& getBoundsY() const;
+			Vector<RelativeTranslation, 2> & getBoundsY();
+			const Vector<RelativeTranslation, 2> & getBoundsY() const;
 			/**
 			@dirty
 			*/
-			void setBoundsY(const Vector<RelativeTranslation, 2>& vec);
+			void setBoundsY(const Vector<RelativeTranslation, 2> & vec);
 
-			Vector<RelativeTranslation, 2>& getBoundsZ();
-			const Vector<RelativeTranslation, 2>& getBoundsZ() const;
+			Vector<RelativeTranslation, 2> & getBoundsZ();
+			const Vector<RelativeTranslation, 2> & getBoundsZ() const;
 			/**
 			@dirty
 			*/
-			void setBoundsZ(const Vector<RelativeTranslation, 2>& vec);
+			void setBoundsZ(const Vector<RelativeTranslation, 2> & vec);
 
 			bool operator==(const BoundsComponent& other);
 			bool operator!=(const BoundsComponent& other);
@@ -487,6 +487,7 @@ namespace mc {
 
 		class NineSliceComponent: public Component {
 		public:
+			NineSliceComponent() noexcept;
 			NineSliceComponent(const NineSliceDesc& desc);
 
 			/**
@@ -495,7 +496,7 @@ namespace mc {
 			NineSliceDesc& getDesc();
 			const NineSliceDesc& getDesc() const;
 			/**
-			@desc
+			@dirty
 			*/
 			void setDesc(const NineSliceDesc& desc);
 		private:

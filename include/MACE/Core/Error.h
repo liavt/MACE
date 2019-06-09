@@ -10,6 +10,10 @@ See LICENSE.md for full copyright information
 #include <stdexcept>
 #include <MACE/Core/Constants.h>
 
+#if !defined(__cpp_exceptions) || __cpp_exceptions < 199711
+#	error C++ exceptions must be supported!
+#endif
+
 namespace mc {
 	//forward declaration for handleError();
 	class Instance;

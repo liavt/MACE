@@ -53,9 +53,8 @@ namespace mc {
 		void Entity::clearChildren() {
 			makeDirty();
 
-			while (!children.empty()) {
-				children.back()->kill();
-				children.pop_back();
+			for (auto iter : children) {
+				removeChild(iter);
 			}
 		}
 
@@ -122,6 +121,10 @@ namespace mc {
 				MACE__THROW(OutOfBounds, "Can\'t remove a child from an empty entity!");
 			}
 #endif
+
+			//strange line, isn't it?
+			//iter-> returns a std::shared_ptr, which we need to call -> of again to get the raw pointer
+			iter->operator->()->destroy();
 
 			children.erase(iter);
 		}
@@ -201,50 +204,25 @@ namespace mc {
 			}
 		}
 
-		Entity* Entity::getRoot() {
-			Entity* par = this;
-
-			//get the highest level element
-			while (par->parent != nullptr) {
-				par = par->parent;
-			}
-
-			return par;
+		RootEntity* Entity::getRoot() {
+			return root;
 		}
 
-		const Entity* Entity::getRoot() const {
-			const Entity* par = this;
-
-			//get the highest level element
-			while (par->hasParent()) {
-				par = par->getParent();
-			}
-
-			return par;
+		const RootEntity* Entity::getRoot() const {
+			return root;
 		}
 
 		const Metrics& Entity::getMetrics() const {
 			return metrics;
 		}
 
-		void Entity::reset() {
-			clearChildren();
-			transformation.reset();
-
-			for (Index i = 0; i < components.size(); ++i) {
-				components[i]->destroy();
-			}
-			components.clear();
-			setParent(nullptr);
-			properties = Entity::DEFAULT_PROPERTIES;
-		}
-
 		void Entity::makeDirty() {
-			//checking for the parent can be slow. only want to do the pointer stuff if its not already dirty
 			if (!getProperty(Entity::DIRTY)) {
 				setProperty(Entity::DIRTY, true);
 
-				getRoot()->setProperty(Entity::DIRTY, true);
+				if (root != nullptr) {
+					root->setProperty(Entity::DIRTY, true);
+				}
 			}
 		}
 
@@ -253,12 +231,6 @@ namespace mc {
 		void Entity::onClean() {}
 
 		void Entity::onHover() {}
-
-		void Entity::setParent(Entity* par) {
-			makeDirty();
-
-			this->parent = par;
-		}
 
 		Entity* const Entity::getParent() {
 			return parent;
@@ -329,7 +301,7 @@ namespace mc {
 			}
 #endif
 
-			e->setParent(this);
+			e->parent = this;
 
 			if (getProperty(Entity::INIT) && !e->getProperty(Entity::INIT)) {
 				e->init();
@@ -403,6 +375,18 @@ namespace mc {
 				MACE__THROW(InitializationFailed, "Entity can not have init() called twice.");
 			}
 
+			if (root == nullptr) {
+				if (parent == nullptr) {
+					MACE__THROW(NullPointer, "Entity parent was nullptr");
+				} else if (parent->root == nullptr) {
+					MACE__THROW(NullPointer, "Entity parent's root was nullptr");
+				}
+
+				root = parent->root;
+			}
+
+			id = root->idManager->generateID();
+
 			makeDirty();
 			for (Index i = 0; i < children.size(); ++i) {
 				EntityPtr child = children[i];
@@ -424,14 +408,29 @@ namespace mc {
 
 			if (getProperty(Entity::INIT)) {
 				setProperty(Entity::DEAD, true);
-				for (Index i = 0; i < children.size(); ++i) {
-					children[i]->destroy();
-				}
+
 				onDestroy();
+
+				for (auto& component : components) {
+					component->destroy();
+				}
+				components.clear();
+
+				for (auto& child : children) {
+					child->destroy();
+				}
+				children.clear();
+
+				root->setProperty(Entity::DIRTY, true);
+
+				root->idManager->deleteID(id);
+
+				transformation.reset();
+				parent = nullptr;
+				root = nullptr;
+				id = 0;
+				properties = Entity::DEFAULT_PROPERTIES;
 			}
-			//in order to notify the root that it became dirty
-			makeDirty();
-			reset();
 		}
 
 		Entity::Entity() noexcept {}
@@ -665,6 +664,51 @@ namespace mc {
 
 		bool Metrics::operator!=(const Metrics& other) const {
 			return !operator==(other);
+		}
+
+		EntityID IDManager::generateID() {
+			if (first == nullptr) {
+				MACE__THROW(NullPointer, "Internal Error: *first was nullptr in IDManager");
+			}
+
+			const EntityID out = first->id;
+
+			if (out == 0) {
+				MACE__THROW(InvalidState, "Internal Error: out EntityID was 0");
+			}
+
+			if (first->next == nullptr) {
+				first = std::unique_ptr<Node>(new Node{out + 1, nullptr});
+			} else {
+				first.swap(first->next);
+			}
+
+			return out;
+		}
+
+		void IDManager::deleteID(const EntityID id) {
+			if (first == nullptr) {
+				MACE__THROW(NullPointer, "Internal Error: *first was nullptr in IDManager");
+			} else if (id == 0) {
+				//ID of 0 is reserved for an uninitialized Entity
+				return;
+			}
+
+			first = std::unique_ptr<Node>(new Node{id, std::move(first)});
+		}
+
+		void RootEntity::init() {
+			root = this;
+			idManager = std::shared_ptr<IDManager>(new IDManager());
+
+			Entity::init();
+		}
+
+		void RootEntity::destroy() {
+			Entity::destroy();
+
+			idManager.reset();
+			root = nullptr;
 		}
 
 	}//gfx

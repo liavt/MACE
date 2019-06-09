@@ -412,7 +412,9 @@ target_link_libraries(MACE LINK_PUBLIC ${FREETYPE_LIBRARY})
 target_link_libraries(MACE LINK_PUBLIC ${GLFW_LIBRARY})
 target_link_libraries(MACE LINK_PUBLIC ${OPENAL_LIBRARY})
 target_link_libraries(MACE LINK_PUBLIC ${OPENGL_LIBRARY})
-target_link_libraries(MACE LINK_PUBLIC ${GLAD_LIBRARIES})
+target_link_libraries(MACE LINK_PUBLIC glad)
+
+add_dependencies(MACE glad)
 
 if(UNIX AND NOT APPLE)#glfw requires this
 	find_package(X11 REQUIRED)
