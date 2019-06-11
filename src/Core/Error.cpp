@@ -20,17 +20,17 @@ namespace mc {
 			std::cerr << Error::getErrorDump(e);
 		} else {
 			std::cerr << os::consoleColor(os::ConsoleColor::LIGHT_RED) << typeid(e).name();
-			std::cerr << os::consoleColor(os::ConsoleColor::RED) << " occured:" << std::endl << "\t";
-			std::cerr << os::consoleColor(os::ConsoleColor::LIGHT_YELLOW) << e.what() << std::endl;
+			std::cerr << os::consoleColor(os::ConsoleColor::RED) << " occured:\n\t";
+			std::cerr << os::consoleColor(os::ConsoleColor::LIGHT_YELLOW) << e.what() << '\n';
 #ifdef MACE_DEBUG
 			const Error* err = dynamic_cast<const Error*>(&e);
 			if (err != nullptr) {
 				std::cerr << os::consoleColor(os::ConsoleColor::YELLOW)
-					<< "\t[ " << err->getLine() << " @ " << err->getFile() << " ]" << std::endl;
+					<< "\t[ " << err->getLine() << " @ " << err->getFile() << " ]" << '\n';
 			}
 #endif
 			//reset console color to default
-			std::cerr << os::consoleColor();
+			std::cerr << os::consoleColor() << std::flush;
 		}
 
 		if (instance != nullptr) {

@@ -339,6 +339,8 @@ namespace mc {
 			*/
 			Size size() const;
 
+			EntityID getID() const;
+
 			/**
 			Retrieves the `Entity's` properties as a `ByteField`
 			@return The current properties belonging to this `Entity`
@@ -720,49 +722,22 @@ namespace mc {
 
 		class IDManager {
 			friend class Entity;
+		public:
+			Entity* getEntityByID(const EntityID id) const;
 		private:
-			struct Node {
-				const EntityID id;
-				std::unique_ptr<Node> next;
-			};
+			std::vector<Entity*> ids;
 
-			/*
-			There are two requirements that the IDManager needed to fulfill:
-			1. Be able to generate unique identifiers for new Entity's
-			2. Be able to reuse identifiers from previously destroyed Entity's
-
-			In order to do this, it uses a singly linked list containing Nodes.
-			Each Node contains an EntityID and the IDManager contains a pointer
-			to the front of the list.
-
-			Whenever a new EntityID is needed, the id at the front of the list
-			is returned and popped.
-
-			If the popped Node was the only Node in the list, a new Node is
-			created that is the same as what is returned but incremented. This
-			makes sure to fulfill requirement 1. in the case taht no Entity's
-			are destroyed and sequentially assigns new ID's.
-
-			If an ID is "deleted" (aka needs to be reclaimed by the IDManager),
-			a new Node is created with the deleted ID and put at the front of
-			the list. When a new ID is requested, this Node will be popped
-			(meaning it will fulfill requirement 2.) and the next Node will be
-			pushed to the front.
-
-			This system means that all operations are performed in O(1) time
-			with minimal memory usage.
-			*/
-			std::unique_ptr<Node> first = std::unique_ptr<Node>(new Node{1, nullptr});
-
-			MACE_NODISCARD EntityID generateID();
+			MACE_NODISCARD EntityID generateID(Entity* e);
 
 			void deleteID(const EntityID id);
 		};//IDManager
 
 		class MACE_NOVTABLE RootEntity: public Entity {
-			friend class Entity;
 		public:
 			virtual ~RootEntity() override = default;
+
+			std::shared_ptr<IDManager> getIDManager();
+			const std::shared_ptr<IDManager> getIDManager() const;
 		protected:
 			virtual void init() override;
 			virtual void destroy() override;

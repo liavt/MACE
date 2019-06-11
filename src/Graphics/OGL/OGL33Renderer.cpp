@@ -693,7 +693,7 @@ namespace mc {
 				inherited.rotation.flatten(entityDataBuffer + 16);
 				inherited.scaler.flatten(entityDataBuffer + 20);
 				//this crazy line puts a float directly into a GLuint, as GLSL expects a uint instead of a float
-				*reinterpret_cast<GLuint*>(entityDataBuffer + 24) = static_cast<GLuint>(painter->getID());
+				*reinterpret_cast<GLuint*>(entityDataBuffer + 24) = static_cast<GLuint>(painter->getEntity()->getID());
 
 				uniformBuffers.entityData.createStorage(MACE__ENTITY_DATA_BUFFER_SIZE, entityDataBuffer, MACE__ENTITY_DATA_STORAGE_FLAGS);
 

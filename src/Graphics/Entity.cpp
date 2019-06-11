@@ -290,6 +290,10 @@ namespace mc {
 			return static_cast<Size>(children.size());
 		}
 
+		EntityID Entity::getID() const {
+			return id;
+		}
+
 		void Entity::kill() {
 			destroy();
 		}
@@ -385,7 +389,7 @@ namespace mc {
 				root = parent->root;
 			}
 
-			id = root->idManager->generateID();
+			id = root->getIDManager()->generateID(this);
 
 			makeDirty();
 			for (Index i = 0; i < children.size(); ++i) {
@@ -423,7 +427,7 @@ namespace mc {
 
 				root->setProperty(Entity::DIRTY, true);
 
-				root->idManager->deleteID(id);
+				root->getIDManager()->deleteID(id);
 
 				transformation.reset();
 				parent = nullptr;
@@ -666,35 +670,42 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		EntityID IDManager::generateID() {
-			if (first == nullptr) {
-				MACE__THROW(NullPointer, "Internal Error: *first was nullptr in IDManager");
+		Entity* IDManager::getEntityByID(const EntityID id) const {
+			if (id == 0) {
+				return nullptr;
+			} else if (id > ids.size()) {
+				return nullptr;
 			}
 
-			const EntityID out = first->id;
+			return ids[id - 1];
+		}
 
-			if (out == 0) {
-				MACE__THROW(InvalidState, "Internal Error: out EntityID was 0");
+		EntityID IDManager::generateID(Entity* e) {
+			for (EntityID i = 0; i < static_cast<EntityID>(ids.size()); ++i) {
+				if (ids[i] == nullptr) {
+					ids[i] = e;
+					//0 is reserved for an unitialized Entity, so add 1 to the interator
+					return i + 1;
+				}
 			}
 
-			if (first->next == nullptr) {
-				first = std::unique_ptr<Node>(new Node{out + 1, nullptr});
-			} else {
-				first.swap(first->next);
-			}
+			ids.push_back(e);
 
-			return out;
+			return static_cast<EntityID>(ids.size());
 		}
 
 		void IDManager::deleteID(const EntityID id) {
-			if (first == nullptr) {
-				MACE__THROW(NullPointer, "Internal Error: *first was nullptr in IDManager");
-			} else if (id == 0) {
-				//ID of 0 is reserved for an uninitialized Entity
-				return;
+			if (id > 0 && id <= ids.size()) {
+				ids[id - 1] = nullptr;
 			}
+		}
 
-			first = std::unique_ptr<Node>(new Node{id, std::move(first)});
+		std::shared_ptr<IDManager> RootEntity::getIDManager() {
+			return idManager;
+		}
+
+		const std::shared_ptr<IDManager> RootEntity::getIDManager() const {
+			return idManager;
 		}
 
 		void RootEntity::init() {

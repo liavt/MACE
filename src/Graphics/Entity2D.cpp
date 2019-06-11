@@ -431,7 +431,7 @@ namespace mc {
 
 		void Text::onUpdate() {}
 
-		void Text::onRender(Painter& p) {}
+		void Text::onRender(Painter&) {}
 
 		void Text::onDestroy() {
 			if (font.isCreated()) {

@@ -16,7 +16,7 @@ See LICENSE.md for full copyright information
 #include <MACE/Utility/Transform.h>
 #include <MACE/Utility/Color.h>
 
-#include <deque>
+#include <unordered_map>
 #include <stack>
 
 namespace mc {
@@ -26,14 +26,6 @@ namespace mc {
 		class GraphicsEntity;
 		class PainterImpl;
 		struct EaseSettings;
-
-		struct RendererEntry {
-			GraphicsEntity* entity;
-
-			std::shared_ptr<PainterImpl> painterImpl;
-		};
-		//if the container we use is ever going to be changed, we typedef
-		using RenderQueue = std::deque<RendererEntry>;
 
 		enum class FrameBufferTarget: int {
 			COLOR = 0,
@@ -217,8 +209,6 @@ namespace mc {
 			State& getState();
 			const State& getState() const;
 
-			const EntityID& getID() const;
-
 			bool operator==(const Painter& other) const;
 			bool operator!=(const Painter& other) const;
 		private:
@@ -231,10 +221,8 @@ namespace mc {
 
 			GraphicsEntity* entity;
 
-			EntityID id;
-
 			Painter();
-			Painter(GraphicsEntity* const en, const EntityID id, const std::shared_ptr<PainterImpl> im);
+			Painter(GraphicsEntity* const en, const std::shared_ptr<PainterImpl> im);
 			Painter(GraphicsEntity* const en, const Painter& other);
 
 			void begin() override;
@@ -293,12 +281,10 @@ namespace mc {
 			friend class WindowModule;
 			friend class GraphicsEntity;
 		public:
-			virtual ~Renderer() = default;
+			virtual ~Renderer() noexcept = default;
 
-			GraphicsEntity* getEntityAt(const RelativeTranslation x, const RelativeTranslation y);
-			const GraphicsEntity* getEntityAt(const RelativeTranslation x, const RelativeTranslation y) const;
-			GraphicsEntity* getEntityAt(const Pixels x, const Pixels y);
-			const GraphicsEntity* getEntityAt(const Pixels x, const Pixels y) const;
+			EntityID getEntityAt(const RelativeTranslation x, const RelativeTranslation y) const;
+			EntityID getEntityAt(const Pixels x, const Pixels y) const;
 
 
 			virtual void getEntitiesAt(const Pixels x, const Pixels y, const Pixels w, const Pixels h, EntityID* arr) const = 0;
@@ -333,11 +319,6 @@ namespace mc {
 
 			Vector<float, 2> getWindowRatios() const;
 
-			RenderQueue getRenderQueue() const;
-
-			GraphicsEntity* getEntityByID(const EntityID id);
-			const GraphicsEntity* getEntityByID(const EntityID id) const;
-
 			bool isResized() const;
 
 			GraphicsContext* getContext();
@@ -348,8 +329,6 @@ namespace mc {
 			*/
 			void flagResize();
 		protected:
-			RenderQueue renderQueue = RenderQueue();
-
 			unsigned int samples = 1;
 
 			bool resized = false;
@@ -406,8 +385,6 @@ namespace mc {
 			void destroy();
 
 			void queue(GraphicsEntity* const e, Painter& p);
-
-			void remove(const EntityID i);
 		};//Renderer
 
 		class MACE_NOVTABLE GraphicsEntity: public Entity {
