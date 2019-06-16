@@ -163,12 +163,12 @@ namespace mc {
 
 			std::fclose(soundFile);
 			return;
-		} catch (const Error& error) {
+		} catch (const std::exception& error) {
 			if (soundFile != nullptr) {
 				std::fclose(soundFile);
 			}
 
-			Error::handleError(error);
+			handleError(error);
 		}
 	}
 

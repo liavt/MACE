@@ -94,7 +94,7 @@ int main() {
 
 		instance.start();
 	} catch (const std::exception& e) {
-		Error::handleError(e, instance);
+		mc::handleError(e, instance);
 		return -1;
 	}
 	return 0;

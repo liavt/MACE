@@ -20,9 +20,9 @@ void create(gfx::WindowModule& win) {
 	std::shared_ptr<gfx::ComponentQueue> queue = std::shared_ptr<gfx::ComponentQueue>(new gfx::ComponentQueue());
 
 	Transformation dest1 = Transformation();
-	dest1.scaler = { 0.2f, 0.2f, 0.0f };
-	dest1.translation = { 0.5f, 0.5f, 0.0f };
-	dest1.rotation = { 0.0f, 0.0f, 0.5f };
+	dest1.scaler = {0.2f, 0.2f, 0.0f};
+	dest1.translation = {0.5f, 0.5f, 0.0f};
+	dest1.rotation = {0.0f, 0.0f, 0.5f};
 
 	gfx::EaseSettings settings = gfx::EaseSettings();
 	settings.ms = 1000;
@@ -32,9 +32,9 @@ void create(gfx::WindowModule& win) {
 	queue->addComponent(std::shared_ptr<gfx::Component>(new gfx::TweenComponent(&square, dest1, settings)));
 
 	Transformation dest2 = Transformation(dest1);
-	dest2.scaler = { 0.5f, 0.5f, 0.0f };
-	dest2.translation = { 0.5f, -0.5f, 0.0f };
-	dest2.rotation = { 0.0f, 0.0f, 1.5f };
+	dest2.scaler = {0.5f, 0.5f, 0.0f};
+	dest2.translation = {0.5f, -0.5f, 0.0f};
+	dest2.rotation = {0.0f, 0.0f, 1.5f};
 
 	settings.ms = 1500;
 	settings.ease = gfx::EaseFunctions::QUADRATIC_IN;
@@ -43,9 +43,9 @@ void create(gfx::WindowModule& win) {
 	queue->addComponent(std::shared_ptr<gfx::Component>(new gfx::TweenComponent(&square, dest1, dest2, settings)));
 
 	Transformation dest3 = Transformation(dest2);
-	dest3.scaler = { 0.05f, 0.05f, 0.0f };
-	dest3.translation = { -0.5f, -0.5f, 0.0f };
-	dest3.rotation = { 0.0f, 0.0f, 6.0f };
+	dest3.scaler = {0.05f, 0.05f, 0.0f};
+	dest3.translation = {-0.5f, -0.5f, 0.0f};
+	dest3.rotation = {0.0f, 0.0f, 6.0f};
 
 	settings.ms = 2000;
 	settings.ease = gfx::EaseFunctions::LINEAR;
@@ -82,7 +82,7 @@ int main() {
 
 		instance.start();
 	} catch (const std::exception& e) {
-		Error::handleError(e, instance);
+		mc::handleError(e, instance);
 		return -1;
 	}
 	return 0;

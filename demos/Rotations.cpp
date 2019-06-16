@@ -49,12 +49,12 @@ class RotationComponent: public gfx::Component {
 };
 
 void create(gfx::WindowModule&) {
-	srand((unsigned int)time(nullptr));
+	srand(( unsigned int) time(nullptr));
 
 	const Size elementNum = 10;
-	
+
 	const gfx::Texture star = gfx::Texture::createFromFile(MACE_DEMO_ASSETS + std::string("star.png"), gfx::ImageFormat::DONT_CARE);
-	
+
 	for (Index x = 0; x < elementNum; x++) {
 		for (Index y = 0; y < elementNum; y++) {
 			gfx::Image* entity = new gfx::Image();
@@ -153,7 +153,7 @@ int main() {
 		}
 		instance.destroy();
 	} catch (const std::exception& e) {
-		Error::handleError(e, instance);
+		mc::handleError(e, instance);
 		return -1;
 	} catch (...) {
 		std::cerr << "An unknown exception occured";

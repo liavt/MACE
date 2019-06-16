@@ -289,6 +289,14 @@ See LICENSE.md for full copyright information
 #	endif
 #endif
 
+#ifdef MACE_MSVC
+#	define MACE_FUNCTION_NAME __FUNCSIG__
+#elif defined(MACE_GNU)
+#	define MACE_FUNCTION_NAME __PRETTY_FUNCTION__
+#else
+#	define MACE_FUNCTION_NAME __func__
+#endif
+
 #define MACE_STRINGIFY(name) #name
 // the "" in front is to ensure that giving it an empty string still works
 #define MACE_STRINGIFY_NAME(name) "" #name

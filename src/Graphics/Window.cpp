@@ -356,7 +356,7 @@ namespace mc {
 
 					os::clearError(__LINE__, __FILE__);
 				} catch (const std::exception& e) {
-					Error::handleError(e, instance);
+					handleError(e, instance);
 				} catch (...) {
 					MACE__THROW(Unknown, "An unknown error has occured trying to initalize MACE");
 				}
@@ -385,7 +385,7 @@ namespace mc {
 							break; // while (!MACE::isRunning) would require a lock on destroyed or have it be an atomic varible, both of which are undesirable. while we already have a lock, set a stack variable to false.that way, we only read it, and we dont need to always lock it
 						}
 					} catch (const std::exception& e) {
-						Error::handleError(e, instance);
+						handleError(e, instance);
 						break;
 					} catch (...) {
 						MACE__THROW(Unknown, "An unknown error occured trying to render a frame");
@@ -414,16 +414,16 @@ namespace mc {
 
 					os::checkError(__LINE__, __FILE__, "A system error occurred destroying the window");
 				} catch (const std::exception& e) {
-					Error::handleError(e, instance);
+					handleError(e, instance);
 				} catch (...) {
 					MACE__THROW(Unknown, "An unknown error occured trying to destroy the rendering thread");
 				}
 
 				os::checkError(__LINE__, __FILE__, "A system error occured while running MACE");
 			} catch (const std::exception& e) {
-				Error::handleError(e, instance);
+				handleError(e, instance);
 			} catch (...) {
-				Error::handleError(MACE__GET_ERROR_NAME(Unknown) ("An unknown error occured while running MACE", __LINE__, __FILE__), instance);
+				handleError(MACE__GET_ERROR_NAME(Unknown) ("An unknown error occured while running MACE", MACE_STRINGIFY_DEFINITION(__LINE__), __FILE__), instance);
 			}
 		}//threadCallback
 

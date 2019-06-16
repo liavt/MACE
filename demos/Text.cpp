@@ -68,7 +68,7 @@ int main() {
 			mc::os::wait(33);
 		}
 	} catch (const std::exception& e) {
-		Error::handleError(e, instance);
+		mc::handleError(e, instance);
 		return -1;
 	}
 	return 0;

@@ -276,7 +276,7 @@ namespace mc {
 
 				SetLastError(0);
 
-				MACE__THROW_CUSTOM_LINE(System, errorMessage + ": Winapi threw error " + std::to_string(lastError) + " with message " + message, line, file);
+				MACE__THROW_CUSTOM_LINE(System, errorMessage + ": Winapi threw error " + std::to_string(lastError) + " with message " + message, std::to_string(line), file);
 #else
 				return;
 #endif
@@ -286,7 +286,7 @@ namespace mc {
 
 			char buffer[128];
 
-			MACE__THROW_CUSTOM_LINE(System, errorMessage + ": " + os::strerror(buffer, getArraySize(buffer), error), line, file);
+			MACE__THROW_CUSTOM_LINE(System, errorMessage + ": " + os::strerror(buffer, getArraySize(buffer), error), std::to_string(line), file);
 		}
 
 		void pause() {

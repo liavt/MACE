@@ -20,41 +20,27 @@ namespace mc {
 
 	/**
 	Superclass that all exceptions in MACE extend.
+	<p>
+	Do not use this class directly. Instead, use the `MACE_THROW_CUSTOM_LINE` or `MACE_THROW` macros.
+	To declare a new type of `Error`, use the `MACE_DECLARE_NAME` macro.
+	@tparam ErrorType A `CString` representing the name of this error
+	@internal
 	*/
+	template<typename ErrorType>
 	class Error: public std::runtime_error {
 	public:
-		static std::string getErrorDump(const std::exception& e, const Instance* i = nullptr);
-
-		/**
-		Stops MACE and prints an exception to console accordingly. This should be used every time a fatal exception is thrown.
-		*/
-		static void handleError MACE_NORETURN(const std::exception& e, Instance* i = nullptr);// i is not const because requestStop() will be called
-
-		/**
-		@copydoc Error::handleError(const std::exception& e, Instance*)
-		*/
-		static void handleError MACE_NORETURN(const std::exception& e, Instance& i);
-
-		Error(const char* message, const unsigned int line, const std::string file);
-		Error(const std::string message, const unsigned int line, const std::string file);
-		Error(const char* MACE_RESTRICT message, const unsigned int line, const char* MACE_RESTRICT file);
-		Error(const std::string message, const unsigned int line = 0, const char* file = "No file reported");
-		Error() noexcept = default;
+		Error(const std::string message, const std::string line, const std::string file) : std::runtime_error(std::string(ErrorType::val) + ": " + message + "\n\t[" + line + " @ " + file + "]") {}
 		~Error() noexcept = default;
-
-		void handle MACE_NORETURN();
-
-		const unsigned int getLine() const;
-		const char* getFile() const;
-	private:
-		const unsigned int line;
-		const char* file;
 	};
 
 #define MACE__GET_ERROR_NAME(name) name##Error
-#define MACE__DECLARE_ERROR(name) class MACE__GET_ERROR_NAME(name) : public Error{public: using Error::Error;}
-#define MACE__THROW_CUSTOM_LINE(name, message, line, file) do{throw MACE__GET_ERROR_NAME(name) ( std::string(__func__) + ": " + std::string(message), line, file);}while(0)
-#define MACE__THROW(name, message) MACE__THROW_CUSTOM_LINE(name, message, __LINE__, __FILE__)
+#define MACE__DECLARE_ERROR(name) struct name##Type { static MACE_CONSTEXPR CString val = MACE_STRINGIFY_DEFINITION(MACE__GET_ERROR_NAME(name)); }; using MACE__GET_ERROR_NAME(name) = Error< name##Type >;
+#define MACE__THROW_CUSTOM_LINE(name, message, line, file) do{throw MACE__GET_ERROR_NAME(name) ( std::string(MACE_FUNCTION_NAME) +  ": " + std::string(message), line, file);}while(0)
+#define MACE__THROW(name, message) MACE__THROW_CUSTOM_LINE(name, message, MACE_STRINGIFY_DEFINITION(__LINE__), __FILE__)
+
+#define MACE_DECLARE_ERROR(name) MACE__DECLARE_ERROR(name)
+#define MACE_THROW_CUSTOMLINE(name, message, line, file) MACE__THROW_CUSTOM_LINE(name, message, line, file)
+#define MACE_THROW(name, message) MACE__THROW(name, message)
 
 	/**
 	Thrown when an error from an unknown source occured
@@ -125,16 +111,17 @@ namespace mc {
 	*/
 	MACE__DECLARE_ERROR(System);
 
-	class MultipleErrors: public Error {
-	public:
-		using Error::Error;
+	std::string getErrorDump(const std::exception& e, const Instance* i = nullptr);
 
-		MultipleErrors(const Error errs[], const std::size_t errorSize, const unsigned int line, const char* file);
+	/**
+	Stops MACE and prints an exception to console accordingly. This should be used every time a fatal exception is thrown.
+	*/
+	void handleError MACE_NORETURN(const std::exception& e, Instance* i = nullptr);// i is not const because requestStop() will be called
 
-		const char* what() const noexcept override;
-	private:
-		std::string message;
-	};
+	/**
+	@copydoc Error::handleError(const std::exception& e, Instance*)
+	*/
+	void handleError MACE_NORETURN(const std::exception& e, Instance& i);
 }
 
 #endif

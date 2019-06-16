@@ -235,8 +235,7 @@ namespace mc {
 			TextureDesc() = default;
 			TextureDesc(const Pixels w, const Pixels h, const Format form = Format::RGBA);
 
-			Filter minFilter = Filter::LINEAR;
-			Filter magFilter = Filter::LINEAR;
+
 			int mipmapLevels = 1;
 			Type type = Type::FLOAT;
 			Format format = Format::RGBA;
@@ -246,6 +245,9 @@ namespace mc {
 
 			Wrap wrapS = Wrap::CLAMP;
 			Wrap wrapT = Wrap::CLAMP;
+			Filter minFilter = Filter::LINEAR;
+			Filter magFilter = Filter::LINEAR;
+
 			Color borderColor = Colors::INVISIBLE;
 		};
 

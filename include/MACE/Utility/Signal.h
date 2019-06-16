@@ -13,12 +13,18 @@ See LICENSE.md for full copyright information
 
 namespace mc {
 	namespace os {
-		class MACE__GET_ERROR_NAME(Signal): public Error {
+		template<typename ErrorType>
+		class MACE__GET_ERROR_NAME(Signal): public Error<ErrorType> {
 		public:
-			using Error::Error;
+			using Error<ErrorType>::Error;
 		};
 
-#define MACE__SIGNAL_ERROR(name) class MACE__GET_ERROR_NAME(name) : public  MACE__GET_ERROR_NAME(Signal) {public: using MACE__GET_ERROR_NAME(Signal) :: MACE__GET_ERROR_NAME(Signal) ;}
+#define MACE__SIGNAL_ERROR(name) struct name##Type { static MACE_CONSTEXPR CString val = MACE_STRINGIFY_DEFINITION(MACE__GET_ERROR_NAME(name)); }; using MACE__GET_ERROR_NAME(name) = MACE__GET_ERROR_NAME(Signal) < name##Type >
+		/**
+		Thrown when an unknown signal encountered
+		*/
+		MACE__SIGNAL_ERROR(SignalUnknown);
+
 		MACE__SIGNAL_ERROR(SignalInterrupt);
 		MACE__SIGNAL_ERROR(SignalTerminate);
 		MACE__SIGNAL_ERROR(SignalIllegalInstruction);

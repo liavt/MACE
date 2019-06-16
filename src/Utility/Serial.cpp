@@ -52,7 +52,7 @@ namespace mc {
 				if (lastError == ERROR_FILE_NOT_FOUND) {
 					MACE__THROW(FileNotFound, "Serial port with name " + std::string(port) + " not found.");
 				} else if (lastError == ERROR_ACCESS_DENIED) {
-					throw SystemError("Access denied accessing serial port at " + std::string(port));
+					MACE__THROW(System, "Access denied accessing serial port at " + std::string(port));
 				} else {
 					MACE__THROW(FileNotFound, "Error opening " + std::string(port) + " with error from CreateFile " + std::to_string(lastError));
 				}
@@ -63,7 +63,7 @@ namespace mc {
 			DCB serialParams = {0};
 
 			if (!GetCommState(serial, &serialParams)) {
-				throw BadFileError("Error getting serial parameters from " + std::string(port));
+				MACE__THROW(BadFile, "Error getting serial parameters from " + std::string(port));
 			}
 
 			serialParams.BaudRate = baudRate;
@@ -73,7 +73,7 @@ namespace mc {
 			serialParams.fDtrControl = DTR_CONTROL_ENABLE;
 
 			if (!SetCommState(serial, &serialParams)) {
-				throw BadFileError("Error setting serial parameters for " + std::string(port));
+				MACE__THROW(BadFile, "Error setting serial parameters for " + std::string(port));
 			}
 
 			os::checkError(__LINE__, __FILE__, "Error setting serial communication status for " + std::string(port));
@@ -86,14 +86,14 @@ namespace mc {
 			timeout.WriteTotalTimeoutMultiplier = 10;
 
 			if (!SetCommTimeouts(serial, &timeout)) {
-				throw BadFileError("Error setting serial timeout for " + std::string(port));
+				MACE__THROW(BadFile, "Error setting serial timeout for " + std::string(port));
 			}
 
 			os::checkError(__LINE__, __FILE__, "Error setting serial communication timeouts for " + std::string(port));
 
 			//we shall purge everything to flush any previous characters;
 			if (!PurgeComm(serial, PURGE_RXCLEAR | PURGE_TXCLEAR)) {
-				throw BadFileError("Error purging serial communications for " + std::string(port));
+				MACE__THROW(BadFile, "Error purging serial communications for " + std::string(port));
 			};
 
 			os::checkError(__LINE__, __FILE__, "Error purging previous messages on the serial communication line at " + std::string(port));
@@ -254,7 +254,7 @@ namespace mc {
 			}
 
 			if (bytesRead == 0 && toRead > 0) {
-				throw BadFileError("Failed to read from serial stream");
+				MACE__THROW(BadFile, "Failed to read from serial stream");
 			}
 
 			os::checkError(__LINE__, __FILE__, "Error reading from serial port");
@@ -293,7 +293,7 @@ namespace mc {
 			}
 
 			if (bytesSent == 0 && bufferSize > 0) {
-				throw BadFileError("Unable to write to serial port");
+				MACE__THROW(BadFile, "Unable to write to serial port");
 			}
 
 			return;

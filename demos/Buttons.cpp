@@ -30,8 +30,8 @@ int main() {
 		instance.addModule(errModule);
 
 		instance.start();
-	} catch (const std::exception & e) {
-		Error::handleError(e, instance);
+	} catch (const std::exception& e) {
+		mc::handleError(e, instance);
 		return -1;
 	}
 	return 0;

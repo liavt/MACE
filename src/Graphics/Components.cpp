@@ -317,7 +317,7 @@ namespace mc {
 		EaseComponent::EaseComponent(const EaseUpdateCallback callback, const EaseSettings easeSettings, const Progress start, const Progress dest)
 			: Component(), settings(easeSettings)
 			, duration(std::chrono::milliseconds(easeSettings.ms) / std::chrono::seconds(1)),
-			updateCallback(callback), startingProgress(start), progress(start), destination(dest), currentRepetition(0) {}
+			updateCallback(callback),  progress(start), startingProgress(start), destination(dest), currentRepetition(0) {}
 
 		EaseComponent::EaseComponent(Progressable* progressable, const EaseSettings settings, const Progress start, const Progress dest) : EaseComponent([progressable](Entity*, Progress prog) {
 			progressable->setProgress(prog);

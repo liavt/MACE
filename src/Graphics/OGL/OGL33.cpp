@@ -6,6 +6,7 @@ See LICENSE.md for full copyright information
 #include <MACE/Graphics/OGL/OGL33.h>
 #include <memory>
 #include <string>
+#include <sstream>
 
 namespace mc {
 	namespace gfx {
@@ -41,39 +42,39 @@ namespace mc {
 				}
 			}//anon namespace
 
-			void forceCheckGLError(const unsigned int line, const char* file, const char* message) {
-				std::vector<Error> errors;
+			void forceCheckGLError(const unsigned int line, const char* file, const char* inMessage) {
+				std::stringstream message{};
 
+				// in order not to potentially overflow it only shows up to 10 errors
+				Index errorAmount = 0;
 				Enum result = GL_NO_ERROR;
 				//have to use glad_glGetError instead of glGetError to prevent stack overflow
 				//see GLAD docs about the post- and pre- callbacks
-				while ((result = glad_glGetError()) != GL_NO_ERROR && errors.size() < 10) {
+				while ((result = glad_glGetError()) != GL_NO_ERROR && (++errorAmount) < 10) {
+					if (errorAmount > 1) {
+						message << "\n";
+					}
+					message << inMessage << ": ";
 					switch (result) {
-					case GL_INVALID_ENUM:
-						errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_INVALID_ENUM: An unacceptable value is specified for an enumerated argument", line, file));
-						break;
-					case GL_INVALID_VALUE:
-						errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_INVALID_VALUE: A numeric argument is out of range", line, file));
-						break;
-					case GL_INVALID_OPERATION:
-						errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_INVALID_OPERATION: The specified operation is not allowed in the current state", line, file));
-						break;
-					case GL_INVALID_FRAMEBUFFER_OPERATION:
-						errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": GL_INVALID_FRAMEBUFFER_OPERATION: The command is trying to render to or read from the framebuffer while the currently bound framebuffer is not framebuffer complete (i.e. the return value from glCheckFramebufferStatus is not GL_FRAMEBUFFER_COMPLETE)", line, file));
-						break;
-					case GL_OUT_OF_MEMORY:
-						errors.push_back(MACE__GET_ERROR_NAME(OutOfMemory) (std::string(message) + ": GL_OUT_OF_MEMORY: There is not enough memory left to execute the command", line, file));
-						break;
-					default:
-						errors.push_back(MACE__GET_ERROR_NAME(OpenGL) (std::string(message) + ": OpenGL has errored with an error code of " + std::to_string(result), line, file));
+#define MACE__GL_ERROR_DEF(error, mes) case error : message << MACE_STRINGIFY_NAME(error) << mes; break
+						MACE__GL_ERROR_DEF(GL_INVALID_ENUM, "An unacceptable value is specified for an enumerated argument");
+						MACE__GL_ERROR_DEF(GL_INVALID_VALUE, "A numeric argument is out of range");
+						MACE__GL_ERROR_DEF(GL_INVALID_OPERATION, "The specified operation is not allowed in the current state");
+						MACE__GL_ERROR_DEF(GL_INVALID_FRAMEBUFFER_OPERATION, "The command is trying to render to or read from the framebuffer while the currently bound framebuffer is not framebuffer complete (i.e. the return value from glCheckFramebufferStatus is not GL_FRAMEBUFFER_COMPLETE)");
+						MACE__GL_ERROR_DEF(GL_OUT_OF_MEMORY, "There is not enough memory left to execute the command");
+#undef MACE__GL_ERROR_DEF
+					MACE_UNLIKELY default:
+						message << "OpenGL has errored with an error code of" << result;
 						break;
 					}
 				}
 
-				if (errors.size() == 1) {
-					throw errors[0];
-				} else if (!errors.empty()) {
-					throw MultipleErrors(errors.data(), errors.size(), line, file);
+				/*
+				if glGetError initially returns GL_NO_ERROR, it short circuits and keeps
+				errorAmount at 0.
+				*/
+				if (errorAmount > 0) {
+					MACE__THROW_CUSTOM_LINE(OpenGL, message.str(), std::to_string(line), file);
 				}
 			}
 

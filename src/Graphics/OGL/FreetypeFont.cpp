@@ -49,7 +49,7 @@ namespace mc {
 					there is no way to do that using FreeType's built in error
 					X-Macro as you can't do conditional macros
 					*/
-#define MACE__FREETYPE_ERROR_CASE_TYPE(err, msg, type) case FT_Err_##err: MACE__THROW_CUSTOM_LINE(type, std::to_string(status) + ": " + MACE_STRINGIFY(err) + ": " + msg, line, file); break;
+#define MACE__FREETYPE_ERROR_CASE_TYPE(err, msg, type) case FT_Err_##err: MACE__THROW_CUSTOM_LINE(type, std::to_string(status) + ": " + MACE_STRINGIFY(err) + ": " + msg, std::to_string(line), file); break;
 #define MACE__FREETYPE_ERROR_CASE(err, msg) MACE__FREETYPE_ERROR_CASE_TYPE(err, msg, Font)
 					switch (status) {
 						MACE__FREETYPE_ERROR_CASE(Ok, "No error (invalid internal call to throwFreetypeError)")
@@ -73,7 +73,7 @@ namespace mc {
 							MACE__FREETYPE_ERROR_CASE_TYPE(Too_Many_Extensions, "Too many extensions", System)
 							MACE__FREETYPE_ERROR_CASE_TYPE(Out_Of_Memory, "Out of memory", OutOfMemory)
 					default:
-						throw MACE__GET_ERROR_NAME(Font)(message + ": Unknown error code " + std::to_string(status), line, file);
+						throw MACE__GET_ERROR_NAME(Font)(message + ": Unknown error code " + std::to_string(status), std::to_string(line), file);
 					}
 #undef MACE__FREETYPE_ERROR_CASE_TYPE
 #undef MACE__FREETYPE_ERROR_CASE

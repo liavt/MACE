@@ -15,20 +15,11 @@ See LICENSE.md for full copyright information
 #include <cstring>
 
 namespace mc {
-	void Error::handleError(const std::exception& e, Instance* instance) {
+	void handleError(const std::exception& e, Instance* instance) {
 		if (instance != nullptr && instance->getFlag(Instance::VERBOSE_ERRORS)) {
-			std::cerr << Error::getErrorDump(e);
+			std::cerr << getErrorDump(e);
 		} else {
-			std::cerr << os::consoleColor(os::ConsoleColor::LIGHT_RED) << typeid(e).name();
-			std::cerr << os::consoleColor(os::ConsoleColor::RED) << " occured:\n\t";
-			std::cerr << os::consoleColor(os::ConsoleColor::LIGHT_YELLOW) << e.what() << '\n';
-#ifdef MACE_DEBUG
-			const Error* err = dynamic_cast<const Error*>(&e);
-			if (err != nullptr) {
-				std::cerr << os::consoleColor(os::ConsoleColor::YELLOW)
-					<< "\t[ " << err->getLine() << " @ " << err->getFile() << " ]" << '\n';
-			}
-#endif
+			std::cerr << os::consoleColor(os::ConsoleColor::RED) << e.what() << '\n';
 			//reset console color to default
 			std::cerr << os::consoleColor() << std::flush;
 		}
@@ -37,7 +28,7 @@ namespace mc {
 			if (instance->getFlag(Instance::WRITE_ERRORS_TO_LOG)) {
 				std::ofstream logFile;
 				logFile.open("err.log", std::ofstream::out | std::ofstream::trunc);
-				logFile << Error::getErrorDump(e);
+				logFile << getErrorDump(e);
 				logFile.close();
 			}
 
@@ -51,15 +42,11 @@ namespace mc {
 #endif
 	}
 
-	void Error::handleError(const std::exception& e, Instance& instance) {
+	void handleError(const std::exception& e, Instance& instance) {
 		handleError(e, &instance);
 	}
 
-	void Error::handle() {
-		Error::handleError(*this);
-	}
-
-	std::string Error::getErrorDump(const std::exception& e, const Instance* instance) {
+	std::string getErrorDump(const std::exception& e, const Instance* instance) {
 		std::stringstream dump;
 		dump << "At ";
 
@@ -78,13 +65,7 @@ namespace mc {
 
 		dump << " MACE encountered an error and had to terminate the application." << std::endl;
 		dump << "====ERROR DETAILS====" << std::endl;
-		dump << "Type:" << std::endl << '\t' << typeid(e).name() << std::endl;
-		dump << "Message:" << std::endl << '\t' << e.what() << std::endl;
-		const Error* err = dynamic_cast<const Error*>(&e);
-		if (err != nullptr) {
-			dump << "Line: " << std::endl << '\t' << err->getLine() << std::endl;
-			dump << "File: " << std::endl << '\t' << err->getFile() << std::endl;
-		}
+		dump << e.what() << std::endl;
 		dump << std::endl;
 		if (instance != nullptr) {
 			dump << "====MACE DETAILS====" << std::endl;
@@ -93,7 +74,7 @@ namespace mc {
 			for (auto val : instance->getModules()) {
 				const ModulePtr m = val.second;
 
-				dump << std::endl << '\t' << m->getName() << " (" << typeid(*m).name() << ')';
+				dump << std::endl << '\t' << m->getName();
 			}
 			//we need to flush it as well as newline. endl accomplishes that
 			dump << std::endl;
@@ -195,37 +176,5 @@ namespace mc {
 #undef MACE__CHECK_MACRO
 
 		return dump.str();
-	}
-
-	Error::Error(const char* message, const unsigned int line, const std::string file) : Error(message, line, file.c_str()) {}
-
-	Error::Error(const std::string message, const unsigned int line, const std::string file) : Error(message, line, file.c_str()) {}
-
-	Error::Error(const char* message, const unsigned int l, const char* f) : std::runtime_error(message), line(l), file(f) {}
-
-	Error::Error(const std::string message, const unsigned int l, const char* f) : std::runtime_error(message), line(l), file(f) {}
-
-	const unsigned int Error::getLine() const {
-		return line;
-	}
-
-	const char* Error::getFile() const {
-		return file;
-	}
-
-	MultipleErrors::MultipleErrors(const Error errs[], const std::size_t errorSize, const unsigned int line, const char* file)
-		: Error("", line, file), message("Multiple errors occured:\n") {
-		if (errs == nullptr) {
-			//normally we would throw an error, but we cant throw an error from an error! that would cause all sorts of crazy memory corruption!
-			message = "Error showing multiple errors: Inputted array of errors was nullptr";
-		} else {
-			for (Index i = 0; i < errorSize; ++i) {
-				message += std::string(errs[i].what()) + '\n';
-			}
-		}
-	}
-
-	const char* MultipleErrors::what() const noexcept {
-		return message.c_str();
 	}
 }

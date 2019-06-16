@@ -37,7 +37,7 @@ int main(int argc, char* const argv[]) {
 
 		return result;
 	} catch( const std::exception& e ) {
-		mc::Error::handleError(e);
+		mc::handleError(e);
 		return -1;
 	} catch (...) {
 		std::cerr << "An unknown exception occured";

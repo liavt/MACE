@@ -696,8 +696,6 @@ namespace mc {
 			std::vector<EntityPtr> children = std::vector<EntityPtr>();
 			std::vector<ComponentPtr> components = std::vector<ComponentPtr>();
 
-			EntityProperties properties = Entity::DEFAULT_PROPERTIES;
-
 			Entity* parent = nullptr;
 			RootEntity* root = nullptr;
 			EntityID id = 0;
@@ -711,6 +709,9 @@ namespace mc {
 			@internal
 			*/
 			Metrics metrics;
+
+			EntityProperties properties = Entity::DEFAULT_PROPERTIES;
+
 
 			/**
 			Automatically called when `Entity::PROPERTY_DEAD` is true. Removes this entity from it's parent, and calls it's `destroy()` method.
