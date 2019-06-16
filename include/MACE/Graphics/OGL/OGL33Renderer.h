@@ -12,7 +12,7 @@ See LICENSE.md for full copyright information
 
 #include <MACE/Graphics/Renderer.h>
 #include <MACE/Graphics/OGL/OGL33.h>
-#include <map>
+#include <unordered_map>
 
 namespace mc {
 	namespace gfx {

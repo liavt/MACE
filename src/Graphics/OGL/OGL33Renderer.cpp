@@ -268,7 +268,7 @@ namespace mc {
 			OGL33Renderer::OGL33Renderer() {}
 
 			void OGL33Renderer::onInit(gfx::WindowModule* win) {
-				const int version = gladLoadGLLoader(( GLADloadproc) glfwGetProcAddress);
+				const int version = gladLoadGL(glfwGetProcAddress);
 				if (version == 0) {
 					std::ostringstream errorMessage;
 					errorMessage << "This system (OpenGL " << glGetString(GL_VERSION) << ")";
@@ -298,24 +298,15 @@ namespace mc {
 				MACE__DEBUG_OUTPUT_EXTENSION(GL_EXT_direct_state_access);
 #undef MACE__DEBUG_OUTPUT_EXTENSION
 				std::cout << os::consoleColor();
-#ifdef GLAD_DEBUG
-				glad_set_pre_callback([](const char*, void*, int, ...) {
+#ifdef GLAD_OPTION_GL_DEBUG
+				gladSetGLPreCallback([](CString, GLADapiproc, int, ...) {
 					//do nothing
 				});
-				glad_set_post_callback([](const char* name, void*, int, ...) {
+				gladSetGLPostCallback([](void*, CString name, GLADapiproc, int, ...) {
 					ogl33::checkGLError(__LINE__, __FILE__, name);
 				});
 #endif//GLAD_DEBUG
-#else
-#ifdef GLAD_DEBUG
-				glad_set_pre_callback([](const char*, void*, int, ...) {
-					//do nothing
-				});
-				glad_set_post_callback([](const char*, void*, int, ...) {
-					//do nothing
-				});
-#endif//GLAD_DEBUG
-#endif//MACE_DEBUG_OPENGL
+#endif
 
 				const WindowModule::LaunchConfig& config = win->getLaunchConfig();
 
@@ -382,18 +373,25 @@ namespace mc {
 					glNamedFramebufferReadBuffer(frameBuffer.getID(), GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
 					//glNamedFramebufferDrawBuffer(frameBuffer.getID(), GL_COLOR_ATTACHMENT0 + MACE__DATA_ATTACHMENT_INDEX);
 					//glNamedFramebufferDrawBuffer(0, GL_FRONT);
-
-					glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-					glNamedFramebufferDrawBuffer(0, GL_FRONT);
-
-					glBlitNamedFramebuffer(frameBuffer.getID(), 0, 0, 0, size[0], size[1], 0, 0, size[0], size[1], GL_COLOR_BUFFER_BIT, GL_NEAREST);
 				} else {
 					glBindFramebuffer(GL_READ_FRAMEBUFFER, frameBuffer.getID());
 					ogl33::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
+				}
 
-					glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-					ogl33::FrameBuffer::setDrawBuffer(GL_FRONT);
+				glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+				ogl33::FrameBuffer::setDrawBuffer(GL_FRONT);
 
+				if (GLAD_GL_ARB_invalidate_subdata) {
+					MACE_CONSTEXPR const Enum buffers[] = {
+						GL_COLOR
+					};
+
+					glInvalidateFramebuffer(GL_DRAW_FRAMEBUFFER, os::getArraySize<GLsizei>(buffers), buffers);
+				}
+
+				if (GLAD_GL_ARB_direct_state_access) {
+					glBlitNamedFramebuffer(frameBuffer.getID(), 0, 0, 0, size[0], size[1], 0, 0, size[0], size[1], GL_COLOR_BUFFER_BIT, GL_NEAREST);
+				} else {
 					glBlitFramebuffer(0, 0, size[0], size[1], 0, 0, size[0], size[1], GL_COLOR_BUFFER_BIT, GL_NEAREST);
 				}
 

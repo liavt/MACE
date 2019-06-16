@@ -17,7 +17,7 @@ See LICENSE.md for full copyright information
 #include <MACE/Utility/Color.h>
 #include <MACE/Graphics/Renderer.h>
 
-#include <glad/glad.h>
+#include <glad/gl.h>
 
 #include <unordered_map>
 #include <vector>
