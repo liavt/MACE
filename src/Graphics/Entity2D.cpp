@@ -246,7 +246,7 @@ namespace mc {
 		}
 
 		void SimpleProgressBar::easeTo(const Progress destination, const EaseSettings settings) {
-			addComponent(ComponentPtr(new EaseComponent(this, settings, getProgress(), destination)));
+			addComponent(ComponentPtr<EaseComponent>(new EaseComponent(this, settings, getProgress(), destination)));
 		}
 
 		bool SimpleProgressBar::operator==(const SimpleProgressBar& other) const {
@@ -426,7 +426,7 @@ namespace mc {
 		}
 
 		void Text::onInit() {
-			addComponent(ComponentPtr(new UninheritScaleComponent()));
+			addComponent(ComponentPtr<UninheritScaleComponent>(new UninheritScaleComponent()));
 		}
 
 		void Text::onUpdate() {}
@@ -450,7 +450,7 @@ namespace mc {
 			}
 			while (letters.size() < text.length()) {
 				std::shared_ptr<Letter> letter = std::shared_ptr<Letter>(new Letter());
-				letter->addComponent(ComponentPtr(new UninheritScaleComponent()));
+				letter->addComponent(ComponentPtr<UninheritScaleComponent>(new UninheritScaleComponent()));
 				letters.push_back(letter);
 				addChild(letter);
 			}

@@ -11,9 +11,38 @@ See LICENSE.md for full copyright information
 #include <MACE/Core/Interfaces.h>
 #include <MACE/Utility/Transform.h>
 #include <vector>
+#include <unordered_map>
 #include <memory>
+#include <type_traits>
 
 namespace mc {
+	namespace gfx {
+		class Component;
+	}
+
+	namespace internal {
+		template<typename T>
+		struct ComponentTypeIDPtr {
+			static const T* const ID;
+		};
+
+		template<typename T>
+		const T* const ComponentTypeIDPtr<T>::ID = nullptr;
+
+		using ComponentTypeID = const void*;
+
+		template<bool Condition, typename T = void>
+		using EnableIfType = typename std::enable_if<Condition, T>::type;
+
+		template<typename T>
+		using ExtendsComponent = EnableIfType < std::is_base_of<gfx::Component, T>{} > ;
+
+		template<typename T, typename = ExtendsComponent<T>>
+		MACE_CONSTEXPR auto getComponentTypeID() noexcept -> ComponentTypeID {
+			return &ComponentTypeIDPtr<T>::ID;
+		}
+	}
+
 	namespace gfx {
 		using EntityProperties = Byte;
 		/**
@@ -117,7 +146,8 @@ namespace mc {
 		/**
 		A pointer to a `Component` that automatically manages pointer lifecycle
 		*/
-		using ComponentPtr = std::shared_ptr<Component>;
+		template<typename T, typename = internal::ExtendsComponent<T>>
+		using ComponentPtr = std::shared_ptr<T>;
 		/**
 		A pointer to a `Entity` that automatically manages pointer lifecycle
 		*/
@@ -447,12 +477,47 @@ namespace mc {
 			*/
 			void addChild(EntityPtr ent) MACE_EXPECTS(ent != nullptr);
 
-			void addComponent(Component& com);
-			void addComponent(Component* com);
+			template<typename T, typename = internal::ExtendsComponent<T>>
+			void addComponent(T & com) {
+				addComponent(&com);
+			}
+
+			template<typename T, typename = internal::ExtendsComponent<T>>
+			void addComponent(T * com) {
+				addComponent(ComponentPtr<T>(com, [](T*) {}));
+			}
 			/**
 			@param com The SmartPointer of an `Entity`. Ownership of the pointer will change meaning this parameter cannot be marked `const`
 			*/
-			void addComponent(ComponentPtr com) MACE_EXPECTS(com != nullptr);
+			template<typename T, typename = internal::ExtendsComponent<T>>
+			void addComponent(ComponentPtr<T> com) MACE_EXPECTS(com != nullptr) {
+				if (com == nullptr) {
+					MACE__THROW(NullPointer, "Inputted ComponentPtr was nullptr");
+				}
+
+				ComponentPtr<Component> component = std::static_pointer_cast<Component>(com);
+				component->parent = this;
+				component->init();
+
+				components.emplace(internal::getComponentTypeID<T>(), component);
+
+				makeDirty();
+			}
+
+			template<typename T>
+			T getComponent() {
+				return std::static_pointer_cast<T>(components[internal::getComponentTypeID(T)]);
+			}
+
+			template<typename T>
+			const T getComponent() const {
+				return std::static_pointer_cast<T>(components[internal::getComponentTypeID(T)]);
+			}
+
+			template<typename T>
+			bool hasComponent() {
+				return components.count(internal::getComponentTypeID(T)) > 0;
+			}
 
 			const RelativeScale& getWidth() const;
 			/**
@@ -693,8 +758,8 @@ namespace mc {
 			`std::vector` of this `Entity\'s` children. Use of this variable directly is unrecommended. Use `addChild()` or `removeChild()` instead.
 			@internal
 			*/
-			std::vector<EntityPtr> children = std::vector<EntityPtr>();
-			std::vector<ComponentPtr> components = std::vector<ComponentPtr>();
+			std::vector<EntityPtr> children{};
+			std::unordered_map<internal::ComponentTypeID, ComponentPtr<Component>> components{};
 
 			Entity* parent = nullptr;
 			RootEntity* root = nullptr;

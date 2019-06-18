@@ -120,10 +120,10 @@ int main() {
 		topRight.setX(0.5f);
 		topRight.setY(0.5f);
 
-		botLeft.addComponent(std::shared_ptr<RotationComponent>(new RotationComponent()));
-		botRight.addComponent(std::shared_ptr<RotationComponent>(new RotationComponent()));
-		topLeft.addComponent(std::shared_ptr<RotationComponent>(new RotationComponent()));
-		topRight.addComponent(std::shared_ptr<RotationComponent>(new RotationComponent()));
+		botLeft.addComponent(gfx::ComponentPtr<RotationComponent>(new RotationComponent()));
+		botRight.addComponent(gfx::ComponentPtr<RotationComponent>(new RotationComponent()));
+		topLeft.addComponent(gfx::ComponentPtr<RotationComponent>(new RotationComponent()));
+		topRight.addComponent(gfx::ComponentPtr<RotationComponent>(new RotationComponent()));
 
 		module.addChild(botLeft);
 		module.addChild(botRight);

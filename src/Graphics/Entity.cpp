@@ -132,8 +132,8 @@ namespace mc {
 		void Entity::render() {
 			//check if we can render
 			if (!getProperty(Entity::DISABLED)) {
-				for (Index i = 0; i < components.size(); ++i) {
-					components[i]->render();
+				for (auto& com : components) {
+					com.second->render();
 				}
 
 				onRender();
@@ -153,8 +153,8 @@ namespace mc {
 
 		void Entity::hover() {
 			onHover();
-			for (Index i = 0; i < components.size(); ++i) {
-				components[i]->hover();
+			for (auto& com : components) {
+				com.second->hover();
 			}
 
 			//propagate upwards
@@ -176,6 +176,7 @@ namespace mc {
 				metrics.transform = transformation;
 
 				metrics.inherited = Transformation();
+				//root doesn't have a parent
 				if (hasParent()) MACE_LIKELY{
 					const Entity * par = getParent();
 
@@ -186,9 +187,9 @@ namespace mc {
 					metrics.inherited.rotation += parentMetrics.transform.rotation;
 				}
 
-				for (Index i = 0; i < components.size(); ++i) {
-					components[i]->clean(metrics);
-				}
+					for (auto& com : components) {
+						com.second->clean(metrics);
+					}
 
 				for (Size i = 0; i < children.size(); ++i) {
 					std::shared_ptr<Entity> child = children[i];
@@ -324,38 +325,15 @@ namespace mc {
 			addChild(&e);
 		}
 
-		void Entity::addComponent(Component& com) {
-			addComponent(&com);
-		}
-
-		void Entity::addComponent(Component* com) {
-			addComponent(ComponentPtr(com, [](Component*) {}));
-		}
-
-		void Entity::addComponent(ComponentPtr com) {
-#ifdef MACE_DEBUG_CHECK_NULLPTR
-			if (com == nullptr) {
-				MACE__THROW(NullPointer, "Inputted Component to addComponent() was nullptr");
-			}
-#endif
-
-			components.push_back(com);
-			components.back()->parent = this;
-			components.back()->init();
-
-			makeDirty();
-		}
-
 		void Entity::update() {
 			//check if we can update
 			if (!getProperty(Entity::DISABLED)) {
 
 				//update the components of this entity
-				for (Index i = 0; i < components.size(); ++i) {
-					ComponentPtr a = components.at(i);
-					if (a->update()) MACE_UNLIKELY{
-						a->destroy();
-						components.erase(components.begin() + i--);//update the index after a removal, so we dont get an exception for accessing deleted memory
+				for (auto& com : components) {
+					if (com.second->update()) MACE_UNLIKELY{
+						com.second->destroy();
+						components.erase(com.first);
 					}
 				}
 
@@ -416,7 +394,7 @@ namespace mc {
 				onDestroy();
 
 				for (auto& component : components) {
-					component->destroy();
+					component.second->destroy();
 				}
 				components.clear();
 
@@ -647,7 +625,7 @@ namespace mc {
 		}
 
 		void Entity::tween(const Transformation start, const Transformation dest, const EaseSettings settings) {
-			addComponent(ComponentPtr(new TweenComponent(this, start, dest, settings)));
+			addComponent(ComponentPtr<TweenComponent>(new TweenComponent(this, start, dest, settings)));
 		}
 
 		void Entity::tween(const Transformation start, const Transformation dest) {
