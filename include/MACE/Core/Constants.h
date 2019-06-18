@@ -63,14 +63,7 @@ See LICENSE.md for full copyright information
 #	endif//MACE_DEBUG == 0
 #elif !defined(MACE_DEBUG)&&(defined(DEBUG) || (defined(_DEBUG)) || !defined(NDEBUG) || defined(MACE_DOXYGEN_PASS))
 #	define MACE_DEBUG 1
-#endif//elif
-
-#ifdef MACE_DEBUG
-#	define MACE_DEBUG_OPENGL 1
-#	define MACE_DEBUG_CHECK_ARGS 1
-#	define MACE_DEBUG_INTERNAL_ERRORS 1
-#	define MACE_DEBUG_CHECK_NULLPTR 1
-#endif
+#endif//MACE_DEBUG
 
 //checks for a C++ attribute in the form of [[attribute]]
 #ifndef MACE_HAS_ATTRIBUTE
@@ -317,6 +310,8 @@ See LICENSE.md for full copyright information
 
 #define MACE_GETTER_SETTER_DEF_BASE(className, funcName, varName, inType, outType) void className:: set##funcName (inType val) { varName = val; } outType className:: get##funcName () { return varName ; } const outType className:: get##funcName () const { return varName ; }
 #define MACE_GETTER_SETTER_DEF(className, funcName, varName, type) MACE_GETTER_SETTER_DEF_BASE(className, funcName, varName, const type, type)
+
+#define MACE__INTERNAL_NS ::mc::internal
 
 #ifndef MACE_MSVC
 //for std::uint_least8_t

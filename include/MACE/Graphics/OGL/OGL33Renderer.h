@@ -15,12 +15,12 @@ See LICENSE.md for full copyright information
 #include <unordered_map>
 
 namespace mc {
-	namespace gfx {
+	namespace internal {
 		namespace ogl33 {
 			class OGL33Painter;
 
 
-			class OGL33Renderer: public Renderer {
+			class OGL33Renderer: public gfx::Renderer {
 				friend class OGL33Painter;
 			public:
 				using ProtocolHash = unsigned short;
@@ -43,14 +43,14 @@ namespace mc {
 				void onSetUp(gfx::WindowModule* win) override;
 				void onTearDown(gfx::WindowModule* win) override;
 				void onDestroy() override;
-				void onQueue(GraphicsEntity* en) override;
+				void onQueue(gfx::GraphicsEntity* en) override;
 
 				void setRefreshColor(const float r, const float g, const float b, const float a = 1.0f) override;
 
-				void getEntitiesAt(const Pixels x, const Pixels y, const Pixels w, const Pixels h, EntityID* arr) const override;
-				void getPixelsAt(const Pixels x, const Pixels y, const Pixels w, const Pixels h, Color* arr, const FrameBufferTarget target) const override;
+				void getEntitiesAt(const Pixels x, const Pixels y, const Pixels w, const Pixels h, gfx::EntityID* arr) const override;
+				void getPixelsAt(const Pixels x, const Pixels y, const Pixels w, const Pixels h, Color* arr, const gfx::FrameBufferTarget target) const override;
 
-				std::shared_ptr<PainterImpl> createPainterImpl() override;
+				std::shared_ptr<gfx::PainterImpl> createPainterImpl() override;
 
 			private:
 				ogl33::FrameBuffer frameBuffer{};
@@ -62,18 +62,18 @@ namespace mc {
 
 				ProtocolHash currentProtocol = 0;
 
-				FrameBufferTarget currentTarget = FrameBufferTarget::COLOR;
+				gfx::FrameBufferTarget currentTarget = gfx::FrameBufferTarget::COLOR;
 
 				void generateFramebuffer(const Pixels width, const Pixels height);
 
-				void bindProtocol(OGL33Painter* painter, const std::pair<Painter::Brush, Painter::RenderFeatures> settings);
+				void bindProtocol(OGL33Painter* painter, const std::pair<gfx::Painter::Brush, gfx::Painter::RenderFeatures> settings);
 
-				void setTarget(const FrameBufferTarget& target);
+				void setTarget(const gfx::FrameBufferTarget& target);
 
 				void bindCurrentTarget();
 			};
 
-			class OGL33Painter: public PainterImpl {
+			class OGL33Painter: public gfx::PainterImpl {
 				friend class OGL33Renderer;
 			public:
 				OGL33Painter(OGL33Renderer* const renderer);
@@ -84,12 +84,12 @@ namespace mc {
 				void begin() override;
 				void end() override;
 
-				void setTarget(const FrameBufferTarget& target) override;
+				void setTarget(const gfx::FrameBufferTarget& target) override;
 
 				void clean() override;
 			protected:
-				void loadSettings(const Painter::State& state) override;
-				void draw(const Model& m, const Painter::Brush brush) override;
+				void loadSettings(const gfx::Painter::State& state) override;
+				void draw(const gfx::Model& m, const gfx::Painter::Brush brush) override;
 			private:
 				OGL33Renderer* const renderer;
 
@@ -98,14 +98,14 @@ namespace mc {
 					UniformBuffer painterData;
 				} uniformBuffers;
 
-				Metrics savedMetrics;
-				Painter::State savedState;
+				gfx::Metrics savedMetrics;
+				gfx::Painter::State savedState;
 
 				void createEntityData();
 				void createPainterData();
 			};
 		}//ogl33
-	}//gfx
+	}//internal
 }//mc
 
 #endif//MACE__DOXYGEN_PASS

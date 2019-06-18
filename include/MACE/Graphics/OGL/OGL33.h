@@ -25,8 +25,9 @@ See LICENSE.md for full copyright information
 #define MACE__VAO_DEFAULT_VERTICES_LOCATION 0
 #define MACE__VAO_DEFAULT_TEXTURE_COORD_LOCATION 1
 
+
 namespace mc {
-	namespace gfx {
+	namespace internal {
 		/**
 		Contains various abstractions for OpenGL. Assume that any class in this namespace requires an OpenGL context.
 		<p>
@@ -70,20 +71,23 @@ namespace mc {
 			/**
 			@rendercontext
 			*/
+#ifdef MACE_DEBUG
 			inline void checkGLError(const unsigned int line = 0, const char* MACE_RESTRICT file = "Unknown file", const char* MACE_RESTRICT message = "No message specified") {
-#ifdef MACE_DEBUG_OPENGL
 				forceCheckGLError(line, file, message);
-#endif
 			}
 			/**
 			@copydoc ogl33::checkGLError(const Index, const char*, const char*)
 			*/
-			inline void checkGLError(const unsigned int line, const char* file, const std::string message) {
-#ifdef MACE_DEBUG_OPENGL
+			inline void checkGLError(const unsigned int line, const char* file, const std::string& message) {
 				checkGLError(line, file, message.c_str());
-#endif
 			}
-
+#else
+			inline void checkGLError(const unsigned int, const char* MACE_RESTRICT, const char* MACE_RESTRICT) {}
+			/**
+			@copydoc ogl33::checkGLError(const Index, const char*, const char*)
+			*/
+			inline void checkGLError(const unsigned int, const char*, const std::string&) {}
+#endif
 			/**
 			@rendercontext
 			*/
@@ -873,7 +877,7 @@ namespace mc {
 				ElementBuffer indices;
 				std::vector<VertexBuffer> buffers = std::vector<VertexBuffer>();
 			private:
-				GLsizei vertexNumber;
+				GLsizei vertexNumber = 0;
 
 				void bindIndex(const GLuint id) const override;
 
@@ -1143,22 +1147,22 @@ namespace mc {
 				/**
 				@rendercontext
 				*/
-				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 2, 2>& m);
-				void setUniform(const char* name, const mc::Matrix<float, 2, 2>& m);
-				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 3, 3>& m);
-				void setUniform(const char* name, const mc::Matrix<float, 3, 3>& m);
-				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 4, 4>& m);
-				void setUniform(const char* name, const mc::Matrix<float, 4, 4>& m);
-				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 2, 3>& m);
-				void setUniform(const char* name, const mc::Matrix<float, 2, 3>& m);
-				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 3, 2>& m);
-				void setUniform(const char* name, const mc::Matrix<float, 3, 2>& m);
-				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 2, 4>& m);
-				void setUniform(const char* name, const mc::Matrix<float, 2, 4>& m);
-				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 3, 4>& m);
-				void setUniform(const char* name, const mc::Matrix<float, 3, 4>& m);
-				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 4, 3>& m);
-				void setUniform(const char* name, const mc::Matrix<float, 4, 3>& m);
+				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 2, 2> & m);
+				void setUniform(const char* name, const mc::Matrix<float, 2, 2> & m);
+				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 3, 3> & m);
+				void setUniform(const char* name, const mc::Matrix<float, 3, 3> & m);
+				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 4, 4> & m);
+				void setUniform(const char* name, const mc::Matrix<float, 4, 4> & m);
+				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 2, 3> & m);
+				void setUniform(const char* name, const mc::Matrix<float, 2, 3> & m);
+				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 3, 2> & m);
+				void setUniform(const char* name, const mc::Matrix<float, 3, 2> & m);
+				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 2, 4> & m);
+				void setUniform(const char* name, const mc::Matrix<float, 2, 4> & m);
+				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 3, 4> & m);
+				void setUniform(const char* name, const mc::Matrix<float, 3, 4> & m);
+				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 4, 3> & m);
+				void setUniform(const char* name, const mc::Matrix<float, 4, 3> & m);
 
 				//setUniform with float
 				void setUniform(const char* name, const float a);
@@ -1216,7 +1220,7 @@ namespace mc {
 				void destroyIndices(const GLuint id[], const GLsizei length) const override;
 			};//ShaderProgram
 		}//ogl33
-	}//gfx
+	}//internal
 }//mc
 
 #endif//MACE__DOXYGEN_PASS

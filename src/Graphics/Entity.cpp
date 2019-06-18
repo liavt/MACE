@@ -76,13 +76,8 @@ namespace mc {
 		}
 
 		void Entity::removeChild(const Entity* e) {
-#ifdef MACE_DEBUG_CHECK_ARGS
-			if (e == nullptr) {
-				MACE__THROW(NullPointer, "Argument to removeChild is nullptr!");
-			} else if (children.empty()) {
-				MACE__THROW(AssertionFailed, "Can\'t remove child from an empty entity (empty() is true)");
-			}
-#endif
+			MACE_ASSERT(e != nullptr, "Argument to removeChild is nullptr!");
+			MACE_ASSERT(!children.empty(), "Can\'t remove child from an empty entity (empty() is true)");
 
 			for (Index i = 0; i < children.size(); ++i) {
 				if (e == children[i].get()) {
@@ -103,24 +98,17 @@ namespace mc {
 		void Entity::removeChild(const Index index) {
 			makeDirty();
 
-#ifdef MACE_DEBUG_CHECK_ARGS
-			if (index >= children.size()) {
-				MACE__THROW(OutOfBounds, std::to_string(index) + " is larger than the amount of children!");
-			} else
-#endif
-				if (children.size() == 1) {
-					children.clear();
-				} else {
-					removeChild(children.begin() + index);
-				}
+			MACE_ASSERT(index < children.size(), std::to_string(index) + " is larger than the amount of children!");
+
+			if (children.size() == 1) {
+				children.clear();
+			} else {
+				removeChild(children.begin() + index);
+			}
 		}
 
 		void Entity::removeChild(const std::vector<EntityPtr>::iterator& iter) {
-#ifdef MACE_DEBUG_CHECK_ARGS
-			if (children.empty()) {
-				MACE__THROW(OutOfBounds, "Can\'t remove a child from an empty entity!");
-			}
-#endif
+			MACE_ASSERT(!children.empty(), "Can\'t remove child from an empty entity (empty() is true)");
 
 			//strange line, isn't it?
 			//iter-> returns a std::shared_ptr, which we need to call -> of again to get the raw pointer
@@ -249,6 +237,10 @@ namespace mc {
 			return getProperty(Entity::DEAD) || !hasParent();
 		}
 
+		bool Entity::isInit() const {
+			return getProperty(EntityProperty::INIT);
+		}
+
 		Entity& Entity::operator[](const Index i) {
 			return *children[i].get();
 		}
@@ -300,11 +292,7 @@ namespace mc {
 		}
 
 		void Entity::addChild(EntityPtr e) {
-#ifdef MACE_DEBUG_CHECK_NULLPTR
-			if (e == nullptr) {
-				MACE__THROW(NullPointer, "Inputted Entity to addChild() was nullptr");
-			}
-#endif
+			MACE_ASSERT(e != nullptr, "Inputted Entity to addChild() was nullptr");
 
 			e->parent = this;
 

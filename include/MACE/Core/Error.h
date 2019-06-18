@@ -18,29 +18,43 @@ namespace mc {
 	//forward declaration for handleError();
 	class Instance;
 
-	/**
-	Superclass that all exceptions in MACE extend.
-	<p>
-	Do not use this class directly. Instead, use the `MACE_THROW_CUSTOM_LINE` or `MACE_THROW` macros.
-	To declare a new type of `Error`, use the `MACE_DECLARE_NAME` macro.
-	@tparam ErrorType A `CString` representing the name of this error
-	@internal
-	*/
-	template<typename ErrorType>
-	class Error: public std::runtime_error {
-	public:
-		Error(const std::string message, const std::string line, const std::string file) : std::runtime_error(std::string(ErrorType::val) + ": " + message + "\n\t[" + line + " @ " + file + "]") {}
-		~Error() noexcept = default;
-	};
+	namespace internal {
+
+		/**
+		Superclass that all exceptions in MACE extend.
+		<p>
+		Do not use this class directly. Instead, use the `MACE_THROW_CUSTOM_LINE` or `MACE_THROW` macros.
+		To declare a new type of `Error`, use the `MACE_DECLARE_NAME` macro.
+		<p>
+		Use `std::exception` for catching MACE exceptions, as they all inherit from that.
+		@tparam ErrorType A `CString` representing the name of this error
+		@internal
+		*/
+		template<typename ErrorType, typename Base>
+		class Error: public Base {
+		public:
+#ifdef MACE_DEBUG
+			Error(const std::string& message, const std::string& line, const std::string& file) noexcept : Base(std::string(ErrorType::val) + ": " + message + "\n\t[" + line + " @ " + file + "]") {}
+#else
+			Error(const std::string& message, const std::string&, const std::string&) noexcept : Base(std::string(ErrorType::val) + ": " + message) {}
+#endif//MACE_DEBUG
+			~Error() noexcept = default;
+		};
+	}
 
 #define MACE__GET_ERROR_NAME(name) name##Error
-#define MACE__DECLARE_ERROR(name) struct name##Type { static MACE_CONSTEXPR CString val = MACE_STRINGIFY_DEFINITION(MACE__GET_ERROR_NAME(name)); }; using MACE__GET_ERROR_NAME(name) = Error< name##Type >;
+#define MACE__DECLARE_ERROR_BASE(name, base) struct name##Type { static MACE_CONSTEXPR CString val = MACE_STRINGIFY_DEFINITION(MACE__GET_ERROR_NAME(name)); }; using MACE__GET_ERROR_NAME(name) = MACE__INTERNAL_NS::Error< name##Type, base >;
+#define MACE__DECLARE_ERROR(name) MACE__DECLARE_ERROR_BASE(name, std::runtime_error)
 #define MACE__THROW_CUSTOM_LINE(name, message, line, file) do{throw MACE__GET_ERROR_NAME(name) ( std::string(MACE_FUNCTION_NAME) +  ": " + std::string(message), line, file);}while(0)
 #define MACE__THROW(name, message) MACE__THROW_CUSTOM_LINE(name, message, MACE_STRINGIFY_DEFINITION(__LINE__), __FILE__)
 
-#define MACE_DECLARE_ERROR(name) MACE__DECLARE_ERROR(name)
-#define MACE_THROW_CUSTOMLINE(name, message, line, file) MACE__THROW_CUSTOM_LINE(name, message, line, file)
-#define MACE_THROW(name, message) MACE__THROW(name, message)
+#ifndef MACE_ASSERT
+#	ifdef MACE_DEBUG
+#		define MACE_ASSERT(cond, message) do{if(!( cond )){MACE__THROW(AssertionFailed, std::string("Assertion failed: " MACE_STRINGIFY(cond) ": ") + message);}}while(0)
+#	else
+#		define MACE_ASSERT(cond, message)
+#	endif//MACE_DEBUG
+#endif//MACE_ASSERT
 
 	/**
 	Thrown when an error from an unknown source occured
@@ -48,7 +62,7 @@ namespace mc {
 	MACE__DECLARE_ERROR(Unknown);
 
 	/**
-	Thrown when a pointer is equal to NULL
+	Thrown when a pointer is equal to `nullptr`
 	*/
 	MACE__DECLARE_ERROR(NullPointer);
 
@@ -56,7 +70,7 @@ namespace mc {
 	Thrown when an assertion fails.
 	@see MACE::assertModule(std::string)
 	*/
-	MACE__DECLARE_ERROR(AssertionFailed);
+	MACE__DECLARE_ERROR_BASE(AssertionFailed, std::logic_error);
 
 	/**
 	Thrown when a resource already exists and you are attempting to recreate it
@@ -94,7 +108,7 @@ namespace mc {
 	/**
 	Thrown when an index is provided for an array, but it is outside the valid bounds of the array.
 	*/
-	MACE__DECLARE_ERROR(OutOfBounds);
+	MACE__DECLARE_ERROR_BASE(OutOfBounds, std::out_of_range);
 
 	/**
 	Thrown when something was in the wrong state at the time of an operation

@@ -13,6 +13,7 @@ See LICENSE.md for full copyright information
 #include <vector>
 #include <unordered_map>
 #include <memory>
+//TODO find a way to not import type_traits as it's really heavy. a custom SFINAE would be nice
 #include <type_traits>
 
 namespace mc {
@@ -21,6 +22,18 @@ namespace mc {
 	}
 
 	namespace internal {
+		/*
+		In order to allow for fast Component lookup in Entity's with minimal runtime overhead
+		and easy semantics, we used some clever template tricks to generate a unique "Type ID"
+		for each Component. Whenever a class that needs to use the internal Entity Component Map
+		it calls the getComponentTypeID() which returns a unique pointer address for each type T.
+
+		These pointers are guarenteed to never return the same pointer for different types in a
+		single execution of a program, but NOT throughout multiple executions.
+
+		ComponentTypeID is used as the key in the unordered_map in Entity
+		*/
+
 		template<typename T>
 		struct ComponentTypeIDPtr {
 			static const T* const ID;
@@ -34,6 +47,9 @@ namespace mc {
 		template<bool Condition, typename T = void>
 		using EnableIfType = typename std::enable_if<Condition, T>::type;
 
+		/**
+		To ensure type safety, ExtendsComponent allows for SFINAE in classes that require Component
+		*/
 		template<typename T>
 		using ExtendsComponent = EnableIfType < std::is_base_of<gfx::Component, T>{} > ;
 
@@ -146,7 +162,7 @@ namespace mc {
 		/**
 		A pointer to a `Component` that automatically manages pointer lifecycle
 		*/
-		template<typename T, typename = internal::ExtendsComponent<T>>
+		template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
 		using ComponentPtr = std::shared_ptr<T>;
 		/**
 		A pointer to a `Entity` that automatically manages pointer lifecycle
@@ -372,59 +388,6 @@ namespace mc {
 			EntityID getID() const;
 
 			/**
-			Retrieves the `Entity's` properties as a `ByteField`
-			@return The current properties belonging to this `Entity`
-			@see Entity::getProperties() const
-			@see Entity::setProperties(ByteField&)
-			@see Entity::getProperty(Index) const
-			@see Entity::setProperty(Index, bool)
-			@dirty
-			*/
-			EntityProperties& getProperties();
-			/**
-			`const` version of `getProperties()`
-			@return The current properties belonging to this `Entity`
-			@see Entity::setProperties(ByteField&)
-			@see Entity::getProperty(Index) const
-			@see Entity::setProperty(Index, bool)
-			*/
-			const EntityProperties& getProperties() const;
-			/**
-			Set the properties for this `Entity`
-			@param b New `Entity` properties
-			@see Entity::getProperties()
-			@see Entity::getProperty(Index) const
-			@see Entity::setProperty(Index, bool)
-			@dirty
-			*/
-			void setProperties(const EntityProperties& b);
-
-			/**
-			Retrieve the value of a property.
-			<p>
-			By default, they are all false.
-			@param position Location of the property based on a constant
-			@return `true` or `false` based on the postition
-			@see Entity::setProperty(Index, bool)
-			@see Entity::getProperties()
-			@see Entity::setProperties(ByteField&)
-			*/
-			bool getProperty(const Byte position) const;
-			/**
-			Set a property to be `true` or `false`.
-			<p>
-			By default, they are all false.
-			@note Do not use `setProperty(Entity::DIRTY, true)`. Use Entity::makeDity() instead.
-			@param position Location of the property based on a constant
-			@param value Whether it is `true` or `false`
-			@see Entity::getProperty(Index) const
-			@see Entity::getProperties()
-			@see Entity::setProperties(ByteField&)
-			@dirty
-			*/
-			void setProperty(const Byte position, const bool value);
-
-			/**
 			@dirty
 			*/
 			Transformation& getTransformation();
@@ -464,6 +427,8 @@ namespace mc {
 
 			bool needsRemoval() const;
 
+			bool isInit() const;
+
 			/**
 			@dirty
 			*/
@@ -477,19 +442,19 @@ namespace mc {
 			*/
 			void addChild(EntityPtr ent) MACE_EXPECTS(ent != nullptr);
 
-			template<typename T, typename = internal::ExtendsComponent<T>>
+			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
 			void addComponent(T & com) {
 				addComponent(&com);
 			}
 
-			template<typename T, typename = internal::ExtendsComponent<T>>
+			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
 			void addComponent(T * com) {
 				addComponent(ComponentPtr<T>(com, [](T*) {}));
 			}
 			/**
 			@param com The SmartPointer of an `Entity`. Ownership of the pointer will change meaning this parameter cannot be marked `const`
 			*/
-			template<typename T, typename = internal::ExtendsComponent<T>>
+			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
 			void addComponent(ComponentPtr<T> com) MACE_EXPECTS(com != nullptr) {
 				if (com == nullptr) {
 					MACE__THROW(NullPointer, "Inputted ComponentPtr was nullptr");
@@ -504,17 +469,17 @@ namespace mc {
 				makeDirty();
 			}
 
-			template<typename T>
+			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
 			T getComponent() {
 				return std::static_pointer_cast<T>(components[internal::getComponentTypeID(T)]);
 			}
 
-			template<typename T>
+			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
 			const T getComponent() const {
 				return std::static_pointer_cast<T>(components[internal::getComponentTypeID(T)]);
 			}
 
-			template<typename T>
+			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
 			bool hasComponent() {
 				return components.count(internal::getComponentTypeID(T)) > 0;
 			}
@@ -627,19 +592,6 @@ namespace mc {
 			const Metrics& getMetrics() const;
 
 			/**
-			@internal
-			@rendercontext
-			*/
-			virtual void clean();
-
-
-			/**
-			@internal
-			@rendercontext
-			*/
-			virtual void hover();
-
-			/**
 			@dirty
 			@rendercontext
 			*/
@@ -678,6 +630,12 @@ namespace mc {
 			*/
 			void tween(const Transformation dest);
 
+			/**
+			@internal
+			@rendercontext
+			*/
+			virtual void hover();
+
 		protected:
 			/**
 			Should be called a by `Entity` when `MACE.update()` is called. Calls `onUpdate()`.
@@ -695,6 +653,11 @@ namespace mc {
 			@throws InitializationError If the property `Entity::INIT` is true, meaning `init()` has already been called.
 			*/
 			virtual void init() override;
+			/**
+			@internal
+			@rendercontext
+			*/
+			virtual void clean();
 			/**
 			Should be called a by `Entity` when `MACE.destroy()` is called. Calls `onDestroy()`. Sets `Entity::INIT` to be false
 			<p>
@@ -753,13 +716,68 @@ namespace mc {
 			@rendercontext
 			*/
 			virtual void onHover();
+
+
+
+			/**
+			Retrieves the `Entity's` properties as a `ByteField`
+			@return The current properties belonging to this `Entity`
+			@see Entity::getProperties() const
+			@see Entity::setProperties(ByteField&)
+			@see Entity::getProperty(Index) const
+			@see Entity::setProperty(Index, bool)
+			@dirty
+			*/
+			EntityProperties& getProperties();
+			/**
+			`const` version of `getProperties()`
+			@return The current properties belonging to this `Entity`
+			@see Entity::setProperties(ByteField&)
+			@see Entity::getProperty(Index) const
+			@see Entity::setProperty(Index, bool)
+			*/
+			const EntityProperties& getProperties() const;
+			/**
+			Set the properties for this `Entity`
+			@param b New `Entity` properties
+			@see Entity::getProperties()
+			@see Entity::getProperty(Index) const
+			@see Entity::setProperty(Index, bool)
+			@dirty
+			*/
+			void setProperties(const EntityProperties& b);
+
+			/**
+			Retrieve the value of a property.
+			<p>
+			By default, they are all false.
+			@param position Location of the property based on a constant
+			@return `true` or `false` based on the postition
+			@see Entity::setProperty(Index, bool)
+			@see Entity::getProperties()
+			@see Entity::setProperties(ByteField&)
+			*/
+			bool getProperty(const Byte position) const;
+			/**
+			Set a property to be `true` or `false`.
+			<p>
+			By default, they are all false.
+			@note Do not use `setProperty(Entity::DIRTY, true)`. Use Entity::makeDity() instead.
+			@param position Location of the property based on a constant
+			@param value Whether it is `true` or `false`
+			@see Entity::getProperty(Index) const
+			@see Entity::getProperties()
+			@see Entity::setProperties(ByteField&)
+			@dirty
+			*/
+			void setProperty(const Byte position, const bool value);
 		private:
 			/**
 			`std::vector` of this `Entity\'s` children. Use of this variable directly is unrecommended. Use `addChild()` or `removeChild()` instead.
 			@internal
 			*/
 			std::vector<EntityPtr> children{};
-			std::unordered_map<internal::ComponentTypeID, ComponentPtr<Component>> components{};
+			std::unordered_map<MACE__INTERNAL_NS::ComponentTypeID, ComponentPtr<Component>> components{};
 
 			Entity* parent = nullptr;
 			RootEntity* root = nullptr;

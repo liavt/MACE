@@ -317,7 +317,7 @@ namespace mc {
 		EaseComponent::EaseComponent(const EaseUpdateCallback callback, const EaseSettings easeSettings, const Progress start, const Progress dest)
 			: Component(), settings(easeSettings)
 			, duration(std::chrono::milliseconds(easeSettings.ms) / std::chrono::seconds(1)),
-			updateCallback(callback),  progress(start), startingProgress(start), destination(dest), currentRepetition(0) {}
+			updateCallback(callback), progress(start), startingProgress(start), destination(dest), currentRepetition(0) {}
 
 		EaseComponent::EaseComponent(Progressable* progressable, const EaseSettings settings, const Progress start, const Progress dest) : EaseComponent([progressable](Entity*, Progress prog) {
 			progressable->setProgress(prog);
@@ -558,17 +558,11 @@ namespace mc {
 		void NineSliceComponent::init() {
 			en = dynamic_cast<GraphicsEntity*>(parent);
 
-#ifdef MACE_DEBUG_CHECK_NULLPTR
-			if (en == nullptr) {
-				MACE__THROW(InvalidType, "NineSliceComponent added to a non-graphical Entity");
-			}
-#endif
+			MACE_ASSERT(en != nullptr, "NineSliceComponent added to a non-graphical Entity");
 
-			if (desc.topLeft.getDimensions() != desc.bottomRight.getDimensions()
-				|| desc.topLeft.getDimensions() != desc.bottomLeft.getDimensions()
-				|| desc.topLeft.getDimensions() != desc.topRight.getDimensions()) {
-				MACE__THROW(AssertionFailed, "NineSliceDesc must contain 4 corners of equal size");
-			}
+			MACE_ASSERT(desc.topLeft.getDimensions() == desc.bottomRight.getDimensions()
+						& desc.topLeft.getDimensions() == desc.bottomLeft.getDimensions()
+						&& desc.topLeft.getDimensions() == desc.topRight.getDimensions(), "NineSliceDesc must contain 4 corners of equal size");
 		}
 
 		void NineSliceComponent::render() {

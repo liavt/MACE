@@ -4,7 +4,7 @@ Copyright (c) 2016-2019 Liav Turkia
 See LICENSE.md for full copyright information
 */
 namespace mc {
-	namespace gfx {
+	namespace internal {
 		/**
 		Binary data for the Source Serif Pro font. Source Serif Pro belongs to Adobe under the SIL Open Font License
 		*/

@@ -18,7 +18,7 @@ See LICENSE.md for full copyright information
 #include FT_FREETYPE_H
 
 namespace mc {
-	namespace gfx {
+	namespace internal {
 		/**
 		Namespace for Freetype-related classes
 
@@ -28,16 +28,16 @@ namespace mc {
 			//forward declare for FreetypeFont
 			class FreetypeLibrary;
 
-			class FreetypeFont: public FontImpl {
+			class FreetypeFont: public gfx::FontImpl {
 			public:
-				FreetypeFont(const FontDesc& desc, FreetypeLibrary& library);
+				FreetypeFont(const gfx::FontDesc& desc, FreetypeLibrary& library);
 				~FreetypeFont() override;
 
-				void fillGlyph(Glyph& glyph, const wchar_t character) const override;
+				void fillGlyph(gfx::Glyph& glyph, const wchar_t character) const override;
 
-				void calculateMetricsForSize(const FontSize height) override;
+				void calculateMetricsForSize(const gfx::FontSize height) override;
 
-				FontMetrics getFontMetrics() override;
+				gfx::FontMetrics getFontMetrics() override;
 
 				Vector<RelativeTranslation, 2> getKerning(const wchar_t prev, const wchar_t current) const override;
 			private:
@@ -58,11 +58,10 @@ namespace mc {
 				void init() override;
 				void destroy() override;
 			private:
-				FT_Library freetype;
+				FT_Library freetype{};
 			};
-		}
-
-	}//gfx
+		}//fty
+	}//internal
 }//mc
 
 #endif//MACE__DOXYGEN_PASS

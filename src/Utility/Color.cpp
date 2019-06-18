@@ -164,21 +164,13 @@ namespace mc {
 	}
 
 	float& Color::getComponent(const Index i) {
-#ifdef MACE_DEBUG_CHECK_ARGS
-		if (i >= size()) MACE_UNLIKELY{
-			MACE__THROW(OutOfBounds, "Component " + std::to_string(i) + " is greater than the size of this Color, " + std::to_string(size()));
-		}
-#endif
+		MACE_ASSERT(i < size(), "Component " + std::to_string(i) + " is greater than the size of this Color, " + std::to_string(size()));
 
 		return begin()[i];
 	}
 
 	const float& Color::getComponent(const Index i) const {
-#ifdef MACE_DEBUG_CHECK_ARGS
-		if (i >= size()) MACE_UNLIKELY{
-			MACE__THROW(OutOfBounds, "Component " + std::to_string(i) + " is greater than the size of this Color, " + std::to_string(size()));
-		}
-#endif
+		MACE_ASSERT(i < size(), "Component " + std::to_string(i) + " is greater than the size of this Color, " + std::to_string(size()));
 
 		return begin()[i];
 	}

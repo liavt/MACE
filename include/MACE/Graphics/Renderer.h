@@ -347,6 +347,7 @@ namespace mc {
 			//not declared const because some of the functions require modification to an internal buffer of impls
 			virtual std::shared_ptr<PainterImpl> createPainterImpl() = 0;
 		private:
+
 			/**
 			@internal
 			@rendercontext

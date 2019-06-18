@@ -402,12 +402,12 @@ namespace mc {
 			}
 #			endif//MACE_OPENCV
 
-			Color & getHue();
+			Color& getHue();
 			const Color& getHue() const;
-			void setHue(const Color & col);
+			void setHue(const Color& col);
 
-			Vector<RelativeUnit, 4>& getTransform();
-			const Vector<RelativeUnit, 4>& getTransform() const;
+			Vector<RelativeUnit, 4> & getTransform();
+			const Vector<RelativeUnit, 4> & getTransform() const;
 			void setTransform(const Vector<RelativeUnit, 4> & trans);
 
 			void setData(const void* data, const int x, const int y, const Pixels width, const Pixels height, const int mipmapLevel = 0, const PixelStorageHints hints = PixelStorageHints());
@@ -434,8 +434,8 @@ namespace mc {
 			*/
 			void readPixels(void* data, const PixelStorageHints hints = PixelStorageHints()) const;
 
-			bool operator==(const Texture & other) const;
-			bool operator!=(const Texture & other) const;
+			bool operator==(const Texture& other) const;
+			bool operator!=(const Texture& other) const;
 		private:
 			std::shared_ptr<TextureImpl> texture;
 
@@ -443,7 +443,7 @@ namespace mc {
 
 			Vector<RelativeUnit, 4> transform{0.0f, 0.0f, 1.0f, 1.0f};
 
-			Texture(const std::shared_ptr<TextureImpl> tex, const Color & col = Color(0.0f, 0.0f, 0.0f, 0.0f));
+			Texture(const std::shared_ptr<TextureImpl> tex, const Color& col = Color(0.0f, 0.0f, 0.0f, 0.0f));
 
 			void bindTextureSlot(const TextureSlot slot) const;
 		};//Texture
@@ -470,7 +470,7 @@ namespace mc {
 			using TextureCreateCallback = std::function<Texture()>;
 			using ModelCreateCallback = std::function<Model()>;
 
-			GraphicsContext(gfx::WindowModule* win);
+			GraphicsContext(gfx::WindowModule* win) MACE_EXPECTS(win != nullptr);
 			//prevent copying
 			GraphicsContext(const GraphicsContext& other) = delete;
 			virtual ~GraphicsContext() = default;

@@ -216,7 +216,7 @@ namespace mc {
 			case LaunchConfig::ContextType::OGL33:
 				MACE_FALLTHROUGH;
 			default:
-				context = std::unique_ptr<gfx::GraphicsContext>(new gfx::ogl33::OGL33Context(this));
+				context = std::unique_ptr<gfx::GraphicsContext>(new MACE__INTERNAL_NS::ogl33::OGL33Context(this));
 
 				glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 				glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -228,7 +228,7 @@ namespace mc {
 
 				glfwWindowHint(GLFW_STENCIL_BITS, 8);
 				glfwWindowHint(GLFW_DEPTH_BITS, GLFW_DONT_CARE);
-#ifdef MACE_DEBUG_OPENGL
+#ifdef MACE_DEBUG
 				glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 #else
 				glfwWindowHint(GLFW_CONTEXT_NO_ERROR, true);
@@ -236,11 +236,7 @@ namespace mc {
 				break;
 			}
 
-#ifdef MACE_DEBUG_INTERNAL_ERRORS
-			if (context == nullptr) {
-				MACE__THROW(UnsupportedRenderer, "Internal Error: GraphicsContext is nullptr");
-			}
-#endif
+			MACE_ASSERT(context != nullptr, "Internal Error: GraphicsContext is nullptr");
 
 			glfwWindowHint(GLFW_RESIZABLE, config.resizable);
 			glfwWindowHint(GLFW_DECORATED, config.decorated);
@@ -316,7 +312,7 @@ namespace mc {
 		}
 
 		void WindowModule::setTitle(const std::string& newTitle) {
-			if (!getProperty(gfx::Entity::INIT)) {
+			if (!isInit()) {
 				MACE__THROW(InvalidState, "WindowModule not initialized! Must call MACE::init() first!");
 			}
 
@@ -478,7 +474,7 @@ namespace mc {
 		}
 
 		Vector<Pixels, 2> WindowModule::getFramebufferSize() const {
-			if (!getProperty(gfx::Entity::INIT)) {
+			if (!isInit()) {
 				MACE__THROW(InvalidState, "WindowModule not initialized! Must call MACE::init() first!");
 			}
 
@@ -492,7 +488,7 @@ namespace mc {
 		}
 
 		Vector<Pixels, 2> WindowModule::getWindowSize() const {
-			if (!getProperty(gfx::Entity::INIT)) {
+			if (!isInit()) {
 				MACE__THROW(InvalidState, "WindowModule not initialized! Must call MACE::init() first!");
 			}
 

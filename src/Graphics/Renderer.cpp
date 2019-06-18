@@ -210,11 +210,7 @@ namespace mc {
 		}
 
 		void Painter::draw(const Model& m, const Painter::Brush brush) {
-#ifdef MACE_DEBUG_CHECK_NULLPTR
-			if (impl == nullptr) {
-				MACE__THROW(NullPointer, "Internal Error: draw: PainterImpl was nullptr");
-			}
-#endif
+			MACE_ASSERT(impl != nullptr, "Internal Error: draw: PainterImpl was nullptr");
 
 			impl->loadSettings(state);
 			impl->draw(m, brush);

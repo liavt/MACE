@@ -24,6 +24,15 @@ It is usually safe to type `using namespace mc`. However, be weary that this may
 @todo Add a proper logger
 */
 namespace mc {
+	/**
+	Namespace which contains various internal classes and utilites. DO NOT use anything from this namespace
+	unless you are developing MACE itself. Symbols in this namespace are not guarenteed to be the same
+	throughout versions and may not be completely documented. Additionally, they may contain less error
+	checking as they are only intended to be used internally.
+	@internal
+	*/
+	namespace internal {
+	}
 
 	//the following functions are for use with runtime link libraries to verify the MACE version
 	//they have a strange naming convention because name mangling is disabled and there has to be an

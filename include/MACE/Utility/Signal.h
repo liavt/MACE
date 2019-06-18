@@ -12,14 +12,16 @@ See LICENSE.md for full copyright information
 #include <exception>
 
 namespace mc {
-	namespace os {
+	namespace internal {
 		template<typename ErrorType>
-		class MACE__GET_ERROR_NAME(Signal): public Error<ErrorType> {
+		class MACE__GET_ERROR_NAME(Signal): public MACE__INTERNAL_NS::Error<ErrorType, std::runtime_error> {
 		public:
-			using Error<ErrorType>::Error;
+			using MACE__INTERNAL_NS::Error<ErrorType, std::runtime_error>::Error;
 		};
+	}
 
-#define MACE__SIGNAL_ERROR(name) struct name##Type { static MACE_CONSTEXPR CString val = MACE_STRINGIFY_DEFINITION(MACE__GET_ERROR_NAME(name)); }; using MACE__GET_ERROR_NAME(name) = MACE__GET_ERROR_NAME(Signal) < name##Type >
+	namespace os {
+#define MACE__SIGNAL_ERROR(name) struct name##Type { static MACE_CONSTEXPR CString val = MACE_STRINGIFY_DEFINITION(MACE__GET_ERROR_NAME(name)); }; using MACE__GET_ERROR_NAME(name) = MACE__INTERNAL_NS::MACE__GET_ERROR_NAME(Signal) < name##Type >
 		/**
 		Thrown when an unknown signal encountered
 		*/

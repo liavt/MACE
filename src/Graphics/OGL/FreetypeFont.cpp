@@ -8,31 +8,31 @@ See LICENSE.md for full copyright information
 #include FT_BITMAP_H
 
 namespace mc {
-	namespace gfx {
+	namespace internal {
 		namespace fty {
 			namespace {
-				Texture convertBitmapToTexture(const FT_Bitmap* bitmap) {
-					TextureDesc desc = TextureDesc(bitmap->width, bitmap->rows);
+				gfx::Texture convertBitmapToTexture(const FT_Bitmap* bitmap) {
+					gfx::TextureDesc desc(bitmap->width, bitmap->rows);
 					switch (bitmap->pixel_mode) {
 					case FT_PIXEL_MODE_GRAY:
-						desc.format = TextureDesc::Format::LUMINANCE;
-						desc.internalFormat = TextureDesc::InternalFormat::R8;
+						desc.format = gfx::TextureDesc::Format::LUMINANCE;
+						desc.internalFormat = gfx::TextureDesc::InternalFormat::R8;
 						break;
 					case FT_PIXEL_MODE_LCD:
 						desc.width /= 3;
-						desc.format = TextureDesc::Format::RGB;
-						desc.internalFormat = TextureDesc::InternalFormat::RGB8;
+						desc.format = gfx::TextureDesc::Format::RGB;
+						desc.internalFormat = gfx::TextureDesc::InternalFormat::RGB8;
 						break;
 					}
-					desc.type = TextureDesc::Type::UNSIGNED_BYTE;
-					desc.wrapS = TextureDesc::Wrap::CLAMP;
-					desc.wrapT = TextureDesc::Wrap::CLAMP;
-					desc.minFilter = TextureDesc::Filter::LINEAR;
-					desc.magFilter = TextureDesc::Filter::LINEAR;
+					desc.type = gfx::TextureDesc::Type::UNSIGNED_BYTE;
+					desc.wrapS = gfx::TextureDesc::Wrap::CLAMP;
+					desc.wrapT = gfx::TextureDesc::Wrap::CLAMP;
+					desc.minFilter = gfx::TextureDesc::Filter::LINEAR;
+					desc.magFilter = gfx::TextureDesc::Filter::LINEAR;
 
-					Texture out = Texture(desc);
+					gfx::Texture out{desc};
 
-					PixelStorageHints hints{};
+					gfx::PixelStorageHints hints{};
 					hints.alignment = 1;
 					out.setData(bitmap->buffer, 0, hints);
 
@@ -50,7 +50,7 @@ namespace mc {
 					X-Macro as you can't do conditional macros
 					*/
 #define MACE__FREETYPE_ERROR_CASE_TYPE(err, msg, type) case FT_Err_##err: MACE__THROW_CUSTOM_LINE(type, std::to_string(status) + ": " + MACE_STRINGIFY(err) + ": " + msg, std::to_string(line), file); break;
-#define MACE__FREETYPE_ERROR_CASE(err, msg) MACE__FREETYPE_ERROR_CASE_TYPE(err, msg, Font)
+#define MACE__FREETYPE_ERROR_CASE(err, msg) MACE__FREETYPE_ERROR_CASE_TYPE(err, msg, gfx::Font)
 					switch (status) {
 						MACE__FREETYPE_ERROR_CASE(Ok, "No error (invalid internal call to throwFreetypeError)")
 							MACE__FREETYPE_ERROR_CASE_TYPE(Cannot_Open_Resource, "Unable to open font file", FileNotFound)
@@ -73,7 +73,7 @@ namespace mc {
 							MACE__FREETYPE_ERROR_CASE_TYPE(Too_Many_Extensions, "Too many extensions", System)
 							MACE__FREETYPE_ERROR_CASE_TYPE(Out_Of_Memory, "Out of memory", OutOfMemory)
 					default:
-						throw MACE__GET_ERROR_NAME(Font)(message + ": Unknown error code " + std::to_string(status), std::to_string(line), file);
+						throw MACE__GET_ERROR_NAME(gfx::Font)(message + ": Unknown error code " + std::to_string(status), std::to_string(line), file);
 					}
 #undef MACE__FREETYPE_ERROR_CASE_TYPE
 #undef MACE__FREETYPE_ERROR_CASE
@@ -86,16 +86,16 @@ namespace mc {
 				}
 			}//anonymous namespace
 
-			FreetypeFont::FreetypeFont(const FontDesc& desc, FreetypeLibrary& lib) : library(lib.freetype) {
+			FreetypeFont::FreetypeFont(const gfx::FontDesc& desc, FreetypeLibrary& lib) : library(lib.freetype) {
 				switch (desc.loadType) {
-				case FontLoadType::FILE:
+				case gfx::FontLoadType::FILE:
 					checkFreetypeError(FT_New_Face(library, desc.input.path, 0, &face), "Failed to create face", __LINE__, __FILE__);
 					break;
-				case FontLoadType::MEMORY:
+				case gfx::FontLoadType::MEMORY:
 					checkFreetypeError(FT_New_Memory_Face(library, desc.input.memory.data, static_cast<FT_Long>(desc.input.memory.size), 0, &face), "Failed to create face", __LINE__, __FILE__);
 					break;
 				MACE_UNLIKELY default:
-					MACE__THROW(Font, "Unknown FontLoadType");
+					MACE__THROW(gfx::Font, "Unknown FontLoadType");
 				}
 
 				checkFreetypeError(FT_Select_Charmap(face, FT_ENCODING_UNICODE), "Failed to change charmap from font", __LINE__, __FILE__);
@@ -105,10 +105,10 @@ namespace mc {
 				//checkFreetypeError(FT_Done_Face(face), "Failed to destroy face", __LINE__, __FILE__);
 			}
 
-			void FreetypeFont::fillGlyph(Glyph& out, const wchar_t character) const {
+			void FreetypeFont::fillGlyph(gfx::Glyph& out, const wchar_t character) const {
 				checkFreetypeError(FT_Load_Char(face, character, FT_LOAD_RENDER | FT_LOAD_PEDANTIC | FT_LOAD_TARGET_LCD), "Failed to load glyph", __LINE__, __FILE__);
 
-				const WindowModule* window = gfx::getCurrentWindow();
+				const gfx::WindowModule* window = gfx::getCurrentWindow();
 
 				const FT_GlyphSlot glyph = face->glyph;
 				const FT_Glyph_Metrics& gMetrics = glyph->metrics;
@@ -152,16 +152,16 @@ namespace mc {
 				}
 			}
 
-			void FreetypeFont::calculateMetricsForSize(const FontSize height) {
-				const Vector<unsigned int, 2> dpi = getCurrentWindow()->getMonitor().getDPI();
+			void FreetypeFont::calculateMetricsForSize(const gfx::FontSize height) {
+				const Vector<unsigned int, 2> dpi = gfx::getCurrentWindow()->getMonitor().getDPI();
 
 				checkFreetypeError(FT_Set_Char_Size(face, 0, height << 6, dpi[0], dpi[1]), "Failed to change char size", __LINE__, __FILE__);
 			}
 
-			FontMetrics FreetypeFont::getFontMetrics() {
-				const WindowModule* window = gfx::getCurrentWindow();
+			gfx::FontMetrics FreetypeFont::getFontMetrics() {
+				const gfx::WindowModule* window = gfx::getCurrentWindow();
 
-				FontMetrics out{};
+				gfx::FontMetrics out{};
 				out.ascent = window->convertPixelsToRelativeYCoordinates(face->size->metrics.ascender >> 6);
 				out.descent = window->convertPixelsToRelativeYCoordinates(face->size->metrics.descender >> 6);
 				out.height = window->convertPixelsToRelativeYCoordinates(face->size->metrics.height >> 6);
@@ -185,5 +185,5 @@ namespace mc {
 				checkFreetypeError(FT_Done_FreeType(freetype), "Failed to destroy FreeType", __LINE__, __FILE__);
 			}
 		}//ogl33
-	}//gfx
+	}//internal
 }//mc

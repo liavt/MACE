@@ -35,13 +35,8 @@ See LICENSE.md for full copyright information
 
 namespace mc {
 	namespace gfx {
-#ifdef MACE_DEBUG_CHECK_NULLPTR
-#	define MACE__VERIFY_TEXTURE_INIT() do{if(texture == nullptr){ MACE__THROW(InvalidState, "This Texture has not had init() called yet"); }}while(0)
-#	define MACE__VERIFY_MODEL_INIT() do{if(model == nullptr){ MACE__THROW(InvalidState, "This Model has not had init() called yet"); }}while(0)
-#else
-#	define MACE__VERIFY_TEXTURE_INIT()
-#	define MACE__VERIFY_MODEL_INIT()
-#endif
+#define MACE__VERIFY_TEXTURE_INIT() MACE_ASSERT(texture != nullptr, "This Texture has not had init() called yet")
+#define MACE__VERIFY_MODEL_INIT() MACE_ASSERT(model != nullptr, "This Model has not had init() called yet")
 
 #define MACE__RESOURCE_PREFIX "MC/"
 
@@ -52,7 +47,7 @@ namespace mc {
 #define MACE__RESOURCE_GRADIENT_HEIGHT 128
 #define MACE__RESOURCE_QUAD MACE__RESOURCE_PREFIX "Quad"
 
-		bool ModelImpl::operator==(const ModelImpl& other) const {
+		bool ModelImpl::operator==(const ModelImpl & other) const {
 			return primitiveType == other.primitiveType;
 		}
 
@@ -232,7 +227,7 @@ namespace mc {
 				tex.init(desc);
 
 				tex.setData(image);
-			} catch (const std::exception & e) {
+			} catch (const std::exception& e) {
 				stbi_image_free(image);
 				throw e;
 			}
@@ -261,7 +256,7 @@ namespace mc {
 				texture.init(desc);
 
 				texture.setData(image);
-			} catch (const std::exception & e) {
+			} catch (const std::exception& e) {
 				stbi_image_free(image);
 				throw e;
 			}
@@ -323,19 +318,19 @@ namespace mc {
 
 		Texture::Texture() : texture(nullptr), hue(0.0f, 0.0f, 0.0f, 0.0f) {}
 
-		Texture::Texture(const TextureDesc & d) : Texture() {
+		Texture::Texture(const TextureDesc& d) : Texture() {
 			init(d);
 		}
 
-		Texture::Texture(const std::shared_ptr<TextureImpl> tex, const Color & col) : texture(tex), hue(col) {}
+		Texture::Texture(const std::shared_ptr<TextureImpl> tex, const Color& col) : texture(tex), hue(col) {}
 
-		Texture::Texture(const Texture & tex) : texture(tex.texture), hue(tex.hue), transform(tex.transform) {}
+		Texture::Texture(const Texture& tex) : texture(tex.texture), hue(tex.hue), transform(tex.transform) {}
 
-		Texture::Texture(const Texture & tex, const Color & col) : texture(tex.texture), transform(tex.transform), hue(col) {}
+		Texture::Texture(const Texture& tex, const Color& col) : texture(tex.texture), transform(tex.transform), hue(col) {}
 
-		Texture::Texture(const Color & col) : Texture(Texture::getSolidColor(), col) {}
+		Texture::Texture(const Color& col) : Texture(Texture::getSolidColor(), col) {}
 
-		void Texture::init(const TextureDesc & desc) {
+		void Texture::init(const TextureDesc& desc) {
 			if (desc.width == 0) {
 				MACE__THROW(OutOfBounds, "Width of a Texture cannot be zero");
 			} else if (desc.height == 0) {
@@ -393,15 +388,15 @@ namespace mc {
 			return hue;
 		}
 
-		void Texture::setHue(const Color & col) {
+		void Texture::setHue(const Color& col) {
 			hue = col;
 		}
 
-		Vector<RelativeUnit, 4>& Texture::getTransform() {
+		Vector<RelativeUnit, 4> & Texture::getTransform() {
 			return transform;
 		}
 
-		const Vector<RelativeUnit, 4>& Texture::getTransform() const {
+		const Vector<RelativeUnit, 4> & Texture::getTransform() const {
 			return transform;
 		}
 
@@ -432,11 +427,11 @@ namespace mc {
 		}
 
 
-		bool Texture::operator==(const Texture & other) const {
+		bool Texture::operator==(const Texture& other) const {
 			return transform == other.transform && hue == other.hue && texture == other.texture;
 		}
 
-		bool Texture::operator!=(const Texture & other) const {
+		bool Texture::operator!=(const Texture& other) const {
 			return !operator==(other);
 		}
 
@@ -448,7 +443,7 @@ namespace mc {
 			return window;
 		}
 
-		Texture& GraphicsContext::createTexture(const std::string & name, const Texture & texture) {
+		Texture& GraphicsContext::createTexture(const std::string& name, const Texture& texture) {
 			if (hasTexture(name)) {
 				MACE__THROW(AlreadyExists, "Texture with name " + name + " has already been created");
 			}
@@ -456,7 +451,7 @@ namespace mc {
 			return textures[name] = texture;
 		}
 
-		Texture& GraphicsContext::getOrCreateTexture(const std::string & name, const TextureCreateCallback create) {
+		Texture& GraphicsContext::getOrCreateTexture(const std::string& name, const TextureCreateCallback create) {
 			if (!hasTexture(name)) {
 				return createTexture(name, create());
 			} else {
@@ -464,13 +459,13 @@ namespace mc {
 			}
 		}
 
-		Texture& GraphicsContext::getOrCreateTextureFromFile(const std::string & name, const std::string & path) {
+		Texture& GraphicsContext::getOrCreateTextureFromFile(const std::string& name, const std::string& path) {
 			return getOrCreateTexture(name, [&path]() {
 				return Texture::createFromFile(path);
 			});
 		}
 
-		Model& GraphicsContext::createModel(const std::string & name, const Model & mod) {
+		Model& GraphicsContext::createModel(const std::string& name, const Model& mod) {
 			if (hasModel(name)) {
 				MACE__THROW(AlreadyExists, "Model with name " + name + " has already been created");
 			}
@@ -478,7 +473,7 @@ namespace mc {
 			return models[name] = mod;
 		}
 
-		Model& GraphicsContext::getOrCreateModel(const std::string & name, const ModelCreateCallback create) {
+		Model& GraphicsContext::getOrCreateModel(const std::string& name, const ModelCreateCallback create) {
 			if (!hasModel(name)) {
 				return createModel(name, create());
 			} else {
@@ -486,36 +481,36 @@ namespace mc {
 			}
 		}
 
-		bool GraphicsContext::hasTexture(const std::string & name) const {
+		bool GraphicsContext::hasTexture(const std::string& name) const {
 			//map.count() returns 1 if key exists, 0 otherwise.
 			return textures.count(name) != 0;//the verbosity is to suppress warnings of casting from std::size_t to bool
 		}
 
-		bool GraphicsContext::hasModel(const std::string & name) const {
+		bool GraphicsContext::hasModel(const std::string& name) const {
 			return models.count(name) != 0;
 		}
 
-		void GraphicsContext::setTexture(const std::string & name, const Texture & texture) {
+		void GraphicsContext::setTexture(const std::string& name, const Texture& texture) {
 			textures[name] = texture;
 		}
 
-		Texture& GraphicsContext::getTexture(const std::string & name) {
+		Texture& GraphicsContext::getTexture(const std::string& name) {
 			return textures.at(name);
 		}
 
-		const Texture& GraphicsContext::getTexture(const std::string & name) const {
+		const Texture& GraphicsContext::getTexture(const std::string& name) const {
 			return textures.at(name);
 		}
 
-		void GraphicsContext::setModel(const std::string & name, const Model & model) {
+		void GraphicsContext::setModel(const std::string& name, const Model& model) {
 			models[name] = model;
 		}
 
-		Model& GraphicsContext::getModel(const std::string & name) {
+		Model& GraphicsContext::getModel(const std::string& name) {
 			return models.at(name);
 		}
 
-		const Model& GraphicsContext::getModel(const std::string & name) const {
+		const Model& GraphicsContext::getModel(const std::string& name) const {
 			return models.at(name);
 		}
 
@@ -535,12 +530,8 @@ namespace mc {
 			return models;
 		}
 
-		GraphicsContext::GraphicsContext(gfx::WindowModule * win) :window(win) {
-#ifdef MACE_DEBUG_CHECK_NULLPTR
-			if (window == nullptr) {
-				MACE__THROW(NullPointer, "WindowModule inputted to GraphicsContext is nullptr");
-			}
-#endif
+		GraphicsContext::GraphicsContext(gfx::WindowModule* win) :window(win) {
+			MACE_ASSERT(window != nullptr, "WindowModule inputted to GraphicsContext is nullptr");
 		}
 
 		void GraphicsContext::init() {
@@ -573,7 +564,7 @@ namespace mc {
 			window = nullptr;
 		}
 
-		TextureImpl::TextureImpl(const TextureDesc & t) : desc(t) {}
+		TextureImpl::TextureImpl(const TextureDesc& t) : desc(t) {}
 
 		TextureDesc::TextureDesc(const unsigned int w, const unsigned int h, const Format form) : format(form), width(w), height(h) {}
 	}//gfx

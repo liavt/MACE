@@ -9,7 +9,7 @@ See LICENSE.md for full copyright information
 #include <sstream>
 
 namespace mc {
-	namespace gfx {
+	namespace internal {
 		namespace ogl33 {
 			namespace {
 				Shader createShader(const Enum type, const char* sources[], const GLsizei sourceSize) {
@@ -20,8 +20,8 @@ namespace mc {
 					return s;
 				}
 
+#ifdef MACE_DEBUG
 				void throwShaderError(const unsigned int shaderId, const Enum type, const std::string& message) {
-#ifdef MACE_DEBUG_OPENGL
 					std::unique_ptr<GLchar[]> log_string = std::unique_ptr<GLchar[]>(new char[1024]);
 					glGetShaderInfoLog(shaderId, 1024, 0, log_string.get());
 					std::string friendlyType = "UNKNOWN SHADER TYPE " + std::to_string(type);//a more human friendly name for type, like VERTEX_SHADER instead of 335030
@@ -36,10 +36,12 @@ namespace mc {
 						glGetProgramInfoLog(shaderId, 1024, 0, log_string.get());
 					}
 					MACE__THROW(Shader, "Error generating " + friendlyType + ": " + message + ": " + log_string.get());
-#else
-					MACE__THROW(Shader, "Error generating shader of type " + std::to_string(type));
-#endif//MACE_DEBUG_OPENGL
 				}
+#else
+				inline void throwShaderError(const unsigned int, const Enum type, const std::string&) {
+					MACE__THROW(Shader, "Error generating shader of type " + std::to_string(type));
+				}
+#endif//MACE_DEBUG
 			}//anon namespace
 
 			void forceCheckGLError(const unsigned int line, const char* file, const char* inMessage) {
@@ -56,12 +58,12 @@ namespace mc {
 					}
 					message << inMessage << ": ";
 					switch (result) {
-#define MACE__GL_ERROR_DEF(error, mes) case error : message << MACE_STRINGIFY_NAME(error) << mes; break
-						MACE__GL_ERROR_DEF(GL_INVALID_ENUM, "An unacceptable value is specified for an enumerated argument");
-						MACE__GL_ERROR_DEF(GL_INVALID_VALUE, "A numeric argument is out of range");
-						MACE__GL_ERROR_DEF(GL_INVALID_OPERATION, "The specified operation is not allowed in the current state");
-						MACE__GL_ERROR_DEF(GL_INVALID_FRAMEBUFFER_OPERATION, "The command is trying to render to or read from the framebuffer while the currently bound framebuffer is not framebuffer complete (i.e. the return value from glCheckFramebufferStatus is not GL_FRAMEBUFFER_COMPLETE)");
-						MACE__GL_ERROR_DEF(GL_OUT_OF_MEMORY, "There is not enough memory left to execute the command");
+#define MACE__GL_ERROR_DEF(error, errorName, mes) case error : message << errorName << ": " << mes; break
+						MACE__GL_ERROR_DEF(GL_INVALID_ENUM, MACE_STRINGIFY_NAME(GL_INVALID_ENUM), "An unacceptable value is specified for an enumerated argument");
+						MACE__GL_ERROR_DEF(GL_INVALID_VALUE, MACE_STRINGIFY_NAME(GL_INVALID_VALUE), "A numeric argument is out of range");
+						MACE__GL_ERROR_DEF(GL_INVALID_OPERATION, MACE_STRINGIFY_NAME(GL_INVALID_OPERATION), "The specified operation is not allowed in the current state");
+						MACE__GL_ERROR_DEF(GL_INVALID_FRAMEBUFFER_OPERATION, MACE_STRINGIFY_NAME(GL_INVALID_FRAMEBUFFER_OPERATION), "The command is trying to render to or read from the framebuffer while the currently bound framebuffer is not framebuffer complete (i.e. the return value from glCheckFramebufferStatus is not GL_FRAMEBUFFER_COMPLETE)");
+						MACE__GL_ERROR_DEF(GL_OUT_OF_MEMORY, MACE_STRINGIFY_NAME(GL_OUT_OF_MEMORY), "There is not enough memory left to execute the command");
 #undef MACE__GL_ERROR_DEF
 					MACE_UNLIKELY default:
 						message << "OpenGL has errored with an error code of" << result;
@@ -1237,5 +1239,5 @@ namespace mc {
 				return uniforms;
 			}
 		}//ogl33
-	}//gfx
+	}//internal
 }//mc

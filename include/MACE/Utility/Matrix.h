@@ -74,7 +74,7 @@ namespace mc {
 	@todo proper `begin()` and `end()` functions
 	*/
 	template<typename T, Size W, Size H = W>
-	struct Matrix: public VectorBase<Matrix<T, W, H>, MatrixRow<T, H>, W> {
+	struct Matrix: public MACE__INTERNAL_NS::VectorBase<Matrix<T, W, H>, MatrixRow<T, H>, W> {
 		/**
 		Default constructor. Creates a `Matrix` of the specified size where every spot is unallocated
 		*/

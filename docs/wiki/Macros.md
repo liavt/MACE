@@ -7,10 +7,6 @@ There are many different macros that can determine how MACE works.
 | *Macro* | *Effect* |
 |--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | MACE_DEBUG | Does more error checking and more verbose error messages. Automatically defined in Debug configurations. If defined to be 0 before including any MACE headers, will never be defined. |
-| MACE_DEBUG_OPENGL | Does extensive and detailed error checking of OpenGL calls. This greatly decreases performance of the renderer, but allows for debugging of graphics routines. Automatically defined when MACE_DEBUG is 1. |
-| MACE_DEBUG_CHECK_ARGS | Do additional argument checking in functions where users may misuse an API. Automatically defined when MACE_DEBUG is 1. |
-| MACE_DEBUG_CHECK_NULLPTR | Do additional nullptr checks internally. In a production scenario, this should never raise an error, but this macro can be useful for the initial debug phase of an application. Automatically defined when MACE_DEBUG is 1. |
-| MACE_DEBUG_INTERNAL_ERRORS | Check for any internal state mismatches or errors. Automatically defined when MACE_DEBUG is 1. |
 
 
 ### Libraries
@@ -24,7 +20,7 @@ These macros are automatically defined if the specified library is found. Otherw
 
 MACE has optional interoptibility with OpenCV. To link OpenCV with CMake, set the OpenCV_* cache variables when running CMake.
 
-MACE will attempt to automatically detect OpenCV and defined MACE_OPENCV if found.
+MACE will attempt to automatically detect OpenCV and define MACE_OPENCV if found.
 
 To manually link OpenCV yourself, define MACE_OPENCV to be 1 before including any MACE header file:
 
@@ -130,3 +126,4 @@ Additionally, if the compiler supports GNU C, `MACE_GNU` will be defined.
 | MACE_GETTER_SETTER_DEC(name, type) | Overload of MACE_GETTER_SETTER_DEC_BASE where `<inType>` and `<outType>` are both `<type>` |
 | MACE_GETTER_SETTER_DEF_BASE(className, funcName, varName, inType, outType) | Utility macro to automatically create getter and setter definitions, where the setter is called `<className>`::set`<funcName>` and sets `<varName` to a value of `inType>` while the getter is called `<className>`::get`<name>` and returns a value of `<outType>`. |
 | MACE_GETTER_SETTER_DEF(className, funcName, varName, type) | Overload of MACE_GETTER_SETTER_DEC_BASE where `<inType>` and `<outType>` are both `<type>` |
+| MACE_ASSERT(cond, message) | Throws an `AssertionFailedError` if `!cond` with `message`. On non-debug builds, this macro is defined to nothing. |

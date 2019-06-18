@@ -205,11 +205,6 @@ namespace mc {
 			Letter();
 			~Letter() = default;
 
-			/**
-			@internal
-			*/
-			const Texture& getGlyph() const;
-
 			const Texture& getTexture() const;
 
 			const GlyphMetrics& getGlpyhMetrics() const;
@@ -228,6 +223,11 @@ namespace mc {
 			Texture texture = Texture();
 
 			GlyphMetrics glyphMetrics{};
+
+			/**
+			@internal
+			*/
+			const Texture& getGlyph() const;
 		};//Letter
 
 		/**

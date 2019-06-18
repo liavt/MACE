@@ -22,646 +22,638 @@ maybe i will fix it later
 */
 
 namespace mc {
+	namespace internal {
+		template <typename Child, typename T, Size N>
+		struct MACE_NOVTABLE VectorBase {
+		public:
+			/**
+			Default constructor. Constructs an empty `Vector`.
+			<p>
+			The data is default initialized.
+			*/
+			VectorBase() noexcept : content{ } {};
+
+			VectorBase(const T& val) noexcept : VectorBase() {
+				for (Index i = 0; i < N; ++i) {
+					content[i] = val;
+				}
+			};
+
+			/**
+			Consructs a `Vector` from the contents of an array.
+			@param arr An equally-sized array whose contents will be filled into a `Vector`
+			*/
+			VectorBase(const T arr[N]) : VectorBase()//we need to initialize the array first, or else we will try to access an empty memory location
+			{
+				this->setContents(arr);//this doesnt create a brand new array, it merely fills the existing one with new content
+			}
+
+			/**
+			Consructs a `Vector` from the contents of an `std::array`.
+			@param contents An equally-sized `std::array` whose contents will be filled into a `Vector`
+			*/
+			VectorBase(const std::array<T, N>& contents) : VectorBase(contents.data()) {};
+
+			/**
+			Creates a `Vector` from an `std::initializer_list`. Allows for an aggregate-style creation.
+			<p>
+			Example:
+			{@code
+			Vector3i mat = {1, 2, 3};
+			}
+			@param args What to create this `Vector` with
+			@todo Make this MACE_CONSTEXPR
+			@todo Make initializer list size check compile time check instead of run time
+			@throws IndexOutOfBoundsException If the amount of arguments in the initializer is not equal to the amount of objects this `Vector` holds
+			*/
+			VectorBase(const std::initializer_list<T> args) : VectorBase() {//this is for aggregate initializaition
+				//TODO find a way to make this a compile time error, not runtime error
+				if (args.size() != N) {
+					MACE__THROW(OutOfBounds, "The number of arguments MUST be equal to the size of the Vector");
+				}
+
+				Index counter = 0;
+				for (auto elem : args) {
+					//the post increment is on purpose to make sure content[0] is accessed
+					content[counter++] = elem;
+				}
+			}
+
+			/**
+			Copies the contents of a `Vector` into a new `Vector`
+			@param obj A `Vector` to clone
+			*/
+			VectorBase(const Child& obj) {
+				for (Index i = 0; i < N; ++i) {
+					content[i] = obj[i];
+				}
+			};
+
+			~VectorBase() = default;
+
+			/**
+			Retrieves the contents of this `Vector`
+			@return An `std::array` of this `Vector` contents
+			@see setContents(std::array<T,N>)
+			*/
+			std::array < T, N>& getContents() {
+				return this->content;
+			};
+
+			/**
+			`const` version of `getContents()`
+			@return A `const std::array` of this `const Vector` contents
+			@see setContents(std::array<T,N>)
+			*/
+			const std::array < T, N>& getContents() const {
+				return this->content;
+			};
+			/**
+			Copies the contents of an `std::array` into this `Vector`
+			@param contents An `std::array` whose data will be dumped into this `Vector`
+			*/
+			void setContents(const std::array<T, N> contents) {
+				this->content = contents;
+			};
+			/**
+			Copies the contents of an array into this `Vector`
+			@param arr An equally sized array whose contents will cloned in this `Vector`
+			*/
+			void setContents(const T arr[N]) {
+				for (Index i = 0; i < N; ++i) {
+					set(i, arr[i]);
+				}
+			};
+
+			/**
+			Retrieves how many elements this `Vector` holds
+			@return How large this `Vector` is
+			*/
+			MACE_CONSTEXPR Size size() const noexcept {
+				return N;
+			};
+
+			/**
+			Get the value at a position. Slower than `operator[]` because it does bounds checking.
+			@param i `Index` of the requested data, zero-indexed
+			@return The value located at `i`
+			@throw IndexOutOfBounds If `i` is greater than `size()`
+			@throw IndexOutOfBounds If `i` is less than 0
+			@see operator[](Index)
+			*/
+			T& get(Index i) MACE_EXPECTS(i < size()) {
+				MACE_ASSERT(i < N, std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
+
+				return content[i];
+			}
+			/**
+			`const` version of `get(Index),` in case a `Vector` is declared `const`
+			@param i `Index` of the requested data, zero-indexed
+			@return The `const` value located at `i`
+			@throw IndexOutOfBounds If `i` is greater than `size()`
+			@throw IndexOutOfBounds If `i` is less than 0
+			@see operator[](Index)
+			*/
+			const T& get(Index i) const MACE_EXPECTS(i < size()) {
+				MACE_ASSERT(i < N, std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
+
+				return content.at(i);
+			}
+			/**
+			Set data at a certain position to equal a new value. Slower than `operator[]` because it does bounds checking.
+			@param position Where to put the new value, zero indexed.
+			@param value What to put in `position`
+			@throw IndexOutOfBounds If `i` is greater than `size()`
+			@throw IndexOutOfBounds If `i` is less than 0
+			@see operator[](Index)
+			*/
+			void set(Index position, T value) MACE_EXPECTS(position < size()) {
+				MACE_ASSERT(position < N, std::to_string(position) + " is greater than the size of this vector, " + std::to_string(N) + "!");
+
+				content[position] = value;
+			}
+
+			/**
+			Creates an array with the data of this `Vector`, in O(N) time
+			@return Pointer to `arr`
+			@param arr The array to fill
+			*/
+			const T* flatten(T arr[N]) const {
+				for (Index i = 0; i < N; ++i) {
+					arr[i] = content[i];
+				}
+				return arr;
+			}
+
+			T* begin() {
+				return content;
+			}
+
+			const T* begin() const {
+				return content;
+			}
+
+			T* end() {
+				return content + (sizeof(T) * (N - 1));
+			}
+
+			const T* end() const {
+				return content + (sizeof(T) * (N - 1));
+			}
+
+			/**
+			Retrieves the content at a certain `Index`, zero indexed. This operator is faster than `get(Index),` as it doesn't do bounds checking. However, accessing an invalid index will be undefined.
+			@param i Where to retrieve the data
+			@return The data at `i`
+			@see operator[](Index) const
+			*/
+			T& operator[](Index i) MACE_EXPECTS(i < size()) {
+				return content[i];
+			};
+			/**
+			`const` version of `operator[](Index)` used if a `Vector` is declared `const`.
+			@param i Where to retrieve the data
+			@return The data at `i`
+			@see operator[](Index)
+			*/
+			const T& operator[](Index i) const MACE_EXPECTS(i < size()) {
+				return content[i];
+			};
+
+			/**
+			Retrieves content at a certain `Index`, not zero indexed.
+			<p>
+			Equal to {@code
+				vector[i-1]
+			}
+			@param i Not zero indexed `Index`
+			@return Value at `i-1`
+			@see operator[](Index)
+			*/
+			T& operator()(Index i) MACE_EXPECTS(i <= size() && i > 0) {
+				return content[i - 1];
+			}
+
+			/**
+			`const` version of `operator()(Index)`.
+			@param i Not zero indexed `Index`
+			@return Value at `i-1`
+			*/
+			const T& operator()(Index i) MACE_EXPECTS(i <= size() && i > 0)const {
+				return content[i - 1];
+			}
+
+			/**
+			Adds 2 `Vectors` together.
+			<p>
+			This is done in o(N) time
+
+			@param right Another `Vector`
+			@return A `Vector` that was created by adding 2 `Vectors` together
+			@see Vector for an explanation of `Vector` math
+			*/
+			Child operator+(const Child& right) const {
+				Child out = Child(content);
+				out += right;
+				return out;
+			};
+			/**
+			Subtracts 2 `Vectors` together.
+			<p>
+			This is done in O(N) time
+
+			@param right Another `Vector`
+			@return A `Vector` that was created by subtracting 2 `Vectors` together
+			@see Vector for an explanation of `Vector` math
+			*/
+			Child operator-(const Child& right) const {
+				Child out = Child(content);
+				out -= right;
+				return out;
+			};
+
+			/**
+			Multiplies 2 `Vectors` together.
+			<p>
+			This is done in O(N) time
+
+			@param right Another `Vector`
+			@return The product of the multiplication
+			@see Vector for an explanation of `Vector` math
+			*/
+			Child operator*(const Child& right) const {
+				Child out = Child(content);
+				out *= right;
+				return out;
+			}
+
+			/**
+			Divides 2 `Vectors` together.
+			<p>
+			This is done in O(N) time
+
+			@param right Another `Vector`
+			@return The quotient of 2 `Vectors`
+			@see Vector for an explanation of `Vector` math
+			*/
+			Child operator/(const Child& right) const {
+				Child out = Child(content);
+				out /= right;
+				return out;
+			}
+
+			/**
+			Translates a `Vector` with a scalar.
+			<p>
+			This is done in O(N) time
+			@param scalar What to translate this `Vector` by
+			@return A `Vector` translated.
+			@see operator*(const Vector&) const
+			*/
+			Child operator+(const T scalar) const {
+				Child out = Child(content);
+				out += scalar;
+				return out;
+			}
+
+			/**
+			Translates a `Vector` with a scalar.
+			<p>
+			This is done in O(N) time
+			@param scalar What to translate this `Vector` by
+			@return A `Vector` translated.
+			@see operator*(const Vector&) const
+			*/
+			Child operator-(const T scalar) const {
+				Child out = Child(content);
+				out -= scalar;
+				return out;
+			}
+
+			/**
+			Multiplies a `Vector` by a scalar.
+			<p>
+			This is done in O(N) time
+			@param scalar What to multiply this `Vector` by
+			@return A `Vector` scaled.
+			@see operator*(const Vector&) const
+			*/
+			Child operator*(const T scalar) const {
+				Child out = Child(content);
+				out *= scalar;
+				return out;
+			}
+
+			/**
+			Divides a `Vector` by a scalar.
+			<p>
+			This is done in O(N) time
+			@param scalar What to divided this `Vector` by
+			@return A `Vector` scaled.
+			@see operator*(const T&) const
+			*/
+			Child operator/(const T scalar) const {
+				Child out = Child(content);
+				out /= scalar;
+				return out;
+			}
+
+			/**
+			Adds a `Vector` to this one.
+			@param right A `Vector` to add
+			@see operator+(const Vector<T,N>&) const
+			*/
+			void operator+= (const Child& right) {
+#pragma omp simd
+				for (Index i = 0; i < N; ++i) {
+					operator[](i) += right[i];
+				}
+			}
+
+			/**
+			Subtracts a `Vector` from this one.
+			@param right A `Vector` to subtract
+			@see operator-(const Vector<T,N>&) const
+			*/
+			void operator-= (const Child& right) {
+#pragma omp simd
+				for (Index i = 0; i < N; ++i) {
+					operator[](i) -= right[i];
+				}
+			}
+
+			/**
+			Multiplies a `Vector` by this one
+			@param right A `Vector` to multiply
+			@see operator+(const Vector<T,N>&) const
+			*/
+			void operator*= (const Child& right) {
+#pragma omp simd
+				for (Index i = 0; i < N; ++i) {
+					operator[](i) *= right[i];
+				}
+			}
+
+			/**
+			Divides a `Vector` by this one
+			@param right A `Vector` to divide
+			@see operator+(const Vector<T,N>&) const
+			*/
+			void operator/= (const Child& right) {
+#pragma omp simd
+				for (Index i = 0; i < N; ++i) {
+					operator[](i) /= right[i];
+				}
+			}
+
+
+			/**
+			Translates this `Vector`
+			@param scalar How much to translate by
+			@see operator*(const Vector<T,3>&) const
+			@see operator*(const T&) const
+			*/
+			void operator+= (const T& scalar) {
+#pragma omp simd
+				for (Index i = 0; i < N; ++i) {
+					operator[](i) += scalar;
+				}
+			}
+
+			/**
+			Translates this `Vector`
+			@param scalar How much to translate by
+			@see operator*(const Vector<T,3>&) const
+			@see operator*(const T&) const
+			*/
+			void operator-= (const T& scalar) {
+#pragma omp simd
+				for (Index i = 0; i < N; ++i) {
+					operator[](i) -= scalar;
+				}
+			}
+
+			/**
+			Scales this `Vector`
+			@param scalar How much to scale
+			@see operator*(const Vector<T,3>&) const
+			@see operator*(const T&) const
+			*/
+			void operator*= (const T& scalar) {
+#pragma omp simd
+				for (Index i = 0; i < N; ++i) {
+					operator[](i) *= scalar;
+				}
+			}
+
+			/**
+			Divides this `Vector`
+			@param scalar How much to divide by
+			@see operator*(const Vector<T,3>&) const
+			@see operator*(const T&) const
+			*/
+			void operator/= (const T& scalar) {
+#pragma omp simd
+				for (Index i = 0; i < N; ++i) {
+					operator[](i) /= scalar;
+				}
+			}
+
+			/**
+			Compares whether 2 `Vectors` have the same values.
+			<p>
+			This is done in O(N) time
+			@param other A `Vector` to compare `this` against
+			@return `true` if the 2 are equal, `false` otherwise
+			@see operator!=(const Vector<T,N>) const
+			@see operator<(const Vector&) const
+			@see operator>=(const Vector&) const
+			@see operator<=(const Vector&) const
+			@see operator>(const Vector&) const
+			*/
+			bool operator==(const Child& other) const {
+				for (Index i = 0; i < N; ++i) {
+					if (operator[](i) != other[i]) {
+						return false;
+					}
+				}
+				return true;
+			};
+
+			/**
+			Compares whether 2 `Vectors` don't have the same values.
+			<p>
+			This is done in O(N) time
+			@param other A `Vector` to compare `this` against
+			@return `true` if the 2 are not equal, `false` otherwise
+			@see operator==(const Vector<T,N>) const
+			@see operator<(const Vector&) const
+			@see operator>=(const Vector&) const
+			@see operator<=(const Vector&) const
+			@see operator>(const Vector&) const
+			*/
+			bool operator!=(const Child& other) const {
+				return !operator==(other);
+			};
+
+			/**
+			Compares the `>` operator on 2 `Vectors` elements.
+			<p>
+			This is done in O(N) time
+			@param other A `Vector` to compare against
+			@return The result of the `>` operator on each element
+			@see operator<(const Vector&) const
+			@see operator>=(const Vector&) const
+			@see operator<=(const Vector&) const
+			@see operator==(const Vector&) const
+			@see operator!=(const Vector&) const
+			*/
+			bool operator>(const Child& other) const {
+				for (Index i = 0; i < N; ++i) {
+					if (operator[](i) <= other[i]) {
+						return false;
+					}
+				}
+				return true;
+			}
+
+			/**
+			Compares the `>=` operator on 2 `Vectors` elements.
+			<p>
+			This is done in O(N) time
+			@param other A `Vector` to compare against
+			@return The result of the `>=` operator on each element
+			@see operator<(const Vector&) const
+			@see operator>(const Vector&) const
+			@see operator<=(const Vector&) const
+			@see operator==(const Vector&) const
+			@see operator!=(const Vector&) const
+			*/
+			bool operator>=(const Child& other) const {
+				return operator>(other) || operator==(other);
+			}
+
+			/**
+			Compares the `<` operator on 2 `Vectors` elements.
+			<p>
+			This is done in O(N) time
+			@param other A `Vector` to compare against
+			@return The result of the `<` operator on each element
+			@see operator<=(const Vector&) const
+			@see operator>=(const Vector&) const
+			@see operator>(const Vector&) const
+			@see operator==(const Vector&) const
+			@see operator!=(const Vector&) const
+			*/
+			bool operator<(const Child& other) const {
+				return !operator>=(other);
+			}
+
+			/**
+			Compares the `<=` operator on 2 `Vectors` elements.
+			@param other A `Vector` to compare against
+			@return The result of the `<=` operator on each element
+			@see operator<(const Vector&) const
+			@see operator>=(const Vector&) const
+			@see operator>(const Vector&) const
+			@see operator==(const Vector&) const
+			@see operator!=(const Vector&) const
+			*/
+			bool operator<=(const Child& other) const {
+				return !operator>(other);
+			}
+
+			/**
+			Operator used to output to `std::cout`.
+			<p>
+			This is done in O(N) time
+			@param output `std::ostream` the `Matrix` was inserted into
+			@param v `Matrix` which will be printed
+			@return `output` for chaining
+			*/
+			friend std::ostream& operator<<(std::ostream& output,
+											const Child& v) {
+				output << '[' << ' ';//why not just "[ "? well, that needs std::string to be included, and thats more compiliation time. this way doesnt need that.
+				for (Index x = 0; x < N; ++x) {
+					output << v[x];
+					if (x != N - 1) {
+						output << ", ";
+					}
+				}
+				output << ' ' << ']';
+				return output;
+			}
+
+		protected:
+			T content[N];
+		};//VectorBase
+	}//internal
+
 	/**
-	1-dimensional vector class that supports mathmatical operations.
-	<p>
-	`Vectors` can be added, subtracted, and multiplied. by other `Vectors` of equal width. Additionally, they can also be operated by a `Matrix` of equal width.
-	`Vectors` CANNOT be divided.
-	<p>
-	`Vector` math is done by adding the adjacent values of both vectors together.
-	For example, we want to add these 2 `Vectors` together:
-	{@code
-	left = [55,42,-12,23]
-
-	right = [3,7,5,9]
-
-	result = left + right
-	}
-	The result would be every value across from eachother added together, as so:
-	{@code
-	result = [left[1]+right[1],left[2]+right[2],left[3]+right[3],left[4]+right[4]]
-	}
-	or
-	{@code
-	result = [58,49,-7,32]
-	}
-	Multiplication, and subtraction are the same concept. To do math with MACE, all you need to do is to use the mathmatical operators.
-	<p>
-	Examples:
-	{@code
-		Vector<int,3> vector = Vector<int,3>();//Create a Vector of 3 ints
-
-		int array[] = {1,2,3};
-		vector = array;//Generate Vector from array
-
-		vector.get(i);//Get int from position i
-		vector[i];//get int from position i
-
-		vector.set(i,v);//Set int at position i to equal v
-		vector[i]=v;//set int at position i to equal v
-
-		vector.size() //Get how many elements the Vector has
-
-		//Iterate through a Vector:
-		for(Index i =0;i<vector.size();i++){
-			int value = vector[i];
-		}
-	}
-	<p>
-	There are various type aliases in place to prevent using the template parameters. They all use the following syntax:
-	`Vector[size][suffix]`
-	<p>
-	suffixes exist for every primitive type and are the first letter of the primitive name. For example, the suffix
-	for a `float` would be `f` and the suffix for an `int` would be `i`. Primitives with modifiers simply add the
-	letter. The suffixes for an `unsigned char` would be `uc` and the prefix for a `long long int` would be `lli`
-	<p>
-	Sizes exist for vertices up to 5 objects
-	<p>
-	For example, to create a `Vector` that is made up of 4 floats, you would use `Vector4f`. For a `Vector` of 2
-	unsigned ints, you would use `Vector2ui`
-	@see Matrix
-	@tparam T what the `Vector` is made of and calculates with. Can be any type/
-	@tparam N amount of elements in the `Vector` which must be greater than 0.
-	*/
-	template <typename Child, typename T, Size N>
-	struct MACE_NOVTABLE VectorBase {
-	public:
-		/**
-		Default constructor. Constructs an empty `Vector`.
+		1-dimensional vector class that supports mathmatical operations.
 		<p>
-		The data is default initialized.
-		*/
-		VectorBase() noexcept : content{ } {};
-
-		VectorBase(const T& val) noexcept : VectorBase() {
-			for (Index i = 0; i < N; ++i) {
-				content[i] = val;
-			}
-		};
-
-		/**
-		Consructs a `Vector` from the contents of an array.
-		@param arr An equally-sized array whose contents will be filled into a `Vector`
-		*/
-		VectorBase(const T arr[N]) : VectorBase()//we need to initialize the array first, or else we will try to access an empty memory location
-		{
-			this->setContents(arr);//this doesnt create a brand new array, it merely fills the existing one with new content
-		}
-
-		/**
-		Consructs a `Vector` from the contents of an `std::array`.
-		@param contents An equally-sized `std::array` whose contents will be filled into a `Vector`
-		*/
-		VectorBase(const std::array<T, N>& contents) : VectorBase(contents.data()) {};
-
-		/**
-		Creates a `Vector` from an `std::initializer_list`. Allows for an aggregate-style creation.
+		`Vectors` can be added, subtracted, and multiplied. by other `Vectors` of equal width. Additionally, they can also be operated by a `Matrix` of equal width.
+		`Vectors` CANNOT be divided.
 		<p>
-		Example:
+		`Vector` math is done by adding the adjacent values of both vectors together.
+		For example, we want to add these 2 `Vectors` together:
 		{@code
-		Vector3i mat = {1, 2, 3};
+		left = [55,42,-12,23]
+
+		right = [3,7,5,9]
+
+		result = left + right
 		}
-		@param args What to create this `Vector` with
-		@todo Make this MACE_CONSTEXPR
-		@todo Make initializer list size check compile time check instead of run time
-		@throws IndexOutOfBoundsException If the amount of arguments in the initializer is not equal to the amount of objects this `Vector` holds
-		*/
-		VectorBase(const std::initializer_list<T> args) : VectorBase() {//this is for aggregate initializaition
-			//TODO find a way to make this a compile time error, not runtime error
-			if (args.size() != N) {
-				MACE__THROW(OutOfBounds, "The number of arguments MUST be equal to the size of the Vector");
-			}
-
-			Index counter = 0;
-			for (auto elem : args) {
-				//the post increment is on purpose to make sure content[0] is accessed
-				content[counter++] = elem;
-			}
+		The result would be every value across from eachother added together, as so:
+		{@code
+		result = [left[1]+right[1],left[2]+right[2],left[3]+right[3],left[4]+right[4]]
 		}
-
-		/**
-		Copies the contents of a `Vector` into a new `Vector`
-		@param obj A `Vector` to clone
-		*/
-		VectorBase(const Child& obj) {
-			for (Index i = 0; i < N; ++i) {
-				content[i] = obj[i];
-			}
-		};
-
-		~VectorBase() = default;
-
-		/**
-		Retrieves the contents of this `Vector`
-		@return An `std::array` of this `Vector` contents
-		@see setContents(std::array<T,N>)
-		*/
-		std::array < T, N>& getContents() {
-			return this->content;
-		};
-
-		/**
-		`const` version of `getContents()`
-		@return A `const std::array` of this `const Vector` contents
-		@see setContents(std::array<T,N>)
-		*/
-		const std::array < T, N>& getContents() const {
-			return this->content;
-		};
-		/**
-		Copies the contents of an `std::array` into this `Vector`
-		@param contents An `std::array` whose data will be dumped into this `Vector`
-		*/
-		void setContents(const std::array<T, N> contents) {
-			this->content = contents;
-		};
-		/**
-		Copies the contents of an array into this `Vector`
-		@param arr An equally sized array whose contents will cloned in this `Vector`
-		*/
-		void setContents(const T arr[N]) {
-			for (Index i = 0; i < N; ++i) {
-				set(i, arr[i]);
-			}
-		};
-
-		/**
-		Retrieves how many elements this `Vector` holds
-		@return How large this `Vector` is
-		*/
-		MACE_CONSTEXPR Size size() const noexcept {
-			return N;
-		};
-
-		/**
-		Get the value at a position. Slower than `operator[]` because it does bounds checking.
-		@param i `Index` of the requested data, zero-indexed
-		@return The value located at `i`
-		@throw IndexOutOfBounds If `i` is greater than `size()`
-		@throw IndexOutOfBounds If `i` is less than 0
-		@see operator[](Index)
-		*/
-		T& get(Index i) MACE_EXPECTS(i < size()) {
-#ifdef MACE_DEBUG_CHECK_ARGS
-			if (i >= N) MACE_UNLIKELY{
-				MACE__THROW(OutOfBounds, std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
-			}
-#endif
-			return content[i];
+		or
+		{@code
+		result = [58,49,-7,32]
 		}
-		/**
-		`const` version of `get(Index),` in case a `Vector` is declared `const`
-		@param i `Index` of the requested data, zero-indexed
-		@return The `const` value located at `i`
-		@throw IndexOutOfBounds If `i` is greater than `size()`
-		@throw IndexOutOfBounds If `i` is less than 0
-		@see operator[](Index)
-		*/
-		const T& get(Index i) const MACE_EXPECTS(i < size()) {
-#ifdef MACE_DEBUG_CHECK_ARGS
-			if (i >= N) MACE_UNLIKELY{
-				MACE__THROW(OutOfBounds, std::to_string(i) + " is greater than the size of this vector, " + std::to_string(N) + "!");
-			}
-#endif
-			return content.at(i);
-		}
-		/**
-		Set data at a certain position to equal a new value. Slower than `operator[]` because it does bounds checking.
-		@param position Where to put the new value, zero indexed.
-		@param value What to put in `position`
-		@throw IndexOutOfBounds If `i` is greater than `size()`
-		@throw IndexOutOfBounds If `i` is less than 0
-		@see operator[](Index)
-		*/
-		void set(Index position, T value) MACE_EXPECTS(position < size()) {
-#ifdef MACE_DEBUG_CHECK_ARGS
-			if (position >= N) MACE_UNLIKELY{
-				MACE__THROW(OutOfBounds, std::to_string(position) + " is greater than the size of this vector, " + std::to_string(N) + "!");
-			}
-#endif
-
-			content[position] = value;
-		}
-
-		/**
-		Creates an array with the data of this `Vector`, in O(N) time
-		@return Pointer to `arr`
-		@param arr The array to fill
-		*/
-		const T* flatten(T arr[N]) const {
-			for (Index i = 0; i < N; ++i) {
-				arr[i] = content[i];
-			}
-			return arr;
-		}
-
-		T* begin() {
-			return content;
-		}
-
-		const T* begin() const {
-			return content;
-		}
-
-		T* end() {
-			return content + (sizeof(T) * (N - 1));
-		}
-
-		const T* end() const {
-			return content + (sizeof(T) * (N - 1));
-		}
-
-		/**
-		Retrieves the content at a certain `Index`, zero indexed. This operator is faster than `get(Index),` as it doesn't do bounds checking. However, accessing an invalid index will be undefined.
-		@param i Where to retrieve the data
-		@return The data at `i`
-		@see operator[](Index) const
-		*/
-		T& operator[](Index i) MACE_EXPECTS(i < size()) {
-			return content[i];
-		};
-		/**
-		`const` version of `operator[](Index)` used if a `Vector` is declared `const`.
-		@param i Where to retrieve the data
-		@return The data at `i`
-		@see operator[](Index)
-		*/
-		const T& operator[](Index i) const MACE_EXPECTS(i < size()) {
-			return content[i];
-		};
-
-		/**
-		Retrieves content at a certain `Index`, not zero indexed.
+		Multiplication, and subtraction are the same concept. To do math with MACE, all you need to do is to use the mathmatical operators.
 		<p>
-		Equal to {@code
-			vector[i-1]
-		}
-		@param i Not zero indexed `Index`
-		@return Value at `i-1`
-		@see operator[](Index)
-		*/
-		T& operator()(Index i) MACE_EXPECTS(i <= size() && i > 0) {
-			return content[i - 1];
-		}
+		Examples:
+		{@code
+			Vector<int,3> vector = Vector<int,3>();//Create a Vector of 3 ints
 
-		/**
-		`const` version of `operator()(Index)`.
-		@param i Not zero indexed `Index`
-		@return Value at `i-1`
-		*/
-		const T& operator()(Index i) MACE_EXPECTS(i <= size() && i > 0)const {
-			return content[i - 1];
-		}
+			int array[] = {1,2,3};
+			vector = array;//Generate Vector from array
 
-		/**
-		Adds 2 `Vectors` together.
-		<p>
-		This is done in o(N) time
+			vector.get(i);//Get int from position i
+			vector[i];//get int from position i
 
-		@param right Another `Vector`
-		@return A `Vector` that was created by adding 2 `Vectors` together
-		@see Vector for an explanation of `Vector` math
-		*/
-		Child operator+(const Child& right) const {
-			Child out = Child(content);
-			out += right;
-			return out;
-		};
-		/**
-		Subtracts 2 `Vectors` together.
-		<p>
-		This is done in O(N) time
+			vector.set(i,v);//Set int at position i to equal v
+			vector[i]=v;//set int at position i to equal v
 
-		@param right Another `Vector`
-		@return A `Vector` that was created by subtracting 2 `Vectors` together
-		@see Vector for an explanation of `Vector` math
-		*/
-		Child operator-(const Child& right) const {
-			Child out = Child(content);
-			out -= right;
-			return out;
-		};
+			vector.size() //Get how many elements the Vector has
 
-		/**
-		Multiplies 2 `Vectors` together.
-		<p>
-		This is done in O(N) time
-
-		@param right Another `Vector`
-		@return The product of the multiplication
-		@see Vector for an explanation of `Vector` math
-		*/
-		Child operator*(const Child& right) const {
-			Child out = Child(content);
-			out *= right;
-			return out;
-		}
-
-		/**
-		Divides 2 `Vectors` together.
-		<p>
-		This is done in O(N) time
-
-		@param right Another `Vector`
-		@return The quotient of 2 `Vectors`
-		@see Vector for an explanation of `Vector` math
-		*/
-		Child operator/(const Child& right) const {
-			Child out = Child(content);
-			out /= right;
-			return out;
-		}
-
-		/**
-		Translates a `Vector` with a scalar.
-		<p>
-		This is done in O(N) time
-		@param scalar What to translate this `Vector` by
-		@return A `Vector` translated.
-		@see operator*(const Vector&) const
-		*/
-		Child operator+(const T scalar) const {
-			Child out = Child(content);
-			out += scalar;
-			return out;
-		}
-
-		/**
-		Translates a `Vector` with a scalar.
-		<p>
-		This is done in O(N) time
-		@param scalar What to translate this `Vector` by
-		@return A `Vector` translated.
-		@see operator*(const Vector&) const
-		*/
-		Child operator-(const T scalar) const {
-			Child out = Child(content);
-			out -= scalar;
-			return out;
-		}
-
-		/**
-		Multiplies a `Vector` by a scalar.
-		<p>
-		This is done in O(N) time
-		@param scalar What to multiply this `Vector` by
-		@return A `Vector` scaled.
-		@see operator*(const Vector&) const
-		*/
-		Child operator*(const T scalar) const {
-			Child out = Child(content);
-			out *= scalar;
-			return out;
-		}
-
-		/**
-		Divides a `Vector` by a scalar.
-		<p>
-		This is done in O(N) time
-		@param scalar What to divided this `Vector` by
-		@return A `Vector` scaled.
-		@see operator*(const T&) const
-		*/
-		Child operator/(const T scalar) const {
-			Child out = Child(content);
-			out /= scalar;
-			return out;
-		}
-
-		/**
-		Adds a `Vector` to this one.
-		@param right A `Vector` to add
-		@see operator+(const Vector<T,N>&) const
-		*/
-		void operator+= (const Child& right) {
-#pragma omp simd
-			for (Index i = 0; i < N; ++i) {
-				operator[](i) += right[i];
+			//Iterate through a Vector:
+			for(Index i =0;i<vector.size();i++){
+				int value = vector[i];
 			}
 		}
-
-		/**
-		Subtracts a `Vector` from this one.
-		@param right A `Vector` to subtract
-		@see operator-(const Vector<T,N>&) const
-		*/
-		void operator-= (const Child& right) {
-#pragma omp simd
-			for (Index i = 0; i < N; ++i) {
-				operator[](i) -= right[i];
-			}
-		}
-
-		/**
-		Multiplies a `Vector` by this one
-		@param right A `Vector` to multiply
-		@see operator+(const Vector<T,N>&) const
-		*/
-		void operator*= (const Child& right) {
-#pragma omp simd
-			for (Index i = 0; i < N; ++i) {
-				operator[](i) *= right[i];
-			}
-		}
-
-		/**
-		Divides a `Vector` by this one
-		@param right A `Vector` to divide
-		@see operator+(const Vector<T,N>&) const
-		*/
-		void operator/= (const Child& right) {
-#pragma omp simd
-			for (Index i = 0; i < N; ++i) {
-				operator[](i) /= right[i];
-			}
-		}
-
-
-		/**
-		Translates this `Vector`
-		@param scalar How much to translate by
-		@see operator*(const Vector<T,3>&) const
-		@see operator*(const T&) const
-		*/
-		void operator+= (const T& scalar) {
-#pragma omp simd
-			for (Index i = 0; i < N; ++i) {
-				operator[](i) += scalar;
-			}
-		}
-
-		/**
-		Translates this `Vector`
-		@param scalar How much to translate by
-		@see operator*(const Vector<T,3>&) const
-		@see operator*(const T&) const
-		*/
-		void operator-= (const T& scalar) {
-#pragma omp simd
-			for (Index i = 0; i < N; ++i) {
-				operator[](i) -= scalar;
-			}
-		}
-
-		/**
-		Scales this `Vector`
-		@param scalar How much to scale
-		@see operator*(const Vector<T,3>&) const
-		@see operator*(const T&) const
-		*/
-		void operator*= (const T& scalar) {
-#pragma omp simd
-			for (Index i = 0; i < N; ++i) {
-				operator[](i) *= scalar;
-			}
-		}
-
-		/**
-		Divides this `Vector`
-		@param scalar How much to divide by
-		@see operator*(const Vector<T,3>&) const
-		@see operator*(const T&) const
-		*/
-		void operator/= (const T& scalar) {
-#pragma omp simd
-			for (Index i = 0; i < N; ++i) {
-				operator[](i) /= scalar;
-			}
-		}
-
-		/**
-		Compares whether 2 `Vectors` have the same values.
 		<p>
-		This is done in O(N) time
-		@param other A `Vector` to compare `this` against
-		@return `true` if the 2 are equal, `false` otherwise
-		@see operator!=(const Vector<T,N>) const
-		@see operator<(const Vector&) const
-		@see operator>=(const Vector&) const
-		@see operator<=(const Vector&) const
-		@see operator>(const Vector&) const
-		*/
-		bool operator==(const Child& other) const {
-			for (Index i = 0; i < N; ++i) {
-				if (operator[](i) != other[i]) {
-					return false;
-				}
-			}
-			return true;
-		};
-
-		/**
-		Compares whether 2 `Vectors` don't have the same values.
+		There are various type aliases in place to prevent using the template parameters. They all use the following syntax:
+		`Vector[size][suffix]`
 		<p>
-		This is done in O(N) time
-		@param other A `Vector` to compare `this` against
-		@return `true` if the 2 are not equal, `false` otherwise
-		@see operator==(const Vector<T,N>) const
-		@see operator<(const Vector&) const
-		@see operator>=(const Vector&) const
-		@see operator<=(const Vector&) const
-		@see operator>(const Vector&) const
-		*/
-		bool operator!=(const Child& other) const {
-			return !operator==(other);
-		};
-
-		/**
-		Compares the `>` operator on 2 `Vectors` elements.
+		suffixes exist for every primitive type and are the first letter of the primitive name. For example, the suffix
+		for a `float` would be `f` and the suffix for an `int` would be `i`. Primitives with modifiers simply add the
+		letter. The suffixes for an `unsigned char` would be `uc` and the prefix for a `long long int` would be `lli`
 		<p>
-		This is done in O(N) time
-		@param other A `Vector` to compare against
-		@return The result of the `>` operator on each element
-		@see operator<(const Vector&) const
-		@see operator>=(const Vector&) const
-		@see operator<=(const Vector&) const
-		@see operator==(const Vector&) const
-		@see operator!=(const Vector&) const
-		*/
-		bool operator>(const Child& other) const {
-			for (Index i = 0; i < N; ++i) {
-				if (operator[](i) <= other[i]) {
-					return false;
-				}
-			}
-			return true;
-		}
-
-		/**
-		Compares the `>=` operator on 2 `Vectors` elements.
+		Sizes exist for vertices up to 5 objects
 		<p>
-		This is done in O(N) time
-		@param other A `Vector` to compare against
-		@return The result of the `>=` operator on each element
-		@see operator<(const Vector&) const
-		@see operator>(const Vector&) const
-		@see operator<=(const Vector&) const
-		@see operator==(const Vector&) const
-		@see operator!=(const Vector&) const
+		For example, to create a `Vector` that is made up of 4 floats, you would use `Vector4f`. For a `Vector` of 2
+		unsigned ints, you would use `Vector2ui`
+		@see Matrix
+		@tparam T what the `Vector` is made of and calculates with. Can be any type/
+		@tparam N amount of elements in the `Vector` which must be greater than 0.
 		*/
-		bool operator>=(const Child& other) const {
-			return operator>(other) || operator==(other);
-		}
-
-		/**
-		Compares the `<` operator on 2 `Vectors` elements.
-		<p>
-		This is done in O(N) time
-		@param other A `Vector` to compare against
-		@return The result of the `<` operator on each element
-		@see operator<=(const Vector&) const
-		@see operator>=(const Vector&) const
-		@see operator>(const Vector&) const
-		@see operator==(const Vector&) const
-		@see operator!=(const Vector&) const
-		*/
-		bool operator<(const Child& other) const {
-			return !operator>=(other);
-		}
-
-		/**
-		Compares the `<=` operator on 2 `Vectors` elements.
-		@param other A `Vector` to compare against
-		@return The result of the `<=` operator on each element
-		@see operator<(const Vector&) const
-		@see operator>=(const Vector&) const
-		@see operator>(const Vector&) const
-		@see operator==(const Vector&) const
-		@see operator!=(const Vector&) const
-		*/
-		bool operator<=(const Child& other) const {
-			return !operator>(other);
-		}
-
-		/**
-		Operator used to output to `std::cout`.
-		<p>
-		This is done in O(N) time
-		@param output `std::ostream` the `Matrix` was inserted into
-		@param v `Matrix` which will be printed
-		@return `output` for chaining
-		*/
-		friend std::ostream& operator<<(std::ostream& output,
-										const Child& v) {
-			output << '[' << ' ';//why not just "[ "? well, that needs std::string to be included, and thats more compiliation time. this way doesnt need that.
-			for (Index x = 0; x < N; ++x) {
-				output << v[x];
-				if (x != N - 1) {
-					output << ", ";
-				}
-			}
-			output << ' ' << ']';
-			return output;
-		}
-
-	protected:
-		T content[N];
-	};//VectorBase
-
 	template<typename T, Size N>
-	struct Vector: public VectorBase<Vector<T, N>, T, N> {
+	struct Vector: public MACE__INTERNAL_NS::VectorBase<Vector<T, N>, T, N> {
 	public:
-		using VectorBase<Vector<T, N>, T, N>::VectorBase;
+		using MACE__INTERNAL_NS::VectorBase<Vector<T, N>, T, N>::VectorBase;
 	};
 
 	template<typename T>
@@ -686,9 +678,9 @@ namespace mc {
 	};
 
 	template<typename T>
-	struct Vector<T, 1>: public VectorBase<Vector<T, 1>, T, 1> {
+	struct Vector<T, 1>: public MACE__INTERNAL_NS::VectorBase<Vector<T, 1>, T, 1> {
 	public:
-		using VectorBase<Vector<T, 1>, T, 1>::VectorBase;
+		using MACE__INTERNAL_NS::VectorBase<Vector<T, 1>, T, 1>::VectorBase;
 
 		operator T() {
 			return this->operator[](0);
@@ -700,9 +692,9 @@ namespace mc {
 	};
 
 	template<typename T>
-	struct Vector<T, 2>: public VectorBase<Vector<T, 2>, T, 2> {
+	struct Vector<T, 2>: public MACE__INTERNAL_NS::VectorBase<Vector<T, 2>, T, 2> {
 	public:
-		using VectorBase<Vector<T, 2>, T, 2>::VectorBase;
+		using MACE__INTERNAL_NS::VectorBase<Vector<T, 2>, T, 2>::VectorBase;
 
 		T& x() {
 			return this->operator[](0);
@@ -722,9 +714,9 @@ namespace mc {
 	};
 
 	template<typename T>
-	struct Vector<T, 3>: public VectorBase<Vector<T, 3>, T, 3> {
+	struct Vector<T, 3>: public MACE__INTERNAL_NS::VectorBase<Vector<T, 3>, T, 3> {
 	public:
-		using VectorBase<Vector<T, 3>, T, 3>::VectorBase;
+		using MACE__INTERNAL_NS::VectorBase<Vector<T, 3>, T, 3>::VectorBase;
 
 		T& x() {
 			return this->operator[](0);
@@ -752,9 +744,9 @@ namespace mc {
 	};
 
 	template<typename T>
-	struct Vector<T, 4>: public VectorBase<Vector<T, 4>, T, 4> {
+	struct Vector<T, 4>: public MACE__INTERNAL_NS::VectorBase<Vector<T, 4>, T, 4> {
 	public:
-		using VectorBase<Vector<T, 4>, T, 4>::VectorBase;
+		using MACE__INTERNAL_NS::VectorBase<Vector<T, 4>, T, 4>::VectorBase;
 
 		T& x() {
 			return this->operator[](0);
