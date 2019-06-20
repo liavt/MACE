@@ -230,7 +230,7 @@ namespace mc {
 		Creates an 1-dimensional array with the data of this `Matrix`, in O(N) time
 		@return `arr`
 		*/
-		const T* flatten(T arr[W * H]) const {
+		MACE_PURE const T* flatten(T arr[W * H]) const {
 			for (Index x = 0; x < W; ++x) {
 				for (Index y = 0; y < H; ++y) {
 					arr[y + (x * H)] = (content[x][y]);
@@ -245,7 +245,7 @@ namespace mc {
 		This method is faster than `math::transpose(matrix).flatten(array)`, as that takes O(N*2) time.
 		@return Pointer to an array of data
 		*/
-		const T* flattenTransposed(T arr[W * H]) const {
+		MACE_PURE const T* flattenTransposed(T arr[W * H]) const {
 			for (Index x = 0; x < H; ++x) {
 				for (Index y = 0; y < W; ++y) {
 					arr[y + (x * H)] = (content[y][x]);
@@ -556,7 +556,7 @@ namespace mc {
 		@tparam T Type of the `Matrix`
 		*/
 		template<typename T>
-		inline T det(const Matrix<T, 2> & matrix) {
+		MACE_PURE MACE_NODISCARD MACE_CONSTEXPR inline T det(const Matrix<T, 2> & matrix) {
 			return (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]);
 		}
 

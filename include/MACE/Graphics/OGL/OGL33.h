@@ -31,7 +31,8 @@ namespace mc {
 		/**
 		Contains various abstractions for OpenGL. Assume that any class in this namespace requires an OpenGL context.
 		<p>
-		OpenGL abstractions will only implement functionality from OpenGL 3.3, as that is what MACE supports.
+		OpenGL abstractions will only implement functionality from core OpenGL 3.3, but may use features from extensions
+		using the GLAD_GL_<extension> runtime check.
 		<p>
 		Most of the abstractions have very minimal extra work. Most of the time they are direct bindings to the
 		actual OpenGL function. However, some classes like `ShaderProgram` do a lot of bookkeeping to make it easier

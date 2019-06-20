@@ -111,6 +111,24 @@ See LICENSE.md for full copyright information
 #	endif
 #endif
 
+//pure attribute
+#ifndef MACE_PURE
+#	if defined(MACE_GNU)
+#		define MACE_PURE __attribute__((pure))
+#	else
+#		define MACE_PURE
+#	endif
+#endif//MACE_PURE
+
+//const attribute
+#ifndef MACE_CONST_ATTR
+#	if defined(MACE_GNU)
+#		define MACE_CONST_ATTR __attribute__((const))
+#	else
+#		define MACE_CONST_ATTR
+#	endif
+#endif//MACE_CONST_ATTR
+
 #ifndef MACE_UNREACHABLE
 #	if defined(MACE_GCC) || defined(MACE_INTEL)
 #		define MACE_UNREACHABLE __builtin_unreachable()

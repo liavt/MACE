@@ -156,22 +156,6 @@ namespace mc {
 #endif		
 		}
 
-#ifdef MACE_DEBUG
-		void assertion(const bool cond, const std::string & message) {
-			assertion(cond, message.c_str());
-		}
-
-		void assertion(const bool cond, const char* message) {
-			if (cond) {
-				MACE__THROW(AssertionFailed, message);
-			}
-		}
-#else
-		void assertion(const bool, const std::string&) {}
-
-		void assertion(const bool, const char*) {}
-#endif
-
 		void wait(const unsigned long long int ms) {
 			std::this_thread::sleep_for(std::chrono::milliseconds(ms));
 		}
@@ -252,7 +236,7 @@ namespace mc {
 #endif
 		}
 
-		void checkError(const unsigned int line, const char* file, const std::string errorMessage) {
+		void checkError(const unsigned int line, const char* file, const std::string& errorMessage) {
 			//POSIX man pages says to save the error before using it in case of a concurrent environment
 			const int error = errno;
 

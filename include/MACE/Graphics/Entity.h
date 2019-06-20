@@ -53,11 +53,14 @@ namespace mc {
 		template<typename T>
 		using ExtendsComponent = EnableIfType < std::is_base_of<gfx::Component, T>{} > ;
 
+		template<typename T>
+		using DefaultConstructible = EnableIfType < std::is_default_constructible<T>{} > ;
+
 		template<typename T, typename = ExtendsComponent<T>>
-		MACE_CONSTEXPR auto getComponentTypeID() noexcept -> ComponentTypeID {
+		MACE_NODISCARD MACE_CONSTEXPR inline ComponentTypeID getComponentTypeID() noexcept {
 			return &ComponentTypeIDPtr<T>::ID;
 		}
-	}
+	}//internal
 
 	namespace gfx {
 		using EntityProperties = Byte;
@@ -80,7 +83,6 @@ namespace mc {
 
 		//forward-defining dependencies
 		class Entity;
-		class RootEntity;
 		class Texture;
 		class Painter;
 		class ComponentQueue;
@@ -179,7 +181,6 @@ namespace mc {
 		*/
 		class MACE_NOVTABLE Entity: public Initializable {
 			friend class Component;
-			friend class RootEntity;
 		public:
 			//values defining which bit in a byte every propety is, or how much to bit shift it
 			enum EntityProperty: Byte {
@@ -443,45 +444,54 @@ namespace mc {
 			void addChild(EntityPtr ent) MACE_EXPECTS(ent != nullptr);
 
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
-			void addComponent(T & com) {
-				addComponent(&com);
+			inline void addComponent(T & com) {
+				addComponent<T>(&com);
 			}
 
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
-			void addComponent(T * com) {
-				addComponent(ComponentPtr<T>(com, [](T*) {}));
+			inline void addComponent(T * com) {
+				addComponent<T>(ComponentPtr<T>(com, [](T*) {}));
 			}
 			/**
 			@param com The SmartPointer of an `Entity`. Ownership of the pointer will change meaning this parameter cannot be marked `const`
 			*/
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
 			void addComponent(ComponentPtr<T> com) MACE_EXPECTS(com != nullptr) {
-				if (com == nullptr) {
-					MACE__THROW(NullPointer, "Inputted ComponentPtr was nullptr");
-				}
+				MACE_ASSERT(com != nullptr, "Inputted ComponentPTr was nullptr");
 
 				ComponentPtr<Component> component = std::static_pointer_cast<Component>(com);
 				component->parent = this;
 				component->init();
 
-				components.emplace(internal::getComponentTypeID<T>(), component);
+				components.emplace(MACE__INTERNAL_NS::getComponentTypeID<T>(), component);
 
 				makeDirty();
 			}
 
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
-			T getComponent() {
-				return std::static_pointer_cast<T>(components[internal::getComponentTypeID(T)]);
+			MACE_NODISCARD ComponentPtr<T> getComponent() {
+				return std::static_pointer_cast<T>(components[MACE__INTERNAL_NS::getComponentTypeID<T>()]);
 			}
 
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
-			const T getComponent() const {
-				return std::static_pointer_cast<T>(components[internal::getComponentTypeID(T)]);
+			MACE_NODISCARD const ComponentPtr<T> getComponent() const {
+				return std::static_pointer_cast<T>(components[MACE__INTERNAL_NS::getComponentTypeID<T>()]);
+			}
+
+			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>, typename = MACE__INTERNAL_NS::DefaultConstructible<T>>
+			MACE_NODISCARD ComponentPtr<T> getOrCreateComponent() {
+				ComponentPtr<T> existing = getComponent<T>();
+				if (existing == nullptr) MACE_UNLIKELY{
+					ComponentPtr<T> newComponent{new T()};
+					addComponent(newComponent);
+					return newComponent;
+				}
+				return existing;
 			}
 
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
 			bool hasComponent() {
-				return components.count(internal::getComponentTypeID(T)) > 0;
+				return components.count(MACE__INTERNAL_NS::getComponentTypeID<T>()) > 0;
 			}
 
 			const RelativeScale& getWidth() const;
@@ -576,15 +586,15 @@ namespace mc {
 			<p>
 			The root does not have any parent.
 			<p>
-			If this `Entity` does not have any parent, returns `this`
+			If this `Entity` does not have any parent, `this` becomes
+			the root of the tree
 			@return The root `Entity` of which this `Entity` belongs to.
-			@note For deep heirarchies, this function could be slower.
 			*/
-			const RootEntity* getRoot() const;
+			const Entity* getRoot() const;
 			/**
 			@copydoc Entity::getRoot() const
 			*/
-			RootEntity* getRoot();
+			Entity* getRoot();
 
 			/**
 			@rendercontext
@@ -780,7 +790,7 @@ namespace mc {
 			std::unordered_map<MACE__INTERNAL_NS::ComponentTypeID, ComponentPtr<Component>> components{};
 
 			Entity* parent = nullptr;
-			RootEntity* root = nullptr;
+			Entity* root = nullptr;
 			EntityID id = 0;
 
 			/**
@@ -804,42 +814,25 @@ namespace mc {
 			void kill();
 		};//Entity
 
-		class IDManager {
-			friend class Entity;
-		public:
-			Entity* getEntityByID(const EntityID id) const;
-		private:
-			std::vector<Entity*> ids;
-
-			MACE_NODISCARD EntityID generateID(Entity* e);
-
-			void deleteID(const EntityID id);
-		};//IDManager
-
-		class MACE_NOVTABLE RootEntity: public Entity {
-		public:
-			virtual ~RootEntity() override = default;
-
-			std::shared_ptr<IDManager> getIDManager();
-			const std::shared_ptr<IDManager> getIDManager() const;
-		protected:
-			virtual void init() override;
-			virtual void destroy() override;
-		private:
-			/*
-			needs to be shared_ptr instead of unique_ptr in order to allowed RootEntity to be Moveable
-
-			the reasoning behind this is that every other Entity is Moveable and by requiring
-			RootEntity to have no move constructor this puts an unneccessary contract on
-			whatever subclasses RootEntity (such as a WindowModule or EntityModule)
-			*/
-			std::shared_ptr<IDManager> idManager;
-
-
-		};//RootEntity
-
 		class Group: public Entity {};//Group
 	}//gfx
+
+	namespace internal {
+		class RootComponent: public gfx::Component {
+			friend class gfx::Entity;
+		public:
+			MACE_NODISCARD gfx::Entity* getEntityByID(const gfx::EntityID id) const;
+		private:
+			std::vector<gfx::Entity*> ids{};
+
+			MACE_NODISCARD gfx::EntityID generateID(gfx::Entity* e);
+
+			void deleteID(const gfx::EntityID id);
+
+			void init() override;
+			void destroy() override;
+		};//RootComponent
+	}
 }//mc
 
 #endif

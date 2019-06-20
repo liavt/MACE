@@ -36,14 +36,19 @@ namespace mc {
 #ifdef MACE_DEBUG
 			Error(const std::string& message, const std::string& line, const std::string& file) noexcept : Base(std::string(ErrorType::val) + ": " + message + "\n\t[" + line + " @ " + file + "]") {}
 #else
-			Error(const std::string& message, const std::string&, const std::string&) noexcept : Base(std::string(ErrorType::val) + ": " + message) {}
+			Error(const std::string& message, const std::string&, const std::string&) noexcept : Base(message) {}
 #endif//MACE_DEBUG
 			~Error() noexcept = default;
 		};
 	}
 
 #define MACE__GET_ERROR_NAME(name) name##Error
-#define MACE__DECLARE_ERROR_BASE(name, base) struct name##Type { static MACE_CONSTEXPR CString val = MACE_STRINGIFY_DEFINITION(MACE__GET_ERROR_NAME(name)); }; using MACE__GET_ERROR_NAME(name) = MACE__INTERNAL_NS::Error< name##Type, base >;
+#ifdef MACE_DEBUG
+#	define MACE__DECLARE_ERROR_TYPE(name) struct name##Type { static MACE_CONSTEXPR CString val = MACE_STRINGIFY_DEFINITION(MACE__GET_ERROR_NAME(name)); }
+#else
+#	define MACE__DECLARE_ERROR_TYPE(name) struct name##Type {}
+#endif//MACE_DEBUG
+#define MACE__DECLARE_ERROR_BASE(name, base) MACE__DECLARE_ERROR_TYPE(name); using MACE__GET_ERROR_NAME(name) = MACE__INTERNAL_NS::Error< name##Type, base >;
 #define MACE__DECLARE_ERROR(name) MACE__DECLARE_ERROR_BASE(name, std::runtime_error)
 #define MACE__THROW_CUSTOM_LINE(name, message, line, file) do{throw MACE__GET_ERROR_NAME(name) ( std::string(MACE_FUNCTION_NAME) +  ": " + std::string(message), line, file);}while(0)
 #define MACE__THROW(name, message) MACE__THROW_CUSTOM_LINE(name, message, MACE_STRINGIFY_DEFINITION(__LINE__), __FILE__)
@@ -64,7 +69,7 @@ namespace mc {
 	/**
 	Thrown when a pointer is equal to `nullptr`
 	*/
-	MACE__DECLARE_ERROR(NullPointer);
+	MACE__DECLARE_ERROR_BASE(NullPointer, std::logic_error);
 
 	/**
 	Thrown when an assertion fails.

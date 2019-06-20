@@ -193,11 +193,11 @@ namespace mc {
 			}
 		}
 
-		RootEntity* Entity::getRoot() {
+		Entity* Entity::getRoot() {
 			return root;
 		}
 
-		const RootEntity* Entity::getRoot() const {
+		const Entity* Entity::getRoot() const {
 			return root;
 		}
 
@@ -346,16 +346,18 @@ namespace mc {
 			}
 
 			if (root == nullptr) {
-				if (parent == nullptr) {
-					MACE__THROW(NullPointer, "Entity parent was nullptr");
-				} else if (parent->root == nullptr) {
-					MACE__THROW(NullPointer, "Entity parent's root was nullptr");
-				}
+				if (parent != nullptr) {
+					MACE_ASSERT(parent->root != nullptr, "Parent root was nullptr");
 
-				root = parent->root;
+					root = parent->root;
+				} else {
+					root = this;
+
+					addComponent<MACE__INTERNAL_NS::RootComponent>(new MACE__INTERNAL_NS::RootComponent());
+				}
 			}
 
-			id = root->getIDManager()->generateID(this);
+			id = root->getComponent<MACE__INTERNAL_NS::RootComponent>()->generateID(this);
 
 			makeDirty();
 			for (Index i = 0; i < children.size(); ++i) {
@@ -381,19 +383,22 @@ namespace mc {
 
 				onDestroy();
 
-				for (auto& component : components) {
-					component.second->destroy();
-				}
-				components.clear();
-
 				for (auto& child : children) {
 					child->destroy();
 				}
 				children.clear();
 
+				for (auto& component : components) {
+					component.second->destroy();
+				}
+				components.clear();
+
 				root->setProperty(Entity::DIRTY, true);
 
-				root->getIDManager()->deleteID(id);
+				// if this is root, the RootComponent would have already been destroyed already.
+				if (root != this) {
+					root->getComponent<MACE__INTERNAL_NS::RootComponent>()->deleteID(id);
+				}
 
 				transformation.reset();
 				parent = nullptr;
@@ -635,8 +640,10 @@ namespace mc {
 		bool Metrics::operator!=(const Metrics& other) const {
 			return !operator==(other);
 		}
+	}//gfx
 
-		Entity* IDManager::getEntityByID(const EntityID id) const {
+	namespace internal {
+		gfx::Entity* RootComponent::getEntityByID(const gfx::EntityID id) const {
 			if (id == 0) {
 				return nullptr;
 			} else if (id > ids.size()) {
@@ -646,8 +653,8 @@ namespace mc {
 			return ids[id - 1];
 		}
 
-		EntityID IDManager::generateID(Entity* e) {
-			for (EntityID i = 0; i < static_cast<EntityID>(ids.size()); ++i) {
+		gfx::EntityID RootComponent::generateID(gfx::Entity* e) {
+			for (gfx::EntityID i = 0; i < static_cast<gfx::EntityID>(ids.size()); ++i) {
 				if (ids[i] == nullptr) {
 					ids[i] = e;
 					//0 is reserved for an unitialized Entity, so add 1 to the interator
@@ -657,36 +664,21 @@ namespace mc {
 
 			ids.push_back(e);
 
-			return static_cast<EntityID>(ids.size());
+			return static_cast<gfx::EntityID>(ids.size());
 		}
 
-		void IDManager::deleteID(const EntityID id) {
+		void RootComponent::deleteID(const gfx::EntityID id) {
 			if (id > 0 && id <= ids.size()) {
 				ids[id - 1] = nullptr;
 			}
 		}
 
-		std::shared_ptr<IDManager> RootEntity::getIDManager() {
-			return idManager;
+		void RootComponent::init() {
+			ids.clear();
 		}
 
-		const std::shared_ptr<IDManager> RootEntity::getIDManager() const {
-			return idManager;
+		void RootComponent::destroy() {
+			ids.clear();
 		}
-
-		void RootEntity::init() {
-			root = this;
-			idManager = std::shared_ptr<IDManager>(new IDManager());
-
-			Entity::init();
-		}
-
-		void RootEntity::destroy() {
-			Entity::destroy();
-
-			idManager.reset();
-			root = nullptr;
-		}
-
-	}//gfx
+	}//internal
 }//mc

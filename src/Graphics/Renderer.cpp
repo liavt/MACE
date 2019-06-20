@@ -65,7 +65,7 @@ namespace mc {
 			const int mouseX = gfx::Input::getMouseX(), mouseY = gfx::Input::getMouseY();
 			if (mouseX >= 0 && mouseY >= 0) {
 				//std::cout << getEntityAt(static_cast<Pixels>(mouseX), static_cast<Pixels>(mouseY)) << std::endl;
-				Entity* hovered = getContext()->getWindow()->getIDManager()->getEntityByID(getEntityAt(static_cast<Pixels>(mouseX), static_cast<Pixels>(mouseY)));
+				Entity* hovered = getContext()->getWindow()->getComponent<MACE__INTERNAL_NS::RootComponent>()->getEntityByID(getEntityAt(static_cast<Pixels>(mouseX), static_cast<Pixels>(mouseY)));
 
 				if (hovered != nullptr && !hovered->needsRemoval()) {
 					hovered->hover();

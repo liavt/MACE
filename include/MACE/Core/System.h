@@ -57,10 +57,6 @@ namespace mc {
 		std::size_t mbsrtowcs(std::size_t* returnValue, wchar_t* wcstr, std::size_t sizeInWords, const char** mbstr, std::size_t count, mbstate_t* mbstate) MACE_EXPECTS(returnValue != nullptr && wcstr != nullptr && mbstr != nullptr && mbstate != nullptr);
 		std::size_t wcstombs(std::size_t* returnValue, char* dst, std::size_t sizeInWords, const wchar_t* src, const std::size_t length) MACE_EXPECTS(returnValue != nullptr && dst != nullptr && src != nullptr);
 
-		//the reason it is called assertion and not assert is because on some platforms, assert is a macro and that conflicts with the function declaration
-		void assertion(const bool cond, const std::string& message) MACE_EXPECTS(!message.empty());
-		void assertion(const bool cond, const char* message = "Assertion failed") MACE_EXPECTS(message != nullptr);
-
 		void wait(const unsigned long long int ms);
 
 		template<typename T>
@@ -72,18 +68,18 @@ namespace mc {
 #endif
 		}
 
-		std::wstring toWideString(const std::string& s);
-		std::string toNarrowString(const std::wstring& s);
+		MACE_NODISCARD std::wstring toWideString(const std::string& s);
+		MACE_NODISCARD std::string toNarrowString(const std::wstring& s);
 
 		template<typename SizeType = Size, class T, SizeType N>
-		inline MACE_CONSTEXPR SizeType getArraySize(const T(&)[N]) noexcept {
+		MACE_NODISCARD MACE_CONST_ATTR inline MACE_CONSTEXPR SizeType getArraySize(const T(&)[N]) noexcept {
 			return N;
 		}
 
 		const char* strerror(char* buf, std::size_t bufsize, int errnum) MACE_EXPECTS(buf != nullptr);
 
 		void clearError(const unsigned int lineNumber = 0, const char* filename = "Unknown file") MACE_EXPECTS(filename != nullptr);
-		void checkError(const unsigned int lineNumber = 0, const char* filename = "Unknown file", const std::string message = "Unknown message") MACE_EXPECTS(filename != nullptr && !message.empty());
+		void checkError(const unsigned int lineNumber = 0, const char* filename = "Unknown file", const std::string& message = "Unknown message") MACE_EXPECTS(filename != nullptr && !message.empty());
 
 		void pause();
 
