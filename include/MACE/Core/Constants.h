@@ -114,7 +114,7 @@ See LICENSE.md for full copyright information
 //pure attribute
 #ifndef MACE_PURE
 #	if defined(MACE_GNU)
-#		define MACE_PURE __attribute__((pure))
+#		define MACE_PURE [[gnu::pure]]
 #	else
 #		define MACE_PURE
 #	endif
@@ -123,7 +123,7 @@ See LICENSE.md for full copyright information
 //const attribute
 #ifndef MACE_CONST_ATTR
 #	if defined(MACE_GNU)
-#		define MACE_CONST_ATTR __attribute__((const))
+#		define MACE_CONST_ATTR [[gnu::const]]
 #	else
 #		define MACE_CONST_ATTR
 #	endif

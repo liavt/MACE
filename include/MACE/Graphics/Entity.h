@@ -15,6 +15,7 @@ See LICENSE.md for full copyright information
 #include <memory>
 //TODO find a way to not import type_traits as it's really heavy. a custom SFINAE would be nice
 #include <type_traits>
+#include <queue>
 
 namespace mc {
 	namespace gfx {
@@ -52,9 +53,6 @@ namespace mc {
 		*/
 		template<typename T>
 		using ExtendsComponent = EnableIfType < std::is_base_of<gfx::Component, T>{} > ;
-
-		template<typename T>
-		using DefaultConstructible = EnableIfType < std::is_default_constructible<T>{} > ;
 
 		template<typename T, typename = ExtendsComponent<T>>
 		MACE_NODISCARD MACE_CONSTEXPR inline ComponentTypeID getComponentTypeID() noexcept {
@@ -457,13 +455,7 @@ namespace mc {
 			*/
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
 			void addComponent(ComponentPtr<T> com) MACE_EXPECTS(com != nullptr) {
-				MACE_ASSERT(com != nullptr, "Inputted ComponentPTr was nullptr");
-
-				ComponentPtr<Component> component = std::static_pointer_cast<Component>(com);
-				component->parent = this;
-				component->init();
-
-				components.emplace(MACE__INTERNAL_NS::getComponentTypeID<T>(), component);
+				componentsToBeInit.push(std::make_pair<>(MACE__INTERNAL_NS::getComponentTypeID<T>(), std::static_pointer_cast<Component>(com)));
 
 				makeDirty();
 			}
@@ -476,17 +468,6 @@ namespace mc {
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
 			MACE_NODISCARD const ComponentPtr<T> getComponent() const {
 				return std::static_pointer_cast<T>(components[MACE__INTERNAL_NS::getComponentTypeID<T>()]);
-			}
-
-			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>, typename = MACE__INTERNAL_NS::DefaultConstructible<T>>
-			MACE_NODISCARD ComponentPtr<T> getOrCreateComponent() {
-				ComponentPtr<T> existing = getComponent<T>();
-				if (existing == nullptr) MACE_UNLIKELY{
-					ComponentPtr<T> newComponent{new T()};
-					addComponent(newComponent);
-					return newComponent;
-				}
-				return existing;
 			}
 
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
@@ -600,12 +581,6 @@ namespace mc {
 			@rendercontext
 			*/
 			const Metrics& getMetrics() const;
-
-			/**
-			@dirty
-			@rendercontext
-			*/
-			void reset();
 
 			/**
 			Makes this `Entity` dirty and root dirty.
@@ -782,6 +757,8 @@ namespace mc {
 			*/
 			void setProperty(const Byte position, const bool value);
 		private:
+			std::queue<EntityPtr> childrenToBeInit{};
+			std::queue <std::pair<MACE__INTERNAL_NS::ComponentTypeID, ComponentPtr<Component>>> componentsToBeInit{};
 			/**
 			`std::vector` of this `Entity\'s` children. Use of this variable directly is unrecommended. Use `addChild()` or `removeChild()` instead.
 			@internal
@@ -805,13 +782,8 @@ namespace mc {
 
 			EntityProperties properties = Entity::DEFAULT_PROPERTIES;
 
-
-			/**
-			Automatically called when `Entity::PROPERTY_DEAD` is true. Removes this entity from it's parent, and calls it's `destroy()` method.
-			@dirty
-			@see getParent()
-			*/
-			void kill();
+			void checkChildrenToBeInit();
+			void checkComponentsToBeInit();
 		};//Entity
 
 		class Group: public Entity {};//Group

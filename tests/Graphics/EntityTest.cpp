@@ -19,6 +19,9 @@ namespace mc {
 			using mc::gfx::Entity::init;
 			using mc::gfx::Entity::update;
 			using mc::gfx::Entity::render;
+			using mc::gfx::Entity::clean;
+			using mc::gfx::Entity::setProperty;
+			using mc::gfx::Entity::getProperty;
 
 			bool isUpdated = false, isInit = false, isDestroyed = false, isRendered = false, isCleaned = false;
 		protected:
@@ -84,15 +87,14 @@ namespace mc {
 			DummyEntity e = DummyEntity();
 
 			SECTION("Testing what makes something dirty") {
+				e = DummyEntity();
 				REQUIRE(!e.getProperty(Entity::DIRTY));
 				e.setProperty(Entity::DEAD, true);
 				REQUIRE(e.getProperty(Entity::DIRTY));
-				e.reset();
-				REQUIRE(!e.getProperty(Entity::DIRTY));
 			}
 
 			SECTION("Testing clean()") {
-				e.reset();
+				e = DummyEntity();
 				REQUIRE(!e.getProperty(Entity::DIRTY));
 				REQUIRE_FALSE(e.isCleaned);
 
@@ -139,7 +141,7 @@ namespace mc {
 				REQUIRE(*e2.getParent() == e);
 			}
 
-			c.reset();
+			c.clearChildren();
 
 			REQUIRE_FALSE(e.hasParent());
 			REQUIRE_FALSE(e2.hasParent());
@@ -171,8 +173,7 @@ namespace mc {
 			REQUIRE(e.getRoot() == &c);
 			REQUIRE(e1.getRoot() == &c);
 
-			c.reset();
-			
+			c.clearChildren();
 		}
 
 		TEST_CASE("Testing the ENABLE property of an entity", "[entity][graphics]") {
@@ -202,7 +203,7 @@ namespace mc {
 				REQUIRE(!e.isRendered);
 			}
 
-			c.reset();
+			c.clearChildren();
 		}
 
 		TEST_CASE("Testing death", "[entity][graphics]") {//the sweet embrace of death
@@ -235,7 +236,7 @@ namespace mc {
 				REQUIRE(!c.hasChild(e));
 			}
 
-			c.reset();
+			c.clearChildren();
 		}
 
 		TEST_CASE("Testing actions", "[entity][graphics]") {
@@ -269,7 +270,7 @@ namespace mc {
 				REQUIRE(a.destroyed);
 			}
 
-			c.reset();
+			c.clearChildren();
 		}
 
 		TEST_CASE("Testing init()", "[entity][graphics]") {
@@ -292,7 +293,7 @@ namespace mc {
 
 			}
 
-			c.reset();
+			c.clearChildren();
 		}
 
 		TEST_CASE("Testing entity properties", "[entity][graphics]") {
@@ -337,7 +338,7 @@ namespace mc {
 
 			}
 
-			c.reset();
+			c.clearChildren();
 
 			DummyEntity child = DummyEntity();
 
@@ -364,7 +365,7 @@ namespace mc {
 
 			}
 
-			c.reset();
+			c.clearChildren();
 		}
 	}
 }

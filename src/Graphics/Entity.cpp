@@ -12,6 +12,7 @@ See LICENSE.md for full copyright information
 #include <MACE/Core/Error.h>
 #include <MACE/Utility/Transform.h>
 #include <string>
+#include <iostream>
 
 namespace mc {
 	namespace gfx {
@@ -117,81 +118,11 @@ namespace mc {
 			children.erase(iter);
 		}
 
-		void Entity::render() {
-			//check if we can render
-			if (!getProperty(Entity::DISABLED)) {
-				for (auto& com : components) {
-					com.second->render();
-				}
-
-				onRender();
-
-				for (Index i = 0; i < children.size(); ++i) {
-					children[i]->render();
-				}
-			}
-
-		}
-
 		void Entity::onUpdate() {}
 
 		void Entity::onInit() {}
 
 		void Entity::onDestroy() {}
-
-		void Entity::hover() {
-			onHover();
-			for (auto& com : components) {
-				com.second->hover();
-			}
-
-			//propagate upwards
-			Entity* par = getParent();
-			while (par != nullptr) {
-				par->hover();
-				par = par->getParent();
-			}
-		}
-
-		void Entity::clean() {
-			if (!getProperty(Entity::INIT)) {
-				init();
-			}
-
-			if (getProperty(Entity::DIRTY)) {
-				onClean();
-
-				metrics.transform = transformation;
-
-				metrics.inherited = Transformation();
-				//root doesn't have a parent
-				if (hasParent()) MACE_LIKELY{
-					const Entity * par = getParent();
-
-					const Metrics& parentMetrics = par->getMetrics();
-
-					metrics.inherited.translation += parentMetrics.transform.translation + parentMetrics.inherited.translation;
-					metrics.inherited.scaler *= parentMetrics.transform.scaler;
-					metrics.inherited.rotation += parentMetrics.transform.rotation;
-				}
-
-					for (auto& com : components) {
-						com.second->clean(metrics);
-					}
-
-				for (Size i = 0; i < children.size(); ++i) {
-					std::shared_ptr<Entity> child = children[i];
-					child->setProperty(Entity::DIRTY, true);
-					child->clean();
-				}
-
-				setProperty(Entity::DIRTY, false);
-			} else {
-				for (Size i = 0; i < children.size(); ++i) {
-					children[i]->clean();
-				}
-			}
-		}
 
 		Entity* Entity::getRoot() {
 			return root;
@@ -287,20 +218,8 @@ namespace mc {
 			return id;
 		}
 
-		void Entity::kill() {
-			destroy();
-		}
-
 		void Entity::addChild(EntityPtr e) {
-			MACE_ASSERT(e != nullptr, "Inputted Entity to addChild() was nullptr");
-
-			e->parent = this;
-
-			if (getProperty(Entity::INIT) && !e->getProperty(Entity::INIT)) {
-				e->init();
-			}
-
-			children.push_back(e);
+			childrenToBeInit.push(e);
 
 			makeDirty();
 		}
@@ -313,14 +232,88 @@ namespace mc {
 			addChild(&e);
 		}
 
+		void Entity::render() {
+			//check if we can render
+			if (!getProperty(Entity::DISABLED)) {
+				for (auto& com : components) {
+					com.second->render();
+				}
+
+				onRender();
+
+				for (Index i = 0; i < children.size(); ++i) {
+					children[i]->render();
+				}
+			}
+
+		}
+
+		void Entity::hover() {
+			onHover();
+			for (auto& com : components) {
+				com.second->hover();
+			}
+
+			//propagate upwards
+			Entity* par = getParent();
+			while (par != nullptr) {
+				par->hover();
+				par = par->getParent();
+			}
+		}
+
+		void Entity::clean() {
+			if (getProperty(Entity::DIRTY)) {
+				checkChildrenToBeInit();
+				checkComponentsToBeInit();
+
+				onClean();
+
+				metrics.transform = transformation;
+
+				metrics.inherited = Transformation();
+				//root doesn't have a parent
+				if (hasParent()) MACE_LIKELY{
+					const Entity * par = getParent();
+
+					const Metrics& parentMetrics = par->getMetrics();
+
+					metrics.inherited.translation += parentMetrics.transform.translation + parentMetrics.inherited.translation;
+					metrics.inherited.scaler *= parentMetrics.transform.scaler;
+					metrics.inherited.rotation += parentMetrics.transform.rotation;
+				}
+
+					for (auto& com : components) {
+						com.second->clean(metrics);
+					}
+
+				for (Size i = 0; i < children.size(); ++i) {
+					std::shared_ptr<Entity> child = children[i];
+					if (child->needsRemoval()) MACE_UNLIKELY{
+						child->destroy();
+						removeChild(i--);//update the index after the removal of an element, dont want an error
+						continue;
+					}
+					child->setProperty(Entity::DIRTY, true);
+					child->clean();
+				}
+
+				setProperty(Entity::DIRTY, false);
+			} else {
+				for (Size i = 0; i < children.size(); ++i) {
+					children[i]->clean();
+				}
+			}
+		}
+
 		void Entity::update() {
 			//check if we can update
 			if (!getProperty(Entity::DISABLED)) {
-
 				//update the components of this entity
 				for (auto& com : components) {
 					if (com.second->update()) MACE_UNLIKELY{
 						com.second->destroy();
+						com.second->parent = nullptr;
 						components.erase(com.first);
 					}
 				}
@@ -329,13 +322,7 @@ namespace mc {
 
 				//call update() on children
 				for (Index i = 0; i < children.size(); ++i) {
-					EntityPtr child = children[i];
-					if (child->needsRemoval()) MACE_UNLIKELY{
-						child->kill();
-						removeChild(i--);//update the index after the removal of an element, dont want an error
-						continue;
-					}
-					child->update();
+					children[i]->update();
 				}
 			}
 		}
@@ -345,6 +332,8 @@ namespace mc {
 				MACE__THROW(InitializationFailed, "Entity can not have init() called twice.");
 			}
 
+			makeDirty();
+
 			if (root == nullptr) {
 				if (parent != nullptr) {
 					MACE_ASSERT(parent->root != nullptr, "Parent root was nullptr");
@@ -353,31 +342,23 @@ namespace mc {
 				} else {
 					root = this;
 
-					addComponent<MACE__INTERNAL_NS::RootComponent>(new MACE__INTERNAL_NS::RootComponent());
+					auto rootCom = ComponentPtr<MACE__INTERNAL_NS::RootComponent>(new MACE__INTERNAL_NS::RootComponent());
+					rootCom->parent = this;
+					rootCom->init();
+					components.emplace(MACE__INTERNAL_NS::getComponentTypeID<MACE__INTERNAL_NS::RootComponent>(), rootCom);
 				}
 			}
 
 			id = root->getComponent<MACE__INTERNAL_NS::RootComponent>()->generateID(this);
 
-			makeDirty();
-			for (Index i = 0; i < children.size(); ++i) {
-				EntityPtr child = children[i];
-				if (child->needsRemoval()) MACE_UNLIKELY{
-					removeChild(i--);//update the index after the removal of an element
-					continue;
-				}
-				child->init();
-			}
-
-			//Component::init is called on addComponent, so it doesn't need to be called here
+			checkChildrenToBeInit();
+			checkComponentsToBeInit();
 
 			onInit();
 			setProperty(Entity::INIT, true);
 		}
 
 		void Entity::destroy() {
-			//Component::destroy is called in reset() before components.clear()
-
 			if (getProperty(Entity::INIT)) {
 				setProperty(Entity::DEAD, true);
 
@@ -390,6 +371,7 @@ namespace mc {
 
 				for (auto& component : components) {
 					component.second->destroy();
+					component.second->parent = nullptr;
 				}
 				components.clear();
 
@@ -631,6 +613,33 @@ namespace mc {
 
 		void Entity::tween(const Transformation dest) {
 			tween(dest, EaseSettings());
+		}
+
+		void Entity::checkChildrenToBeInit() {
+			while (!childrenToBeInit.empty()) {
+				EntityPtr child = childrenToBeInit.front();
+				childrenToBeInit.pop();
+
+				MACE_ASSERT(child != nullptr, "Added Entity was nullptr");
+
+				child->parent = this;
+				child->init();
+				children.push_back(child);
+			}
+		}
+
+		void Entity::checkComponentsToBeInit() {
+			while (!componentsToBeInit.empty()) {
+				std::pair<MACE__INTERNAL_NS::ComponentTypeID, ComponentPtr<Component>> component = componentsToBeInit.front();
+				componentsToBeInit.pop();
+
+				MACE_ASSERT(component.second != nullptr, "Added Component was nullptr");
+				MACE_ASSERT(components.count(component.first) == 0, "Component of type already exists");
+
+				component.second->parent = this;
+				component.second->init();
+				components.emplace(component);
+			}
 		}
 
 		bool Metrics::operator==(const Metrics& other) const {
