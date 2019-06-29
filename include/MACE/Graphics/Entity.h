@@ -112,7 +112,8 @@ namespace mc {
 			friend class Entity;
 			friend class ComponentQueue;
 		public:
-			virtual ~Component() = default;
+			Component() = default;
+			virtual MACE__DEFAULT_OPERATORS(Component);
 
 			Entity* getParent();
 
@@ -227,13 +228,16 @@ namespace mc {
 
 			/**
 			Default constructor. Constructs properties based on `Entity::DEFAULT_PROPERTIES`
+			<p>
+			All subclasses of `Entity` should have a `noexcept` default constructor. Exceptions
+			should instead be thrown from `init()`.
 			*/
 			Entity() noexcept;
 			/**
 			Destructor. Made `virtual` for inheritance.
 			@see ~Entity()
 			*/
-			virtual ~Entity() noexcept;
+			virtual MACE__DEFAULT_OPERATORS(Entity);
 
 			/**
 			Gets all of this `Entity's` children.
@@ -431,31 +435,32 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			void addChild(Entity& e);
+			void addChild(Entity& e) noexcept;
 			/**
 			@copydoc Entity::addChild(Entity&)
 			*/
-			void addChild(Entity* e);
+			void addChild(Entity* e) noexcept MACE_EXPECTS(ent != nullptr);
 			/**
 			@copydoc Entity::addChild(Entity&)
 			*/
-			void addChild(EntityPtr ent) MACE_EXPECTS(ent != nullptr);
+			void addChild(EntityPtr ent) noexcept MACE_EXPECTS(ent != nullptr);
 
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
-			inline void addComponent(T & com) {
+			inline void addComponent(T & com) noexcept {
 				addComponent<T>(&com);
 			}
 
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
-			inline void addComponent(T * com) {
+			inline void addComponent(T * com) noexcept {
 				addComponent<T>(ComponentPtr<T>(com, [](T*) {}));
 			}
 			/**
 			@param com The SmartPointer of an `Entity`. Ownership of the pointer will change meaning this parameter cannot be marked `const`
 			*/
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
-			void addComponent(ComponentPtr<T> com) MACE_EXPECTS(com != nullptr) {
-				componentsToBeInit.push(std::make_pair<>(MACE__INTERNAL_NS::getComponentTypeID<T>(), std::static_pointer_cast<Component>(com)));
+			void addComponent(ComponentPtr<T> com) MACE_EXPECTS(com != nullptr) noexcept {
+				//using the std::pair<> constructor instead of make_pair because the constructor is noexcept
+				componentsToBeInit.push(std::pair<MACE__INTERNAL_NS::ComponentTypeID, ComponentPtr<Component>>(MACE__INTERNAL_NS::getComponentTypeID<T>(), std::static_pointer_cast<Component>(std::move(com))));
 
 				makeDirty();
 			}
@@ -471,7 +476,7 @@ namespace mc {
 			}
 
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
-			bool hasComponent() {
+			bool hasComponent() noexcept {
 				return components.count(MACE__INTERNAL_NS::getComponentTypeID<T>()) > 0;
 			}
 
@@ -589,7 +594,7 @@ namespace mc {
 			@see Entity::getRoot()
 			@dirty
 			*/
-			void makeDirty();
+			void makeDirty() noexcept;
 
 			/**
 			Tween this `Entity`'s transformation
@@ -742,7 +747,7 @@ namespace mc {
 			@see Entity::getProperties()
 			@see Entity::setProperties(ByteField&)
 			*/
-			bool getProperty(const Byte position) const;
+			bool getProperty(const Byte position) const noexcept;
 			/**
 			Set a property to be `true` or `false`.
 			<p>
@@ -755,10 +760,10 @@ namespace mc {
 			@see Entity::setProperties(ByteField&)
 			@dirty
 			*/
-			void setProperty(const Byte position, const bool value);
+			void setProperty(const Byte position, const bool value) noexcept;
 		private:
 			std::queue<EntityPtr> childrenToBeInit{};
-			std::queue <std::pair<MACE__INTERNAL_NS::ComponentTypeID, ComponentPtr<Component>>> componentsToBeInit{};
+			std::queue <std::pair<MACE__INTERNAL_NS::ComponentTypeID, ComponentPtr<Component>>> componentsToBeInit{}, componentsToBeDestroyed{};
 			/**
 			`std::vector` of this `Entity\'s` children. Use of this variable directly is unrecommended. Use `addChild()` or `removeChild()` instead.
 			@internal

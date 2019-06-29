@@ -60,7 +60,7 @@ namespace mc {
 		void wait(const unsigned long long int ms);
 
 		template<typename T>
-		inline bool bittest(const T& val, const T& pos) {
+		inline bool bittest(const T& val, const T& pos) noexcept {
 #ifdef MACE_MSVC
 			return _bittest(&static_cast<long>(val), static_cast<long>(pos));
 #else
@@ -79,7 +79,7 @@ namespace mc {
 		const char* strerror(char* buf, std::size_t bufsize, int errnum) MACE_EXPECTS(buf != nullptr);
 
 		void clearError(const unsigned int lineNumber = 0, const char* filename = "Unknown file") MACE_EXPECTS(filename != nullptr);
-		void checkError(const unsigned int lineNumber = 0, const char* filename = "Unknown file", const std::string& message = "Unknown message") MACE_EXPECTS(filename != nullptr && !message.empty());
+		void checkError(const unsigned int lineNumber = 0, const char* filename = "Unknown file", const std::string & message = "Unknown message") MACE_EXPECTS(filename != nullptr && !message.empty());
 
 		void pause();
 

@@ -23,7 +23,7 @@ namespace mc {
 	class MACE_NOVTABLE Module: public Initializable {
 		friend class Instance;
 	public:
-		virtual ~Module() = default;
+		virtual MACE__DEFAULT_OPERATORS(Module);
 
 		/**
 		Called when {@link MACE#init} is called and this `Module` is registered.
@@ -61,6 +61,8 @@ namespace mc {
 		const Instance* getInstance() const;
 	protected:
 		Instance* instance = nullptr;
+
+		Module() noexcept = default;
 	};
 
 	/**

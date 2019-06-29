@@ -22,6 +22,7 @@ namespace mc {
 		Process();
 		Process(const char* path, const char* args) MACE_EXPECTS(path != nullptr && args != nullptr);
 		Process(const std::string& path, std::string& args);
+		// TODO make this noexcept
 		~Process();
 
 		void init() override;

@@ -71,7 +71,7 @@ namespace mc {
 		class MACE_NOVTABLE ModelImpl {
 			friend class Model;
 		public:
-			virtual ~ModelImpl() = default;
+			virtual MACE__DEFAULT_OPERATORS(ModelImpl);
 
 			virtual void draw() const = 0;
 
@@ -82,6 +82,8 @@ namespace mc {
 			bool operator==(const ModelImpl& other) const;
 			bool operator!=(const ModelImpl& other) const;
 		protected:
+			ModelImpl() noexcept = default;
+
 			PrimitiveType primitiveType = PrimitiveType::TRIANGLES;
 		};
 
@@ -91,7 +93,6 @@ namespace mc {
 
 			Model();
 			Model(const Model& other);
-			~Model() = default;
 
 			/**
 			@rendercontext
@@ -235,7 +236,6 @@ namespace mc {
 			TextureDesc() = default;
 			TextureDesc(const Pixels w, const Pixels h, const Format form = Format::RGBA);
 
-
 			int mipmapLevels = 1;
 			Type type = Type::FLOAT;
 			Format format = Format::RGBA;
@@ -260,7 +260,7 @@ namespace mc {
 			friend class Texture;
 		public:
 			TextureImpl(const TextureDesc& t);
-			virtual ~TextureImpl() = default;
+			virtual MACE__DEFAULT_OPERATORS(TextureImpl);
 
 			virtual void bindTextureSlot(const TextureSlot slot) const = 0;
 
@@ -462,7 +462,7 @@ namespace mc {
 		struct FontDesc;
 		class FontImpl;
 
-		class GraphicsContext: public Initializable {
+		class MACE_NOVTABLE GraphicsContext: public Initializable {
 			friend class Texture;
 			friend class Model;
 			friend class Font;
@@ -473,7 +473,7 @@ namespace mc {
 			GraphicsContext(gfx::WindowModule* win) MACE_EXPECTS(win != nullptr);
 			//prevent copying
 			GraphicsContext(const GraphicsContext& other) = delete;
-			virtual ~GraphicsContext() = default;
+			virtual ~GraphicsContext() noexcept = default;
 
 			void init() override;
 			void render();

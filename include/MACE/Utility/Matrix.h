@@ -79,7 +79,7 @@ namespace mc {
 		Default constructor. Creates a `Matrix` of the specified size where every spot is unallocated
 		*/
 		//extending default construtor so it initializes the array
-		Matrix() : VectorBase<Matrix<T, W, H>, MatrixRow<T, H>, W>() {
+		Matrix() noexcept : VectorBase<Matrix<T, W, H>, MatrixRow<T, H>, W>() {
 			MACE_STATIC_ASSERT(W != 0, "A Matrix's width must be greater than 0!");
 			MACE_STATIC_ASSERT(H != 0, "A Matrix's height must be greater than 0!");
 			for (Index i = 0; i < W; ++i) {

@@ -35,14 +35,14 @@ namespace mc {
 		@param v A quaternion representing a rotation
 		@return A rotated `Matrix`
 		*/
-		Matrix<RelativeUnit, 4> rotate(const Vector<RelativeRadian, 3>& v);
+		Matrix<RelativeUnit, 4> rotate(const Vector<RelativeRadian, 3> & v);
 		/**
 		Rotates an existing `Matrix`
 		@param v A quaternion representing a rotation
 		@param m `Matrix` base to rotate
 		@return A rotated `Matrix`
 		*/
-		Matrix<RelativeUnit, 4> rotate(const Matrix<RelativeUnit, 4>& m, const Vector<RelativeRadian, 3>& v);
+		Matrix<RelativeUnit, 4> rotate(const Matrix<RelativeUnit, 4> & m, const Vector<RelativeRadian, 3> & v);
 		/**
 		Rotates an existing `Matrix`
 		@param m A `Matrix` to rotate
@@ -51,7 +51,7 @@ namespace mc {
 		@param z Rotation in radians around the Z axis
 		@return A rotated `Matrix`
 		*/
-		Matrix<RelativeUnit, 4> rotate(const Matrix<RelativeUnit, 4>& m, const RelativeRadian x, const RelativeRadian y, const RelativeRadian z);
+		Matrix<RelativeUnit, 4> rotate(const Matrix<RelativeUnit, 4> & m, const RelativeRadian x, const RelativeRadian y, const RelativeRadian z);
 
 		/**
 		Creates a scaling matrix, that when multiplied by a vector, scales the X, Y, and Z values.
@@ -71,7 +71,7 @@ namespace mc {
 		@param z How much to scale the Z coordinate
 		@return A `Matrix` that is scaled based on the supplied values
 		*/
-		Matrix<RelativeUnit, 4> scale(const Matrix<RelativeUnit, 4>& m, const RelativeScale x, const RelativeScale y, const RelativeScale z);
+		Matrix<RelativeUnit, 4> scale(const Matrix<RelativeUnit, 4> & m, const RelativeScale x, const RelativeScale y, const RelativeScale z);
 
 		/**
 		Creates a translation matrix, that when multiplied by a vector, translates the X, Y, and Z values.
@@ -91,7 +91,7 @@ namespace mc {
 		@param z How much to translate the Z coordinate
 		@return A `Matrix` that is translated based on the supplied values
 		*/
-		Matrix<RelativeUnit, 4> translate(const Matrix<RelativeUnit, 4>& m, const RelativeTranslation x, const RelativeTranslation y, const RelativeTranslation z);
+		Matrix<RelativeUnit, 4> translate(const Matrix<RelativeUnit, 4> & m, const RelativeTranslation x, const RelativeTranslation y, const RelativeTranslation z);
 
 		/**
 		Generates a projection matrix based on values. Each time the window changes size, you need to regenerate your projection matrix
@@ -150,7 +150,7 @@ namespace mc {
 		Default constructor. Generates a `Transformation` as an identity matrix.
 		@see reset()
 		*/
-		Transformation();
+		Transformation() noexcept;
 
 		/**
 		Translates this `Transformation` in any 3 directions.

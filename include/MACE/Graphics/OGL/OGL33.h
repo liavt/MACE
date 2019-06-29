@@ -144,10 +144,9 @@ namespace mc {
 			*/
 			class MACE_NOVTABLE Object: public Initializable {
 			public:
-				/**
-				Virtual destructor for subclasses and safety
-				*/
-				virtual ~Object() = default;
+				Object() noexcept = default;
+				virtual MACE__DEFAULT_OPERATORS(Object);
+
 
 				/**
 				Calls the corresponding glCreate\* function and assigns an ID.
@@ -552,8 +551,6 @@ namespace mc {
 			*/
 			class MACE_NOVTABLE Buffer: public Object {
 			public:
-				virtual ~Buffer() = default;
-
 				/**
 				Creates the Buffer with the specified Buffer type. You should not usually use this directly.
 				Instead, use a subclass which has extra functions for the Buffer type.
@@ -1148,56 +1145,56 @@ namespace mc {
 				/**
 				@rendercontext
 				*/
-				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 2, 2> & m);
-				void setUniform(const char* name, const mc::Matrix<float, 2, 2> & m);
-				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 3, 3> & m);
-				void setUniform(const char* name, const mc::Matrix<float, 3, 3> & m);
-				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 4, 4> & m);
-				void setUniform(const char* name, const mc::Matrix<float, 4, 4> & m);
-				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 2, 3> & m);
-				void setUniform(const char* name, const mc::Matrix<float, 2, 3> & m);
-				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 3, 2> & m);
-				void setUniform(const char* name, const mc::Matrix<float, 3, 2> & m);
-				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 2, 4> & m);
-				void setUniform(const char* name, const mc::Matrix<float, 2, 4> & m);
-				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 3, 4> & m);
-				void setUniform(const char* name, const mc::Matrix<float, 3, 4> & m);
-				void setUniform(const char* name, const bool transpose, const mc::Matrix<float, 4, 3> & m);
-				void setUniform(const char* name, const mc::Matrix<float, 4, 3> & m);
+				void setUniform(CString name, const bool transpose, const mc::Matrix<float, 2, 2> & m);
+				void setUniform(CString name, const mc::Matrix<float, 2, 2> & m);
+				void setUniform(CString name, const bool transpose, const mc::Matrix<float, 3, 3> & m);
+				void setUniform(CString name, const mc::Matrix<float, 3, 3> & m);
+				void setUniform(CString name, const bool transpose, const mc::Matrix<float, 4, 4> & m);
+				void setUniform(CString name, const mc::Matrix<float, 4, 4> & m);
+				void setUniform(CString name, const bool transpose, const mc::Matrix<float, 2, 3> & m);
+				void setUniform(CString name, const mc::Matrix<float, 2, 3> & m);
+				void setUniform(CString name, const bool transpose, const mc::Matrix<float, 3, 2> & m);
+				void setUniform(CString name, const mc::Matrix<float, 3, 2> & m);
+				void setUniform(CString name, const bool transpose, const mc::Matrix<float, 2, 4> & m);
+				void setUniform(CString name, const mc::Matrix<float, 2, 4> & m);
+				void setUniform(CString name, const bool transpose, const mc::Matrix<float, 3, 4> & m);
+				void setUniform(CString name, const mc::Matrix<float, 3, 4> & m);
+				void setUniform(CString name, const bool transpose, const mc::Matrix<float, 4, 3> & m);
+				void setUniform(CString name, const mc::Matrix<float, 4, 3> & m);
 
 				//setUniform with float
-				void setUniform(const char* name, const float a);
-				void setUniform(const char* name, const float a, const float b);
-				void setUniform(const char* name, const float a, const float b, const float c);
-				void setUniform(const char* name, const float a, const float b, const float c, const float d);
-				void setUniform(const char* name, const GLsizei arraySize, const float* a);
-				void setUniform(const char* name, const GLsizei componentSize, const GLsizei arraySize, const float* a);
-				void setUniform(const char* name, const mc::Vector<float, 1> v);
-				void setUniform(const char* name, const mc::Vector<float, 2> v);
-				void setUniform(const char* name, const mc::Vector<float, 3> v);
-				void setUniform(const char* name, const mc::Vector<float, 4> v);
+				void setUniform(CString name, const float a);
+				void setUniform(CString name, const float a, const float b);
+				void setUniform(CString name, const float a, const float b, const float c);
+				void setUniform(CString name, const float a, const float b, const float c, const float d);
+				void setUniform(CString name, const GLsizei arraySize, const float* a);
+				void setUniform(CString name, const GLsizei componentSize, const GLsizei arraySize, const float* a);
+				void setUniform(CString name, const mc::Vector<float, 1> v);
+				void setUniform(CString name, const mc::Vector<float, 2> v);
+				void setUniform(CString name, const mc::Vector<float, 3> v);
+				void setUniform(CString name, const mc::Vector<float, 4> v);
 				//setUniform with int
-				void setUniform(const char* name, const int a);
-				void setUniform(const char* name, const int a, const int b);
-				void setUniform(const char* name, const int a, const int b, const int c);
-				void setUniform(const char* name, const int a, const int b, const int c, const int d);
-				void setUniform(const char* name, const GLsizei arraySize, const int* a);
-				void setUniform(const char* name, const GLsizei componentSize, const GLsizei arraySize, const int* a);
-				void setUniform(const char* name, const mc::Vector<int, 1> v);
-				void setUniform(const char* name, const mc::Vector<int, 2> v);
-				void setUniform(const char* name, const mc::Vector<int, 3> v);
-				void setUniform(const char* name, const mc::Vector<int, 4> v);
+				void setUniform(CString name, const int a);
+				void setUniform(CString name, const int a, const int b);
+				void setUniform(CString name, const int a, const int b, const int c);
+				void setUniform(CString name, const int a, const int b, const int c, const int d);
+				void setUniform(CString name, const GLsizei arraySize, const int* a);
+				void setUniform(CString name, const GLsizei componentSize, const GLsizei arraySize, const int* a);
+				void setUniform(CString name, const mc::Vector<int, 1> v);
+				void setUniform(CString name, const mc::Vector<int, 2> v);
+				void setUniform(CString name, const mc::Vector<int, 3> v);
+				void setUniform(CString name, const mc::Vector<int, 4> v);
 				//setUniform with unsigned int
-				void setUniform(const char* name, const unsigned int a);
-				void setUniform(const char* name, const unsigned int a, const unsigned int b);
-				void setUniform(const char* name, const unsigned int a, const unsigned int b, const unsigned int c);
-				void setUniform(const char* name, const unsigned int a, const unsigned int b, const unsigned int c, const unsigned int d);
-				void setUniform(const char* name, const GLsizei arraySize, const unsigned int* a);
-				void setUniform(const char* name, const GLsizei componentSize, const GLsizei arraySize, const unsigned int* a);
-				void setUniform(const char* name, const mc::Vector<unsigned int, 1> v);
-				void setUniform(const char* name, const mc::Vector<unsigned int, 2> v);
-				void setUniform(const char* name, const mc::Vector<unsigned int, 3> v);
-				void setUniform(const char* name, const mc::Vector<unsigned int, 4> v);
+				void setUniform(CString name, const unsigned int a);
+				void setUniform(CString name, const unsigned int a, const unsigned int b);
+				void setUniform(CString name, const unsigned int a, const unsigned int b, const unsigned int c);
+				void setUniform(CString name, const unsigned int a, const unsigned int b, const unsigned int c, const unsigned int d);
+				void setUniform(CString name, const GLsizei arraySize, const unsigned int* a);
+				void setUniform(CString name, const GLsizei componentSize, const GLsizei arraySize, const unsigned int* a);
+				void setUniform(CString name, const mc::Vector<unsigned int, 1> v);
+				void setUniform(CString name, const mc::Vector<unsigned int, 2> v);
+				void setUniform(CString name, const mc::Vector<unsigned int, 3> v);
+				void setUniform(CString name, const mc::Vector<unsigned int, 4> v);
 
 				void setShaders(const std::unordered_map<Enum, Shader>& newShaders);
 				const std::unordered_map<Enum, Shader>& getShaders() const;

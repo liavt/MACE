@@ -12,7 +12,8 @@ See LICENSE.md for full copyright information
 namespace mc {
 	class MACE_NOVTABLE Beginable {
 	public:
-		virtual ~Beginable() = default;
+		Beginable() noexcept = default;
+		virtual MACE__DEFAULT_OPERATORS(Beginable);
 
 		virtual void begin() = 0;
 
@@ -45,7 +46,8 @@ namespace mc {
 	class MACE_NOVTABLE Initializable {
 		friend class Initializer;
 	public:
-		virtual ~Initializable() = default;
+		Initializable() noexcept = default;
+		virtual MACE__DEFAULT_OPERATORS(Initializable);
 	protected:
 		virtual void init() = 0;
 

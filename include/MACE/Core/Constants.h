@@ -323,6 +323,10 @@ See LICENSE.md for full copyright information
 #	define MACE_OPENCV 1
 #endif
 
+//leave out the semicolon at the end so you put the semicolon after the statement
+//since virtual destructors cancel move semantics, this macro generates all the macros you need
+#define MACE__DEFAULT_OPERATORS(name) ~name() noexcept = default; name(name&&) = default; name& operator=(name&&) = default; name(const name&) = default; name& operator=(const name&) = default
+
 #define MACE_GETTER_SETTER_DEC_BASE(name, inType, outType) void set##name (inType val); outType get##name (); const outType get##name () const;
 #define MACE_GETTER_SETTER_DEC(name, type) MACE_GETTER_SETTER_DEC_BASE(name, const type, type)
 

@@ -55,7 +55,8 @@ namespace mc {
 		class MACE_NOVTABLE FontImpl {
 			friend class Font;
 		protected:
-			virtual ~FontImpl() = default;
+			FontImpl() noexcept = default;
+			virtual MACE__DEFAULT_OPERATORS(FontImpl);
 
 			/**
 			@rendercontext
@@ -117,7 +118,6 @@ namespace mc {
 			Font(const Font& other);
 			Font(const Font& other, const FontSize size);
 			Font(const Fonts font, const FontSize size = 12);
-			~Font() = default;
 
 			/**
 			@rendercontext

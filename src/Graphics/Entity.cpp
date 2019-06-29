@@ -136,7 +136,7 @@ namespace mc {
 			return metrics;
 		}
 
-		void Entity::makeDirty() {
+		void Entity::makeDirty() noexcept {
 			if (!getProperty(Entity::DIRTY)) {
 				setProperty(Entity::DIRTY, true);
 
@@ -218,17 +218,17 @@ namespace mc {
 			return id;
 		}
 
-		void Entity::addChild(EntityPtr e) {
+		void Entity::addChild(EntityPtr e) noexcept {
 			childrenToBeInit.push(e);
 
 			makeDirty();
 		}
 
-		void Entity::addChild(Entity* e) {
+		void Entity::addChild(Entity* e) noexcept {
 			addChild(EntityPtr(e, [](Entity*) {}));
 		}
 
-		void Entity::addChild(Entity& e) {
+		void Entity::addChild(Entity& e) noexcept {
 			addChild(&e);
 		}
 
@@ -298,6 +298,14 @@ namespace mc {
 					child->clean();
 				}
 
+				while (!componentsToBeDestroyed.empty()) {
+					auto component = componentsToBeDestroyed.front();
+					componentsToBeDestroyed.pop();
+
+					component.second->destroy();
+					component.second->parent = nullptr;
+				}
+
 				setProperty(Entity::DIRTY, false);
 			} else {
 				for (Size i = 0; i < children.size(); ++i) {
@@ -312,8 +320,7 @@ namespace mc {
 				//update the components of this entity
 				for (auto& com : components) {
 					if (com.second->update()) MACE_UNLIKELY{
-						com.second->destroy();
-						com.second->parent = nullptr;
+						componentsToBeDestroyed.emplace(com);
 						components.erase(com.first);
 					}
 				}
@@ -392,11 +399,6 @@ namespace mc {
 
 		Entity::Entity() noexcept {}
 
-		Entity::~Entity() noexcept {
-			children.clear();
-		}
-
-
 		EntityProperties& Entity::getProperties() {
 			makeDirty();
 
@@ -414,11 +416,11 @@ namespace mc {
 			}
 		}
 
-		bool Entity::getProperty(const Byte flag) const {
+		bool Entity::getProperty(const Byte flag) const noexcept {
 			return os::bittest(properties, flag);
 		}
 
-		void Entity::setProperty(const Byte position, const bool value) {
+		void Entity::setProperty(const Byte position, const bool value) noexcept {
 			if (getProperty(position) != value) {
 				if (position != Entity::DIRTY) {
 					properties |= (1 << Entity::DIRTY);

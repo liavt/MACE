@@ -27,6 +27,7 @@ namespace mc {
 			Serial();
 			Serial(const char* port, const unsigned int baudRate = 9600);
 			Serial(const std::string& port, const unsigned int baudRate = 9600);
+			// TODO make this noexcept
 			~Serial();
 
 			void init(const char* port, const unsigned int baudRate = 9600);

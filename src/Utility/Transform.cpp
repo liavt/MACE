@@ -17,7 +17,7 @@ namespace mc {
 	Matrix<RelativeUnit, 4, 4> math::rotate(const Matrix<RelativeUnit, 4, 4> & m, const Vector<RelativeRadian, 3> & v) {
 		return rotate(m, v[0], v[1], v[2]);
 	}
-	Matrix<RelativeUnit, 4, 4> math::rotate(const Matrix<RelativeUnit, 4, 4>& m, const RelativeRadian x, const RelativeRadian y, const RelativeRadian z) {
+	Matrix<RelativeUnit, 4, 4> math::rotate(const Matrix<RelativeUnit, 4, 4> & m, const RelativeRadian x, const RelativeRadian y, const RelativeRadian z) {
 		//Instead of having to calculate it twice, which is quite expensive, we store it in variables.
 		const float cosZ = std::cos(z), sinZ = std::sin(z);
 		const float cosY = std::cos(y), sinY = std::sin(y);
@@ -42,7 +42,7 @@ namespace mc {
 		return scale(identity<float, 4>(), x, y, z);
 	}
 
-	Matrix<RelativeUnit, 4, 4> math::scale(const Matrix<RelativeUnit, 4, 4>& m, const RelativeScale x, const RelativeScale y, const RelativeScale z) {
+	Matrix<RelativeUnit, 4, 4> math::scale(const Matrix<RelativeUnit, 4, 4> & m, const RelativeScale x, const RelativeScale y, const RelativeScale z) {
 		Matrix<RelativeUnit, 4, 4> out = m;
 		out[0][0] *= x;
 		out[1][1] *= y;
@@ -52,7 +52,7 @@ namespace mc {
 	Matrix<RelativeUnit, 4, 4> math::translate(const RelativeTranslation x, const RelativeTranslation y, const RelativeTranslation z) {
 		return translate(identity<float, 4>(), x, y, z);
 	}
-	Matrix<RelativeUnit, 4, 4> math::translate(const Matrix<RelativeUnit, 4, 4>& in, const RelativeTranslation x, const RelativeTranslation y, const RelativeTranslation z) {
+	Matrix<RelativeUnit, 4, 4> math::translate(const Matrix<RelativeUnit, 4, 4> & in, const RelativeTranslation x, const RelativeTranslation y, const RelativeTranslation z) {
 		Matrix<RelativeUnit, 4, 4> m = in;
 		m[3][0] += x;
 		m[3][1] += y;
@@ -60,7 +60,7 @@ namespace mc {
 		return m;
 	}
 	Matrix<RelativeUnit, 4, 4> math::projection(const float FOV, const float NEAR_PLANE, const float FAR_PLANE, const float aspectRatio) {
-		const float y_scale = (float)((1.0f / std::tan(math::toRadians(FOV / 2.0f))) * aspectRatio);
+		const float y_scale = ( float) ((1.0f / std::tan(math::toRadians(FOV / 2.0f))) * aspectRatio);
 		const float x_scale = y_scale / aspectRatio;
 		const float frustum_length = FAR_PLANE - NEAR_PLANE;
 
@@ -88,43 +88,43 @@ namespace mc {
 
 		return orthoMatrix;
 	}
-	Transformation::Transformation() {
-		translation = { 0,0,0 };
-		rotation = { 0,0,0 };
-		scaler = { 1,1,1 };
+	Transformation::Transformation() noexcept {
+		translation = {0,0,0};
+		rotation = {0,0,0};
+		scaler = {1,1,1};
 
 
 	}
-	Transformation & Transformation::translate(const RelativeTranslation x, const RelativeTranslation y, const RelativeTranslation z) {
+	Transformation& Transformation::translate(const RelativeTranslation x, const RelativeTranslation y, const RelativeTranslation z) {
 		translation[0] += x;
 		translation[1] += y;
 		translation[2] += z;
 		return *this;
 	}
-	Transformation & Transformation::rotate(const RelativeRadian x, const RelativeRadian y, const RelativeRadian z) {
+	Transformation& Transformation::rotate(const RelativeRadian x, const RelativeRadian y, const RelativeRadian z) {
 		rotation[0] += x;
 		rotation[1] += y;
 		rotation[2] += z;
 		return *this;
 	}
-	Transformation & Transformation::scale(const RelativeScale x, const RelativeScale y, const RelativeScale z) {
+	Transformation& Transformation::scale(const RelativeScale x, const RelativeScale y, const RelativeScale z) {
 		scaler[0] *= x;
 		scaler[1] *= y;
 		scaler[2] *= z;
 		return *this;
 	}
-	Transformation & Transformation::reset() {
-		scaler = { 1.0f, 1.0f, 1.0f };
-		translation = { 0.0f, 0.0f, 0.0f };
-		rotation = { 0.0f, 0.0f, 0.0f };
+	Transformation& Transformation::reset() {
+		scaler = {1.0f, 1.0f, 1.0f};
+		translation = {0.0f, 0.0f, 0.0f};
+		rotation = {0.0f, 0.0f, 0.0f};
 		return *this;
 	}
 	Matrix<RelativeUnit, 4, 4> Transformation::get() const {
 		return math::identity<float, 4>() * math::translate(translation[0], translation[1], translation[2]) * math::rotate(rotation[0], rotation[1], rotation[2]) * math::scale(scaler[0], scaler[1], scaler[2]);
 	}
-	bool Transformation::collides2D(const Transformation & other) const {
-		const Vector<RelativeUnit, 4> thisAABB{ (translation[0] / 2.0f) + 0.5f, (translation[1] / 2.0f) + 0.5f, scaler[0], scaler[1] };
-		const Vector<RelativeUnit, 4> otherAABB{ (other.translation[0] / 2.0f) + 0.5f, (other.translation[1] / 2.0f) + 0.5f, other.scaler[0], other.scaler[1] };
+	bool Transformation::collides2D(const Transformation& other) const {
+		const Vector<RelativeUnit, 4> thisAABB{(translation[0] / 2.0f) + 0.5f, (translation[1] / 2.0f) + 0.5f, scaler[0], scaler[1]};
+		const Vector<RelativeUnit, 4> otherAABB{(other.translation[0] / 2.0f) + 0.5f, (other.translation[1] / 2.0f) + 0.5f, other.scaler[0], other.scaler[1]};
 
 		if (thisAABB.x() < otherAABB.x() + otherAABB.z() &&
 			thisAABB.x() + thisAABB.z() > otherAABB.x() &&
@@ -136,22 +136,22 @@ namespace mc {
 		return false;
 	}
 
-	bool Transformation::operator==(const Transformation & other) const {
+	bool Transformation::operator==(const Transformation& other) const {
 		return other.translation == translation && other.rotation == rotation && other.scaler == scaler;
 	}
-	bool Transformation::operator!=(const Transformation & other) const {
+	bool Transformation::operator!=(const Transformation& other) const {
 		return !operator==(other);
 	}
-	bool Transformation::operator>(const Transformation & other) const {
+	bool Transformation::operator>(const Transformation& other) const {
 		return translation > other.translation && rotation > other.rotation && scaler > other.scaler;
 	}
-	bool Transformation::operator>=(const Transformation & other) const {
+	bool Transformation::operator>=(const Transformation& other) const {
 		return operator>(other) || operator==(other);
 	}
-	bool Transformation::operator<(const Transformation & other) const {
+	bool Transformation::operator<(const Transformation& other) const {
 		return !(operator>(other) || operator==(other));
 	}
-	bool Transformation::operator<=(const Transformation & other) const {
+	bool Transformation::operator<=(const Transformation& other) const {
 		return !operator>(other) || operator==(other);
 	}
 }

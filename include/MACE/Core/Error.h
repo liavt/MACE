@@ -38,7 +38,6 @@ namespace mc {
 #else
 			Error(const std::string& message, const std::string&, const std::string&) noexcept : Base(message) {}
 #endif//MACE_DEBUG
-			~Error() noexcept = default;
 		};
 	}
 

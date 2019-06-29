@@ -16,10 +16,11 @@ namespace mc {
 	public:
 		static DynamicLibrary getRunningProcess();
 
-		~DynamicLibrary();
 		DynamicLibrary();
 		DynamicLibrary(const std::string& path);
 		DynamicLibrary(const char* path);
+		// TODO make this noexcept
+		~DynamicLibrary();
 
 		void init(const std::string& path);
 		void init(const char* path);
@@ -37,7 +38,7 @@ namespace mc {
 		bool created;
 
 		void* dll;
-		};//DynamicLibrary
-	}//mc
+	};//DynamicLibrary
+}//mc
 
 #endif//MACE__UTILITY_DYNAMIC_LIBRARY_H

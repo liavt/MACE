@@ -250,7 +250,7 @@ namespace mc {
 			friend class Renderer;
 			friend class Painter;
 		public:
-			virtual ~PainterImpl() noexcept = default;
+			virtual MACE__DEFAULT_OPERATORS(PainterImpl);
 
 			virtual void init() override = 0;
 			virtual void destroy() override = 0;
@@ -269,6 +269,8 @@ namespace mc {
 			bool operator!=(const PainterImpl& other) const;
 		protected:
 			Painter* painter = nullptr;
+
+			PainterImpl() noexcept = default;
 		};
 
 		/**
@@ -281,7 +283,7 @@ namespace mc {
 			friend class WindowModule;
 			friend class GraphicsEntity;
 		public:
-			virtual ~Renderer() noexcept = default;
+			virtual MACE__DEFAULT_OPERATORS(Renderer);
 
 			EntityID getEntityAt(const RelativeTranslation x, const RelativeTranslation y) const;
 			EntityID getEntityAt(const Pixels x, const Pixels y) const;
@@ -336,6 +338,8 @@ namespace mc {
 			Vector<float, 2> windowRatios;
 
 			GraphicsContext* context;
+
+			Renderer() noexcept = default;
 
 			virtual void onResize(gfx::WindowModule* win, const Pixels width, const Pixels height) = 0;
 			virtual void onInit(gfx::WindowModule* win) = 0;
