@@ -36,10 +36,11 @@ namespace mc {
 		}
 
 #ifdef MACE_DEBUG
-		throw e;
-#else
-		std::exit(EXIT_FAILURE);
+		if (instance != nullptr) {
+			throw e;
+		}
 #endif
+		std::exit(EXIT_FAILURE);
 	}
 
 	void handleError(const std::exception& e, Instance& instance) {

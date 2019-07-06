@@ -20,6 +20,7 @@ See LICENSE.md for full copyright information
 namespace mc {
 	namespace gfx {
 		class Component;
+		class Entity;
 	}
 
 	namespace internal {
@@ -53,6 +54,9 @@ namespace mc {
 		*/
 		template<typename T>
 		using ExtendsComponent = EnableIfType < std::is_base_of<gfx::Component, T>{} > ;
+
+		template<typename T>
+		using ExtendsEntity = EnableIfType < std::is_base_of<gfx::Entity, T>{} > ;
 
 		template<typename T, typename = ExtendsComponent<T>>
 		MACE_NODISCARD MACE_CONSTEXPR inline ComponentTypeID getComponentTypeID() noexcept {
@@ -125,20 +129,14 @@ namespace mc {
 			/**
 			Called when this `Component` is added to the `Entity` via Entity::addComponent(Component&).
 			Required function.
-			@note This is not called at Entity::init(), instead it is called when the component is added to the `Entity`. Keep that in mind.
 			@rendercontext
 			*/
 			virtual void init() override;
 			/**
 			Called when Entity::update() is called. Required function.
-			<p>
-			There is no function to remove a `Component` so this is the only way for a `Component` to be removed from an `Entity`
-			<p>
-			Component::destroy(Entity*) will be called afterwards.
-			@return Whether this `Component` should be deleted or not.
 			@rendercontext
 			*/
-			virtual bool update();
+			virtual void update();
 			/**
 			Called when Entity::destroy() is called or the `Component` is removed via Component::update(Entity*),
 			whichever comes first. Once Component::destroy(Entity*) is called, it is immediately removed from
@@ -151,6 +149,7 @@ namespace mc {
 			/**
 			Called when Entity::clean() is called and it was dirty. This is not required for inheritance.
 			@rendercontext
+			@return whether the `Component` needs to be removed from the `Entity`. Use this for tweens or timed events.
 			*/
 			virtual void clean(Metrics& metrics);
 
@@ -158,17 +157,30 @@ namespace mc {
 			@rendercontext
 			*/
 			virtual void hover();
+
+			/**
+			Calculate whether this `Component` has finished performing whatever functionality it needed.
+			<br>
+			This is used to implement timed events like tweening or easing.
+			<br>
+			This is the only method of which you can remove a `Compoment` from an `Entity`
+			@return Whether this `Component` should be removed
+			@note This function must be able to work WITHOUT a render context, as it can be called from any thread.
+			*/
+			MACE_NODISCARD virtual bool isDone() const;
 		};//Component
 
 		/**
 		A pointer to a `Component` that automatically manages pointer lifecycle
+		@note There is no default type as you are expected to provide the specific `Component` type as the template parameter. It uses the template typename to drive internal calculations
 		*/
 		template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
 		using ComponentPtr = std::shared_ptr<T>;
 		/**
 		A pointer to a `Entity` that automatically manages pointer lifecycle
 		*/
-		using EntityPtr = std::shared_ptr<Entity>;
+		template<typename T = Entity, typename = MACE__INTERNAL_NS::ExtendsEntity<T>>
+		using EntityPtr = std::shared_ptr<T>;
 
 		/**
 		Abstract superclass for all graphical objects. Contains basic information like position, and provides a standard interface for communicating with graphical objects.
@@ -243,7 +255,7 @@ namespace mc {
 			Gets all of this `Entity's` children.
 			@return an `std::vector` with all children of this `Entity`
 			*/
-			const std::vector<EntityPtr>& getChildren() const;
+			const std::vector<EntityPtr<Entity>>& getChildren() const;
 			/**
 			Removes a child.
 			<p>
@@ -270,7 +282,7 @@ namespace mc {
 			/**
 			@copydoc Entity::removeChild(const Entity*)
 			*/
-			void removeChild(EntityPtr ent);
+			void removeChild(EntityPtr<Entity> ent);
 
 			/**
 			Removes a child via location.
@@ -278,6 +290,7 @@ namespace mc {
 			@param index Index of the `Entity` to be removed
 			@see Entity::indexOf(const Entity&) const
 			@see Entity::removeChild(const Entity&)
+			@todo call Entity::destroy in the render thread
 			@dirty
 			@rendercontext
 			*/
@@ -286,7 +299,7 @@ namespace mc {
 			/**
 			@copydoc removeChild(Index)
 			*/
-			void removeChild(const std::vector<EntityPtr>::iterator& iter);
+			void removeChild(const std::vector<EntityPtr<Entity>>::iterator& iter);
 
 			/**
 			Checks to see if this `Entity` contains an `Entity`
@@ -364,7 +377,7 @@ namespace mc {
 			Checks whether this `Entity` has any children
 			@return If Entity::size() is 0
 			*/
-			bool isEmpty() const;
+			MACE_NODISCARD bool isEmpty() const;
 
 			/**
 			Retrieves the beginning of the children of this `Entity`
@@ -372,23 +385,23 @@ namespace mc {
 			@see Entity::end()
 			@see Entity::size()
 			*/
-			std::vector<EntityPtr>::iterator begin();
+			std::vector<EntityPtr<Entity>>::iterator begin();
 			/**
 			Retrieves the end of the children of this `Entity`
 			@return End of the last `Entity`
 			@see Entity::begin()
 			@see Entity::size()
 			*/
-			std::vector<EntityPtr>::iterator end();
+			std::vector<EntityPtr<Entity>>::iterator end();
 
 			/**
 			Calculates the amount of children this `Entity` has.
 			@return Size of this `Entity`
 			@see Entity::isEmpty()
 			*/
-			Size size() const;
+			MACE_NODISCARD Size size() const;
 
-			EntityID getID() const;
+			MACE_NODISCARD EntityID getID() const;
 
 			/**
 			@dirty
@@ -430,7 +443,7 @@ namespace mc {
 
 			bool needsRemoval() const;
 
-			bool isInit() const;
+			MACE_NODISCARD bool isInit() const;
 
 			/**
 			@dirty
@@ -443,7 +456,7 @@ namespace mc {
 			/**
 			@copydoc Entity::addChild(Entity&)
 			*/
-			void addChild(EntityPtr ent) noexcept MACE_EXPECTS(ent != nullptr);
+			void addChild(EntityPtr<Entity> ent) noexcept MACE_EXPECTS(ent != nullptr);
 
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
 			inline void addComponent(T & com) noexcept {
@@ -762,13 +775,13 @@ namespace mc {
 			*/
 			void setProperty(const Byte position, const bool value) noexcept;
 		private:
-			std::queue<EntityPtr> childrenToBeInit{};
-			std::queue <std::pair<MACE__INTERNAL_NS::ComponentTypeID, ComponentPtr<Component>>> componentsToBeInit{}, componentsToBeDestroyed{};
+			std::queue<EntityPtr<Entity>> childrenToBeInit{};
+			std::queue <std::pair<MACE__INTERNAL_NS::ComponentTypeID, ComponentPtr<Component>>> componentsToBeInit{};
 			/**
 			`std::vector` of this `Entity\'s` children. Use of this variable directly is unrecommended. Use `addChild()` or `removeChild()` instead.
 			@internal
 			*/
-			std::vector<EntityPtr> children{};
+			std::vector<EntityPtr<Entity>> children{};
 			std::unordered_map<MACE__INTERNAL_NS::ComponentTypeID, ComponentPtr<Component>> components{};
 
 			Entity* parent = nullptr;

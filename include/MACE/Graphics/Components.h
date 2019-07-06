@@ -124,17 +124,18 @@ namespace mc {
 			void addComponent(Component* com);
 			void addComponent(std::shared_ptr<Component> com);
 
-			MACE_GETTER_SETTER_DEC(Components, std::queue<std::shared_ptr<Component>>&)
+			MACE_GETTER_SETTER_DEC(Components, std::queue<std::shared_ptr<Component>>&);
 
-				bool operator==(const ComponentQueue& other) const;
+			bool operator==(const ComponentQueue& other) const;
 			bool operator!=(const ComponentQueue& other) const;
 		protected:
 			void init() final;
-			bool update() final;
+			void update() final;
 			void render() final;
 			void destroy() final;
 			void hover() final;
 			void clean(Metrics& metrics) final;
+			bool isDone() const final;
 		private:
 			std::queue<std::shared_ptr<Component>> components;
 		};
@@ -209,9 +210,10 @@ namespace mc {
 			bool operator!=(const EaseComponent& other) const;
 		protected:
 			void init() override;
-			bool update() override;
+			void update() override;
 			void render() override;
 			void destroy() override;
+			bool isDone() const override;
 		private:
 			const EaseSettings settings;
 
@@ -241,12 +243,11 @@ namespace mc {
 		class CallbackComponent: public Component {
 		public:
 			using CallbackPtr = std::function<void(Entity*)>;
-			using UpdatePtr = std::function<bool(Entity*)>;
 			using CleanPtr = std::function<void(Entity*, Metrics&)>;
 
 			MACE_GETTER_SETTER_DEC(InitCallback, CallbackPtr);
 
-			MACE_GETTER_SETTER_DEC(UpdateCallback, UpdatePtr);
+			MACE_GETTER_SETTER_DEC(UpdateCallback, CallbackPtr);
 
 			MACE_GETTER_SETTER_DEC(RenderCallback, CallbackPtr);
 
@@ -260,7 +261,7 @@ namespace mc {
 			bool operator!=(const CallbackComponent& other) const;
 		protected:
 			void init() final;
-			bool update() final;
+			void update() final;
 			void render() final;
 			void destroy() final;
 			void hover() final;
@@ -269,11 +270,9 @@ namespace mc {
 			CallbackPtr destroyCallback = [](Entity*) {},
 				renderCallback = [](Entity*) {},
 				initCallback = [](Entity*) {},
-				hoverCallback = [](Entity*) {};
+				hoverCallback = [](Entity*) {},
+				updateCallback = [](Entity*) {};
 			CleanPtr cleanCallback = [](Entity*, Metrics&) {};
-			UpdatePtr updateCallback = [](Entity*) -> bool {
-				return false;
-			};
 		};//CallbackEntity
 
 		class FPSComponent: public Component {
@@ -302,7 +301,7 @@ namespace mc {
 			std::chrono::time_point<std::chrono::steady_clock> lastTime = std::chrono::steady_clock::now();
 
 			void init() final;
-			bool update() final;
+			void update() final;
 			void render() final;
 			void clean(Metrics& metrics) final;
 			void hover() final;
@@ -535,7 +534,7 @@ namespace mc {
 			bool operator!=(const TextureFramesComponent& other) const;
 		private:
 			void init() final;
-			bool update() final;
+			void update() final;
 
 			const FrameCallback callback;
 

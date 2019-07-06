@@ -372,7 +372,7 @@ namespace mc {
 			progress = startingProgress;
 		}
 
-		bool EaseComponent::update() {
+		void EaseComponent::update() {
 			//there is a chance that elapsed will be higher than duration, so std::min fixes that
 			progress = std::min(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - startTime) / duration, 1.0f);
 
@@ -382,17 +382,15 @@ namespace mc {
 				updateCallback(parent, settings.ease(progress, startingProgress, destination - startingProgress, 1.0f));
 			}
 
-			//if progress is greater then or equal to 100%, destroy this component
 			if (progress >= 1.0f) {
 				++currentRepetition;
 				init();
 			}
+		}
 
-			if (settings.repeats < 0) {
-				return false;
-			}
-
-			return currentRepetition >= settings.repeats;
+		bool EaseComponent::isDone() const {
+			//if infinitely looping (repeats < 0) then this function will never return
+			return settings.repeats >= 0 && currentRepetition >= settings.repeats;
 		}
 
 		void EaseComponent::render() {}
@@ -406,8 +404,8 @@ namespace mc {
 			initCallback(parent);
 		}
 
-		bool CallbackComponent::update() {
-			return updateCallback(parent);
+		void CallbackComponent::update() {
+			updateCallback(parent);
 		}
 
 		void CallbackComponent::render() {
@@ -428,7 +426,7 @@ namespace mc {
 
 		MACE_GETTER_SETTER_DEF(CallbackComponent, InitCallback, initCallback, CallbackComponent::CallbackPtr);
 
-		MACE_GETTER_SETTER_DEF(CallbackComponent, UpdateCallback, updateCallback, CallbackComponent::UpdatePtr);
+		MACE_GETTER_SETTER_DEF(CallbackComponent, UpdateCallback, updateCallback, CallbackComponent::CallbackPtr);
 
 		MACE_GETTER_SETTER_DEF(CallbackComponent, RenderCallback, renderCallback, CallbackComponent::CallbackPtr);
 
@@ -490,7 +488,7 @@ namespace mc {
 			lastTime = std::chrono::steady_clock::now();
 		}
 
-		bool FPSComponent::update() {
+		void FPSComponent::update() {
 			++nbUpdates;
 			if (std::chrono::steady_clock::now() - lastTime >= std::chrono::seconds(1)) {
 				updatesPerSecond = nbUpdates;
@@ -507,7 +505,6 @@ namespace mc {
 
 				tickCallback(this, parent);
 			}
-			return false;
 		}
 
 		void FPSComponent::render() {
@@ -652,10 +649,8 @@ namespace mc {
 			progress = 0;
 		}
 
-		bool TextureFramesComponent::update() {
+		void TextureFramesComponent::update() {
 			callback(frames.at(math::clamp(static_cast<Index>(math::floor(progress)), Index(0), frames.size() - 1)), parent, this);
-
-			return false;
 		}
 
 		bool TextureFramesComponent::operator==(const TextureFramesComponent& other) const {
@@ -849,31 +844,34 @@ namespace mc {
 			}
 		}
 
-		bool ComponentQueue::update() {
+		void ComponentQueue::update() {
 			if (components.empty()) {
-				return true;
+				return;
 			}
 
-			const bool result = components.front()->update();
+			components.front()->update();
+			const bool result = components.front()->isDone();
 			if (result) {
 				components.pop();
 
 				if (components.empty()) {
-					return true;
+					return;
 				}
 
 				components.front()->init();
 
 				update();
 			}
-
-			return false;
 		}
 
 		void ComponentQueue::render() {
 			if (!components.empty()) {
 				components.front()->render();
 			}
+		}
+
+		bool ComponentQueue::isDone() const {
+			return components.empty();
 		}
 
 		void ComponentQueue::destroy() {}

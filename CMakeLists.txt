@@ -71,10 +71,6 @@ set(GLFW_SOURCE_VERSION "3.3")
 set(GLFW_SOURCE_NAME "glfw-${GLFW_SOURCE_VERSION}")
 set(GLFW_URL "https://github.com/glfw/glfw/archive/${GLFW_SOURCE_VERSION}.tar.gz")
 
-set(OPENAL_SOURCE_VERSION "1.19.1")
-set(OPENAL_SOURCE_NAME "openal-soft-openal-soft-${OPENAL_SOURCE_VERSION}")
-set(OPENAL_URL "https://github.com/kcat/openal-soft/archive/openal-soft-${OPENAL_SOURCE_VERSION}.tar.gz")
-
 set(FREETYPE_SOURCE_VERSION "2.10.0")
 set(FREETYPE_SOURCE_NAME "freetype-${FREETYPE_SOURCE_VERSION}")
 set(FREETYPE_URL "https://download.savannah.gnu.org/releases/freetype/${FREETYPE_SOURCE_NAME}.tar.gz")
@@ -94,7 +90,6 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 find_package(OpenGL REQUIRED)
 find_package(GLFW ${GLFW_SOURCE_VERSION})
 find_package(Freetype ${FREETYPE_SOURCE_VERSION})
-find_package(OpenAL)
 find_package(Catch2 ${CATCH_VERSION} QUIET)
 
 #finding header-only libraries
@@ -358,29 +353,6 @@ if(NOT ${FREETYPE_FOUND})
 	endif()
 endif()
 
-if(NOT ${OPENAL_FOUND})
-	if(NOT MACE_DOWNLOAD_DEPENDENCIES)
-		message(FATAL_ERROR "OpenAL not found!")
-	else()
-		download_library(${OPENAL_SOURCE_NAME} ${OPENAL_URL})
-		
-		set(ALSOFT_NO_CONFIG_UTIL ON CACHE BOOL "" FORCE)
-		set(ALSOFT_EXAMPLES OFF CACHE BOOL "" FORCE)
-		set(ALSOFT_TESTS OFF CACHE BOOL "" FORCE)
-		set(ALSOFT_UTILS OFF CACHE BOOL "" FORCE)
-		
-		add_subdirectory(${CMAKE_BINARY_DIR}/${OPENAL_SOURCE_NAME} ${CMAKE_BINARY_DIR}/${OPENAL_SOURCE_NAME})
-		
-		if(WIN32)
-			set(OPENAL_LIBRARY OpenAL)
-		else()
-			set(OPENAL_LIBRARY openal)
-		endif()
-		
-		set(OPENAL_INCLUDE_DIR ${CMAKE_BINARY_DIR}/${OPENAL_SOURCE_NAME}/include)
-	endif()
-endif()
-
 find_package(OpenMP)
 if(OPENMP_FOUND)
 	if(MSVC)
@@ -391,7 +363,6 @@ if(OPENMP_FOUND)
 	endif()
 endif()
 
-
 if(MACE_TESTS OR MACE_DEMOS)
 	set_target_properties(MACE PROPERTIES FOLDER "MC")
 endif()
@@ -399,14 +370,12 @@ endif()
 target_include_directories(MACE PUBLIC ${GLFW_INCLUDE_DIR})
 target_include_directories(MACE PUBLIC ${FREETYPE_INCLUDE_DIR_ft2build})
 target_include_directories(MACE PUBLIC ${FREETYPE_INCLUDE_DIR_freetype2})
-target_include_directories(MACE PUBLIC ${OPENAL_INCLUDE_DIR})
 target_include_directories(MACE PUBLIC ${MACE_INCLUDES})
 target_include_directories(MACE PUBLIC ${STB_IMAGE_INCLUDE_DIR})
 target_include_directories(MACE PUBLIC ${GLAD_INCLUDE_DIR})
 
 target_link_libraries(MACE LINK_PUBLIC ${FREETYPE_LIBRARY})
 target_link_libraries(MACE LINK_PUBLIC ${GLFW_LIBRARY})
-target_link_libraries(MACE LINK_PUBLIC ${OPENAL_LIBRARY})
 target_link_libraries(MACE LINK_PUBLIC ${OPENGL_LIBRARY})
 target_link_libraries(MACE LINK_PUBLIC ${GLAD_LIBRARY})
 
@@ -460,5 +429,6 @@ set_target_properties(MACE PROPERTIES COTIRE_UNITY_TARGET_NAME "MACE-Unity"
 								COTIRE_ADD_UNITY_BUILD FALSE
 								COTIRE_PREFIX_HEADER_INCLUDE_PATH "${GLAD_INCLUDE_DIRS};${GLFW_INCLUDE_DIR};${MACE_INCLUDES}/MACE/Core/Constants.h;${MACE_OUTPUT_INCLUDE_DIR}/MACE"
 								COTIRE_PREFIX_HEADER_INCLUDE_PRIORITY_PATH "${GLAD_INCLUDE_DIRS};${GLFW_INCLUDE_DIR}"
-								COTIRE_PREFIX_HEADER_IGNORE_PATH "${CMAKE_SOURCE_DIR};${CMAKE_BINARY_DIR};${OPENGL_INCLUDE_DIR};")
-cotire(MACE CONFIGURATIONS Release MinSizeRel)
+								COTIRE_PREFIX_HEADER_IGNORE_PATH "${CMAKE_SOURCE_DIR};${CMAKE_BINARY_DIR};${OPENGL_INCLUDE_DIR};${MACE_INCLUDES}")
+# Cotire seems to disable incremental build (even in debug configurations)
+#cotire(MACE CONFIGURATIONS Release MinSizeRel)

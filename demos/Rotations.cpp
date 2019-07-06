@@ -19,33 +19,19 @@ class TestComponent: public gfx::Component {
 		dynamic_cast<gfx::Image*>(parent)->getTexture().setHue(Color((rand() % 10) / 10.0f, (rand() % 10) / 10.0f, (rand() % 10) / 10.0f, 0.5f));
 	}
 
-	bool update() override {
-		return false;
-	}
-
-	void render() override {}
-
 	void hover() override {
 		if (gfx::Input::isKeyDown(gfx::Input::MOUSE_LEFT)) {
 			parent->rotate(0.0f, 0.0f, 0.01f);
 		}
 	}
-
-	void destroy() override {}
-
-	void clean(gfx::Metrics&) override {}
 };
 
 class RotationComponent: public gfx::Component {
-	void init() override {};
-	bool update() override {
+	void update() override {
 		if (rotating) {
 			parent->rotate(0.0f, 0.0f, 0.01f);
 		}
-		return false;
 	};
-	void render() override {};
-	void destroy() override {};
 };
 
 void create(gfx::WindowModule&) {
@@ -57,7 +43,7 @@ void create(gfx::WindowModule&) {
 
 	for (Index x = 0; x < elementNum; x++) {
 		for (Index y = 0; y < elementNum; y++) {
-			gfx::Image* entity = new gfx::Image();
+			gfx::EntityPtr<gfx::Image> entity = gfx::EntityPtr<gfx::Image>(new gfx::Image());
 
 			entity->setTexture(star);
 
@@ -69,7 +55,7 @@ void create(gfx::WindowModule&) {
 
 			entity->getPainter().setOpacity(0.5f);
 
-			entity->addComponent(std::shared_ptr<TestComponent>(new TestComponent()));
+			entity->addComponent(gfx::ComponentPtr<TestComponent>(new TestComponent()));
 
 			if (x >= elementNum / 2) {
 				if (y >= elementNum / 2) {

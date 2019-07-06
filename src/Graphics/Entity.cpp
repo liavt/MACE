@@ -12,15 +12,13 @@ See LICENSE.md for full copyright information
 #include <MACE/Core/Error.h>
 #include <MACE/Utility/Transform.h>
 #include <string>
-#include <iostream>
+#include <algorithm>
 
 namespace mc {
 	namespace gfx {
 		void Component::init() {}
 
-		bool Component::update() {
-			return false;
-		}
+		void Component::update() {}
 
 		void Component::destroy() {}
 
@@ -29,6 +27,10 @@ namespace mc {
 		void Component::clean(Metrics&) {}
 
 		void Component::hover() {}
+
+		bool Component::isDone() const {
+			return false;
+		}
 
 		Entity* Component::getParent() {
 			return parent;
@@ -43,11 +45,12 @@ namespace mc {
 		}
 
 		bool Entity::hasChild(Entity& e) const {
-			for (Size i = 0; i < children.size(); ++i) {
-				if (children[i].get() == &e) {
+			for (auto child : children) {
+				if (child.get() == &e) {
 					return true;
 				}
 			}
+
 			return false;
 		}
 
@@ -67,7 +70,7 @@ namespace mc {
 			}
 		}
 
-		const std::vector<EntityPtr>& Entity::getChildren() const {
+		const std::vector<EntityPtr<Entity>>& Entity::getChildren() const {
 			return this->children;
 		}
 
@@ -92,7 +95,7 @@ namespace mc {
 			MACE__THROW(ObjectNotFound, "Specified argument to removeChild is not a valid object in the array!");
 		}
 
-		void Entity::removeChild(EntityPtr ent) {
+		void Entity::removeChild(EntityPtr<Entity> ent) {
 			removeChild(ent.get());
 		}
 
@@ -108,7 +111,7 @@ namespace mc {
 			}
 		}
 
-		void Entity::removeChild(const std::vector<EntityPtr>::iterator& iter) {
+		void Entity::removeChild(const std::vector<EntityPtr<Entity>>::iterator& iter) {
 			MACE_ASSERT(!children.empty(), "Can\'t remove child from an empty entity (empty() is true)");
 
 			//strange line, isn't it?
@@ -194,18 +197,18 @@ namespace mc {
 					return i;
 				}
 			}
-			return Index(-1);
+			return size();
 		}
 
 		bool Entity::isEmpty() const {
 			return size() == 0;
 		}
 
-		std::vector<EntityPtr>::iterator Entity::begin() {
+		std::vector<EntityPtr<Entity>>::iterator Entity::begin() {
 			return children.begin();
 		}
 
-		std::vector<EntityPtr>::iterator Entity::end() {
+		std::vector<EntityPtr<Entity>>::iterator Entity::end() {
 			return children.end();
 		}
 
@@ -218,14 +221,14 @@ namespace mc {
 			return id;
 		}
 
-		void Entity::addChild(EntityPtr e) noexcept {
+		void Entity::addChild(EntityPtr<Entity> e) noexcept {
 			childrenToBeInit.push(e);
 
 			makeDirty();
 		}
 
 		void Entity::addChild(Entity* e) noexcept {
-			addChild(EntityPtr(e, [](Entity*) {}));
+			addChild(EntityPtr<Entity>(e, [](Entity*) {}));
 		}
 
 		void Entity::addChild(Entity& e) noexcept {
@@ -235,14 +238,14 @@ namespace mc {
 		void Entity::render() {
 			//check if we can render
 			if (!getProperty(Entity::DISABLED)) {
-				for (auto& com : components) {
+				for (auto com : components) {
 					com.second->render();
 				}
 
 				onRender();
 
-				for (Index i = 0; i < children.size(); ++i) {
-					children[i]->render();
+				for (auto child : children) {
+					child->render();
 				}
 			}
 
@@ -250,7 +253,7 @@ namespace mc {
 
 		void Entity::hover() {
 			onHover();
-			for (auto& com : components) {
+			for (auto com : components) {
 				com.second->hover();
 			}
 
@@ -283,11 +286,18 @@ namespace mc {
 					metrics.inherited.rotation += parentMetrics.transform.rotation;
 				}
 
-					for (auto& com : components) {
-						com.second->clean(metrics);
+				for (auto com = components.begin(); com != components.end();) {
+					com->second->clean(metrics);
+					if (com->second->isDone()) MACE_UNLIKELY{
+						com->second->destroy();
+						com->second->parent = nullptr;
+						components.erase(com++);
+					} else {
+						++com;
 					}
+				}
 
-				for (Size i = 0; i < children.size(); ++i) {
+				for (Index i = 0; i < children.size(); ++i) {
 					std::shared_ptr<Entity> child = children[i];
 					if (child->needsRemoval()) MACE_UNLIKELY{
 						child->destroy();
@@ -298,18 +308,10 @@ namespace mc {
 					child->clean();
 				}
 
-				while (!componentsToBeDestroyed.empty()) {
-					auto component = componentsToBeDestroyed.front();
-					componentsToBeDestroyed.pop();
-
-					component.second->destroy();
-					component.second->parent = nullptr;
-				}
-
 				setProperty(Entity::DIRTY, false);
 			} else {
-				for (Size i = 0; i < children.size(); ++i) {
-					children[i]->clean();
+				for (auto child : children) {
+					child->clean();
 				}
 			}
 		}
@@ -318,18 +320,19 @@ namespace mc {
 			//check if we can update
 			if (!getProperty(Entity::DISABLED)) {
 				//update the components of this entity
-				for (auto& com : components) {
-					if (com.second->update()) MACE_UNLIKELY{
-						componentsToBeDestroyed.emplace(com);
-						components.erase(com.first);
+				for (auto com : components) {
+					com.second->update();
+					if (com.second->isDone()) MACE_UNLIKELY{
+						//it only gets deleted in clean() so we need to notify the render thread to check
+						makeDirty();
 					}
 				}
 
 				onUpdate();
 
 				//call update() on children
-				for (Index i = 0; i < children.size(); ++i) {
-					children[i]->update();
+				for (auto child : children) {
+					child->update();
 				}
 			}
 		}
@@ -619,7 +622,7 @@ namespace mc {
 
 		void Entity::checkChildrenToBeInit() {
 			while (!childrenToBeInit.empty()) {
-				EntityPtr child = childrenToBeInit.front();
+				EntityPtr<Entity> child = childrenToBeInit.front();
 				childrenToBeInit.pop();
 
 				MACE_ASSERT(child != nullptr, "Added Entity was nullptr");
@@ -632,7 +635,7 @@ namespace mc {
 
 		void Entity::checkComponentsToBeInit() {
 			while (!componentsToBeInit.empty()) {
-				std::pair<MACE__INTERNAL_NS::ComponentTypeID, ComponentPtr<Component>> component = componentsToBeInit.front();
+				auto component = componentsToBeInit.front();
 				componentsToBeInit.pop();
 
 				MACE_ASSERT(component.second != nullptr, "Added Component was nullptr");
