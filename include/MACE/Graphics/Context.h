@@ -9,8 +9,10 @@ See LICENSE.md for full copyright information
 
 #include <MACE/Core/Constants.h>
 #include <MACE/Core/Interfaces.h>
-#include <MACE/Graphics/Window.h>
 #include <MACE/Utility/Color.h>
+#include <MACE/Utility/Transform.h>
+#include <MACE/Graphics/Entity.h>
+
 #include <memory>
 #include <map>
 #include <string>
@@ -23,6 +25,7 @@ See LICENSE.md for full copyright information
 namespace mc {
 	namespace gfx {
 		class Renderer;
+		class WindowModule;
 
 		/**
 		Thrown when an error occured trying to read or write an image
@@ -448,21 +451,12 @@ namespace mc {
 			void bindTextureSlot(const TextureSlot slot) const;
 		};//Texture
 
-		struct RenderTargetDesc {
-		public:
-			Pixels width = 128, height = 128;
-		};
-
-		class MACE_NOVTABLE RenderTargetImpl: public Initializable {
-
-		};//RenderTargetImpl
-
 		//forward declare
 
 		struct FontDesc;
 		class FontImpl;
 
-		class MACE_NOVTABLE GraphicsContext: public Initializable {
+		class MACE_NOVTABLE GraphicsContextComponent: public gfx::Component {
 			friend class Texture;
 			friend class Model;
 			friend class Font;
@@ -470,14 +464,14 @@ namespace mc {
 			using TextureCreateCallback = std::function<Texture()>;
 			using ModelCreateCallback = std::function<Model()>;
 
-			GraphicsContext(gfx::WindowModule* win) MACE_EXPECTS(win != nullptr);
+			GraphicsContextComponent(gfx::WindowModule* win) MACE_EXPECTS(win != nullptr);
 			//prevent copying
-			GraphicsContext(const GraphicsContext& other) = delete;
-			virtual ~GraphicsContext() noexcept = default;
+			GraphicsContextComponent(const GraphicsContextComponent& other) = delete;
+			virtual ~GraphicsContextComponent() noexcept = default;
 
-			void init() override;
-			void render();
-			void destroy() override;
+			void init() final;
+			void render() final;
+			void destroy() final;
 
 			virtual Renderer* getRenderer() const = 0;
 
@@ -506,6 +500,16 @@ namespace mc {
 
 			std::map<std::string, Model>& getModels();
 			const std::map<std::string, Model>& getModels() const;
+
+			template<typename T>
+			float convertPixelsToRelativeXCoordinates(T px) const {
+				return static_cast<float>(px) / window->getLaunchConfig().width;
+			}
+
+			template<typename T>
+			float convertPixelsToRelativeYCoordinates(T px) const {
+				return static_cast<float>(px) / window->getLaunchConfig().height;
+			}
 		protected:
 			gfx::WindowModule* window;
 

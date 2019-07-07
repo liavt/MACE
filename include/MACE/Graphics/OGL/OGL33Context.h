@@ -48,7 +48,7 @@ namespace mc {
 				void bindTextureSlot(const gfx::TextureSlot slot) const override;
 			};
 
-			class OGL33Context: public gfx::GraphicsContext {
+			class OGL33Context: public gfx::GraphicsContextComponent {
 			public:
 				OGL33Context(gfx::WindowModule* win);
 				OGL33Context(const OGL33Context& other) = delete;

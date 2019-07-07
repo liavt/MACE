@@ -46,10 +46,10 @@ namespace mc {
 			};
 
 			/*
-			in order to decouple the implementation of Freetype from any GraphicsContext,
+			in order to decouple the implementation of Freetype from any GraphicsContextComponent,
 			the FreetypeLibrary is the public Freetype interface which FreetypeFont uses.
 
-			this also doubles as allowing the GraphicsContext.h to forward declare this class,
+			this also doubles as allowing the GraphicsContextComponent.h to forward declare this class,
 			instead of having to include the entirety of Freetype for FT_Library
 			*/
 			class FreetypeLibrary: public Initializable {

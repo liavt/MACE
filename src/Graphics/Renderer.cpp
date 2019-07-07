@@ -126,11 +126,11 @@ namespace mc {
 			return resized;
 		}
 
-		GraphicsContext* Renderer::getContext() {
+		GraphicsContextComponent* Renderer::getContext() {
 			return context;
 		}
 
-		const GraphicsContext* Renderer::getContext() const {
+		const GraphicsContextComponent* Renderer::getContext() const {
 			return context;
 		}
 
@@ -524,9 +524,9 @@ namespace mc {
 		GraphicsEntity::GraphicsEntity() noexcept : Entity(), painter(this, nullptr) {}
 
 		void GraphicsEntity::init() {
-			gfx::getCurrentWindow()->getContext()->getRenderer()->queue(this, painter);
-
 			Entity::init();
+
+			getRoot()->getComponent<GraphicsContextComponent>()->getRenderer()->queue(this, painter);
 
 			painter.init();
 		}

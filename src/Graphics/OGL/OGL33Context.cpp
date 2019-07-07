@@ -312,7 +312,7 @@ namespace mc {
 				freetype.destroy();
 			}
 
-			OGL33Context::OGL33Context(gfx::WindowModule* win) : GraphicsContext(win) {}
+			OGL33Context::OGL33Context(gfx::WindowModule* win) : GraphicsContextComponent(win) {}
 
 			gfx::Renderer* OGL33Context::getRenderer() const {
 				return renderer.get();

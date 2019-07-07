@@ -279,7 +279,7 @@ namespace mc {
 		*/
 		class MACE_NOVTABLE Renderer {
 			friend class Painter;
-			friend class GraphicsContext;
+			friend class GraphicsContextComponent;
 			friend class WindowModule;
 			friend class GraphicsEntity;
 		public:
@@ -323,8 +323,8 @@ namespace mc {
 
 			bool isResized() const;
 
-			GraphicsContext* getContext();
-			const GraphicsContext* getContext() const;
+			GraphicsContextComponent* getContext();
+			const GraphicsContextComponent* getContext() const;
 
 			/**
 			@internal
@@ -337,7 +337,7 @@ namespace mc {
 
 			Vector<float, 2> windowRatios;
 
-			GraphicsContext* context;
+			GraphicsContextComponent* context;
 
 			Renderer() noexcept = default;
 

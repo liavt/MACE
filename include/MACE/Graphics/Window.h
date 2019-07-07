@@ -11,6 +11,7 @@ See LICENSE.md for full copyright information
 #include <MACE/Core/Constants.h>
 #include <MACE/Graphics/Entity.h>
 #include <MACE/Utility/Color.h>
+#include <MACE/Graphics/Context.h>
 
 #include <thread>
 #include <string>
@@ -25,8 +26,6 @@ namespace mc {
 	struct Color;
 
 	namespace gfx {
-		class GraphicsContext;
-
 		/**
 		Thrown when GLFW (windowing library) throws an error and no other `Error` subclass is more specific.
 		*/
@@ -64,10 +63,10 @@ namespace mc {
 		public:
 			struct LaunchConfig {
 				/**
-				Hints to the `WindowModule` which `GraphicsContext` to create.
+				Hints to the `WindowModule` which `GraphicsContextComponent` to create.
 				<p>
 				If `ContextType::CUSTOM`, then the pointer pointed to by `customContext`
-				will be used as the `GraphicsContext`.
+				will be used as the `GraphicsContextComponent`.
 
 				@remark Some contexes are not available on certain platforms. An `UnsupportedRendererError` is thrown in these cases.
 				@see NoRendererContextError
@@ -128,18 +127,9 @@ namespace mc {
 
 			Vector<float, 2> getContentScale() const;
 
-			GraphicsContext* getContext();
-			const GraphicsContext* getContext() const;
+			ComponentPtr<GraphicsContextComponent> getContext();
+			const ComponentPtr<GraphicsContextComponent> getContext() const;
 
-			template<typename T>
-			float convertPixelsToRelativeXCoordinates(T px) const {
-				return static_cast<float>(px) / config.width;
-			}
-
-			template<typename T>
-			float convertPixelsToRelativeYCoordinates(T px) const {
-				return static_cast<float>(px) / config.height;
-			}
 
 			Monitor getMonitor();
 		private:
@@ -154,8 +144,6 @@ namespace mc {
 			const LaunchConfig config;
 
 			Byte properties;
-
-			std::unique_ptr<gfx::GraphicsContext> context;
 
 			void create();
 

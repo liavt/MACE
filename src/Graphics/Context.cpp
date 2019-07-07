@@ -40,7 +40,7 @@ namespace mc {
 
 #define MACE__RESOURCE_PREFIX "MC/"
 
-		//these are the names for cached resources in the GraphicsContext
+		//these are the names for cached resources in the GraphicsContextComponent
 #define MACE__RESOURCE_SOLIDCOLOR MACE__RESOURCE_PREFIX "SolidColor"
 #define MACE__RESOURCE_GRADIENT MACE__RESOURCE_PREFIX "Gradient"
 		//how many pixels in the gradient
@@ -56,7 +56,7 @@ namespace mc {
 		}
 
 		Model& Model::getQuad() {
-			GraphicsContext* context = gfx::getCurrentWindow()->getContext();
+			auto context = gfx::getCurrentWindow()->getContext();
 			if (context == nullptr) {
 				MACE__THROW(NullPointer, "No graphics context found in window!");
 			} else {
@@ -267,7 +267,7 @@ namespace mc {
 		}
 
 		Texture& Texture::getSolidColor() {
-			GraphicsContext* context = gfx::getCurrentWindow()->getContext();
+			auto context = gfx::getCurrentWindow()->getContext();
 			if (context == nullptr) {
 				MACE__THROW(NullPointer, "No graphics context found in window!");
 			} else {
@@ -289,7 +289,7 @@ namespace mc {
 		}
 
 		Texture& Texture::getGradient() {
-			GraphicsContext* context = gfx::getCurrentWindow()->getContext();
+			auto context = gfx::getCurrentWindow()->getContext();
 			if (context == nullptr) {
 				MACE__THROW(NullPointer, "No graphics context found in window!");
 			} else {
@@ -435,15 +435,15 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		gfx::WindowModule* GraphicsContext::getWindow() {
+		gfx::WindowModule* GraphicsContextComponent::getWindow() {
 			return window;
 		}
 
-		const gfx::WindowModule* GraphicsContext::getWindow() const {
+		const gfx::WindowModule* GraphicsContextComponent::getWindow() const {
 			return window;
 		}
 
-		Texture& GraphicsContext::createTexture(const std::string& name, const Texture& texture) {
+		Texture& GraphicsContextComponent::createTexture(const std::string& name, const Texture& texture) {
 			if (hasTexture(name)) {
 				MACE__THROW(AlreadyExists, "Texture with name " + name + " has already been created");
 			}
@@ -451,7 +451,7 @@ namespace mc {
 			return textures[name] = texture;
 		}
 
-		Texture& GraphicsContext::getOrCreateTexture(const std::string& name, const TextureCreateCallback create) {
+		Texture& GraphicsContextComponent::getOrCreateTexture(const std::string& name, const TextureCreateCallback create) {
 			if (!hasTexture(name)) {
 				return createTexture(name, create());
 			} else {
@@ -459,13 +459,13 @@ namespace mc {
 			}
 		}
 
-		Texture& GraphicsContext::getOrCreateTextureFromFile(const std::string& name, const std::string& path) {
+		Texture& GraphicsContextComponent::getOrCreateTextureFromFile(const std::string& name, const std::string& path) {
 			return getOrCreateTexture(name, [&path]() {
 				return Texture::createFromFile(path);
 			});
 		}
 
-		Model& GraphicsContext::createModel(const std::string& name, const Model& mod) {
+		Model& GraphicsContextComponent::createModel(const std::string& name, const Model& mod) {
 			if (hasModel(name)) {
 				MACE__THROW(AlreadyExists, "Model with name " + name + " has already been created");
 			}
@@ -473,7 +473,7 @@ namespace mc {
 			return models[name] = mod;
 		}
 
-		Model& GraphicsContext::getOrCreateModel(const std::string& name, const ModelCreateCallback create) {
+		Model& GraphicsContextComponent::getOrCreateModel(const std::string& name, const ModelCreateCallback create) {
 			if (!hasModel(name)) {
 				return createModel(name, create());
 			} else {
@@ -481,72 +481,70 @@ namespace mc {
 			}
 		}
 
-		bool GraphicsContext::hasTexture(const std::string& name) const {
+		bool GraphicsContextComponent::hasTexture(const std::string& name) const {
 			//map.count() returns 1 if key exists, 0 otherwise.
 			return textures.count(name) != 0;//the verbosity is to suppress warnings of casting from std::size_t to bool
 		}
 
-		bool GraphicsContext::hasModel(const std::string& name) const {
+		bool GraphicsContextComponent::hasModel(const std::string& name) const {
 			return models.count(name) != 0;
 		}
 
-		void GraphicsContext::setTexture(const std::string& name, const Texture& texture) {
+		void GraphicsContextComponent::setTexture(const std::string& name, const Texture& texture) {
 			textures[name] = texture;
 		}
 
-		Texture& GraphicsContext::getTexture(const std::string& name) {
+		Texture& GraphicsContextComponent::getTexture(const std::string& name) {
 			return textures.at(name);
 		}
 
-		const Texture& GraphicsContext::getTexture(const std::string& name) const {
+		const Texture& GraphicsContextComponent::getTexture(const std::string& name) const {
 			return textures.at(name);
 		}
 
-		void GraphicsContext::setModel(const std::string& name, const Model& model) {
+		void GraphicsContextComponent::setModel(const std::string& name, const Model& model) {
 			models[name] = model;
 		}
 
-		Model& GraphicsContext::getModel(const std::string& name) {
+		Model& GraphicsContextComponent::getModel(const std::string& name) {
 			return models.at(name);
 		}
 
-		const Model& GraphicsContext::getModel(const std::string& name) const {
+		const Model& GraphicsContextComponent::getModel(const std::string& name) const {
 			return models.at(name);
 		}
 
-		std::map<std::string, Texture>& GraphicsContext::getTextures() {
+		std::map<std::string, Texture>& GraphicsContextComponent::getTextures() {
 			return textures;
 		}
 
-		const std::map<std::string, Texture>& GraphicsContext::getTextures() const {
+		const std::map<std::string, Texture>& GraphicsContextComponent::getTextures() const {
 			return textures;
 		}
 
-		std::map<std::string, Model>& GraphicsContext::getModels() {
+		std::map<std::string, Model>& GraphicsContextComponent::getModels() {
 			return models;
 		}
 
-		const std::map<std::string, Model>& GraphicsContext::getModels() const {
+		const std::map<std::string, Model>& GraphicsContextComponent::getModels() const {
 			return models;
 		}
 
-		GraphicsContext::GraphicsContext(gfx::WindowModule* win) :window(win) {
-			MACE_ASSERT(window != nullptr, "WindowModule inputted to GraphicsContext is nullptr");
+		GraphicsContextComponent::GraphicsContextComponent(gfx::WindowModule* win) :window(win) {
+			MACE_ASSERT(window != nullptr, "WindowModule inputted to GraphicsContextComponent is nullptr");
 		}
 
-		void GraphicsContext::init() {
+		void GraphicsContextComponent::init() {
 			onInit(window);
 			getRenderer()->context = this;
 			getRenderer()->init(window);
 		}
 
-		void GraphicsContext::render() {
+		void GraphicsContextComponent::render() {
 			onRender(window);
-
-			getRenderer()->checkInput(window);
 		}
 
-		void GraphicsContext::destroy() {
+		void GraphicsContextComponent::destroy() {
 			for (auto& x : textures) {
 				if (x.second.isCreated()) {
 					x.second.destroy();

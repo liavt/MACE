@@ -208,6 +208,8 @@ namespace mc {
 			//just in case someone changed some before creating the window module
 			glfwDefaultWindowHints();
 
+			ComponentPtr<GraphicsContextComponent> context;
+
 			switch (config.contextType) {
 			case LaunchConfig::ContextType::AUTOMATIC:
 				MACE_FALLTHROUGH;
@@ -216,7 +218,7 @@ namespace mc {
 			case LaunchConfig::ContextType::OGL33:
 				MACE_FALLTHROUGH;
 			default:
-				context = std::unique_ptr<gfx::GraphicsContext>(new MACE__INTERNAL_NS::ogl33::OGL33Context(this));
+				context = ComponentPtr<gfx::GraphicsContextComponent>(new MACE__INTERNAL_NS::ogl33::OGL33Context(this));
 
 				glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 				glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -236,7 +238,9 @@ namespace mc {
 				break;
 			}
 
-			MACE_ASSERT(context != nullptr, "Internal Error: GraphicsContext is nullptr");
+			MACE_ASSERT(context != nullptr, "Internal Error: GraphicsContextComponent is nullptr");
+
+			addComponent<GraphicsContextComponent>(context);
 
 			glfwWindowHint(GLFW_RESIZABLE, config.resizable);
 			glfwWindowHint(GLFW_DECORATED, config.decorated);
@@ -272,8 +276,6 @@ namespace mc {
 		void WindowModule::configureThread() {
 			glfwMakeContextCurrent(window);
 
-			context->init();
-
 			if (config.vsync) {
 				glfwSwapInterval(1);
 			} else {
@@ -302,9 +304,6 @@ namespace mc {
 			//if (width != config.width || height != config.height) {
 			//	context->getRenderer()->resize(this, width, height);
 			//}
-			context->getRenderer()->resize(this, config.width, config.height);
-
-			config.onCreate(*this);
 		}
 
 		const WindowModule::LaunchConfig& WindowModule::getLaunchConfig() const {
@@ -346,6 +345,10 @@ namespace mc {
 
 					Entity::init();
 
+					getContext()->getRenderer()->resize(this, config.width, config.height);
+
+					config.onCreate(*this);
+
 					if (config.fps != 0) {
 						windowDelay = Duration(std::chrono::seconds(1)) / static_cast<long long>(config.fps);
 					}
@@ -364,8 +367,9 @@ namespace mc {
 						//thread doesn't own window, so we have to lock the mutex
 						const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
 
+						Renderer* const renderer = getContext()->getRenderer();
+
 						if (getProperty(Entity::DIRTY)) {
-							Renderer* const renderer = context->getRenderer();
 							renderer->setUp(this);
 							setProperty(Entity::DIRTY, false);
 							Entity::clean();
@@ -373,7 +377,7 @@ namespace mc {
 							renderer->tearDown(this);
 						}
 
-						context->render();
+						renderer->checkInput(this);
 
 						if (!instance->isRunning()) {
 							//pressing the X button on a window sends a SIGABRT which throws an error later
@@ -402,8 +406,6 @@ namespace mc {
 					const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
 
 					Entity::destroy();
-
-					context->destroy();
 
 					//the window will be destroyed on the main thread, need to detach this one
 					glfwMakeContextCurrent(nullptr);
@@ -513,12 +515,12 @@ namespace mc {
 			return out;
 		}
 
-		GraphicsContext* WindowModule::getContext() {
-			return context.get();
+		ComponentPtr<GraphicsContextComponent> WindowModule::getContext() {
+			return getComponent<GraphicsContextComponent>();
 		}
 
-		const GraphicsContext* WindowModule::getContext() const {
-			return context.get();
+		const ComponentPtr<GraphicsContextComponent> WindowModule::getContext() const {
+			return getComponent<GraphicsContextComponent>();
 		}
 
 		Monitor WindowModule::getMonitor() {

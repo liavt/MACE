@@ -227,7 +227,7 @@ namespace mc {
 				<p>
 				Other classes that inherit `Entity` can also set this to true via Entity#setProperty(Byte, bool)
 				<p>
-				When an `Entity` becomes dirty, it will propogate up the tree. It's parent will become dirty, it's parent will become dirty, etc. This will continue until it reaches the highest level `Entity`, which is usually the `GraphicsContext`. From there, it will decide what to do based on it's `Entity::DIRTY` flag.
+				When an `Entity` becomes dirty, it will propogate up the tree. It's parent will become dirty, it's parent will become dirty, etc. This will continue until it reaches the highest level `Entity`, which is usually the `GraphicsContextComponent`. From there, it will decide what to do based on it's `Entity::DIRTY` flag.
 				<p>
 				Certain `GraphicsContexts` may only render when something is dirty, heavily increasing performance in applications with little moving objects.
 				<p>
@@ -480,12 +480,12 @@ namespace mc {
 
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
 			MACE_NODISCARD ComponentPtr<T> getComponent() {
-				return std::static_pointer_cast<T>(components[MACE__INTERNAL_NS::getComponentTypeID<T>()]);
+				return std::static_pointer_cast<T>(components.at(MACE__INTERNAL_NS::getComponentTypeID<T>()));
 			}
 
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
 			MACE_NODISCARD const ComponentPtr<T> getComponent() const {
-				return std::static_pointer_cast<T>(components[MACE__INTERNAL_NS::getComponentTypeID<T>()]);
+				return std::static_pointer_cast<T>(components.at(MACE__INTERNAL_NS::getComponentTypeID<T>()));
 			}
 
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>

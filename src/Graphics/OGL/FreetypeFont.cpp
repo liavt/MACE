@@ -4,6 +4,7 @@ Copyright (c) 2016-2019 Liav Turkia
 See LICENSE.md for full copyright information
 */
 #include <MACE/Graphics/OGL/FreetypeFont.h>
+#include <MACE/Graphics/Window.h>
 
 #include FT_BITMAP_H
 
@@ -108,17 +109,17 @@ namespace mc {
 			void FreetypeFont::fillGlyph(gfx::Glyph& out, const wchar_t character) const {
 				checkFreetypeError(FT_Load_Char(face, character, FT_LOAD_RENDER | FT_LOAD_PEDANTIC | FT_LOAD_TARGET_LCD), "Failed to load glyph", __LINE__, __FILE__);
 
-				const gfx::WindowModule* window = gfx::getCurrentWindow();
+				const auto context = gfx::getCurrentWindow()->getContext();
 
 				const FT_GlyphSlot glyph = face->glyph;
 				const FT_Glyph_Metrics& gMetrics = glyph->metrics;
 				const FT_Vector& advance = glyph->advance;
-				out.metrics.width = window->convertPixelsToRelativeXCoordinates(gMetrics.width >> 6);
-				out.metrics.height = window->convertPixelsToRelativeYCoordinates(gMetrics.height >> 6);
-				out.metrics.bearingX = window->convertPixelsToRelativeXCoordinates(gMetrics.horiBearingY >> 6);
-				out.metrics.bearingY = window->convertPixelsToRelativeYCoordinates(gMetrics.horiBearingY >> 6);
-				out.metrics.advanceX = window->convertPixelsToRelativeXCoordinates(advance.x >> 6);
-				out.metrics.advanceY = window->convertPixelsToRelativeYCoordinates(advance.y >> 6);
+				out.metrics.width = context->convertPixelsToRelativeXCoordinates(gMetrics.width >> 6);
+				out.metrics.height = context->convertPixelsToRelativeYCoordinates(gMetrics.height >> 6);
+				out.metrics.bearingX = context->convertPixelsToRelativeXCoordinates(gMetrics.horiBearingY >> 6);
+				out.metrics.bearingY = context->convertPixelsToRelativeYCoordinates(gMetrics.horiBearingY >> 6);
+				out.metrics.advanceX = context->convertPixelsToRelativeXCoordinates(advance.x >> 6);
+				out.metrics.advanceY = context->convertPixelsToRelativeYCoordinates(advance.y >> 6);
 
 				// spaces and control characters have either 0 width or 0 height (or both!)
 				if (out.metrics.width == 0.0f || out.metrics.height == 0.0f) {
@@ -159,12 +160,12 @@ namespace mc {
 			}
 
 			gfx::FontMetrics FreetypeFont::getFontMetrics() {
-				const gfx::WindowModule* window = gfx::getCurrentWindow();
+				const auto context = gfx::getCurrentWindow()->getContext();
 
 				gfx::FontMetrics out{};
-				out.ascent = window->convertPixelsToRelativeYCoordinates(face->size->metrics.ascender >> 6);
-				out.descent = window->convertPixelsToRelativeYCoordinates(face->size->metrics.descender >> 6);
-				out.height = window->convertPixelsToRelativeYCoordinates(face->size->metrics.height >> 6);
+				out.ascent = context->convertPixelsToRelativeYCoordinates(face->size->metrics.ascender >> 6);
+				out.descent = context->convertPixelsToRelativeYCoordinates(face->size->metrics.descender >> 6);
+				out.height = context->convertPixelsToRelativeYCoordinates(face->size->metrics.height >> 6);
 				out.kerning = FT_HAS_KERNING(face);
 				return out;
 			}
