@@ -11,6 +11,8 @@ namespace mc {
 	namespace internal {
 		namespace ogl33 {
 			namespace {
+				thread_local OGL33Context* currentContext = nullptr;
+
 				GLenum getFormat(const gfx::TextureDesc::Format format) {
 					switch (format) {
 						//INTENSITY and LUMINANCE are deprecated since core 3.1, so we implement them with swizzle masks
@@ -148,117 +150,132 @@ namespace mc {
 				}
 			}//anon namespace
 
-			OGL33Texture::OGL33Texture(const gfx::TextureDesc& desc) : TextureImpl(desc), ogl33::Texture2D() {
-				ogl33::Texture2D::init();
-				ogl33::Texture2D::bind();
+			OGL33Texture::OGL33Texture(OGL33Context* const con, const gfx::TextureDesc& desc) : TextureImpl(desc), ogl33::Texture2D(), context(con) {
+				context->dispatch([this, desc]() {
+					ogl33::Texture2D::init();
+					ogl33::Texture2D::bind();
 
-				if (desc.minFilter == gfx::TextureDesc::Filter::MIPMAP_LINEAR) {
-					ogl33::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-				} else if (desc.minFilter == gfx::TextureDesc::Filter::MIPMAP_NEAREST) {
-					ogl33::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-				} else if (desc.minFilter == gfx::TextureDesc::Filter::LINEAR) {
-					ogl33::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-				} else if (desc.minFilter == gfx::TextureDesc::Filter::NEAREST) {
-					ogl33::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-				} else {
-					MACE__THROW(gfx::UnsupportedRenderer, "Unsupported ResizeFilter for OpenGL: " + std::to_string(static_cast<Byte>(desc.minFilter)));
-				}
-				if (desc.magFilter == gfx::TextureDesc::Filter::MIPMAP_LINEAR ||
-					desc.magFilter == gfx::TextureDesc::Filter::MIPMAP_NEAREST) {
-					MACE__THROW(gfx::UnsupportedRenderer, "Mipmap resize filtering can't be used as a magnification filter with OpenGL");
-				} else if (desc.magFilter == gfx::TextureDesc::Filter::LINEAR) {
-					setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-				} else if (desc.magFilter == gfx::TextureDesc::Filter::NEAREST) {
-					setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-				} else {
-					MACE__THROW(gfx::UnsupportedRenderer, "Unsupported ResizeFilter for OpenGL: " + std::to_string(static_cast<Byte>(desc.magFilter)));
-				}
+					if (desc.minFilter == gfx::TextureDesc::Filter::MIPMAP_LINEAR) {
+						ogl33::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+					} else if (desc.minFilter == gfx::TextureDesc::Filter::MIPMAP_NEAREST) {
+						ogl33::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+					} else if (desc.minFilter == gfx::TextureDesc::Filter::LINEAR) {
+						ogl33::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+					} else if (desc.minFilter == gfx::TextureDesc::Filter::NEAREST) {
+						ogl33::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+					} else {
+						MACE__THROW(gfx::UnsupportedRenderer, "Unsupported ResizeFilter for OpenGL: " + std::to_string(static_cast<Byte>(desc.minFilter)));
+					}
+					if (desc.magFilter == gfx::TextureDesc::Filter::MIPMAP_LINEAR ||
+						desc.magFilter == gfx::TextureDesc::Filter::MIPMAP_NEAREST) {
+						MACE__THROW(gfx::UnsupportedRenderer, "Mipmap resize filtering can't be used as a magnification filter with OpenGL");
+					} else if (desc.magFilter == gfx::TextureDesc::Filter::LINEAR) {
+						setParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+					} else if (desc.magFilter == gfx::TextureDesc::Filter::NEAREST) {
+						setParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+					} else {
+						MACE__THROW(gfx::UnsupportedRenderer, "Unsupported ResizeFilter for OpenGL: " + std::to_string(static_cast<Byte>(desc.magFilter)));
+					}
 
-				if (desc.wrapS == gfx::TextureDesc::Wrap::CLAMP) {
-					setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-				} else if (desc.wrapS == gfx::TextureDesc::Wrap::WRAP) {
-					setParameter(GL_TEXTURE_WRAP_S, GL_REPEAT);
-				} else if (desc.wrapS == gfx::TextureDesc::Wrap::MIRROR) {
-					setParameter(GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
-				} else if (desc.wrapS == gfx::TextureDesc::Wrap::BORDER) {
-					setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-				} else {
-					MACE__THROW(gfx::BadFormat, "Unknown wrap mode for OpenGL texture: " + std::to_string(static_cast<Byte>(desc.wrapS)));
-				}
+					if (desc.wrapS == gfx::TextureDesc::Wrap::CLAMP) {
+						setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+					} else if (desc.wrapS == gfx::TextureDesc::Wrap::WRAP) {
+						setParameter(GL_TEXTURE_WRAP_S, GL_REPEAT);
+					} else if (desc.wrapS == gfx::TextureDesc::Wrap::MIRROR) {
+						setParameter(GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+					} else if (desc.wrapS == gfx::TextureDesc::Wrap::BORDER) {
+						setParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+					} else {
+						MACE__THROW(gfx::BadFormat, "Unknown wrap mode for OpenGL texture: " + std::to_string(static_cast<Byte>(desc.wrapS)));
+					}
 
-				if (desc.wrapT == gfx::TextureDesc::Wrap::CLAMP) {
-					setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-				} else if (desc.wrapT == gfx::TextureDesc::Wrap::WRAP) {
-					setParameter(GL_TEXTURE_WRAP_T, GL_REPEAT);
-				} else if (desc.wrapT == gfx::TextureDesc::Wrap::MIRROR) {
-					setParameter(GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
-				} else if (desc.wrapT == gfx::TextureDesc::Wrap::BORDER) {
-					setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+					if (desc.wrapT == gfx::TextureDesc::Wrap::CLAMP) {
+						setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+					} else if (desc.wrapT == gfx::TextureDesc::Wrap::WRAP) {
+						setParameter(GL_TEXTURE_WRAP_T, GL_REPEAT);
+					} else if (desc.wrapT == gfx::TextureDesc::Wrap::MIRROR) {
+						setParameter(GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+					} else if (desc.wrapT == gfx::TextureDesc::Wrap::BORDER) {
+						setParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+						glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, desc.borderColor.begin());
+					} else {
+						MACE__THROW(gfx::BadFormat, "Unknown wrap mode for OpenGL texture: " + std::to_string(static_cast<Byte>(desc.wrapT)));
+					}
+
+					/*
+					switch (desc.format) {
+						case gfx::TextureDesc::Format::INTENSITY:
+							setParameter(GL_TEXTURE_SWIZZLE_A, GL_RED);
+							MACE_FALLTHROUGH;
+						case gfx::TextureDesc::Format::LUMINANCE:
+							setParameter(GL_TEXTURE_SWIZZLE_G, GL_RED);
+							setParameter(GL_TEXTURE_SWIZZLE_B, GL_RED);
+							break;
+						case gfx::TextureDesc::Format::LUMINANCE_ALPHA:
+							setParameter(GL_TEXTURE_SWIZZLE_G, GL_RED);
+							setParameter(GL_TEXTURE_SWIZZLE_B, GL_RED);
+							setParameter(GL_TEXTURE_SWIZZLE_A, GL_GREEN);
+							break;
+						default:
+							break;
+					}
+					*/
 					glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, desc.borderColor.begin());
-				} else {
-					MACE__THROW(gfx::BadFormat, "Unknown wrap mode for OpenGL texture: " + std::to_string(static_cast<Byte>(desc.wrapT)));
-				}
 
-				/*
-				switch (desc.format) {
-					case gfx::TextureDesc::Format::INTENSITY:
-						setParameter(GL_TEXTURE_SWIZZLE_A, GL_RED);
-						MACE_FALLTHROUGH;
-					case gfx::TextureDesc::Format::LUMINANCE:
-						setParameter(GL_TEXTURE_SWIZZLE_G, GL_RED);
-						setParameter(GL_TEXTURE_SWIZZLE_B, GL_RED);
-						break;
-					case gfx::TextureDesc::Format::LUMINANCE_ALPHA:
-						setParameter(GL_TEXTURE_SWIZZLE_G, GL_RED);
-						setParameter(GL_TEXTURE_SWIZZLE_B, GL_RED);
-						setParameter(GL_TEXTURE_SWIZZLE_A, GL_GREEN);
-						break;
-					default:
-						break;
-				}
-				*/
-				glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, desc.borderColor.begin());
-
-				ogl33::Texture2D::createStorage(desc.width, desc.height, getType(desc.type), getFormat(desc.format), getInternalFormat(desc.internalFormat), desc.mipmapLevels);
+					ogl33::Texture2D::createStorage(desc.width, desc.height, getType(desc.type), getFormat(desc.format), getInternalFormat(desc.internalFormat), desc.mipmapLevels);
+				});
 			}
 
 			OGL33Texture::~OGL33Texture() {
-				ogl33::Texture2D::destroy();
+				context->dispatch([this]() {
+					ogl33::Texture2D::destroy();
+				});
 			}
 
 			void OGL33Texture::setData(const void* data, const int x, const int y, const Pixels w, const Pixels h, const int mipmap, const gfx::PixelStorageHints hints) {
-				setPixelStorage(GL_UNPACK_ALIGNMENT, hints.alignment);
-				setPixelStorage(GL_UNPACK_ROW_LENGTH, hints.rowLength);
+				context->dispatch([this, data, x, y, w, h, mipmap, hints]() {
+					setPixelStorage(GL_UNPACK_ALIGNMENT, hints.alignment);
+					setPixelStorage(GL_UNPACK_ROW_LENGTH, hints.rowLength);
 
-				ogl33::Texture2D::setSubdata(data, x, y, w, h, getType(desc.type), getFormat(desc.format), mipmap);
+					ogl33::Texture2D::setSubdata(data, x, y, w, h, getType(desc.type), getFormat(desc.format), mipmap);
 
-				if (desc.minFilter == gfx::TextureDesc::Filter::MIPMAP_LINEAR || desc.minFilter == gfx::TextureDesc::Filter::MIPMAP_NEAREST) {
-					ogl33::Texture2D::generateMipmap();
-				}
+					if (desc.minFilter == gfx::TextureDesc::Filter::MIPMAP_LINEAR || desc.minFilter == gfx::TextureDesc::Filter::MIPMAP_NEAREST) {
+						ogl33::Texture2D::generateMipmap();
+					}
+				});
 			}
 
 			void OGL33Texture::readPixels(void* data, const gfx::PixelStorageHints hints) const {
-				setPixelStorage(GL_PACK_ALIGNMENT, hints.alignment);
-				setPixelStorage(GL_PACK_ROW_LENGTH, hints.rowLength);
+				context->dispatch([this, data, hints]() {
+					setPixelStorage(GL_PACK_ALIGNMENT, hints.alignment);
+					setPixelStorage(GL_PACK_ROW_LENGTH, hints.rowLength);
 
-				ogl33::Texture2D::getImage(getFormat(desc.format), getType(desc.type), data);
+					ogl33::Texture2D::getImage(getFormat(desc.format), getType(desc.type), data);
+				});
 			}
 
 			void OGL33Texture::bindTextureSlot(const gfx::TextureSlot slot) const {
-				ogl33::Texture2D::bind(static_cast<unsigned int>(slot));
+				context->dispatch([this, slot]() {
+					ogl33::Texture2D::bind(static_cast<unsigned int>(slot));
+				});
 			}
 
-			OGL33Model::OGL33Model() {
-				ogl33::VertexArray::init();
+			OGL33Model::OGL33Model(OGL33Context* const con) : context(con) {
+				context->dispatch([this]() {
+					ogl33::VertexArray::init();
+				});
 			}
 
 			OGL33Model::~OGL33Model() {
-				ogl33::VertexArray::destroy();
+				context->dispatch([this]() {
+					ogl33::VertexArray::destroy();
+				});
 			}
 
 			void OGL33Model::bind() const {
-				ogl33::VertexArray::bind();
-
+				context->dispatch([this]() {
+					ogl33::VertexArray::bind();
+				});
 				// not sure if we need to rebind all the VBO's in the VAO, or whether just binding the VAO will do
 
 				//for (Index i = 0; i < buffers.size(); ++i) {
@@ -271,45 +288,77 @@ namespace mc {
 			}
 
 			void OGL33Model::draw() const {
-				bind();
+				context->dispatch([this]() {
+					bind();
 
-				if (indices.getIndiceNumber() > 0) {
-					glDrawElements(lookupPrimitiveType(primitiveType), indices.getIndiceNumber(), GL_UNSIGNED_INT, nullptr);
-				} else {
-					glDrawArrays(lookupPrimitiveType(primitiveType), 0, getVertexNumber());
-				}
+					if (indices.getIndiceNumber() > 0) {
+						glDrawElements(lookupPrimitiveType(primitiveType), indices.getIndiceNumber(), GL_UNSIGNED_INT, nullptr);
+					} else {
+						glDrawArrays(lookupPrimitiveType(primitiveType), 0, getVertexNumber());
+					}
+				});
 			}
 
 			void OGL33Model::loadTextureCoordinates(const unsigned int dataSize, const float* data) {
-				bind();
+				context->dispatch([this, dataSize, data]() {
+					bind();
 
-				ogl33::VertexArray::storeDataInAttributeList(dataSize * sizeof(float), data, MACE__VAO_DEFAULT_TEXTURE_COORD_LOCATION, 2);
+					ogl33::VertexArray::storeDataInAttributeList(dataSize * sizeof(float), data, MACE__VAO_DEFAULT_TEXTURE_COORD_LOCATION, 2);
+				});
 			}
 
 			void OGL33Model::loadVertices(const unsigned int verticeSize, const float* vertices) {
-				bind();
+				context->dispatch([this, verticeSize, vertices]() {
+					bind();
 
-				ogl33::VertexArray::loadVertices(verticeSize, vertices, MACE__VAO_DEFAULT_VERTICES_LOCATION, 3);
+					ogl33::VertexArray::loadVertices(verticeSize, vertices, MACE__VAO_DEFAULT_VERTICES_LOCATION, 3);
+				});
 			}
 
 			void OGL33Model::loadIndices(const unsigned int indiceNum, const unsigned int* indiceData) {
-				bind();
+				context->dispatch([this, indiceNum, indiceData]() {
+					bind();
 
-				ogl33::VertexArray::loadIndices(indiceNum, indiceData);
+					ogl33::VertexArray::loadIndices(indiceNum, indiceData);
+				});
 			}
 
 			void OGL33Context::onInit(gfx::WindowModule*) {
 				freetype.init();
 
-				renderer = std::unique_ptr<gfx::Renderer>(new OGL33Renderer());
+				renderer = std::unique_ptr<OGL33Renderer>(new OGL33Renderer());
+
+				currentContext = this;
 			}
 
-			void OGL33Context::onRender(gfx::WindowModule*) {}
+			void OGL33Context::onRender(gfx::WindowModule*) {
+				std::lock_guard<std::mutex> guard(dispatchMutex);
+				while (!dispatchQueue.empty()) {
+					OGL33Dispatch& dispatch = dispatchQueue.front();
+					dispatchQueue.pop();
+					dispatch();
+				}
+			}
 
 			void OGL33Context::onDestroy(gfx::WindowModule*) {
 				renderer.reset();
 
 				freetype.destroy();
+
+				currentContext = nullptr;
+			}
+
+			void OGL33Context::dispatch(const OGL33Dispatch& dispatch) {
+				if (currentContext == this) {
+					if (dispatchQueue.empty()) {
+						dispatch();
+					} else {
+						dispatchQueue.push(dispatch);
+					}
+				} else {
+					std::lock_guard<std::mutex> guard(dispatchMutex);
+					dispatchQueue.push(dispatch);
+				}
 			}
 
 			OGL33Context::OGL33Context(gfx::WindowModule* win) : GraphicsContextComponent(win) {}
@@ -319,11 +368,11 @@ namespace mc {
 			}
 
 			std::shared_ptr<gfx::ModelImpl> OGL33Context::createModelImpl() {
-				return std::unique_ptr<gfx::ModelImpl>(new OGL33Model());
+				return std::shared_ptr<gfx::ModelImpl>(new OGL33Model(this));
 			}
 
 			std::shared_ptr<gfx::TextureImpl> OGL33Context::createTextureImpl(const gfx::TextureDesc& desc) {
-				return std::unique_ptr<gfx::TextureImpl>(new OGL33Texture(desc));
+				return std::shared_ptr<gfx::TextureImpl>(new OGL33Texture(this, desc));
 			}
 			std::shared_ptr<gfx::FontImpl> OGL33Context::createFontImpl(const gfx::FontDesc& desc) {
 				return std::shared_ptr<gfx::FontImpl>(new fty::FreetypeFont(desc, freetype));

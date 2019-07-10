@@ -303,7 +303,7 @@ namespace mc {
 					//do nothing
 				});
 				gladSetGLPostCallback([](void*, CString name, GLADapiproc, int, ...) {
-					ogl33::checkGLError(__LINE__, __FILE__, name);
+					//ogl33::checkGLError(__LINE__, __FILE__, name);
 				});
 #endif//GLAD_DEBUG
 #endif
