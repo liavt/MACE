@@ -471,7 +471,7 @@ namespace mc {
 				if (this->texture.isCreated()) {
 					letters[i]->texture = this->texture;
 				} else {
-					letters[i]->texture = Colors::WHITE;
+					letters[i]->texture = getRoot()->getComponent<GraphicsContextComponent>()->createTextureFromColor(Colors::WHITE);
 				}
 
 				if (text[i] == '\n') {

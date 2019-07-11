@@ -45,7 +45,7 @@ namespace mc {
 		}//flagResize
 
 		void Renderer::resize(WindowModule* win, const Pixels width, const Pixels height) {
-			const gfx::WindowModule::LaunchConfig& config = context->getWindow()->getLaunchConfig();
+			const gfx::WindowModule::LaunchConfig& config = win->getLaunchConfig();
 
 			windowRatios = {
 				static_cast<float>(config.width) / static_cast<float>(width),
@@ -54,6 +54,9 @@ namespace mc {
 
 			onResize(win, width, height);
 
+			this->currentWidth = width;
+			this->currentHeight = height;
+
 			resized = false;
 		}//resize
 
@@ -61,11 +64,11 @@ namespace mc {
 			onTearDown(win);
 		}//tearDown
 
-		void Renderer::checkInput(gfx::WindowModule*) {
+		void Renderer::checkInput(gfx::WindowModule* win) {
 			const int mouseX = gfx::Input::getMouseX(), mouseY = gfx::Input::getMouseY();
 			if (mouseX >= 0 && mouseY >= 0) {
 				//std::cout << getEntityAt(static_cast<Pixels>(mouseX), static_cast<Pixels>(mouseY)) << std::endl;
-				Entity* hovered = getContext()->getWindow()->getComponent<MACE__INTERNAL_NS::RootComponent>()->getEntityByID(getEntityAt(static_cast<Pixels>(mouseX), static_cast<Pixels>(mouseY)));
+				Entity* hovered = win->getComponent<MACE__INTERNAL_NS::RootComponent>()->getEntityByID(getEntityAt(static_cast<Pixels>(mouseX), static_cast<Pixels>(mouseY)));
 
 				if (hovered != nullptr && !hovered->needsRemoval()) {
 					hovered->hover();
@@ -107,11 +110,11 @@ namespace mc {
 		}//setRefreshColor(Color)
 
 		Pixels Renderer::getWidth() const {
-			return static_cast<Pixels>(static_cast<float>(context->getWindow()->getLaunchConfig().width) * windowRatios[0]);
+			return currentWidth;
 		}
 
 		Pixels Renderer::getHeight() const {
-			return static_cast<Pixels>(static_cast<float>(context->getWindow()->getLaunchConfig().width) * windowRatios[1]);
+			return currentHeight;
 		}
 
 		unsigned int Renderer::getSamples() const {
@@ -124,14 +127,6 @@ namespace mc {
 
 		bool Renderer::isResized() const {
 			return resized;
-		}
-
-		GraphicsContextComponent* Renderer::getContext() {
-			return context;
-		}
-
-		const GraphicsContextComponent* Renderer::getContext() const {
-			return context;
 		}
 
 		Painter::Painter() : entity(nullptr), impl(nullptr) {}

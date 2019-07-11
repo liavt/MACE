@@ -33,14 +33,16 @@ namespace mc {
 		}//anonymous namespace
 
 		void UIButton::onInit() {
+			auto context = getRoot()->getComponent<GraphicsContextComponent>();
+
 			NineSliceDesc desc{};
-			desc.center = Colors::BLACK;
+			desc.center = context->createTextureFromColor(Colors::BLACK);
 			desc.top = desc.center;
 			desc.left = desc.center;
 			desc.right = desc.center;
 			desc.bottom = desc.center;
 
-			desc.topLeft = Texture::createFromMemory(DEFAULT_UI_CORNER, os::getArraySize(DEFAULT_UI_CORNER));
+			desc.topLeft = context->createTextureFromMemory(DEFAULT_UI_CORNER, os::getArraySize(DEFAULT_UI_CORNER));
 			desc.topRight = desc.topLeft;
 			desc.bottomLeft = desc.topLeft;
 			desc.bottomRight = desc.topLeft;
@@ -51,8 +53,10 @@ namespace mc {
 		}
 
 		void UIButton::onHover() {
+			auto context = getRoot()->getComponent<GraphicsContextComponent>();
+
 			NineSliceDesc& desc = nineSlice.getDesc();
-			desc.center = Colors::BLUE;
+			desc.center = context->createTextureFromColor(Colors::BLUE);
 			desc.top = desc.center;
 			desc.left = desc.center;
 			desc.right = desc.center;

@@ -22,6 +22,8 @@ See LICENSE.md for full copyright information
 #	define STBI_FAILURE_USERMSG
 #endif//MACE_DEBUG
 
+#define STBI_ASSERT(x) MACE_ASSERT(x, "stb_image assert")
+
 #include <stb_image.h>
 
 #ifdef MACE_GCC
@@ -152,14 +154,14 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		Texture Texture::create(const Color& col, const Pixels width, const Pixels height) {
+		Texture GraphicsContextComponent::createTextureFromColor(const Color& col, const Pixels width, const Pixels height) {
 			TextureDesc desc = TextureDesc(width, height, TextureDesc::Format::RGBA);
 			desc.minFilter = TextureDesc::Filter::NEAREST;
 			desc.magFilter = TextureDesc::Filter::NEAREST;
 			desc.type = TextureDesc::Type::UNSIGNED_INT;
 			desc.internalFormat = TextureDesc::InternalFormat::RGBA8;
 
-			Texture texture = Texture(desc);
+			Texture texture = Texture(this, desc);
 
 			const Size newSize = static_cast<Size>(width) * static_cast<Size>(height);
 			std::vector<unsigned int> data = std::vector<unsigned int>();
@@ -172,154 +174,128 @@ namespace mc {
 			return texture;
 		}
 
-		Texture Texture::createFromFile(const std::string& file, const ImageFormat format, const TextureDesc::Wrap wrap) {
-			return Texture::createFromFile(file.c_str(), format, wrap);
+		Texture GraphicsContextComponent::createTextureFromFile(const std::string& file, const ImageFormat format, const TextureDesc::Wrap wrap) {
+			return createTextureFromFile(file.c_str(), format, wrap);
 		}
 
-		Texture Texture::createFromFile(const CString file, const ImageFormat imgFormat, const TextureDesc::Wrap wrap) {
+		Texture GraphicsContextComponent::createTextureFromFile(const CString file, const ImageFormat imgFormat, const TextureDesc::Wrap wrap) {
 			Texture tex = Texture();
 
 			int width, height, actualComponents;
-			Byte* image = stbi_load(file, &width, &height, &actualComponents, static_cast<int>(imgFormat));
+			auto image = std::unique_ptr<Byte, decltype(&stbi_image_free)>(stbi_load(file, &width, &height, &actualComponents, static_cast<int>(imgFormat)), stbi_image_free);
 
-			try {
-				if (image == nullptr || width == 0 || height == 0 || actualComponents == 0) {
-					MACE__THROW(BadImage, "Unable to read image: " + std::string(file) + '\n' + stbi_failure_reason());
-				}
-
-				/*if DONT_CARE, the outputComponents is equal to the amount of components in image,
-				otherwise equal to amount of requestedComponents
-				*/
-				const int outputComponents = (imgFormat == ImageFormat::DONT_CARE
-											  ? actualComponents : static_cast<int>(imgFormat));
-
-				TextureDesc desc = TextureDesc(width, height);
-				if (outputComponents == 1) {
-					if (imgFormat == ImageFormat::LUMINANCE) {
-						desc.format = TextureDesc::Format::LUMINANCE;
-					} else if (imgFormat == ImageFormat::INTENSITY) {
-						desc.format = TextureDesc::Format::INTENSITY;
-					} else {
-						desc.format = TextureDesc::Format::RED;
-					}
-					desc.internalFormat = TextureDesc::InternalFormat::R8;
-				} else if (outputComponents == 2) {
-					if (imgFormat == ImageFormat::LUMINANCE_ALPHA) {
-						desc.format = TextureDesc::Format::LUMINANCE_ALPHA;
-					} else {
-						desc.format = TextureDesc::Format::RG;
-					}
-					desc.internalFormat = TextureDesc::InternalFormat::RG8;
-				} else if (outputComponents == 3) {
-					desc.format = TextureDesc::Format::RGB;
-					desc.internalFormat = TextureDesc::InternalFormat::RGB8;
-				} else if (outputComponents == 4) {
-					desc.format = TextureDesc::Format::RGBA;
-					desc.internalFormat = TextureDesc::InternalFormat::RGBA8;
-				} else MACE_UNLIKELY{
-					MACE__THROW(BadImage, "Internal Error: createFromFile: outputComponents is not 1-4");
-				}
-				desc.type = TextureDesc::Type::UNSIGNED_BYTE;
-				desc.wrapS = wrap;
-				desc.wrapT = wrap;
-				desc.minFilter = TextureDesc::Filter::MIPMAP_LINEAR;
-				desc.magFilter = TextureDesc::Filter::NEAREST;
-				tex.init(desc);
-
-				tex.setData(image);
-			} catch (const std::exception& e) {
-				stbi_image_free(image);
-				throw e;
+			if (image == nullptr || width == 0 || height == 0 || actualComponents == 0) {
+				MACE__THROW(gfx::BadImage, "Unable to read image: " + std::string(file) + '\n' + stbi_failure_reason());
 			}
 
-			stbi_image_free(image);
+			/*if DONT_CARE, the outputComponents is equal to the amount of components in image,
+			otherwise equal to amount of requestedComponents
+			*/
+			const int outputComponents = (imgFormat == ImageFormat::DONT_CARE
+										  ? actualComponents : static_cast<int>(imgFormat));
+
+			TextureDesc desc = TextureDesc(width, height);
+			if (outputComponents == 1) {
+				if (imgFormat == ImageFormat::LUMINANCE) {
+					desc.format = TextureDesc::Format::LUMINANCE;
+				} else if (imgFormat == ImageFormat::INTENSITY) {
+					desc.format = TextureDesc::Format::INTENSITY;
+				} else {
+					desc.format = TextureDesc::Format::RED;
+				}
+				desc.internalFormat = TextureDesc::InternalFormat::R8;
+			} else if (outputComponents == 2) {
+				if (imgFormat == ImageFormat::LUMINANCE_ALPHA) {
+					desc.format = TextureDesc::Format::LUMINANCE_ALPHA;
+				} else {
+					desc.format = TextureDesc::Format::RG;
+				}
+				desc.internalFormat = TextureDesc::InternalFormat::RG8;
+			} else if (outputComponents == 3) {
+				desc.format = TextureDesc::Format::RGB;
+				desc.internalFormat = TextureDesc::InternalFormat::RGB8;
+			} else if (outputComponents == 4) {
+				desc.format = TextureDesc::Format::RGBA;
+				desc.internalFormat = TextureDesc::InternalFormat::RGBA8;
+			} else MACE_UNLIKELY{
+				MACE__THROW(gfx::BadImage, "Internal Error: createFromFile: outputComponents is not 1-4");
+			}
+			desc.type = TextureDesc::Type::UNSIGNED_BYTE;
+			desc.wrapS = wrap;
+			desc.wrapT = wrap;
+			desc.minFilter = TextureDesc::Filter::MIPMAP_LINEAR;
+			desc.magFilter = TextureDesc::Filter::NEAREST;
+			tex.init(this, desc);
+
+			tex.setData(image.get());
 
 			return tex;
 		}
 
-		Texture Texture::createFromMemory(const unsigned char* c, const Size size) {
+		Texture GraphicsContextComponent::createTextureFromMemory(const unsigned char* c, const Size size) {
 			Texture texture = Texture();
 			int width, height, componentSize;
 
-			Byte* image = stbi_load_from_memory(c, static_cast<int>(size), &width, &height, &componentSize, STBI_rgb_alpha);
+			auto image = std::unique_ptr<Byte, decltype(&stbi_image_free)>(stbi_load_from_memory(c, static_cast<int>(size), &width, &height, &componentSize, STBI_rgb_alpha), &stbi_image_free);
 
-			try {
-				if (image == nullptr || width == 0 || height == 0 || componentSize == 0) {
-					MACE__THROW(BadImage, "Unable to read image from memory: " + std::string(stbi_failure_reason()));
-				}
-
-				TextureDesc desc = TextureDesc(width, height, TextureDesc::Format::RGBA);
-				desc.type = TextureDesc::Type::UNSIGNED_BYTE;
-				desc.internalFormat = TextureDesc::InternalFormat::RGBA8;
-				desc.minFilter = TextureDesc::Filter::MIPMAP_LINEAR;
-				desc.magFilter = TextureDesc::Filter::NEAREST;
-				texture.init(desc);
-
-				texture.setData(image);
-			} catch (const std::exception& e) {
-				stbi_image_free(image);
-				throw e;
+			if (image == nullptr || width == 0 || height == 0 || componentSize == 0) {
+				MACE__THROW(gfx::BadImage, "Unable to read image from memory: " + std::string(stbi_failure_reason()));
 			}
 
-			stbi_image_free(image);
+			TextureDesc desc = TextureDesc(width, height, TextureDesc::Format::RGBA);
+			desc.type = TextureDesc::Type::UNSIGNED_BYTE;
+			desc.internalFormat = TextureDesc::InternalFormat::RGBA8;
+			desc.minFilter = TextureDesc::Filter::MIPMAP_LINEAR;
+			desc.magFilter = TextureDesc::Filter::NEAREST;
+			texture.init(this, desc);
+
+			texture.setData(image.get());
 
 			return texture;
 		}
 
-		Texture& Texture::getSolidColor() {
-			auto context = gfx::getCurrentWindow()->getContext();
-			if (context == nullptr) {
-				MACE__THROW(NullPointer, "No graphics context found in window!");
-			} else {
-				return context->getOrCreateTexture(MACE__RESOURCE_SOLIDCOLOR, []() {
-					TextureDesc desc = TextureDesc(1, 1, TextureDesc::Format::LUMINANCE);
-					desc.minFilter = TextureDesc::Filter::NEAREST;
-					desc.magFilter = TextureDesc::Filter::NEAREST;
-					desc.type = TextureDesc::Type::FLOAT;
-					desc.internalFormat = TextureDesc::InternalFormat::R8;
+		Texture& GraphicsContextComponent::getSolidColor() {
+			return getOrCreateTexture(MACE__RESOURCE_SOLIDCOLOR, [this]() {
+				TextureDesc desc = TextureDesc(1, 1, TextureDesc::Format::LUMINANCE);
+				desc.minFilter = TextureDesc::Filter::NEAREST;
+				desc.magFilter = TextureDesc::Filter::NEAREST;
+				desc.type = TextureDesc::Type::FLOAT;
+				desc.internalFormat = TextureDesc::InternalFormat::R8;
 
-					Texture texture = Texture(desc);
+				Texture texture = Texture(this, desc);
 
-					MACE_CONSTEXPR const float data[] = {1.0f};
-					texture.setData(data);
+				MACE_CONSTEXPR const float data[] = {1.0f};
+				texture.setData(data);
 
-					return texture;
-				});
-			}
+				return texture;
+			});
 		}
 
-		Texture& Texture::getGradient() {
-			auto context = gfx::getCurrentWindow()->getContext();
-			if (context == nullptr) {
-				MACE__THROW(NullPointer, "No graphics context found in window!");
-			} else {
+		Texture& GraphicsContextComponent::getGradient() {
+			return getOrCreateTexture(MACE__RESOURCE_GRADIENT, [this]() {
+				TextureDesc desc = TextureDesc(1, MACE__RESOURCE_GRADIENT_HEIGHT);
+				desc.format = TextureDesc::Format::LUMINANCE;
+				desc.type = TextureDesc::Type::FLOAT;
+				desc.internalFormat = TextureDesc::InternalFormat::R8;
+				desc.minFilter = TextureDesc::Filter::LINEAR;
+				desc.magFilter = TextureDesc::Filter::NEAREST;
+				Texture texture = Texture(this, desc);
 
+				float data[MACE__RESOURCE_GRADIENT_HEIGHT];
+				for (unsigned int i = 0; i < MACE__RESOURCE_GRADIENT_HEIGHT; ++i) {
+					//the darker part is on the bottom
+					data[i] = static_cast<float>(MACE__RESOURCE_GRADIENT_HEIGHT - i) / static_cast<float>(MACE__RESOURCE_GRADIENT_HEIGHT);
+				}
+				texture.setData(data);
 
-				return context->getOrCreateTexture(MACE__RESOURCE_GRADIENT, []() {
-					TextureDesc desc = TextureDesc(1, MACE__RESOURCE_GRADIENT_HEIGHT);
-					desc.format = TextureDesc::Format::LUMINANCE;
-					desc.type = TextureDesc::Type::FLOAT;
-					desc.internalFormat = TextureDesc::InternalFormat::R8;
-					desc.minFilter = TextureDesc::Filter::LINEAR;
-					desc.magFilter = TextureDesc::Filter::NEAREST;
-					Texture texture = Texture(desc);
-
-					float data[MACE__RESOURCE_GRADIENT_HEIGHT];
-					for (unsigned int i = 0; i < MACE__RESOURCE_GRADIENT_HEIGHT; ++i) {
-						//the darker part is on the bottom
-						data[i] = static_cast<float>(MACE__RESOURCE_GRADIENT_HEIGHT - i) / static_cast<float>(MACE__RESOURCE_GRADIENT_HEIGHT);
-					}
-					texture.setData(data);
-
-					return texture;
-				});
-			}
+				return texture;
+			});
 		}
 
 		Texture::Texture() : texture(nullptr), hue(0.0f, 0.0f, 0.0f, 0.0f) {}
 
-		Texture::Texture(const TextureDesc& d) : Texture() {
-			init(d);
+		Texture::Texture(GraphicsContextComponent* context, const TextureDesc& d) : Texture() {
+			init(context, d);
 		}
 
 		Texture::Texture(const std::shared_ptr<TextureImpl> tex, const Color& col) : texture(tex), hue(col) {}
@@ -328,9 +304,9 @@ namespace mc {
 
 		Texture::Texture(const Texture& tex, const Color& col) : texture(tex.texture), transform(tex.transform), hue(col) {}
 
-		Texture::Texture(const Color& col) : Texture(Texture::getSolidColor(), col) {}
+		Texture::Texture(GraphicsContextComponent* context, const Color& col) : Texture(context->getSolidColor(), col) {}
 
-		void Texture::init(const TextureDesc& desc) {
+		void Texture::init(GraphicsContextComponent* context, const TextureDesc& desc) {
 			if (desc.width == 0) {
 				MACE__THROW(OutOfBounds, "Width of a Texture cannot be zero");
 			} else if (desc.height == 0) {
@@ -338,7 +314,7 @@ namespace mc {
 			}
 
 			//the old texture will be deallocated, and its destructor will be called and decrement ref count
-			texture = gfx::getCurrentWindow()->getContext()->createTextureImpl(desc);
+			texture = context->createTextureImpl(desc);
 		}
 
 		void Texture::destroy() {
@@ -460,8 +436,8 @@ namespace mc {
 		}
 
 		Texture& GraphicsContextComponent::getOrCreateTextureFromFile(const std::string& name, const std::string& path) {
-			return getOrCreateTexture(name, [&path]() {
-				return Texture::createFromFile(path);
+			return getOrCreateTexture(name, [this, &path]() {
+				return createTextureFromFile(path);
 			});
 		}
 
@@ -536,7 +512,6 @@ namespace mc {
 
 		void GraphicsContextComponent::init() {
 			onInit(window);
-			getRenderer()->context = this;
 			getRenderer()->init(window);
 		}
 

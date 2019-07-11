@@ -35,7 +35,7 @@ namespace mc {
 						friendlyType = "SHADER PROGRAM";
 						glGetProgramInfoLog(shaderId, 1024, 0, log_string.get());
 					}
-					MACE__THROW(Shader, "Error generating " + friendlyType + ": " + message + ": " + log_string.get());
+					MACE__THROW(internal::ogl33::Shader, "Error generating " + friendlyType + ": " + message + ": " + log_string.get());
 				}
 #else
 				inline void throwShaderError(const unsigned int, const Enum type, const std::string&) {
@@ -76,7 +76,7 @@ namespace mc {
 				errorAmount at 0.
 				*/
 				if (errorAmount > 0) {
-					MACE__THROW_CUSTOM_LINE(OpenGL, message.str(), std::to_string(line), file);
+					MACE__THROW_CUSTOM_LINE(internal::ogl33::OpenGL, message.str(), std::to_string(line), file);
 				}
 			}
 
@@ -736,7 +736,7 @@ namespace mc {
 
 			void Shader::setSource(const GLsizei count, const char* strings[], const int lengths[]) {
 				if (type == GL_FALSE) {
-					MACE__THROW(Shader, "Shader must have a type before compile() is called");
+					MACE__THROW(internal::ogl33::Shader, "Shader must have a type before compile() is called");
 				}
 
 				glShaderSource(id, count, strings, lengths);
@@ -783,7 +783,7 @@ namespace mc {
 
 			void Shader::compile() {
 				if (type == GL_FALSE) {
-					MACE__THROW(Shader, "Shader must have a type before compile() is called");
+					MACE__THROW(internal::ogl33::Shader, "Shader must have a type before compile() is called");
 				}
 				glCompileShader(id);
 
@@ -932,7 +932,7 @@ namespace mc {
 			void ShaderProgram::createUniform(const std::string& name) {
 				int location = glGetUniformLocation(id, name.data());
 				if (location < 0) {
-					MACE__THROW(Shader, "Error finding uniform with name " + std::string(name));
+					MACE__THROW(internal::ogl33::Shader, "Error finding uniform with name " + std::string(name));
 				}
 
 				uniforms[name] = location;

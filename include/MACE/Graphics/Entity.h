@@ -480,12 +480,22 @@ namespace mc {
 
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
 			MACE_NODISCARD ComponentPtr<T> getComponent() {
-				return std::static_pointer_cast<T>(components.at(MACE__INTERNAL_NS::getComponentTypeID<T>()));
+				auto it = components.find(MACE__INTERNAL_NS::getComponentTypeID<T>());
+				if (it != components.end()) {
+					return std::static_pointer_cast<T>(it->second);
+				}
+
+				return nullptr;
 			}
 
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
 			MACE_NODISCARD const ComponentPtr<T> getComponent() const {
-				return std::static_pointer_cast<T>(components.at(MACE__INTERNAL_NS::getComponentTypeID<T>()));
+				auto it = components.find(MACE__INTERNAL_NS::getComponentTypeID<T>());
+				if (it != components.end()) {
+					return std::static_pointer_cast<T>(it->second);
+				}
+
+				return nullptr;
 			}
 
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>

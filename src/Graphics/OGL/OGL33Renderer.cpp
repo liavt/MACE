@@ -302,7 +302,7 @@ namespace mc {
 				gladSetGLPreCallback([](CString, GLADapiproc, int, ...) {
 					//do nothing
 				});
-				gladSetGLPostCallback([](void*, CString name, GLADapiproc, int, ...) {
+				gladSetGLPostCallback([](void*, CString, GLADapiproc, int, ...) {
 					//ogl33::checkGLError(__LINE__, __FILE__, name);
 				});
 #endif//GLAD_DEBUG
@@ -513,28 +513,28 @@ namespace mc {
 
 				switch (frameBuffer.checkStatus(GL_FRAMEBUFFER)) {
 				case GL_FRAMEBUFFER_UNDEFINED:
-					MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_UNDEFINED: The specified framebuffer is the default read or draw framebuffer, but the default framebuffer does not exist. ");
+					MACE__THROW(internal::ogl33::Framebuffer, "GL_FRAMEBUFFER_UNDEFINED: The specified framebuffer is the default read or draw framebuffer, but the default framebuffer does not exist. ");
 					break;
 				case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
-					MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT: One of the framebuffer attachments are incomplete!");
+					MACE__THROW(internal::ogl33::Framebuffer, "GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT: One of the framebuffer attachments are incomplete!");
 					break;
 				case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
-					MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT: The framebuffer is missing at least one image");
+					MACE__THROW(internal::ogl33::Framebuffer, "GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT: The framebuffer is missing at least one image");
 					break;
 				case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
-					MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER: GL_READ_BUFFER is not GL_NONE and the value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for the color attachment point named by GL_READ_BUFFER. ");
+					MACE__THROW(internal::ogl33::Framebuffer, "GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER: GL_READ_BUFFER is not GL_NONE and the value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for the color attachment point named by GL_READ_BUFFER. ");
 					break;
 				case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
-					MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER: The value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for any color attachment point(s) named by GL_DRAW_BUFFERi. ");
+					MACE__THROW(internal::ogl33::Framebuffer, "GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER: The value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for any color attachment point(s) named by GL_DRAW_BUFFERi. ");
 					break;
 				case GL_FRAMEBUFFER_UNSUPPORTED:
-					MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_UNSUPPORTED: The combination of internal formats of the attached images violates an implementation-dependent set of restrictions. ");
+					MACE__THROW(internal::ogl33::Framebuffer, "GL_FRAMEBUFFER_UNSUPPORTED: The combination of internal formats of the attached images violates an implementation-dependent set of restrictions. ");
 					break;
 				case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:
-					MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE: The value of GL_RENDERBUFFER_SAMPLES is not the same for all attached renderbuffers; if the value of GL_TEXTURE_SAMPLES is the not same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_RENDERBUFFER_SAMPLES does not match the value of GL_TEXTURE_SAMPLES. It can also be that the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not the same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not GL_TRUE for all attached textures. ");
+					MACE__THROW(internal::ogl33::Framebuffer, "GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE: The value of GL_RENDERBUFFER_SAMPLES is not the same for all attached renderbuffers; if the value of GL_TEXTURE_SAMPLES is the not same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_RENDERBUFFER_SAMPLES does not match the value of GL_TEXTURE_SAMPLES. It can also be that the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not the same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not GL_TRUE for all attached textures. ");
 					break;
 				case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS:
-					MACE__THROW(Framebuffer, "GL_FRAMEBUFFER_LAYER_TARGETS: Any framebuffer attachment is layered, and any populated attachment is not layered, or if all populated color attachments are not from textures of the same target. ");
+					MACE__THROW(internal::ogl33::Framebuffer, "GL_FRAMEBUFFER_LAYER_TARGETS: Any framebuffer attachment is layered, and any populated attachment is not layered, or if all populated color attachments are not from textures of the same target. ");
 					break;
 				MACE_LIKELY case GL_FRAMEBUFFER_COMPLETE:
 					MACE_FALLTHROUGH;
@@ -556,8 +556,6 @@ namespace mc {
 			}
 
 			void OGL33Renderer::getEntitiesAt(const Pixels x, const Pixels y, const Pixels w, const Pixels h, gfx::EntityID* arr) const {
-				const Vector<Pixels, 2> framebufferSize = getContext()->getWindow()->getFramebufferSize();
-
 				if (GLAD_GL_ARB_direct_state_access) {
 					glNamedFramebufferReadBuffer(frameBuffer.getID(), GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
 				} else {
@@ -566,14 +564,12 @@ namespace mc {
 					ogl33::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
 				}
 				//opengl y-axis is inverted from window coordinates
-				frameBuffer.readPixels(x, framebufferSize.y() - y, w, h, GL_RED_INTEGER, GL_UNSIGNED_INT, arr);
+				frameBuffer.readPixels(x, getHeight() - y, w, h, GL_RED_INTEGER, GL_UNSIGNED_INT, arr);
 
 				ogl33::checkGLError(__LINE__, __FILE__, "Internal Error: Error getting Entity from index buffer");
 			}
 
 			void OGL33Renderer::getPixelsAt(const Pixels x, const Pixels y, const Pixels w, const Pixels h, Color* arr, const gfx::FrameBufferTarget target) const {
-				const Vector<Pixels, 2> framebufferSize = getContext()->getWindow()->getFramebufferSize();
-
 				Enum colorAttachment;
 				switch (target) {
 				case gfx::FrameBufferTarget::COLOR:
@@ -595,7 +591,7 @@ namespace mc {
 				}
 
 				//opengl y-axis is inverted from window coordinates
-				frameBuffer.readPixels(x, framebufferSize.y() - y, w, h, GL_RGBA, GL_FLOAT, arr);
+				frameBuffer.readPixels(x, getHeight() - y, w, h, GL_RGBA, GL_FLOAT, arr);
 			}
 
 			std::shared_ptr<gfx::PainterImpl> OGL33Renderer::createPainterImpl() {

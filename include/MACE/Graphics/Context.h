@@ -26,6 +26,7 @@ namespace mc {
 	namespace gfx {
 		class Renderer;
 		class WindowModule;
+		class GraphicsContextComponent;
 
 		/**
 		Thrown when an error occured trying to read or write an image
@@ -277,52 +278,16 @@ namespace mc {
 		class Texture {
 			friend class Painter;
 		public:
-			/**
-			@rendercontext
-			*/
-			static Texture create(const Color& col, const Pixels width = 1, const Pixels height = 1);
-			/**
-			@rendercontext
-			*/
-			static Texture createFromFile(const std::string& file, const ImageFormat format = ImageFormat::DONT_CARE, const TextureDesc::Wrap wrap = TextureDesc::Wrap::CLAMP);
-			/**
-			@rendercontext
-			*/
-			static Texture createFromFile(const CString file, const ImageFormat format = ImageFormat::DONT_CARE, const TextureDesc::Wrap wrap = TextureDesc::Wrap::CLAMP);
-			/**
-			@rendercontext
-			*/
-			static Texture createFromMemory(const unsigned char* c, const Size size);
-			/**
-			@copydoc createFromMemory(const unsigned char*, const int)
-			*/
-			template<const Size N>
-			static Texture createFromMemory(const unsigned char c[N]) {
-				return createFromMemory(c, static_cast<int>(N));
-			}
-			/**
-			@rendercontext
-			*/
-			static Texture& getSolidColor();
-			/**
-			- Vertical gradient
-			- Darker part on bottom
-			- Height is 100
-
-			@rendercontext
-			*/
-			static Texture& getGradient();
-
 			Texture();
-			Texture(const TextureDesc& d);
-			Texture(const Color& col);
+			Texture(GraphicsContextComponent* context, const TextureDesc& d);
+			Texture(GraphicsContextComponent* context, const Color& col);
 			Texture(const Texture& tex);
 			Texture(const Texture& tex, const Color& col);
 
 			/**
 			@rendercontext
 			*/
-			void init(const TextureDesc& desc);
+			void init(GraphicsContextComponent* context, const TextureDesc& desc);
 			/**
 			@rendercontext
 			*/
@@ -477,6 +442,42 @@ namespace mc {
 
 			gfx::WindowModule* getWindow();
 			const gfx::WindowModule* getWindow() const;
+
+			/**
+			@rendercontext
+			*/
+			Texture createTextureFromColor(const Color& col, const Pixels width = 1, const Pixels height = 1);
+			/**
+			@rendercontext
+			*/
+			Texture createTextureFromFile(const std::string& file, const ImageFormat format = ImageFormat::DONT_CARE, const TextureDesc::Wrap wrap = TextureDesc::Wrap::CLAMP);
+			/**
+			@rendercontext
+			*/
+			Texture createTextureFromFile(const CString file, const ImageFormat format = ImageFormat::DONT_CARE, const TextureDesc::Wrap wrap = TextureDesc::Wrap::CLAMP);
+			/**
+			@rendercontext
+			*/
+			Texture createTextureFromMemory(const unsigned char* c, const Size size);
+			/**
+			@copydoc createFromMemory(const unsigned char*, const int)
+			*/
+			template<const Size N>
+			inline Texture createTextureFromMemory(const unsigned char c[N]) {
+				return createTextureFromMemory(c, static_cast<int>(N));
+			}
+			/**
+			@rendercontext
+			*/
+			Texture& getSolidColor();
+			/**
+			- Vertical gradient
+			- Darker part on bottom
+			- Height is 100
+
+			@rendercontext
+			*/
+			Texture& getGradient();
 
 			Texture& createTexture(const std::string& name, const Texture& texture = Texture());
 			Texture& getOrCreateTexture(const std::string& name, const TextureCreateCallback create);

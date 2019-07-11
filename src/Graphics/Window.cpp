@@ -73,21 +73,21 @@ namespace mc {
 				if (id == GLFW_NOT_INITIALIZED) {
 					MACE__THROW(InvalidState, "Windowing manager was not initialized/initialization was invalid: NOT_INITIALIZED: " + std::string(desc));
 				} else if (id == GLFW_NO_CURRENT_CONTEXT) {
-					MACE__THROW(NoRendererContext, "No Renderer context in this thread: NO_CURRENT_CONTEXT: " + std::string(desc));
+					MACE__THROW(gfx::NoRendererContext, "No Renderer context in this thread: NO_CURRENT_CONTEXT: " + std::string(desc));
 				} else if (id == GLFW_FORMAT_UNAVAILABLE) {
-					MACE__THROW(BadFormat, "The system does not support the required format: FORMAT_UNAVAIBLE: " + std::string(desc));
+					MACE__THROW(gfx::BadFormat, "The system does not support the required format: FORMAT_UNAVAIBLE: " + std::string(desc));
 				} else if (id == GLFW_NO_WINDOW_CONTEXT) {
-					MACE__THROW(NoRendererContext, "No window in this thread: NO_WINDOW_CONTEXT: " + std::string(desc));
+					MACE__THROW(gfx::NoRendererContext, "No window in this thread: NO_WINDOW_CONTEXT: " + std::string(desc));
 				} else if (id == GLFW_API_UNAVAILABLE) {
-					MACE__THROW(UnsupportedRenderer, "Context unavailable on this system: API_UNAVAILABLE" + std::string(desc));
+					MACE__THROW(gfx::UnsupportedRenderer, "Context unavailable on this system: API_UNAVAILABLE" + std::string(desc));
 				} else if (id == GLFW_VERSION_UNAVAILABLE) {
-					MACE__THROW(UnsupportedRenderer, "Context unavailable on this system: VERSION_UNAVAILABLE: " + std::string(desc));
+					MACE__THROW(gfx::UnsupportedRenderer, "Context unavailable on this system: VERSION_UNAVAILABLE: " + std::string(desc));
 				} else if (id == GLFW_PLATFORM_ERROR) {
 					MACE__THROW(System, "An error occured in the window platform: PLATFORM_ERROR: " + std::string(desc));
 				} else if (id == GLFW_OUT_OF_MEMORY) {
 					MACE__THROW(OutOfMemory, "Out of memory: OUT_OF_MEMORY: " + std::string(desc));
 				} else {
-					MACE__THROW(Window, desc);
+					MACE__THROW(gfx::Window, desc);
 				}
 			}
 
@@ -592,7 +592,7 @@ namespace mc {
 		WindowModule* getCurrentWindow() {
 			WindowModule* win = getCurrentWindowOrNull();
 			if (win == nullptr) {
-				MACE__THROW(NoRendererContext, "No Renderer found in this thread");
+				MACE__THROW(gfx::NoRendererContext, "No Renderer found in this thread");
 			}
 
 			return win;

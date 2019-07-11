@@ -295,9 +295,6 @@ namespace mc {
 				getEntitiesAt(x, y, W, H, arr);
 			}
 
-			/**
-			@rendercontext
-			*/
 			virtual void setRefreshColor(const float r, const float g, const float b, const float a = 1.0f) = 0;
 
 			Color getPixelAt(const RelativeTranslation x, const RelativeTranslation y, const FrameBufferTarget target = FrameBufferTarget::COLOR) const;
@@ -309,9 +306,6 @@ namespace mc {
 				getPixelsAt(x, y, W, H, arr, target);
 			}
 
-			/**
-			@rendercontext
-			*/
 			void setRefreshColor(const Color& c);
 
 			Pixels getWidth() const;
@@ -323,11 +317,10 @@ namespace mc {
 
 			bool isResized() const;
 
-			GraphicsContextComponent* getContext();
-			const GraphicsContextComponent* getContext() const;
 
 			/**
 			@internal
+			@todo remove this from the public interface (see glfwWindowResized in Window.cpp for why this is a problem)
 			*/
 			void flagResize();
 		protected:
@@ -336,8 +329,6 @@ namespace mc {
 			bool resized = false;
 
 			Vector<float, 2> windowRatios;
-
-			GraphicsContextComponent* context;
 
 			Renderer() noexcept = default;
 
@@ -351,6 +342,7 @@ namespace mc {
 			//not declared const because some of the functions require modification to an internal buffer of impls
 			virtual std::shared_ptr<PainterImpl> createPainterImpl() = 0;
 		private:
+			Pixels currentWidth = 0, currentHeight = 0;
 
 			/**
 			@internal

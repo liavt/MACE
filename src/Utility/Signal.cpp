@@ -20,25 +20,25 @@ namespace mc {
 #ifdef MACE_POSIX
 					if (sig == SIGHUP) {
 						//no YOU hangup first!
-						MACE__THROW(SignalHangup, "SIGHUP: Hangup detected on controlling terminal or death of controlling process");
+						MACE__THROW(os::SignalHangup, "SIGHUP: Hangup detected on controlling terminal or death of controlling process");
 					} else if (sig == SIGKILL) {
 						//RIP program. may it forever live on in /dev/null
-						MACE__THROW(SignalKill, "SIGKILL: Program was killed");
+						MACE__THROW(os::SignalKill, "SIGKILL: Program was killed");
 					} else if (sig == SIGSTOP) {
 						//stop, hammertime
-						MACE__THROW(SignalStop, "SIGSTOP: Program was stopped");
+						MACE__THROW(os::SignalStop, "SIGSTOP: Program was stopped");
 					} else if (sig == SIGALRM) {
 						//the terminal's form of birth control
-						MACE__THROW(SignalAlarm, "SIGALRM: Abort signal from alarm()");
+						MACE__THROW(os::SignalAlarm, "SIGALRM: Abort signal from alarm()");
 					} else if (sig == SIGTSTP) {
 						//ive got a terminal illness
-						MACE__THROW(SignalTerminalStop, "SIGTSTP: Stop was typed in the terminal");
+						MACE__THROW(os::SignalTerminalStop, "SIGTSTP: Stop was typed in the terminal");
 					} else if (sig == SIGTTIN) {
 						//the adventures of TTIN TTIN
-						MACE__THROW(SignalTerminalInput, "SIGTTIN: Terminal input for background process");
+						MACE__THROW(os::SignalTerminalInput, "SIGTTIN: Terminal input for background process");
 					} else if (sig == SIGTTOU) {
 						//no TTOU
-						MACE__THROW(SignalTerminalOutput, "SIGTTOU: Terminal output for background process");
+						MACE__THROW(os::SignalTerminalOutput, "SIGTTOU: Terminal output for background process");
 					}
 #endif//MACE_POSIX
 
@@ -50,25 +50,25 @@ namespace mc {
 #endif//MACE_WINDOWS
 						) {
 						//conservatives hate SIGABRT
-						MACE__THROW(SignalAbort, "SIGABRT: Program was aborted");
+						MACE__THROW(os::SignalAbort, "SIGABRT: Program was aborted");
 					} else if (sig == SIGFPE) {
 						//i was just trying to make a point
-						MACE__THROW(SignalFloatingPoint, "SIGFPE: A floating point error occured");
+						MACE__THROW(os::SignalFloatingPoint, "SIGFPE: A floating point error occured");
 					} else if (sig == SIGILL) {
 						//oh dear, the program seems quite ill
-						MACE__THROW(SignalIllegalInstruction, "SIGILL: An illegal instruction occured");
+						MACE__THROW(os::SignalIllegalInstruction, "SIGILL: An illegal instruction occured");
 					} else if (sig == SIGINT) {
 						//its rude to interuppt
-						MACE__THROW(SignalInterrupt, "SIGINT: Program was interrupted from keyboard");
+						MACE__THROW(os::SignalInterrupt, "SIGINT: Program was interrupted from keyboard");
 					} else if (sig == SIGSEGV) {
 						//now to unleash the ol' gdb and empty the next 3 days from the calendar
-						MACE__THROW(SignalSegmentFault, "SIGSEGV: Invalid memory reference (segmentation fault)");
+						MACE__THROW(os::SignalSegmentFault, "SIGSEGV: Invalid memory reference (segmentation fault)");
 					} else if (sig == SIGTERM) {
 						//hasta la vista baby
-						MACE__THROW(SignalTerminate, "SIGTERM: Program was terminated");
+						MACE__THROW(os::SignalTerminate, "SIGTERM: Program was terminated");
 					}  else MACE_UNLIKELY{
 						//we are getting mixed signals here
-						MACE__THROW(SignalUnknown, "Program recieved signal " + std::to_string(sig));
+						MACE__THROW(os::SignalUnknown, "Program recieved signal " + std::to_string(sig));
 					}
 				} catch (const std::exception& err) {
 					handleError(err);

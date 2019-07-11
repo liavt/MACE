@@ -34,12 +34,13 @@ class RotationComponent: public gfx::Component {
 	};
 };
 
-void create(gfx::WindowModule&) {
+void create(gfx::WindowModule& window) {
+	auto context = window.getContext();
 	srand(( unsigned int) time(nullptr));
 
 	const Size elementNum = 10;
 
-	const gfx::Texture star = gfx::Texture::createFromFile(MACE_DEMO_ASSETS + std::string("star.png"), gfx::ImageFormat::DONT_CARE);
+	const gfx::Texture star = context->createTextureFromFile(MACE_DEMO_ASSETS + std::string("star.png"), gfx::ImageFormat::DONT_CARE);
 
 	for (Index x = 0; x < elementNum; x++) {
 		for (Index y = 0; y < elementNum; y++) {

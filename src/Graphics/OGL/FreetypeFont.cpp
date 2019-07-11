@@ -4,6 +4,7 @@ Copyright (c) 2016-2019 Liav Turkia
 See LICENSE.md for full copyright information
 */
 #include <MACE/Graphics/OGL/FreetypeFont.h>
+#include <MACE/Graphics/Context.h>
 #include <MACE/Graphics/Window.h>
 
 #include FT_BITMAP_H
@@ -12,7 +13,7 @@ namespace mc {
 	namespace internal {
 		namespace fty {
 			namespace {
-				gfx::Texture convertBitmapToTexture(const FT_Bitmap* bitmap) {
+				gfx::Texture convertBitmapToTexture(mc::gfx::GraphicsContextComponent* context, const FT_Bitmap* bitmap) {
 					gfx::TextureDesc desc(bitmap->width, bitmap->rows);
 					switch (bitmap->pixel_mode) {
 					case FT_PIXEL_MODE_GRAY:
@@ -31,7 +32,7 @@ namespace mc {
 					desc.minFilter = gfx::TextureDesc::Filter::LINEAR;
 					desc.magFilter = gfx::TextureDesc::Filter::LINEAR;
 
-					gfx::Texture out{desc};
+					gfx::Texture out{context, desc};
 
 					gfx::PixelStorageHints hints{};
 					hints.alignment = 1;
@@ -128,7 +129,7 @@ namespace mc {
 					a #allblack texture will result in an invisible
 					texture (which is what we want for 0 width glyphs)
 					*/
-					out.texture = Colors::BLACK;
+					out.texture = context->createTextureFromColor(Colors::BLACK);
 				} else {
 					// this monster of a line allows use to use RAII principles on targetBitmap with FT_Bitmap_Done
 					/*
@@ -149,7 +150,7 @@ namespace mc {
 
 					bitmapPtr->pixel_mode = FT_PIXEL_MODE_LCD;
 
-					out.texture = convertBitmapToTexture(bitmapPtr.get());
+					out.texture = convertBitmapToTexture(context.get(), bitmapPtr.get());
 				}
 			}
 

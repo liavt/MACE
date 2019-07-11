@@ -92,7 +92,7 @@ namespace mc {
 				break;
 			MACE_UNLIKELY default:
 				//should never be reached, but just to be safe
-				MACE__THROW(Font, "Unknown Fonts enum constant");
+				MACE__THROW(gfx::Font, "Unknown Fonts enum constant");
 			}
 		}
 
