@@ -39,7 +39,7 @@ namespace mc {
 				}
 #else
 				inline void throwShaderError(const unsigned int, const Enum type, const std::string&) {
-					MACE__THROW(Shader, "Error generating shader of type " + std::to_string(type));
+					MACE__THROW(internal::ogl33::Shader, "Error generating shader of type " + std::to_string(type));
 				}
 #endif//MACE_DEBUG
 			}//anon namespace

@@ -13,10 +13,6 @@ See LICENSE.md for full copyright information
 #	error A C++ compiler is required!
 #endif//__cplusplus
 
-#ifndef __cpp_rtti
-#	error C++ RTTI must be supported!
-#endif
-
 #define MACE_MAKE_VERSION_NUMBER(major,minor,patch) (((major % 100) * 10000000) + ((minor % 100) * 100000) + (patch % 100000))
 #define MACE_MAKE_VERSION_STRING(major, minor, patch) major##.##minor##.##patch
 

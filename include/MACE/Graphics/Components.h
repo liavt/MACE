@@ -542,6 +542,82 @@ namespace mc {
 
 			const std::vector<Texture> frames;
 		};
+
+		template<TextureSlot Slot = TextureSlot::FOREGROUND>
+		class TextureComponent: public Component {
+		public:
+			TextureComponent(Texture tex) : texture(tex) {}
+			TextureComponent() : texture() {}
+
+			/**
+			@dirty
+			*/
+			Texture& getTexture() {
+				parent->makeDirty();
+
+				return texture;
+			}
+
+			const Texture& getTexture() const {
+				return texture;
+			}
+
+			/**
+			@dirty
+			*/
+			void setTexture(Texture& tex) {
+				if (tex != texture) {
+					parent->makeDirty();
+
+					texture = tex;
+				}
+			}
+
+			bool operator==(const TextureComponent<Slot>& other) const {
+				return texture == other.texture;
+			}
+
+			bool operator!=(const TextureComponent<Slot>& other) const {
+				return !operator==(other);
+			}
+		private:
+			Texture texture;
+		};
+
+		class MACE_NOVTABLE TexturedEntity: public virtual GraphicsEntity {
+		public:
+			TexturedEntity() noexcept = default;
+			template<TextureSlot Slot = TextureSlot::FOREGROUND>
+			TexturedEntity(Texture tex) {
+				addComponent(ComponentPtr< TextureComponent<Slot>>(new TextureComponent<Slot>(tex)));
+			}
+
+			/**
+			@dirty
+			*/
+			template<TextureSlot Slot = TextureSlot::FOREGROUND>
+			Texture& getTexture() {
+				return getOrCreateComponent<TextureComponent<Slot>>()->getTexture();
+			}
+
+			template<TextureSlot Slot = TextureSlot::FOREGROUND>
+			const Texture& getTexture() const {
+				return getOrCreateComponent<TextureComponent<Slot>>()->getTexture();
+			}
+
+			/**
+			@dirty
+			*/
+			template<TextureSlot Slot = TextureSlot::FOREGROUND>
+			void setTexture(Texture& tex) {
+				getOrCreateComponent<TextureComponent<Slot>>()->setTexture(tex);
+			}
+
+			template<TextureSlot Slot = TextureSlot::FOREGROUND>
+			inline void setTexture(const Color & col) {
+				setTexture<Slot>(getContext()->createTextureFromColor(col));
+			}
+		};
 	}//gfx
 }//mc
 

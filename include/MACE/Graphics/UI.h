@@ -12,7 +12,7 @@ See LICENSE.md for full copyright information
 
 namespace mc {
 	namespace gfx {
-		class UIButton: public Selectable, public Entity2D {
+		class UIButton: public Selectable, public GraphicsEntity {
 		private:
 			NineSliceComponent nineSlice;
 

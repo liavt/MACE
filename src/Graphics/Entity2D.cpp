@@ -19,16 +19,6 @@ See LICENSE.md for full copyright information
 
 namespace mc {
 	namespace gfx {
-		Entity2D::Entity2D() : GraphicsEntity() {}
-
-		bool Entity2D::operator==(const Entity2D& other) const {
-			return GraphicsEntity::operator==(other);
-		}
-
-		bool Entity2D::operator!=(const Entity2D& other) const {
-			return !operator==(other);
-		}
-
 		bool Selectable::isClicked() const {
 			return selectableProperties & Selectable::CLICKED;
 		}
@@ -88,46 +78,14 @@ namespace mc {
 
 		//IMAGE
 
-		Image::Image() noexcept : texture() {}
-
-		Image::Image(const Texture& tex) : texture(tex) {}
-
-		void Image::onInit() {}
-
-		void Image::onUpdate() {}
+		Image::Image(const Texture& tex) : TexturedEntity(tex) {}
 
 		void Image::onRender(Painter& p) {
-			p.drawImage(texture);
-		}
-
-		void Image::onDestroy() {
-			if (texture.isCreated()) {
-				texture.destroy();
-			}
-		}
-
-		void Image::onClean() {}
-
-		void Image::setTexture(const Texture& tex) {
-			if (tex != texture) {
-				makeDirty();
-
-				texture = tex;
-			}
-		}
-
-		Texture& Image::getTexture() {
-			makeDirty();
-
-			return texture;
-		}
-
-		const Texture& Image::getTexture() const {
-			return texture;
+			p.drawImage(getTexture());
 		}
 
 		bool Image::operator==(const Image& other) const {
-			return Entity2D::operator==(other) && texture == other.texture;
+			return TexturedEntity::operator==(other);
 		}
 
 		bool Image::operator!=(const Image& other) const {
@@ -250,7 +208,7 @@ namespace mc {
 		}
 
 		bool SimpleProgressBar::operator==(const SimpleProgressBar& other) const {
-			return Entity2D::operator==(other) && maximumProgress == other.maximumProgress && minimumProgress == other.minimumProgress && progress == other.progress && backgroundTexture == other.backgroundTexture && foregroundTexture == other.foregroundTexture && selectionTexture == other.selectionTexture;
+			return GraphicsEntity::operator==(other) && maximumProgress == other.maximumProgress && minimumProgress == other.minimumProgress && progress == other.progress && backgroundTexture == other.backgroundTexture && foregroundTexture == other.foregroundTexture && selectionTexture == other.selectionTexture;
 		}
 
 		bool SimpleProgressBar::operator!=(const SimpleProgressBar& other) const {
@@ -319,7 +277,7 @@ namespace mc {
 		}
 
 		bool Letter::operator==(const Letter& other) const {
-			return Entity2D::operator==(other) && texture == other.texture && glyph == other.glyph && glyphMetrics == other.glyphMetrics;
+			return GraphicsEntity::operator==(other) && texture == other.texture && glyph == other.glyph && glyphMetrics == other.glyphMetrics;
 		}
 
 		bool Letter::operator!=(const Letter& other) const {
@@ -349,11 +307,11 @@ namespace mc {
 
 		void Letter::onClean() {}
 
-		Text::Text() noexcept : TexturedEntity2D(), text(), font() {}
+		Text::Text() noexcept : TexturedEntity(), text(), font() {}
 
 		Text::Text(const std::string& s, const Font& f) : Text(os::toWideString(s), f) {}
 
-		Text::Text(const std::wstring& t, const Font& f) : TexturedEntity2D(), text(t), font(f) {}
+		Text::Text(const std::wstring& t, const Font& f) : TexturedEntity(), text(t), font(f) {}
 
 		void mc::gfx::Text::setText(const std::string& newText) {
 			setText(os::toWideString(newText));
@@ -399,26 +357,8 @@ namespace mc {
 			return letters;
 		}
 
-		void Text::setTexture(const Texture& tex) {
-			if (tex != texture) {
-				makeDirty();
-
-				texture = tex;
-			}
-		}
-
-		Texture& Text::getTexture() {
-			makeDirty();
-
-			return texture;
-		}
-
-		const Texture& Text::getTexture() const {
-			return texture;
-		}
-
 		bool Text::operator==(const Text& other) const {
-			return Entity2D::operator==(other) && letters == other.letters && text == other.text && texture == other.texture;
+			return TexturedEntity::operator==(other) && letters == other.letters && text == other.text;
 		}
 
 		bool Text::operator!=(const Text& other) const {
@@ -468,10 +408,10 @@ namespace mc {
 
 				letters[i]->glyph = glyph.texture;
 
-				if (this->texture.isCreated()) {
-					letters[i]->texture = this->texture;
+				if (getTexture().isCreated()) {
+					letters[i]->texture = getTexture();
 				} else {
-					letters[i]->texture = getRoot()->getComponent<GraphicsContextComponent>()->createTextureFromColor(Colors::WHITE);
+					letters[i]->texture = getContext()->createTextureFromColor(Colors::WHITE);
 				}
 
 				if (text[i] == '\n') {
@@ -532,114 +472,6 @@ namespace mc {
 
 			for (auto letter : letters) {
 				letter->translate(-width, height);
-			}
-		}
-
-		const Texture& SimpleButton::getTexture() const {
-			return texture;
-		}
-
-		Texture& SimpleButton::getTexture() {
-			makeDirty();
-
-			return texture;
-		}
-
-		void SimpleButton::setTexture(const Texture& c) {
-			if (texture != c) {
-				makeDirty();
-
-				texture = c;
-			}
-		}
-
-		const Texture& SimpleButton::getHoverTexture() const {
-			return hoverTexture;
-		}
-
-		Texture& SimpleButton::getHoverTexture() {
-			makeDirty();
-
-			return hoverTexture;
-		}
-
-		void SimpleButton::setHoverTexture(const Texture& c) {
-			if (hoverTexture != c) {
-				makeDirty();
-
-				hoverTexture = c;
-			}
-		}
-
-		const Texture& SimpleButton::getClickedTexture() const {
-			return clickedTexture;
-		}
-
-		Texture& SimpleButton::getClickedTexture() {
-			makeDirty();
-
-			return clickedTexture;
-		}
-
-		void SimpleButton::setClickedTexture(const Texture& c) {
-			if (clickedTexture != c) {
-				makeDirty();
-
-				clickedTexture = c;
-			}
-		}
-
-		const Texture& SimpleButton::getDisabledTexture() const {
-			return disabledTexture;
-		}
-
-		Texture& SimpleButton::getDisabledTexture() {
-			makeDirty();
-
-			return disabledTexture;
-		}
-
-		void SimpleButton::setDisabledTexture(const Texture& c) {
-			if (disabledTexture != c) {
-				makeDirty();
-
-				disabledTexture = c;
-			}
-		}
-
-		void SimpleButton::onRender(Painter& p) {
-			p.drawImage(texture);
-			if (isDisabled()) {
-				p.drawImage(disabledTexture);
-			} else {
-				if (isHovered()) {
-					p.drawImage(hoverTexture);
-				}
-				if (isClicked()) {
-					p.drawImage(clickedTexture);
-				}
-			}
-		}
-
-		void SimpleButton::onHover() {
-			doHover();
-		}
-
-		void SimpleButton::onDestroy() {
-			if (texture.isCreated()) {
-				texture.destroy();
-			}
-
-			if (hoverTexture.isCreated()) {
-				hoverTexture.destroy();
-			}
-
-			if (clickedTexture.isCreated()) {
-				clickedTexture.destroy();
-			}
-
-			if (disabledTexture.isCreated()) {
-				disabledTexture.destroy();
 			}
 		}
 	}//gfx

@@ -516,7 +516,7 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		GraphicsEntity::GraphicsEntity() noexcept : Entity(), painter(this, nullptr) {}
+		GraphicsEntity::GraphicsEntity() noexcept : painter(this, nullptr) {}
 
 		void GraphicsEntity::init() {
 			Entity::init();
@@ -540,6 +540,14 @@ namespace mc {
 
 		const Painter& GraphicsEntity::getPainter() const {
 			return painter;
+		}
+
+		ComponentPtr<GraphicsContextComponent> GraphicsEntity::getContext() {
+			return getRoot()->getComponent<GraphicsContextComponent>();
+		}
+
+		const ComponentPtr<GraphicsContextComponent> GraphicsEntity::getContext() const {
+			return getRoot()->getComponent<GraphicsContextComponent>();
 		}
 
 		bool GraphicsEntity::operator==(const GraphicsEntity& other) const noexcept {

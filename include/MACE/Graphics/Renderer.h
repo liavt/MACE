@@ -384,7 +384,7 @@ namespace mc {
 			void queue(GraphicsEntity* const e, Painter& p);
 		};//Renderer
 
-		class MACE_NOVTABLE GraphicsEntity: public Entity {
+		class MACE_NOVTABLE GraphicsEntity: public virtual Entity {
 		public:
 			GraphicsEntity() noexcept;
 
@@ -395,6 +395,9 @@ namespace mc {
 			*/
 			Painter& getPainter();
 			const Painter& getPainter() const;
+
+			ComponentPtr<GraphicsContextComponent> getContext();
+			const ComponentPtr<GraphicsContextComponent> getContext() const;
 
 			bool operator==(const GraphicsEntity& other) const noexcept;
 			bool operator!=(const GraphicsEntity& other) const noexcept;

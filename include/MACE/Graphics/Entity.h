@@ -58,6 +58,9 @@ namespace mc {
 		template<typename T>
 		using ExtendsEntity = EnableIfType < std::is_base_of<gfx::Entity, T>{} > ;
 
+		template<typename T>
+		using DefaultConstrucible = EnableIfType < std::is_default_constructible<T>{} > ;
+
 		template<typename T, typename = ExtendsComponent<T>>
 		MACE_NODISCARD MACE_CONSTEXPR inline ComponentTypeID getComponentTypeID() noexcept {
 			return &ComponentTypeIDPtr<T>::ID;
@@ -471,9 +474,17 @@ namespace mc {
 			@param com The SmartPointer of an `Entity`. Ownership of the pointer will change meaning this parameter cannot be marked `const`
 			*/
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
-			void addComponent(ComponentPtr<T> com) MACE_EXPECTS(com != nullptr) noexcept {
-				//using the std::pair<> constructor instead of make_pair because the constructor is noexcept
-				componentsToBeInit.push(std::pair<MACE__INTERNAL_NS::ComponentTypeID, ComponentPtr<Component>>(MACE__INTERNAL_NS::getComponentTypeID<T>(), std::static_pointer_cast<Component>(std::move(com))));
+			void addComponent(ComponentPtr<T> com) MACE_EXPECTS(com != nullptr) {
+				MACE_ASSERT(com != nullptr, "Added Component was nullptr");
+				MACE_ASSERT(!hasComponent<T>(), "Component of type already exists");
+
+				// in case T declares init() as private, cast it to Component which is friends with Entity
+				auto component = std::static_pointer_cast<Component>(com);
+				component->parent = this;
+				if (isInit()) {
+					component->init();
+				}
+				components.emplace(MACE__INTERNAL_NS::getComponentTypeID<T>(), component);
 
 				makeDirty();
 			}
@@ -496,6 +507,18 @@ namespace mc {
 				}
 
 				return nullptr;
+			}
+
+			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>, typename = MACE__INTERNAL_NS::DefaultConstrucible<T>>
+			MACE_NODISCARD ComponentPtr<T> getOrCreateComponent() {
+				auto it = components.find(MACE__INTERNAL_NS::getComponentTypeID<T>());
+				if (it != components.end()) {
+					return std::static_pointer_cast<T>(it->second);
+				}
+
+				ComponentPtr<T> newCom = ComponentPtr<T>(new T());
+				addComponent(newCom);
+				return newCom;
 			}
 
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
@@ -786,7 +809,6 @@ namespace mc {
 			void setProperty(const Byte position, const bool value) noexcept;
 		private:
 			std::queue<EntityPtr<Entity>> childrenToBeInit{};
-			std::queue <std::pair<MACE__INTERNAL_NS::ComponentTypeID, ComponentPtr<Component>>> componentsToBeInit{};
 			/**
 			`std::vector` of this `Entity\'s` children. Use of this variable directly is unrecommended. Use `addChild()` or `removeChild()` instead.
 			@internal
@@ -811,7 +833,6 @@ namespace mc {
 			EntityProperties properties = Entity::DEFAULT_PROPERTIES;
 
 			void checkChildrenToBeInit();
-			void checkComponentsToBeInit();
 		};//Entity
 
 		class Group: public Entity {};//Group

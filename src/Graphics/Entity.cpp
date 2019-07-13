@@ -268,7 +268,6 @@ namespace mc {
 		void Entity::clean() {
 			if (getProperty(Entity::DIRTY)) {
 				checkChildrenToBeInit();
-				checkComponentsToBeInit();
 
 				onClean();
 
@@ -362,7 +361,10 @@ namespace mc {
 			id = root->getComponent<MACE__INTERNAL_NS::RootComponent>()->generateID(this);
 
 			checkChildrenToBeInit();
-			checkComponentsToBeInit();
+
+			for (auto com : components) {
+				com.second->init();
+			}
 
 			onInit();
 			setProperty(Entity::INIT, true);
@@ -630,20 +632,6 @@ namespace mc {
 				child->parent = this;
 				child->init();
 				children.push_back(child);
-			}
-		}
-
-		void Entity::checkComponentsToBeInit() {
-			while (!componentsToBeInit.empty()) {
-				auto component = componentsToBeInit.front();
-				componentsToBeInit.pop();
-
-				MACE_ASSERT(component.second != nullptr, "Added Component was nullptr");
-				MACE_ASSERT(components.count(component.first) == 0, "Component of type already exists");
-
-				component.second->parent = this;
-				component.second->init();
-				components.emplace(component);
 			}
 		}
 
