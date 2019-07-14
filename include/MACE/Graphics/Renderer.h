@@ -36,6 +36,7 @@ namespace mc {
 			friend class GraphicsEntity;
 			friend class PainterImpl;
 			friend class Renderer;
+			friend class PainterComponent;
 		public:
 			enum class Brush: Byte {
 				/**
@@ -134,7 +135,7 @@ namespace mc {
 			void drawQuad(const Brush brush);
 			void draw(const Model& m, const Brush brush);
 
-			const GraphicsEntity* const getEntity() const;
+			const Entity* const getEntity() const;
 
 			void setTexture(const Texture& t, const TextureSlot slot = TextureSlot::FOREGROUND);
 
@@ -219,11 +220,11 @@ namespace mc {
 			//for pushing/popping the state
 			std::stack<Painter::State> stateStack{};
 
-			GraphicsEntity* entity;
+			Entity* entity;
 
 			Painter();
-			Painter(GraphicsEntity* const en, const std::shared_ptr<PainterImpl> im);
-			Painter(GraphicsEntity* const en, const Painter& other);
+			Painter(Entity* const en, const std::shared_ptr<PainterImpl> im);
+			Painter(Entity* const en, const Painter& other);
 
 			void begin() override;
 			void end() override;
@@ -282,6 +283,7 @@ namespace mc {
 			friend class GraphicsContextComponent;
 			friend class WindowModule;
 			friend class GraphicsEntity;
+			friend class PainterComponent;
 		public:
 			virtual MACE__DEFAULT_OPERATORS(Renderer);
 
@@ -337,7 +339,7 @@ namespace mc {
 			virtual void onSetUp(gfx::WindowModule* win) = 0;
 			virtual void onTearDown(gfx::WindowModule* win) = 0;
 			virtual void onDestroy() = 0;
-			virtual void onQueue(GraphicsEntity* en) = 0;
+			virtual void onQueue(Entity* en) = 0;
 
 			//not declared const because some of the functions require modification to an internal buffer of impls
 			virtual std::shared_ptr<PainterImpl> createPainterImpl() = 0;
@@ -381,7 +383,7 @@ namespace mc {
 			*/
 			void destroy();
 
-			void queue(GraphicsEntity* const e, Painter& p);
+			void queue(Entity* const e, Painter& p);
 		};//Renderer
 
 		class MACE_NOVTABLE GraphicsEntity: public virtual Entity {
@@ -414,6 +416,20 @@ namespace mc {
 
 			void onRender() override final;
 		};//GraphicsEntity
+
+		class PainterComponent: public Component {
+		public:
+			Painter& getPainter();
+			const Painter& getPainter() const;
+		private:
+			Painter painter;
+
+			void clean(Metrics& metrics) override final;
+
+			void init() override final;
+
+			void destroy() override final;
+		};
 	}//gfx
 }//mc
 

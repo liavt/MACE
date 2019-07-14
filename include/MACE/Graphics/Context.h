@@ -260,6 +260,9 @@ namespace mc {
 			int rowLength = 0;
 		};
 
+		using TextureSetDataCallback = std::function<const void *()>;
+		using TextureReadDataCallback = std::function<void(void*)>;
+
 		class MACE_NOVTABLE TextureImpl {
 			friend class Texture;
 		public:
@@ -438,7 +441,7 @@ namespace mc {
 			void render() final;
 			void destroy() final;
 
-			virtual Renderer* getRenderer() const = 0;
+			virtual std::shared_ptr<Renderer> getRenderer() const = 0;
 
 			gfx::WindowModule* getWindow();
 			const gfx::WindowModule* getWindow() const;

@@ -130,27 +130,26 @@ namespace mc {
 			Entity* parent = nullptr;
 
 			/**
-			Called when this `Component` is added to the `Entity` via Entity::addComponent(Component&).
-			Required function.
+			Called when this `Component` is added to the `Entity` via Entity::addComponent().
 			@rendercontext
 			*/
 			virtual void init() override;
 			/**
-			Called when Entity::update() is called. Required function.
+			Called when Entity::update() is called.
 			@rendercontext
 			*/
 			virtual void update();
 			/**
 			Called when Entity::destroy() is called or the `Component` is removed via Component::update(Entity*),
 			whichever comes first. Once Component::destroy(Entity*) is called, it is immediately removed from
-			the `Entity`. Required function.
+			the `Entity`.
 			@rendercontext
 			*/
 			virtual void destroy() override;
 
 			virtual void render();
 			/**
-			Called when Entity::clean() is called and it was dirty. This is not required for inheritance.
+			Called when Entity::clean() is called and it was dirty.
 			@rendercontext
 			@return whether the `Component` needs to be removed from the `Entity`. Use this for tweens or timed events.
 			*/
@@ -491,6 +490,8 @@ namespace mc {
 
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
 			MACE_NODISCARD ComponentPtr<T> getComponent() {
+				//TODO use the __cpp_lib_generic_unordered_hash_lookup (201902L) macro to use precomputated hashes
+
 				auto it = components.find(MACE__INTERNAL_NS::getComponentTypeID<T>());
 				if (it != components.end()) {
 					return std::static_pointer_cast<T>(it->second);

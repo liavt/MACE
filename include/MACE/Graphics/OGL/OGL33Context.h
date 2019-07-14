@@ -67,7 +67,7 @@ namespace mc {
 				OGL33Context(const OGL33Context& other) = delete;
 				~OGL33Context() = default;
 
-				gfx::Renderer* getRenderer() const override;
+				std::shared_ptr<gfx::Renderer> getRenderer() const override;
 
 				std::shared_ptr<gfx::ModelImpl> createModelImpl() override;
 				std::shared_ptr<gfx::TextureImpl> createTextureImpl(const gfx::TextureDesc& desc) override;
@@ -79,12 +79,14 @@ namespace mc {
 				void onRender(gfx::WindowModule* win) override;
 				void onDestroy(gfx::WindowModule* win) override;
 			private:
-				std::unique_ptr<OGL33Renderer> renderer;
+				std::shared_ptr<OGL33Renderer> renderer;
 				std::queue <OGL33Dispatch, std::list<OGL33Dispatch>> dispatchQueue{};
 				std::mutex dispatchMutex;
 
 				//TODO forward declare this insead of including FreetypeFont.h
 				MACE__INTERNAL_NS::fty::FreetypeLibrary freetype;
+
+				void processDispatchQueue();
 			};
 		}//ogl33
 	}//internal

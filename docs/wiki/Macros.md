@@ -2,6 +2,8 @@
 
 There are many different macros that can determine how MACE works.
 
+All macros defined by MACE are prefixed with `MACE_`. Macros prefixed by `MACE__` (two underscores) are for internal usage only and should not be used.
+
 ## Macros that affect how MACE works
 
 | *Macro* | *Effect* |

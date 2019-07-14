@@ -43,7 +43,7 @@ namespace mc {
 				void onSetUp(gfx::WindowModule* win) override;
 				void onTearDown(gfx::WindowModule* win) override;
 				void onDestroy() override;
-				void onQueue(gfx::GraphicsEntity* en) override;
+				void onQueue(gfx::Entity* en) override;
 
 				void setRefreshColor(const float r, const float g, const float b, const float a = 1.0f) override;
 

@@ -333,11 +333,7 @@ namespace mc {
 
 			void OGL33Context::onRender(gfx::WindowModule*) {
 				std::lock_guard<std::mutex> guard(dispatchMutex);
-				while (!dispatchQueue.empty()) {
-					OGL33Dispatch& dispatch = dispatchQueue.front();
-					dispatchQueue.pop();
-					dispatch();
-				}
+				processDispatchQueue();
 			}
 
 			void OGL33Context::onDestroy(gfx::WindowModule*) {
@@ -350,21 +346,26 @@ namespace mc {
 
 			void OGL33Context::dispatch(const OGL33Dispatch& dispatch) {
 				if (currentContext == this) {
-					if (dispatchQueue.empty()) {
-						dispatch();
-					} else {
-						dispatchQueue.push(dispatch);
-					}
+					processDispatchQueue();
+					dispatch();
 				} else {
 					std::lock_guard<std::mutex> guard(dispatchMutex);
 					dispatchQueue.push(dispatch);
 				}
 			}
 
+			void OGL33Context::processDispatchQueue() {
+				while (!dispatchQueue.empty()) {
+					OGL33Dispatch& dispatch = dispatchQueue.front();
+					dispatchQueue.pop();
+					dispatch();
+				}
+			}
+
 			OGL33Context::OGL33Context(gfx::WindowModule* win) : GraphicsContextComponent(win) {}
 
-			gfx::Renderer* OGL33Context::getRenderer() const {
-				return renderer.get();
+			std::shared_ptr<gfx::Renderer> OGL33Context::getRenderer() const {
+				return renderer;
 			}
 
 			std::shared_ptr<gfx::ModelImpl> OGL33Context::createModelImpl() {

@@ -28,7 +28,7 @@ namespace mc {
 			onSetUp(win);
 		}//setUp
 
-		void Renderer::queue(GraphicsEntity* const e, Painter& p) {
+		void Renderer::queue(Entity* const e, Painter& p) {
 			if (e == nullptr) {
 				MACE__THROW(NullPointer, "Internal Error: Input pointer to a GraphicsEntity must not be null in Renderer::queue()");
 			}
@@ -67,8 +67,9 @@ namespace mc {
 		void Renderer::checkInput(gfx::WindowModule* win) {
 			const int mouseX = gfx::Input::getMouseX(), mouseY = gfx::Input::getMouseY();
 			if (mouseX >= 0 && mouseY >= 0) {
+				const auto rootComponent = win->getComponent<MACE__INTERNAL_NS::RootComponent>();
 				//std::cout << getEntityAt(static_cast<Pixels>(mouseX), static_cast<Pixels>(mouseY)) << std::endl;
-				Entity* hovered = win->getComponent<MACE__INTERNAL_NS::RootComponent>()->getEntityByID(getEntityAt(static_cast<Pixels>(mouseX), static_cast<Pixels>(mouseY)));
+				Entity* hovered = rootComponent->getEntityByID(getEntityAt(static_cast<Pixels>(mouseX), static_cast<Pixels>(mouseY)));
 
 				if (hovered != nullptr && !hovered->needsRemoval()) {
 					hovered->hover();
@@ -131,9 +132,9 @@ namespace mc {
 
 		Painter::Painter() : entity(nullptr), impl(nullptr) {}
 
-		Painter::Painter(GraphicsEntity* const en, const std::shared_ptr<PainterImpl> pimpl) : entity(en), impl(pimpl) {}
+		Painter::Painter(Entity* const en, const std::shared_ptr<PainterImpl> pimpl) : entity(en), impl(pimpl) {}
 
-		Painter::Painter(GraphicsEntity* const en, const Painter& p) : impl(p.impl), entity(en) {}
+		Painter::Painter(Entity* const en, const Painter& p) : impl(p.impl), entity(en) {}
 
 		void Painter::begin() {
 			if (impl == nullptr) {
@@ -211,7 +212,7 @@ namespace mc {
 			impl->draw(m, brush);
 		}
 
-		const GraphicsEntity* const Painter::getEntity() const {
+		const Entity* const Painter::getEntity() const {
 			return entity;
 		}
 
@@ -567,6 +568,20 @@ namespace mc {
 			Entity::clean();
 
 			painter.clean();
+		}
+		Painter& PainterComponent::getPainter() {
+			parent->makeDirty();
+
+			return painter;
+		}
+		const Painter& PainterComponent::getPainter() const {
+			return painter;
+		}
+		void PainterComponent::clean(Metrics&) {
+			painter.clean();
+		}
+		void PainterComponent::init() {
+			parent->getRoot()->getComponent<GraphicsContextComponent>()->getRenderer()->queue(parent, painter);
 		}
 	}//gfx
 }//mc

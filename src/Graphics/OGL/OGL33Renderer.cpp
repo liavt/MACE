@@ -465,7 +465,7 @@ namespace mc {
 
 			}
 
-			void OGL33Renderer::onQueue(gfx::GraphicsEntity*) {}
+			void OGL33Renderer::onQueue(gfx::Entity*) {}
 
 			void OGL33Renderer::setRefreshColor(const float r, const float g, const float b, const float a) {
 				clearColor = Color(r, g, b, a);

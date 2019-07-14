@@ -249,7 +249,7 @@ namespace mc {
 		}
 
 		void SimpleSlider::onClick() {
-			const Renderer* renderer = getRoot()->getComponent<GraphicsContextComponent>()->getRenderer();
+			const auto renderer = getRoot()->getComponent<GraphicsContextComponent>()->getRenderer();
 
 			const int mouseX = gfx::Input::getMouseX(), mouseY = gfx::Input::getMouseY();
 			if (mouseX >= 0 && mouseY >= 0) {

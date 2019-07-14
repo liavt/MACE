@@ -360,14 +360,14 @@ namespace mc {
 					MACE__THROW(Unknown, "An unknown error has occured trying to initalize MACE");
 				}
 
+				auto renderer = getContext()->getRenderer();
+
 				//this is the main rendering loop.
 				//we loop infinitely until break is called. break is called when an exception is thrown or MACE::isRunning is false
 				for (;;) {//( ;_;)
 					try {
 						//thread doesn't own window, so we have to lock the mutex
 						const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
-
-						Renderer* const renderer = getContext()->getRenderer();
 
 						if (getProperty(Entity::DIRTY)) {
 							renderer->setUp(this);
