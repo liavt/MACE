@@ -32,6 +32,12 @@ namespace mc {
 			DATA = 1
 		};
 
+		enum PainterTextureSlots: TextureSlot {
+			FOREGROUND = 0,
+			BACKGROUND = 1,
+			MASK = 2
+		};
+
 		class Painter: public Beginable, private Initializable {
 			friend class GraphicsEntity;
 			friend class PainterImpl;
@@ -137,7 +143,7 @@ namespace mc {
 
 			const Entity* const getEntity() const;
 
-			void setTexture(const Texture& t, const TextureSlot slot = TextureSlot::FOREGROUND);
+			void setTexture(const Texture& t, const TextureSlot slot = MACE__INTERNAL_NS::getTextureSlot(PainterTextureSlots::FOREGROUND));
 
 			void setForegroundColor(const Color& col);
 			Color& getForegroundColor();

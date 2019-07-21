@@ -98,60 +98,6 @@ namespace mc {
 
 		SimpleProgressBar::SimpleProgressBar(const Progress minimum, const Progress maximum, const Progress prog) noexcept : minimumProgress(minimum), maximumProgress(maximum), progress(prog) {}
 
-		void SimpleProgressBar::setBackgroundTexture(const Texture& tex) {
-			if (backgroundTexture != tex) {
-				makeDirty();
-
-				backgroundTexture = tex;
-			}
-		}
-
-		Texture& SimpleProgressBar::getBackgroundTexture() {
-			makeDirty();
-
-			return backgroundTexture;
-		}
-
-		const Texture& SimpleProgressBar::getBackgroundTexture() const {
-			return backgroundTexture;
-		}
-
-		void SimpleProgressBar::setForegroundTexture(const Texture& tex) {
-			if (foregroundTexture != tex) {
-				makeDirty();
-
-				foregroundTexture = tex;
-			}
-		}
-
-		Texture& SimpleProgressBar::getForegroundTexture() {
-			makeDirty();
-
-			return foregroundTexture;
-		}
-
-		const Texture& SimpleProgressBar::getForegroundTexture() const {
-			return foregroundTexture;
-		}
-
-		void SimpleProgressBar::setSelectionTexture(const Texture& tex) {
-			if (selectionTexture != tex) {
-				makeDirty();
-
-				selectionTexture = tex;
-			}
-		}
-
-		Texture& SimpleProgressBar::getSelectionTexture() {
-			makeDirty();
-
-			return selectionTexture;
-		}
-
-		const Texture& SimpleProgressBar::getSelectionTexture() const {
-			return selectionTexture;
-		}
-
 
 		void SimpleProgressBar::setMinimum(const Progress minimum) {
 			if (minimumProgress != minimum) {
@@ -208,7 +154,7 @@ namespace mc {
 		}
 
 		bool SimpleProgressBar::operator==(const SimpleProgressBar& other) const {
-			return GraphicsEntity::operator==(other) && maximumProgress == other.maximumProgress && minimumProgress == other.minimumProgress && progress == other.progress && backgroundTexture == other.backgroundTexture && foregroundTexture == other.foregroundTexture && selectionTexture == other.selectionTexture;
+			return GraphicsEntity::operator==(other) && maximumProgress == other.maximumProgress && minimumProgress == other.minimumProgress;
 		}
 
 		bool SimpleProgressBar::operator!=(const SimpleProgressBar& other) const {
@@ -217,24 +163,14 @@ namespace mc {
 
 		void SimpleProgressBar::onRender(Painter& p) {
 			p.enableRenderFeatures(Painter::RenderFeatures::FILTER | Painter::RenderFeatures::DISCARD_INVISIBLE);
-			p.conditionalMaskImages(foregroundTexture, backgroundTexture, selectionTexture,
+			p.conditionalMaskImages(getTexture<SimpleProgressBarTextureSlots::FOREGROUND>(),
+									getTexture<SimpleProgressBarTextureSlots::BACKGROUND>(),
+									getTexture<SimpleProgressBarTextureSlots::MASK>(),
 									minimumProgress / maximumProgress,
 									(progress - minimumProgress) / (maximumProgress - minimumProgress));
 		}
 
-		void SimpleProgressBar::onDestroy() {
-			if (backgroundTexture.isCreated()) {
-				backgroundTexture.destroy();
-			}
-
-			if (foregroundTexture.isCreated()) {
-				foregroundTexture.destroy();
-			}
-
-			if (selectionTexture.isCreated()) {
-				selectionTexture.destroy();
-			}
-		}
+		void SimpleProgressBar::onDestroy() {}
 
 
 		SimpleSlider::SimpleSlider() noexcept : SimpleProgressBar() {}
@@ -245,7 +181,7 @@ namespace mc {
 			SimpleProgressBar::onRender(p);
 
 			p.setTarget(FrameBufferTarget::DATA);
-			p.drawImage(selectionTexture);
+			p.drawImage(getTexture<SimpleProgressBarTextureSlots::MASK>());
 		}
 
 		void SimpleSlider::onClick() {
@@ -290,8 +226,8 @@ namespace mc {
 
 		void Letter::onRender(Painter& p) {
 			p.disableRenderFeatures(Painter::RenderFeatures::DISCARD_INVISIBLE | Painter::RenderFeatures::FILTER | Painter::RenderFeatures::STORE_ID);
-			p.setTexture(texture, TextureSlot::FOREGROUND);
-			p.setTexture(glyph, TextureSlot::BACKGROUND);
+			p.setTexture(texture, PainterTextureSlots::FOREGROUND);
+			p.setTexture(glyph, PainterTextureSlots::BACKGROUND);
 			p.drawQuad(Painter::Brush::MULTICOMPONENT_BLEND);
 		}
 
@@ -411,7 +347,7 @@ namespace mc {
 				if (getTexture().isCreated()) {
 					letters[i]->texture = getTexture();
 				} else {
-					letters[i]->texture = getContext()->createTextureFromColor(Colors::WHITE);
+					letters[i]->texture = getContext()->getSolidColor(Colors::WHITE);
 				}
 
 				if (text[i] == '\n') {

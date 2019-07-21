@@ -130,7 +130,7 @@ namespace mc {
 
 						program.createUniform("tex");
 
-						program.setUniform("tex", static_cast<int>(gfx::TextureSlot::FOREGROUND));
+						program.setUniform("tex", static_cast<int>(gfx::PainterTextureSlots::FOREGROUND));
 					} else if (settings.first == gfx::Painter::Brush::MASK) {
 						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
 #							include <MACE/Graphics/OGL/Shaders/Brushes/mask.f.glsl>
@@ -144,8 +144,8 @@ namespace mc {
 						program.createUniform("mask");
 
 						//binding the samplers
-						program.setUniform("tex", static_cast<int>(gfx::TextureSlot::FOREGROUND));
-						program.setUniform("mask", static_cast<int>(gfx::TextureSlot::MASK));
+						program.setUniform("tex", static_cast<int>(gfx::PainterTextureSlots::FOREGROUND));
+						program.setUniform("mask", static_cast<int>(gfx::PainterTextureSlots::MASK));
 					} else if (settings.first == gfx::Painter::Brush::MASK) {
 						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
 #							include <MACE/Graphics/OGL/Shaders/Brushes/mask.f.glsl>
@@ -159,8 +159,8 @@ namespace mc {
 						program.createUniform("mask");
 
 						//binding the samplers
-						program.setUniform("tex", static_cast<int>(gfx::TextureSlot::FOREGROUND));
-						program.setUniform("mask", static_cast<int>(gfx::TextureSlot::MASK));
+						program.setUniform("tex", static_cast<int>(gfx::PainterTextureSlots::FOREGROUND));
+						program.setUniform("mask", static_cast<int>(gfx::PainterTextureSlots::MASK));
 					} else if (settings.first == gfx::Painter::Brush::BLEND) {
 						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
 #							include <MACE/Graphics/OGL/Shaders/Brushes/blend.f.glsl>
@@ -173,8 +173,8 @@ namespace mc {
 						program.createUniform("tex1");
 						program.createUniform("tex2");
 
-						program.setUniform("tex1", static_cast<int>(gfx::TextureSlot::FOREGROUND));
-						program.setUniform("tex2", static_cast<int>(gfx::TextureSlot::BACKGROUND));
+						program.setUniform("tex1", static_cast<int>(gfx::PainterTextureSlots::FOREGROUND));
+						program.setUniform("tex2", static_cast<int>(gfx::PainterTextureSlots::BACKGROUND));
 					} else if (settings.first == gfx::Painter::Brush::CONDITIONAL_MASK) {
 						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
 #							include <MACE/Graphics/OGL/Shaders/Brushes/conditional_mask.f.glsl>
@@ -189,9 +189,9 @@ namespace mc {
 						program.createUniform("mask");
 
 						//binding the samplers
-						program.setUniform("tex1", static_cast<int>(gfx::TextureSlot::FOREGROUND));
-						program.setUniform("tex2", static_cast<int>(gfx::TextureSlot::BACKGROUND));
-						program.setUniform("mask", static_cast<int>(gfx::TextureSlot::MASK));
+						program.setUniform("tex1", static_cast<int>(gfx::PainterTextureSlots::FOREGROUND));
+						program.setUniform("tex2", static_cast<int>(gfx::PainterTextureSlots::BACKGROUND));
+						program.setUniform("mask", static_cast<int>(gfx::PainterTextureSlots::MASK));
 					} else if (settings.first == gfx::Painter::Brush::MULTICOMPONENT_BLEND) {
 						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
 #							include <MACE/Graphics/OGL/Shaders/Brushes/multicomponent_blend.f.glsl>
@@ -204,8 +204,8 @@ namespace mc {
 						program.createUniform("tex1");
 						program.createUniform("tex2");
 
-						program.setUniform("tex1", static_cast<int>(gfx::TextureSlot::FOREGROUND));
-						program.setUniform("tex2", static_cast<int>(gfx::TextureSlot::BACKGROUND));
+						program.setUniform("tex1", static_cast<int>(gfx::PainterTextureSlots::FOREGROUND));
+						program.setUniform("tex2", static_cast<int>(gfx::PainterTextureSlots::BACKGROUND));
 
 						prot.sourceBlend = GL_SRC1_COLOR;
 						prot.destBlend = GL_ONE_MINUS_SRC1_COLOR;
@@ -278,18 +278,18 @@ namespace mc {
 				}
 
 #ifdef MACE_DEBUG
-				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "OpenGL Info:" << std::endl;
-				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "Version: " << std::endl << "\t";
-				std::cout << os::consoleColor(os::ConsoleColor::GREEN) << glGetString(GL_VERSION) << std::endl;
-				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "Vendor: " << std::endl << "\t";
-				std::cout << os::consoleColor(os::ConsoleColor::GREEN) << glGetString(GL_VENDOR) << std::endl;
-				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "Renderer: " << std::endl << "\t";
-				std::cout << os::consoleColor(os::ConsoleColor::GREEN) << glGetString(GL_RENDERER) << std::endl;
-				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "Shader version: " << std::endl << "\t";
-				std::cout << os::consoleColor(os::ConsoleColor::GREEN) << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
-				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "Supported extensions: " << std::endl;
+				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "OpenGL Info:\n";
+				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "Version:\n\t";
+				std::cout << os::consoleColor(os::ConsoleColor::GREEN) << glGetString(GL_VERSION) << '\n';
+				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "Vendor:\n\t";
+				std::cout << os::consoleColor(os::ConsoleColor::GREEN) << glGetString(GL_VENDOR) << '\n';
+				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "Renderer:\n\t";
+				std::cout << os::consoleColor(os::ConsoleColor::GREEN) << glGetString(GL_RENDERER) << '\n';
+				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "Shader version:\n\t";
+				std::cout << os::consoleColor(os::ConsoleColor::GREEN) << glGetString(GL_SHADING_LANGUAGE_VERSION) << '\n';
+				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "Supported extensions:\n";
 				std::cout << os::consoleColor(os::ConsoleColor::GREEN);
-#define MACE__DEBUG_OUTPUT_EXTENSION(ext) if(GLAD_##ext){std::cout << "\t* " << #ext << std::endl;}
+#define MACE__DEBUG_OUTPUT_EXTENSION(ext) if(GLAD_##ext){std::cout << "\t* " << #ext << '\n';}
 				MACE__DEBUG_OUTPUT_EXTENSION(GL_ARB_buffer_storage);
 				MACE__DEBUG_OUTPUT_EXTENSION(GL_ARB_texture_storage);
 				MACE__DEBUG_OUTPUT_EXTENSION(GL_ARB_invalidate_subdata);
@@ -297,15 +297,7 @@ namespace mc {
 				MACE__DEBUG_OUTPUT_EXTENSION(GL_ARB_direct_state_access);
 				MACE__DEBUG_OUTPUT_EXTENSION(GL_EXT_direct_state_access);
 #undef MACE__DEBUG_OUTPUT_EXTENSION
-				std::cout << os::consoleColor();
-#ifdef GLAD_OPTION_GL_DEBUG
-				gladSetGLPreCallback([](CString, GLADapiproc, int, ...) {
-					//do nothing
-				});
-				gladSetGLPostCallback([](void*, CString, GLADapiproc, int, ...) {
-					//ogl33::checkGLError(__LINE__, __FILE__, name);
-				});
-#endif//GLAD_DEBUG
+				std::cout << os::consoleColor() << std::flush;
 #endif
 
 				const gfx::WindowModule::LaunchConfig& config = win->getLaunchConfig();

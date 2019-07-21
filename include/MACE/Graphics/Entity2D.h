@@ -50,7 +50,11 @@ namespace mc {
 			void doHover();
 		};
 
-		class Image: public TexturedEntity {
+		enum class ImageTextureSlots: TextureSlot {
+			IMAGE
+		};
+
+		class Image: public TexturedEntity<ImageTextureSlots, ImageTextureSlots::IMAGE> {
 		public:
 			Image() noexcept = default;
 			Image(const Texture& col);
@@ -59,45 +63,21 @@ namespace mc {
 			bool operator!=(const Image& other) const;
 		protected:
 			void onRender(Painter& p) override final;
-		};//Image
+		};
+
+		enum class SimpleProgressBarTextureSlots: TextureSlot {
+			FOREGROUND,
+			BACKGROUND,
+			MASK
+		};
 
 		/**
 		*/
-		class SimpleProgressBar: public GraphicsEntity, public Progressable {
+		class SimpleProgressBar: public TexturedEntity< SimpleProgressBarTextureSlots, SimpleProgressBarTextureSlots::FOREGROUND>, public Progressable {
 		public:
 			SimpleProgressBar() noexcept;
 			SimpleProgressBar(const Progress minimum, const Progress maximum, const Progress progress = 0) noexcept;
 			virtual ~SimpleProgressBar() = default;
-
-			/**
-			@dirty
-			*/
-			void setBackgroundTexture(const Texture& tex);
-			/**
-			@dirty
-			*/
-			Texture& getBackgroundTexture();
-			const Texture& getBackgroundTexture() const;
-
-			/**
-			@dirty
-			*/
-			void setForegroundTexture(const Texture& tex);
-			/**
-			@dirty
-			*/
-			Texture& getForegroundTexture();
-			const Texture& getForegroundTexture() const;
-
-			/**
-			@dirty
-			*/
-			void setSelectionTexture(const Texture& tex);
-			/**
-			@dirty
-			*/
-			Texture& getSelectionTexture();
-			const Texture& getSelectionTexture() const;
 
 			/**
 			@dirty
@@ -137,10 +117,6 @@ namespace mc {
 			void onDestroy() override final;
 
 			Progress minimumProgress = 0, maximumProgress = 0, progress = 0;
-
-			Texture backgroundTexture;
-			Texture foregroundTexture;
-			Texture selectionTexture;
 		};//SimpleProgressBar
 
 		class SimpleSlider: public SimpleProgressBar, public Selectable {
@@ -190,10 +166,14 @@ namespace mc {
 			const Texture& getGlyph() const;
 		};//Letter
 
+		enum class TextTextureSlots: TextureSlot {
+			TEXTURE
+		};
+
 		/**
 		@bug newline with vertical align doesnt really work
 		*/
-		class Text: public TexturedEntity {
+		class Text: public TexturedEntity<TextTextureSlots, TextTextureSlots::TEXTURE> {
 		public:
 			Text() noexcept;
 			/**

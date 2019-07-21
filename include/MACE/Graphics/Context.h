@@ -66,11 +66,23 @@ namespace mc {
 			//TRIANGLES_FAN does not exist in DirectX 10+ because of performance issues. It is not included in this list
 		};
 
-		enum class TextureSlot: Byte {
-			FOREGROUND = 0,
-			BACKGROUND = 1,
-			MASK = 2
-		};
+		using TextureSlot = Byte;
+
+	}//gfx
+
+	namespace internal {
+		template<typename T>
+		constexpr gfx::TextureSlot getTextureSlot(T value) {
+			return static_cast<gfx::TextureSlot>(value);
+		}
+
+		template<gfx::TextureSlot>
+		constexpr gfx::TextureSlot getTextureSlot(gfx::TextureSlot value) {
+			return value;
+		}
+	}
+
+	namespace gfx {
 
 		class MACE_NOVTABLE ModelImpl {
 			friend class Model;
@@ -260,7 +272,7 @@ namespace mc {
 			int rowLength = 0;
 		};
 
-		using TextureSetDataCallback = std::function<const void *()>;
+		using TextureSetDataCallback = std::function<const void* ()>;
 		using TextureReadDataCallback = std::function<void(void*)>;
 
 		class MACE_NOVTABLE TextureImpl {
@@ -394,9 +406,7 @@ namespace mc {
 				MACE_STATIC_ASSERT(W != 0, "Width of Texture can not be 0!");
 				MACE_STATIC_ASSERT(H != 0, "Height of Texture can not be 0!");
 
-				MACE_IF_CONSTEXPR(W != texture->desc.width || H != texture->desc.height) {
-					MACE__THROW(AssertionFailed, "Input data is not equal to Texture width and height");
-				}
+				MACE_ASSERT(W == texture->desc.width || H == texture->desc.height, "Input data is not equal to Texture width and height");
 
 				setData(static_cast<const void*>(data[0]), mipmap, hints);
 			}
@@ -472,7 +482,7 @@ namespace mc {
 			/**
 			@rendercontext
 			*/
-			Texture& getSolidColor();
+			Texture getSolidColor(const Color& color = Colors::WHITE);
 			/**
 			- Vertical gradient
 			- Darker part on bottom

@@ -450,23 +450,23 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			void addChild(Entity& e) noexcept;
+			void addChild(Entity& e);
 			/**
 			@copydoc Entity::addChild(Entity&)
 			*/
-			void addChild(Entity* e) noexcept MACE_EXPECTS(ent != nullptr);
+			void addChild(Entity* e)MACE_EXPECTS(ent != nullptr);
 			/**
 			@copydoc Entity::addChild(Entity&)
 			*/
-			void addChild(EntityPtr<Entity> ent) noexcept MACE_EXPECTS(ent != nullptr);
+			void addChild(EntityPtr<Entity> ent) MACE_EXPECTS(ent != nullptr);
 
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
-			inline void addComponent(T & com) noexcept {
+			inline void addComponent(T & com) {
 				addComponent<T>(&com);
 			}
 
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
-			inline void addComponent(T * com) noexcept {
+			inline void addComponent(T * com) {
 				addComponent<T>(ComponentPtr<T>(com, [](T*) {}));
 			}
 			/**
@@ -809,7 +809,6 @@ namespace mc {
 			*/
 			void setProperty(const Byte position, const bool value) noexcept;
 		private:
-			std::queue<EntityPtr<Entity>> childrenToBeInit{};
 			/**
 			`std::vector` of this `Entity\'s` children. Use of this variable directly is unrecommended. Use `addChild()` or `removeChild()` instead.
 			@internal
@@ -832,8 +831,6 @@ namespace mc {
 			Metrics metrics;
 
 			EntityProperties properties = Entity::DEFAULT_PROPERTIES;
-
-			void checkChildrenToBeInit();
 		};//Entity
 
 		class Group: public Entity {};//Group

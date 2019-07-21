@@ -11,25 +11,14 @@ See LICENSE.md for full copyright information
 using namespace mc;
 
 class TestComponent: public gfx::Component {
-	void init() override {
-	}
-
-	bool update() override {
-		return false;
-	}
-
-	void render() override {}
-
 	void hover() override {
-		if( gfx::Input::isKeyDown(gfx::Input::MOUSE_LEFT) ) {
+		if (gfx::Input::isKeyDown(gfx::Input::MOUSE_LEFT)) {
 			parent->makeDirty();
 		}
 	}
 
-	void destroy() override {}
-
 	void clean(gfx::Metrics&) override {
-		dynamic_cast<gfx::Image*>(parent)->getTexture().setHue(Color((rand() % 10) / 10.0f, (rand() % 10) / 10.0f, (rand() % 10) / 10.0f, 0.5f));
+		parent->getComponent<gfx::TextureComponent<>>()->getTexture().setHue(Color((rand() % 10) / 10.0f, (rand() % 10) / 10.0f, (rand() % 10) / 10.0f, 0.5f));
 	}
 };
 
@@ -39,14 +28,16 @@ gfx::Image rightTop;
 gfx::Image rightBot;
 
 void create(gfx::WindowModule& window) {
-	srand((unsigned) time(nullptr));
+	srand(( unsigned) time(nullptr));
 
 	const Size elementNum = 10;
 
-	left = gfx::Image(gfx::Texture::getGradient());
-	leftBot = gfx::Image(gfx::Texture::getGradient());
-	rightTop = gfx::Image(gfx::Texture::getGradient());
-	rightBot = gfx::Image(gfx::Texture::getGradient());
+	gfx::Texture gradient = window.getContext()->getGradient();
+
+	left = gfx::Image(gradient);
+	leftBot = gfx::Image(gradient);
+	rightTop = gfx::Image(gradient);
+	rightBot = gfx::Image(gradient);
 
 	left.setY(0.0f);
 	left.setX(-0.5f);
@@ -68,10 +59,10 @@ void create(gfx::WindowModule& window) {
 	rightBot.setX(0.5f);
 	rightBot.setY(-0.5f);
 
-	left.addComponent(std::shared_ptr<gfx::Component>(new TestComponent()));
-	leftBot.addComponent(std::shared_ptr<gfx::Component>(new TestComponent()));
-	rightTop.addComponent(std::shared_ptr<gfx::Component>(new TestComponent()));
-	rightBot.addComponent(std::shared_ptr<gfx::Component>(new TestComponent()));
+	left.addComponent(gfx::ComponentPtr<TestComponent>(new TestComponent()));
+	leftBot.addComponent(gfx::ComponentPtr<TestComponent>(new TestComponent()));
+	rightTop.addComponent(gfx::ComponentPtr<TestComponent>(new TestComponent()));
+	rightBot.addComponent(gfx::ComponentPtr<TestComponent>(new TestComponent()));
 
 	left.addChild(leftBot);
 
@@ -90,7 +81,7 @@ int main() {
 		instance.addModule(module);
 
 		gfx::FPSComponent f = gfx::FPSComponent();
-		f.setTickCallback([] (gfx::FPSComponent* com, gfx::Entity*) {
+		f.setTickCallback([](gfx::FPSComponent* com, gfx::Entity*) {
 			std::cout << "UPS: " << com->getUpdatesPerSecond() << " FPS: " << com->getFramesPerSecond() << " Frame Time: " << float(1000.0f) / com->getFramesPerSecond() << std::endl;
 		});
 		module.addComponent(f);
@@ -99,7 +90,7 @@ int main() {
 		instance.addModule(errModule);
 
 		instance.start();
-	} catch( const std::exception& e ) {
+	} catch (const std::exception& e) {
 		mc::handleError(e, instance);
 		return -1;
 	}

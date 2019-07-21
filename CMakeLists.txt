@@ -258,7 +258,8 @@ endif()
 #COMPILER CHECKS
 
 message("Configuring target compilation features")
-target_compile_features(MACE PRIVATE cxx_std_11 cxx_constexpr cxx_final cxx_lambdas cxx_noexcept cxx_long_long_type cxx_nullptr cxx_override cxx_range_for cxx_raw_string_literals cxx_static_assert cxx_strong_enums cxx_unicode_literals cxx_variadic_macros)
+target_compile_features(MACE PUBLIC cxx_std_17 cxx_constexpr cxx_lambdas cxx_noexcept cxx_strong_enums )
+target_compile_features(MACE PRIVATE cxx_thread_local cxx_func_identifier cxx_attributes cxx_auto_type cxx_final  cxx_defaulted_functions cxx_delegating_constructors cxx_deleted_functions cxx_long_long_type cxx_nullptr cxx_override cxx_range_for cxx_raw_string_literals cxx_static_assert cxx_unicode_literals cxx_variadic_macros cxx_nullptr)
 set_property(TARGET MACE PROPERTY CXX_STANDARD 20)
 set_property(TARGET MACE PROPERTY CXX_STANDARD_REQUIRED OFF)
 
@@ -328,14 +329,11 @@ if(NOT ${GLFW_FOUND})
 	endif()
 endif()
 
-add_library(glad-release "${CMAKE_CURRENT_SOURCE_DIR}/external/glad/src/gl.c")
-target_include_directories(glad-release PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/external/glad/include")
+add_library(glad "${CMAKE_CURRENT_SOURCE_DIR}/external/glad/src/gl.c")
+target_include_directories(glad PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/external/glad/include")
 
-add_library(glad-debug "${CMAKE_CURRENT_SOURCE_DIR}/external/glad-debug/src/gl.c")
-target_include_directories(glad-debug PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/external/glad-debug/include")
-
-set(GLAD_LIBRARY "$<IF:$<CONFIG:DEBUG>,glad-debug,glad-release>")
-set(GLAD_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/external/glad$<$<CONFIG:DEBUG>:-debug>/include")
+set(GLAD_LIBRARY "glad")
+set(GLAD_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/external/glad/include")
 
 if(NOT ${FREETYPE_FOUND})
 	if(NOT MACE_DOWNLOAD_DEPENDENCIES)

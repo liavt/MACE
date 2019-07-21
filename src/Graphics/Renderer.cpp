@@ -176,8 +176,8 @@ namespace mc {
 
 		void Painter::maskImage(const Texture& img, const Texture& mask) {
 			push();
-			setTexture(img, TextureSlot::FOREGROUND);
-			setTexture(mask, TextureSlot::MASK);
+			setTexture(img, PainterTextureSlots::FOREGROUND);
+			setTexture(mask, PainterTextureSlots::MASK);
 			drawQuad(Painter::Brush::MASK);
 			pop();
 		}
@@ -185,8 +185,8 @@ namespace mc {
 		void Painter::blendImages(const Texture& foreground, const Texture& background, const Progress amount) {
 			push();
 			setData({amount, 0, 0, 0});
-			setTexture(foreground, TextureSlot::FOREGROUND);
-			setTexture(background, TextureSlot::BACKGROUND);
+			setTexture(foreground, PainterTextureSlots::FOREGROUND);
+			setTexture(background, PainterTextureSlots::BACKGROUND);
 			drawQuad(Painter::Brush::BLEND);
 			pop();
 		}
@@ -194,9 +194,9 @@ namespace mc {
 		void Painter::conditionalMaskImages(const Texture& foreground, const Texture& background, const Texture& mask, const float minimum, const float maximum) {
 			push();
 			setData({minimum, maximum, 0, 0});
-			setTexture(foreground, TextureSlot::FOREGROUND);
-			setTexture(background, TextureSlot::BACKGROUND);
-			setTexture(mask, TextureSlot::MASK);
+			setTexture(foreground, PainterTextureSlots::FOREGROUND);
+			setTexture(background, PainterTextureSlots::BACKGROUND);
+			setTexture(mask, PainterTextureSlots::MASK);
 			drawQuad(Painter::Brush::CONDITIONAL_MASK);
 			pop();
 		}
@@ -219,15 +219,15 @@ namespace mc {
 		void Painter::setTexture(const Texture& t, const TextureSlot slot) {
 			t.bindTextureSlot(slot);
 			switch (slot) {
-			case TextureSlot::FOREGROUND:
+			case PainterTextureSlots::FOREGROUND:
 				setForegroundColor(t.getHue());
 				setForegroundTransform(t.getTransform());
 				break;
-			case TextureSlot::BACKGROUND:
+			case PainterTextureSlots::BACKGROUND:
 				setBackgroundColor(t.getHue());
 				setBackgroundTransform(t.getTransform());
 				break;
-			case TextureSlot::MASK:
+			case PainterTextureSlots::MASK:
 				setMaskColor(t.getHue());
 				setMaskTransform(t.getTransform());
 				break;
@@ -238,7 +238,7 @@ namespace mc {
 
 		void Painter::drawModel(const Model& m, const Texture& img) {
 			push();
-			setTexture(img, TextureSlot::FOREGROUND);
+			setTexture(img, PainterTextureSlots::FOREGROUND);
 			draw(m, Painter::Brush::TEXTURE);
 			pop();
 		}
@@ -266,7 +266,7 @@ namespace mc {
 
 		void Painter::drawImage(const Texture& img) {
 			push();
-			setTexture(img, TextureSlot::FOREGROUND);
+			setTexture(img, PainterTextureSlots::FOREGROUND);
 			enableRenderFeatures(Painter::RenderFeatures::DISCARD_INVISIBLE);
 			drawQuad(Painter::Brush::TEXTURE);
 			pop();

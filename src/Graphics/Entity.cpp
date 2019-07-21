@@ -221,17 +221,23 @@ namespace mc {
 			return id;
 		}
 
-		void Entity::addChild(EntityPtr<Entity> e) noexcept {
-			childrenToBeInit.push(e);
+		void Entity::addChild(EntityPtr<Entity> e) {
+			MACE_ASSERT(e != nullptr, "Added Entity was nullptr");
+
+			e->parent = this;
+			if (isInit()) {
+				e->init();
+			}
+			children.push_back(e);
 
 			makeDirty();
 		}
 
-		void Entity::addChild(Entity* e) noexcept {
+		void Entity::addChild(Entity* e) {
 			addChild(EntityPtr<Entity>(e, [](Entity*) {}));
 		}
 
-		void Entity::addChild(Entity& e) noexcept {
+		void Entity::addChild(Entity& e) {
 			addChild(&e);
 		}
 
@@ -267,8 +273,6 @@ namespace mc {
 
 		void Entity::clean() {
 			if (getProperty(Entity::DIRTY)) {
-				checkChildrenToBeInit();
-
 				onClean();
 
 				metrics.transform = transformation;
@@ -360,7 +364,9 @@ namespace mc {
 
 			id = root->getComponent<MACE__INTERNAL_NS::RootComponent>()->generateID(this);
 
-			checkChildrenToBeInit();
+			for (auto child : children) {
+				child->init();
+			}
 
 			for (auto com : components) {
 				com.second->init();
@@ -620,19 +626,6 @@ namespace mc {
 
 		void Entity::tween(const Transformation dest) {
 			tween(dest, EaseSettings());
-		}
-
-		void Entity::checkChildrenToBeInit() {
-			while (!childrenToBeInit.empty()) {
-				EntityPtr<Entity> child = childrenToBeInit.front();
-				childrenToBeInit.pop();
-
-				MACE_ASSERT(child != nullptr, "Added Entity was nullptr");
-
-				child->parent = this;
-				child->init();
-				children.push_back(child);
-			}
 		}
 
 		bool Metrics::operator==(const Metrics& other) const {

@@ -13,22 +13,22 @@ void create(gfx::WindowModule& win) {
 	center = gfx::Text("FPS: 000 UPS: 000", gfx::Font(gfx::Fonts::CODE, 10));
 
 	topLeft = gfx::Text(L"Top😎 left!", gfx::Fonts::SERIF);
-	topLeft.setTexture(Colors::WHITE);
-	topLeft.addComponent(std::shared_ptr<gfx::Component>(new gfx::AlignmentComponent(gfx::VerticalAlign::TOP, gfx::HorizontalAlign::LEFT)));
+	topLeft.setTexture(win.getContext()->getSolidColor(Colors::WHITE));
+	topLeft.addComponent(gfx::ComponentPtr<gfx::AlignmentComponent>(new gfx::AlignmentComponent(gfx::VerticalAlign::TOP, gfx::HorizontalAlign::LEFT)));
 
 	topRight = gfx::Text("Top right.", gfx::Fonts::SANS);
-	topRight.setTexture(Colors::LIGHT_BLUE);
-	topRight.addComponent(std::shared_ptr<gfx::Component>(new gfx::AlignmentComponent(gfx::VerticalAlign::TOP, gfx::HorizontalAlign::RIGHT)));
+	topRight.setTexture(win.getContext()->getSolidColor(Colors::LIGHT_BLUE));
+	topRight.addComponent(gfx::ComponentPtr<gfx::AlignmentComponent>(new gfx::AlignmentComponent(gfx::VerticalAlign::TOP, gfx::HorizontalAlign::RIGHT)));
 
 	botLeft = gfx::Text("bOtToM lEfT?", gfx::Font(gfx::Fonts::SERIF));
-	botLeft.setTexture(Colors::RED);
-	botLeft.addComponent(std::shared_ptr<gfx::Component>(new gfx::AlignmentComponent(gfx::VerticalAlign::BOTTOM, gfx::HorizontalAlign::LEFT)));
+	botLeft.setTexture(win.getContext()->getSolidColor(Colors::RED));
+	botLeft.addComponent(gfx::ComponentPtr<gfx::AlignmentComponent>(new gfx::AlignmentComponent(gfx::VerticalAlign::BOTTOM, gfx::HorizontalAlign::LEFT)));
 
 	gfx::Font font = gfx::Font::loadFont(MACE_DEMO_ASSETS + std::string("/arial.ttf"), 24);
 
 	botRight = gfx::Text(L"B0ttom ®1ght", font);
-	botRight.setTexture(Colors::YELLOW);
-	botRight.addComponent(std::shared_ptr<gfx::Component>(new gfx::AlignmentComponent(gfx::VerticalAlign::BOTTOM, gfx::HorizontalAlign::RIGHT)));
+	botRight.setTexture(win.getContext()->getSolidColor(Colors::YELLOW));
+	botRight.addComponent(gfx::ComponentPtr<gfx::AlignmentComponent>(new gfx::AlignmentComponent(gfx::VerticalAlign::BOTTOM, gfx::HorizontalAlign::RIGHT)));
 
 	win.addChild(center);
 	

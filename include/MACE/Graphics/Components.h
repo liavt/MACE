@@ -16,7 +16,18 @@ See LICENSE.md for full copyright information
 #include <functional>
 
 namespace mc {
+
+	namespace internal {
+		class CleanManagerComponent: public gfx::Component {
+		private:
+			void init() override;
+			void update() override;
+			void destroy() override;
+		};
+	}
+
 	namespace gfx {
+
 		class TexturedEntity2D;
 
 		enum class VerticalAlign: Byte {
@@ -543,29 +554,30 @@ namespace mc {
 			const std::vector<Texture> frames;
 		};
 
-		template<TextureSlot Slot = TextureSlot::FOREGROUND>
-		class TextureComponent: public Component {
+	}//gfx
+
+	namespace internal {
+		template<gfx::TextureSlot Slot>
+		class TextureComponentBase: public gfx::Component {
 		public:
-			TextureComponent(Texture tex) : texture(tex) {}
-			TextureComponent() : texture() {}
+			TextureComponentBase(gfx::Texture tex) : texture(tex) {}
+			TextureComponentBase() : texture() {}
 
 			/**
 			@dirty
 			*/
-			Texture& getTexture() {
-				parent->makeDirty();
-
+			gfx::Texture& getTexture() {
 				return texture;
 			}
 
-			const Texture& getTexture() const {
+			const gfx::Texture& getTexture() const {
 				return texture;
 			}
 
 			/**
 			@dirty
 			*/
-			void setTexture(Texture& tex) {
+			void setTexture(gfx::Texture& tex) {
 				if (tex != texture) {
 					parent->makeDirty();
 
@@ -573,21 +585,32 @@ namespace mc {
 				}
 			}
 
-			bool operator==(const TextureComponent<Slot>& other) const {
+			bool operator==(const TextureComponentBase<Slot>& other) const {
 				return texture == other.texture;
 			}
 
-			bool operator!=(const TextureComponent<Slot>& other) const {
+			bool operator!=(const TextureComponentBase<Slot>& other) const {
 				return !operator==(other);
 			}
 		private:
-			Texture texture;
-		};
+			gfx::Texture texture;
 
+			void destroy() override{
+				texture.destroy();
+			}
+		};
+	}//internal
+
+	namespace gfx {
+
+		template<auto Value = 0>
+		using TextureComponent = MACE__INTERNAL_NS::TextureComponentBase<MACE__INTERNAL_NS::getTextureSlot(Value)>;
+
+		template<typename SlotEnum, SlotEnum Default>
 		class MACE_NOVTABLE TexturedEntity: public virtual GraphicsEntity {
 		public:
 			TexturedEntity() noexcept = default;
-			template<TextureSlot Slot = TextureSlot::FOREGROUND>
+			template<SlotEnum Slot = Default>
 			TexturedEntity(Texture tex) {
 				addComponent(ComponentPtr< TextureComponent<Slot>>(new TextureComponent<Slot>(tex)));
 			}
@@ -595,27 +618,22 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			template<TextureSlot Slot = TextureSlot::FOREGROUND>
-			Texture& getTexture() {
+			template<SlotEnum Slot = Default>
+			Texture & getTexture() {
 				return getOrCreateComponent<TextureComponent<Slot>>()->getTexture();
 			}
 
-			template<TextureSlot Slot = TextureSlot::FOREGROUND>
-			const Texture& getTexture() const {
+			template<SlotEnum Slot = Default>
+			const Texture & getTexture() const {
 				return getOrCreateComponent<TextureComponent<Slot>>()->getTexture();
 			}
 
 			/**
 			@dirty
 			*/
-			template<TextureSlot Slot = TextureSlot::FOREGROUND>
-			void setTexture(Texture& tex) {
+			template<SlotEnum Slot = Default>
+			void setTexture(Texture & tex) {
 				getOrCreateComponent<TextureComponent<Slot>>()->setTexture(tex);
-			}
-
-			template<TextureSlot Slot = TextureSlot::FOREGROUND>
-			inline void setTexture(const Color & col) {
-				setTexture<Slot>(getContext()->createTextureFromColor(col));
 			}
 		};
 	}//gfx

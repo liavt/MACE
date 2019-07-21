@@ -163,12 +163,7 @@ namespace mc {
 
 			Texture texture = Texture(this, desc);
 
-			const Size newSize = static_cast<Size>(width) * static_cast<Size>(height);
-			std::vector<unsigned int> data = std::vector<unsigned int>();
-			data.reserve(newSize);
-			for (Index i = 0; i < newSize; ++i) {
-				data[i] = col.toUnsignedInt();
-			}
+			const auto data = std::vector<unsigned int>(static_cast<Size>(width) * static_cast<Size>(height), col.toUnsignedInt());
 			texture.setData(&data[0]);
 
 			return texture;
@@ -254,8 +249,8 @@ namespace mc {
 			return texture;
 		}
 
-		Texture& GraphicsContextComponent::getSolidColor() {
-			return getOrCreateTexture(MACE__RESOURCE_SOLIDCOLOR, [this]() {
+		Texture GraphicsContextComponent::getSolidColor(const Color& col) {
+			return Texture(getOrCreateTexture(MACE__RESOURCE_SOLIDCOLOR, [this]() {
 				TextureDesc desc = TextureDesc(1, 1, TextureDesc::Format::LUMINANCE);
 				desc.minFilter = TextureDesc::Filter::NEAREST;
 				desc.magFilter = TextureDesc::Filter::NEAREST;
@@ -268,7 +263,7 @@ namespace mc {
 				texture.setData(data);
 
 				return texture;
-			});
+			}), col);
 		}
 
 		Texture& GraphicsContextComponent::getGradient() {

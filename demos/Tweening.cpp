@@ -10,14 +10,14 @@ using namespace mc;
 gfx::Image square;
 
 void create(gfx::WindowModule& win) {
-	square = gfx::Image(Colors::RED);
+	square = gfx::Image(win.getContext()->getSolidColor(Colors::RED));
 
 	square.setX(-0.5f);
 	square.setY(0.5f);
 	square.setWidth(0.1f);
 	square.setHeight(0.1f);
 
-	std::shared_ptr<gfx::ComponentQueue> queue = std::shared_ptr<gfx::ComponentQueue>(new gfx::ComponentQueue());
+	gfx::ComponentPtr<gfx::ComponentQueue> queue = std::shared_ptr<gfx::ComponentQueue>(new gfx::ComponentQueue());
 
 	Transformation dest1 = Transformation();
 	dest1.scaler = {0.2f, 0.2f, 0.0f};
@@ -29,7 +29,7 @@ void create(gfx::WindowModule& win) {
 	settings.ease = gfx::EaseFunctions::BOUNCE_OUT;
 	settings.repeats = 1;
 	settings.reverseOnRepeat = false;
-	queue->addComponent(std::shared_ptr<gfx::Component>(new gfx::TweenComponent(&square, dest1, settings)));
+	queue->addComponent(gfx::ComponentPtr<gfx::Component>(new gfx::TweenComponent(&square, dest1, settings)));
 
 	Transformation dest2 = Transformation(dest1);
 	dest2.scaler = {0.5f, 0.5f, 0.0f};
@@ -40,7 +40,7 @@ void create(gfx::WindowModule& win) {
 	settings.ease = gfx::EaseFunctions::QUADRATIC_IN;
 	settings.repeats = 3;
 	settings.reverseOnRepeat = true;
-	queue->addComponent(std::shared_ptr<gfx::Component>(new gfx::TweenComponent(&square, dest1, dest2, settings)));
+	queue->addComponent(gfx::ComponentPtr<gfx::Component>(new gfx::TweenComponent(&square, dest1, dest2, settings)));
 
 	Transformation dest3 = Transformation(dest2);
 	dest3.scaler = {0.05f, 0.05f, 0.0f};
@@ -51,14 +51,14 @@ void create(gfx::WindowModule& win) {
 	settings.ease = gfx::EaseFunctions::LINEAR;
 	settings.repeats = 1;
 	settings.reverseOnRepeat = false;
-	queue->addComponent(std::shared_ptr<gfx::Component>(new gfx::TweenComponent(&square, dest2, dest3, settings)));
+	queue->addComponent(gfx::ComponentPtr<gfx::Component>(new gfx::TweenComponent(&square, dest2, dest3, settings)));
 
 	//have it end up at the same place
 	settings.ms = 2000;
 	settings.ease = gfx::EaseFunctions::ELASTIC_IN;
 	settings.repeats = 3;
 	settings.reverseOnRepeat = false;
-	queue->addComponent(std::shared_ptr<gfx::Component>(new gfx::TweenComponent(&square, dest3, square.getTransformation(), settings)));
+	queue->addComponent(gfx::ComponentPtr<gfx::Component>(new gfx::TweenComponent(&square, dest3, square.getTransformation(), settings)));
 
 	square.addComponent(queue);
 
