@@ -12,9 +12,9 @@ gfx::SimpleSlider circleBar, rectangleBar;
 class TestComponent: public gfx::Component {
 	void init(gfx::Entity* e) {};
 	bool update(gfx::Entity* e) {
-		if( gfx::Input::isKeyDown(gfx::Input::UP) ) {
+		if (gfx::Input::isKeyDown(gfx::Input::UP)) {
 			dynamic_cast<gfx::Progressable*>(e)->addProgress(1);
-		} else if( gfx::Input::isKeyDown(gfx::Input::DOWN) ) {
+		} else if (gfx::Input::isKeyDown(gfx::Input::DOWN)) {
 			dynamic_cast<gfx::Progressable*>(e)->addProgress(-1);
 		}
 		return false;
@@ -23,17 +23,15 @@ class TestComponent: public gfx::Component {
 	void destroy(gfx::Entity* e) {};
 };
 
-TestComponent r = TestComponent();
-
 void create(gfx::WindowModule& win) {
 	circleBar = gfx::SimpleSlider(100, 255, 20);
-	circleBar.setBackgroundTexture(gfx::Texture(win.getContext()->createTextureFromFile(std::string(MACE_DEMO_ASSETS) + "/star.png", gfx::ImageFormat::DONT_CARE), Color(Colors::DARK_GRAY, 0.5f)));
-	circleBar.setForegroundTexture(Colors::GREEN);
-	circleBar.setSelectionTexture(win.getContext()->createTextureFromFile(std::string(MACE_DEMO_ASSETS) + "/starGradient.png", gfx::ImageFormat::DONT_CARE));
+	circleBar.setTexture<gfx::SimpleSliderTextureSlots::BACKGROUND>(gfx::Texture(win.getContext()->createTextureFromFile(std::string(MACE_DEMO_ASSETS) + "/star.png", gfx::ImageFormat::DONT_CARE), Color(Colors::DARK_GRAY, 0.5f)));
+	circleBar.setTexture<gfx::SimpleSliderTextureSlots::FOREGROUND>(win.getContext()->getSolidColor(Colors::GREEN));
+	circleBar.setTexture<gfx::SimpleSliderTextureSlots::MASK>(win.getContext()->createTextureFromFile(std::string(MACE_DEMO_ASSETS) + "/starGradient.png", gfx::ImageFormat::DONT_CARE));
 	circleBar.setWidth(0.25f);
 	circleBar.setHeight(0.25f);
 	circleBar.setX(-0.5f);
-	circleBar.addComponent(r);
+	circleBar.addComponent(gfx::ComponentPtr<TestComponent>(new TestComponent()));
 
 	gfx::EaseSettings settings = gfx::EaseSettings();
 	settings.ms = 3500;
@@ -43,13 +41,13 @@ void create(gfx::WindowModule& win) {
 	win.addChild(circleBar);
 
 	rectangleBar = gfx::SimpleSlider(0, 255, 50);
-	rectangleBar.setBackgroundTexture(Colors::RED);
-	rectangleBar.setForegroundTexture(gfx::Texture(win.getContext()->getGradient(), Color(0.0f, 1.0f, 0.0f, 0.5f)));
-	rectangleBar.setSelectionTexture(win.getContext()->getGradient());
+	rectangleBar.setTexture<gfx::SimpleSliderTextureSlots::BACKGROUND>(win.getContext()->getSolidColor(Colors::RED));
+	rectangleBar.setTexture<gfx::SimpleSliderTextureSlots::FOREGROUND>(gfx::Texture(win.getContext()->getGradient(), Color(0.0f, 1.0f, 0.0f, 0.5f)));
+	rectangleBar.setTexture<gfx::SimpleSliderTextureSlots::MASK>(win.getContext()->getGradient());
 	rectangleBar.setWidth(0.1f);
 	rectangleBar.setHeight(0.25f);
 	rectangleBar.setX(0.5f);
-	rectangleBar.addComponent(r);
+	rectangleBar.addComponent(gfx::ComponentPtr<TestComponent>(new TestComponent()));
 
 	settings = gfx::EaseSettings();
 	settings.ms = 2000;
@@ -75,7 +73,7 @@ int main() {
 		instance.addModule(errModule);
 
 		instance.start();
-	} catch( const std::exception& e ) {
+	} catch (const std::exception& e) {
 		mc::handleError(e, instance);
 		return -1;
 	}

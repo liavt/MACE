@@ -119,6 +119,8 @@ namespace mc {
 			Progress minimumProgress = 0, maximumProgress = 0, progress = 0;
 		};//SimpleProgressBar
 
+		using SimpleSliderTextureSlots = SimpleProgressBarTextureSlots;
+
 		class SimpleSlider: public SimpleProgressBar, public Selectable {
 		public:
 			SimpleSlider() noexcept;

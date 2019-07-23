@@ -11,9 +11,7 @@ See LICENSE.md for full copyright information
 #include <MACE/Graphics/Window.h>
 #include <MACE/Graphics/Renderer.h>
 #include <MACE/Graphics/Context.h>
-#include <MACE/Graphics/OGL/OGL33.h>
-#include <MACE/Graphics/OGL/OGL33Renderer.h>
-#include <MACE/Graphics/OGL/OGL33Context.h>
+#include <MACE/Graphics/OGL/OGLContext.h>
 
 #include <mutex>
 #include <chrono>
@@ -218,7 +216,7 @@ namespace mc {
 			case LaunchConfig::ContextType::OGL33:
 				MACE_FALLTHROUGH;
 			default:
-				context = ComponentPtr<gfx::GraphicsContextComponent>(new MACE__INTERNAL_NS::ogl33::OGL33Context(this));
+				context = ComponentPtr<gfx::GraphicsContextComponent>(new MACE__INTERNAL_NS::ogl::Context(this));
 
 				glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 				glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);

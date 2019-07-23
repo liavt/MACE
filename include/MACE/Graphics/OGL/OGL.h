@@ -4,8 +4,8 @@ Copyright (c) 2016-2019 Liav Turkia
 See LICENSE.md for full copyright information
 */
 #pragma once
-#ifndef MACE__GRAPHICS_OGL_OGL33_H
-#define MACE__GRAPHICS_OGL_OGL33_H
+#ifndef MACE__GRAPHICS_OGL_OGL_H
+#define MACE__GRAPHICS_OGL_OGL_H
 
 //The api docs shouldn't include a bunch of internal classes, since any end user wouldn't care about them
 #ifndef MACE__DOXYGEN_PASS
@@ -38,7 +38,7 @@ namespace mc {
 		actual OpenGL function. However, some classes like `ShaderProgram` do a lot of bookkeeping to make it easier
 		to use.
 		<p>
-		The documentation for classes in the `ogl33` namespace assumes that you understand the underlying OpenGL concepts.
+		The documentation for classes in the `ogl` namespace assumes that you understand the underlying OpenGL concepts.
 		A link to a page about the OpenGL concept is usually present.
 		<p>
 		Each abstraction follows a very similar syntax and style to make it easier to understand.
@@ -46,7 +46,7 @@ namespace mc {
 		@see Buffer
 		@internal
 		*/
-		namespace ogl33 {
+		namespace ogl {
 
 			/**
 			Thrown when OpenGL fails or errors
@@ -62,7 +62,7 @@ namespace mc {
 
 			/**
 			Thrown when a Framebuffer fails to be created, or throws an error
-			@see gfx::ogl33::Framebuffer
+			@see gfx::ogl::Framebuffer
 			@see OpenGLError
 			*/
 			MACE__DECLARE_ERROR(Framebuffer);
@@ -77,7 +77,7 @@ namespace mc {
 				forceCheckGLError(line, file, message);
 			}
 			/**
-			@copydoc ogl33::checkGLError(const Index, const char*, const char*)
+			@copydoc ogl::checkGLError(const Index, const char*, const char*)
 			*/
 			inline void checkGLError(const unsigned int line, const char* file, const std::string& message) {
 				checkGLError(line, file, message.c_str());
@@ -85,7 +85,7 @@ namespace mc {
 #else
 			inline void checkGLError(const unsigned int, const char* MACE_RESTRICT, const char* MACE_RESTRICT) {}
 			/**
-			@copydoc ogl33::checkGLError(const Index, const char*, const char*)
+			@copydoc ogl::checkGLError(const Index, const char*, const char*)
 			*/
 			inline void checkGLError(const unsigned int, const char*, const std::string&) {}
 #endif
@@ -1217,10 +1217,10 @@ namespace mc {
 				void initIndices(GLuint id[], const GLsizei length) const override;
 				void destroyIndices(const GLuint id[], const GLsizei length) const override;
 			};//ShaderProgram
-		}//ogl33
+		}//ogl
 	}//internal
 }//mc
 
 #endif//MACE__DOXYGEN_PASS
 
-#endif//MACE__GRAPHICS_OGL_OGL33_H
+#endif//MACE__GRAPHICS_OGL_OGL_H

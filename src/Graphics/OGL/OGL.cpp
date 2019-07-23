@@ -3,14 +3,14 @@ Copyright (c) 2016-2019 Liav Turkia
 
 See LICENSE.md for full copyright information
 */
-#include <MACE/Graphics/OGL/OGL33.h>
+#include <MACE/Graphics/OGL/OGL.h>
 #include <memory>
 #include <string>
 #include <sstream>
 
 namespace mc {
 	namespace internal {
-		namespace ogl33 {
+		namespace ogl {
 			namespace {
 				Shader createShader(const Enum type, const char* sources[], const GLsizei sourceSize) {
 					Shader s = Shader(type);
@@ -35,11 +35,11 @@ namespace mc {
 						friendlyType = "SHADER PROGRAM";
 						glGetProgramInfoLog(shaderId, 1024, 0, log_string.get());
 					}
-					MACE__THROW(internal::ogl33::Shader, "Error generating " + friendlyType + ": " + message + ": " + log_string.get());
+					MACE__THROW(internal::ogl::Shader, "Error generating " + friendlyType + ": " + message + ": " + log_string.get());
 				}
 #else
 				inline void throwShaderError(const unsigned int, const Enum type, const std::string&) {
-					MACE__THROW(internal::ogl33::Shader, "Error generating shader of type " + std::to_string(type));
+					MACE__THROW(internal::ogl::Shader, "Error generating shader of type " + std::to_string(type));
 				}
 #endif//MACE_DEBUG
 			}//anon namespace
@@ -76,7 +76,7 @@ namespace mc {
 				errorAmount at 0.
 				*/
 				if (errorAmount > 0) {
-					MACE__THROW_CUSTOM_LINE(internal::ogl33::OpenGL, message.str(), std::to_string(line), file);
+					MACE__THROW_CUSTOM_LINE(internal::ogl::OpenGL, message.str(), std::to_string(line), file);
 				}
 			}
 
@@ -736,7 +736,7 @@ namespace mc {
 
 			void Shader::setSource(const GLsizei count, const char* strings[], const int lengths[]) {
 				if (type == GL_FALSE) {
-					MACE__THROW(internal::ogl33::Shader, "Shader must have a type before compile() is called");
+					MACE__THROW(internal::ogl::Shader, "Shader must have a type before compile() is called");
 				}
 
 				glShaderSource(id, count, strings, lengths);
@@ -783,7 +783,7 @@ namespace mc {
 
 			void Shader::compile() {
 				if (type == GL_FALSE) {
-					MACE__THROW(internal::ogl33::Shader, "Shader must have a type before compile() is called");
+					MACE__THROW(internal::ogl::Shader, "Shader must have a type before compile() is called");
 				}
 				glCompileShader(id);
 
@@ -932,7 +932,7 @@ namespace mc {
 			void ShaderProgram::createUniform(const std::string& name) {
 				int location = glGetUniformLocation(id, name.data());
 				if (location < 0) {
-					MACE__THROW(internal::ogl33::Shader, "Error finding uniform with name " + std::string(name));
+					MACE__THROW(internal::ogl::Shader, "Error finding uniform with name " + std::string(name));
 				}
 
 				uniforms[name] = location;
@@ -1238,6 +1238,6 @@ namespace mc {
 			std::unordered_map<std::string, int>& ShaderProgram::getUniforms() {
 				return uniforms;
 			}
-		}//ogl33
+		}//ogl
 	}//internal
 }//mc

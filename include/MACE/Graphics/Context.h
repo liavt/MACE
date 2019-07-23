@@ -434,7 +434,7 @@ namespace mc {
 		struct FontDesc;
 		class FontImpl;
 
-		class MACE_NOVTABLE GraphicsContextComponent: public gfx::Component {
+		class MACE_NOVTABLE GraphicsContextComponent: public gfx::Component, public std::enable_shared_from_this<GraphicsContextComponent> {
 			friend class Texture;
 			friend class Model;
 			friend class Font;
@@ -451,7 +451,7 @@ namespace mc {
 			void render() final;
 			void destroy() final;
 
-			virtual std::shared_ptr<Renderer> getRenderer() const = 0;
+			virtual std::shared_ptr<Renderer> getRenderer()= 0;
 
 			gfx::WindowModule* getWindow();
 			const gfx::WindowModule* getWindow() const;

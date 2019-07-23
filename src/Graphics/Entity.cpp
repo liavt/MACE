@@ -345,6 +345,8 @@ namespace mc {
 				MACE__THROW(InitializationFailed, "Entity can not have init() called twice.");
 			}
 
+			setProperty(Entity::INIT, true);
+
 			makeDirty();
 
 			if (root == nullptr) {
@@ -354,15 +356,10 @@ namespace mc {
 					root = parent->root;
 				} else {
 					root = this;
-
-					auto rootCom = ComponentPtr<MACE__INTERNAL_NS::RootComponent>(new MACE__INTERNAL_NS::RootComponent());
-					rootCom->parent = this;
-					rootCom->init();
-					components.emplace(MACE__INTERNAL_NS::getComponentTypeID<MACE__INTERNAL_NS::RootComponent>(), rootCom);
 				}
 			}
 
-			id = root->getComponent<MACE__INTERNAL_NS::RootComponent>()->generateID(this);
+			id = root->getOrCreateComponent<MACE__INTERNAL_NS::RootComponent>()->generateID(this);
 
 			for (auto child : children) {
 				child->init();
@@ -373,7 +370,6 @@ namespace mc {
 			}
 
 			onInit();
-			setProperty(Entity::INIT, true);
 		}
 
 		void Entity::destroy() {

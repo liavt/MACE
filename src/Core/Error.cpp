@@ -19,7 +19,8 @@ namespace mc {
 		if (instance != nullptr && instance->getFlag(Instance::VERBOSE_ERRORS)) {
 			std::cerr << getErrorDump(e);
 		} else {
-			std::cerr << os::consoleColor(os::ConsoleColor::RED) << e.what() << '\n';
+			std::cerr << os::consoleColor(os::ConsoleColor::RED) << "Exception occured: ";
+			std::cerr << os::consoleColor(os::ConsoleColor::LIGHT_RED) << e.what() << '\n';
 			//reset console color to default
 			std::cerr << os::consoleColor() << std::flush;
 		}

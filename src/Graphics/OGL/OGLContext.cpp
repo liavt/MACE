@@ -3,15 +3,15 @@ Copyright (c) 2016-2019 Liav Turkia
 
 See LICENSE.md for full copyright information
 */
-#include <MACE/Graphics/OGL/OGL33Context.h>
-#include <MACE/Graphics/OGL/OGL33Renderer.h>
+#include <MACE/Graphics/OGL/OGLContext.h>
+#include <MACE/Graphics/OGL/OGLRenderer.h>
 #include <MACE/Graphics/OGL/FreetypeFont.h>
 
 namespace mc {
 	namespace internal {
-		namespace ogl33 {
+		namespace ogl {
 			namespace {
-				thread_local OGL33Context* currentContext = nullptr;
+				thread_local Context* currentContext = nullptr;
 
 				GLenum getFormat(const gfx::TextureDesc::Format format) {
 					switch (format) {
@@ -150,19 +150,25 @@ namespace mc {
 				}
 			}//anon namespace
 
-			OGL33Texture::OGL33Texture(OGL33Context* const con, const gfx::TextureDesc& desc) : TextureImpl(desc), ogl33::Texture2D(), context(con) {
-				context->dispatch([this, desc]() {
-					ogl33::Texture2D::init();
-					ogl33::Texture2D::bind();
+			Dispatchable::Dispatchable(std::shared_ptr<Context> con) : context(con) {}
+
+			void Dispatchable::dispatch(const DispatchFunction func) const {
+				context->dispatch(func);
+			}
+
+			Texture::Texture(std::shared_ptr<Context> con, const gfx::TextureDesc& desc) : TextureImpl(desc), ogl::Texture2D(), Dispatchable(con) {
+				dispatch([this, desc]() {
+					ogl::Texture2D::init();
+					ogl::Texture2D::bind();
 
 					if (desc.minFilter == gfx::TextureDesc::Filter::MIPMAP_LINEAR) {
-						ogl33::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+						ogl::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 					} else if (desc.minFilter == gfx::TextureDesc::Filter::MIPMAP_NEAREST) {
-						ogl33::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+						ogl::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 					} else if (desc.minFilter == gfx::TextureDesc::Filter::LINEAR) {
-						ogl33::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+						ogl::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 					} else if (desc.minFilter == gfx::TextureDesc::Filter::NEAREST) {
-						ogl33::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+						ogl::Texture2D::setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 					} else {
 						MACE__THROW(gfx::UnsupportedRenderer, "Unsupported ResizeFilter for OpenGL: " + std::to_string(static_cast<Byte>(desc.minFilter)));
 					}
@@ -222,59 +228,59 @@ namespace mc {
 					*/
 					glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, desc.borderColor.begin());
 
-					ogl33::Texture2D::createStorage(desc.width, desc.height, getType(desc.type), getFormat(desc.format), getInternalFormat(desc.internalFormat), desc.mipmapLevels);
+					ogl::Texture2D::createStorage(desc.width, desc.height, getType(desc.type), getFormat(desc.format), getInternalFormat(desc.internalFormat), desc.mipmapLevels);
 				});
 			}
 
-			OGL33Texture::~OGL33Texture() {
-				context->dispatch([this]() {
-					ogl33::Texture2D::destroy();
+			Texture::~Texture() {
+				dispatch([this]() {
+					ogl::Texture2D::destroy();
 				});
 			}
 
-			void OGL33Texture::setData(const void* data, const int x, const int y, const Pixels w, const Pixels h, const int mipmap, const gfx::PixelStorageHints hints) {
-				context->dispatch([this, data, x, y, w, h, mipmap, hints]() {
+			void Texture::setData(const void* data, const int x, const int y, const Pixels w, const Pixels h, const int mipmap, const gfx::PixelStorageHints hints) {
+				dispatch([this, data, x, y, w, h, mipmap, hints]() {
 					setPixelStorage(GL_UNPACK_ALIGNMENT, hints.alignment);
 					setPixelStorage(GL_UNPACK_ROW_LENGTH, hints.rowLength);
 
-					ogl33::Texture2D::setSubdata(data, x, y, w, h, getType(desc.type), getFormat(desc.format), mipmap);
+					ogl::Texture2D::setSubdata(data, x, y, w, h, getType(desc.type), getFormat(desc.format), mipmap);
 
 					if (desc.minFilter == gfx::TextureDesc::Filter::MIPMAP_LINEAR || desc.minFilter == gfx::TextureDesc::Filter::MIPMAP_NEAREST) {
-						ogl33::Texture2D::generateMipmap();
+						ogl::Texture2D::generateMipmap();
 					}
 				});
 			}
 
-			void OGL33Texture::readPixels(void* data, const gfx::PixelStorageHints hints) const {
-				context->dispatch([this, data, hints]() {
+			void Texture::readPixels(void* data, const gfx::PixelStorageHints hints) const {
+				dispatch([this, data, hints]() {
 					setPixelStorage(GL_PACK_ALIGNMENT, hints.alignment);
 					setPixelStorage(GL_PACK_ROW_LENGTH, hints.rowLength);
 
-					ogl33::Texture2D::getImage(getFormat(desc.format), getType(desc.type), data);
+					ogl::Texture2D::getImage(getFormat(desc.format), getType(desc.type), data);
 				});
 			}
 
-			void OGL33Texture::bindTextureSlot(const gfx::TextureSlot slot) const {
-				context->dispatch([this, slot]() {
-					ogl33::Texture2D::bind(static_cast<unsigned int>(slot));
+			void Texture::bindTextureSlot(const gfx::TextureSlot slot) const {
+				dispatch([this, slot]() {
+					ogl::Texture2D::bind(static_cast<unsigned int>(slot));
 				});
 			}
 
-			OGL33Model::OGL33Model(OGL33Context* const con) : context(con) {
-				context->dispatch([this]() {
-					ogl33::VertexArray::init();
+			Model::Model(std::shared_ptr<Context> con) : Dispatchable(con) {
+				dispatch([this]() {
+					ogl::VertexArray::init();
 				});
 			}
 
-			OGL33Model::~OGL33Model() {
-				context->dispatch([this]() {
-					ogl33::VertexArray::destroy();
+			Model::~Model() {
+				dispatch([this]() {
+					ogl::VertexArray::destroy();
 				});
 			}
 
-			void OGL33Model::bind() const {
-				context->dispatch([this]() {
-					ogl33::VertexArray::bind();
+			void Model::bind() const {
+				dispatch([this]() {
+					ogl::VertexArray::bind();
 				});
 				// not sure if we need to rebind all the VBO's in the VAO, or whether just binding the VAO will do
 
@@ -287,8 +293,8 @@ namespace mc {
 				//}
 			}
 
-			void OGL33Model::draw() const {
-				context->dispatch([this]() {
+			void Model::draw() const {
+				dispatch([this]() {
 					bind();
 
 					if (indices.getIndiceNumber() > 0) {
@@ -299,52 +305,49 @@ namespace mc {
 				});
 			}
 
-			void OGL33Model::loadTextureCoordinates(const unsigned int dataSize, const float* data) {
-				context->dispatch([this, dataSize, data]() {
+			void Model::loadTextureCoordinates(const unsigned int dataSize, const float* data) {
+				dispatch([this, dataSize, data]() {
 					bind();
 
-					ogl33::VertexArray::storeDataInAttributeList(dataSize * sizeof(float), data, MACE__VAO_DEFAULT_TEXTURE_COORD_LOCATION, 2);
+					ogl::VertexArray::storeDataInAttributeList(dataSize * sizeof(float), data, MACE__VAO_DEFAULT_TEXTURE_COORD_LOCATION, 2);
 				});
 			}
 
-			void OGL33Model::loadVertices(const unsigned int verticeSize, const float* vertices) {
-				context->dispatch([this, verticeSize, vertices]() {
+			void Model::loadVertices(const unsigned int verticeSize, const float* vertices) {
+				dispatch([this, verticeSize, vertices]() {
 					bind();
 
-					ogl33::VertexArray::loadVertices(verticeSize, vertices, MACE__VAO_DEFAULT_VERTICES_LOCATION, 3);
+					ogl::VertexArray::loadVertices(verticeSize, vertices, MACE__VAO_DEFAULT_VERTICES_LOCATION, 3);
 				});
 			}
 
-			void OGL33Model::loadIndices(const unsigned int indiceNum, const unsigned int* indiceData) {
-				context->dispatch([this, indiceNum, indiceData]() {
+			void Model::loadIndices(const unsigned int indiceNum, const unsigned int* indiceData) {
+				dispatch([this, indiceNum, indiceData]() {
 					bind();
 
-					ogl33::VertexArray::loadIndices(indiceNum, indiceData);
+					ogl::VertexArray::loadIndices(indiceNum, indiceData);
 				});
 			}
 
-			void OGL33Context::onInit(gfx::WindowModule*) {
+			void Context::onInit(gfx::WindowModule*) {
 				freetype.init();
-
-				renderer = std::unique_ptr<OGL33Renderer>(new OGL33Renderer());
 
 				currentContext = this;
 			}
 
-			void OGL33Context::onRender(gfx::WindowModule*) {
+			void Context::onRender(gfx::WindowModule*) {
 				std::lock_guard<std::mutex> guard(dispatchMutex);
 				processDispatchQueue();
 			}
 
-			void OGL33Context::onDestroy(gfx::WindowModule*) {
-				renderer.reset();
-
+			void Context::onDestroy(gfx::WindowModule*) {
 				freetype.destroy();
 
 				currentContext = nullptr;
 			}
 
-			void OGL33Context::dispatch(const OGL33Dispatch& dispatch) {
+			void Context::dispatch(const DispatchFunction dispatch) {
+				MACE_ASSERT(dispatch, "Internal Error: DispatchFunction in OGL Context was empty!");
 				if (currentContext == this) {
 					processDispatchQueue();
 					dispatch();
@@ -354,30 +357,34 @@ namespace mc {
 				}
 			}
 
-			void OGL33Context::processDispatchQueue() {
+			void Context::processDispatchQueue() {
 				while (!dispatchQueue.empty()) {
-					OGL33Dispatch& dispatch = dispatchQueue.front();
+					const DispatchFunction& dispatch = dispatchQueue.front();
 					dispatchQueue.pop();
 					dispatch();
 				}
 			}
 
-			OGL33Context::OGL33Context(gfx::WindowModule* win) : GraphicsContextComponent(win) {}
+			Context::Context(gfx::WindowModule* win) : GraphicsContextComponent(win) {}
 
-			std::shared_ptr<gfx::Renderer> OGL33Context::getRenderer() const {
+			std::shared_ptr<gfx::Renderer> Context::getRenderer() {
+				if (renderer == nullptr) {
+					//this has to be done here and not in the constructor because we need access to shared_from_this()
+					renderer = std::shared_ptr<Renderer>(new Renderer(std::static_pointer_cast<Context>(shared_from_this())));
+				}
 				return renderer;
 			}
 
-			std::shared_ptr<gfx::ModelImpl> OGL33Context::createModelImpl() {
-				return std::shared_ptr<gfx::ModelImpl>(new OGL33Model(this));
+			std::shared_ptr<gfx::ModelImpl> Context::createModelImpl() {
+				return std::shared_ptr<gfx::ModelImpl>(new Model(std::static_pointer_cast<Context>(shared_from_this())));
 			}
 
-			std::shared_ptr<gfx::TextureImpl> OGL33Context::createTextureImpl(const gfx::TextureDesc& desc) {
-				return std::shared_ptr<gfx::TextureImpl>(new OGL33Texture(this, desc));
+			std::shared_ptr<gfx::TextureImpl> Context::createTextureImpl(const gfx::TextureDesc& desc) {
+				return std::shared_ptr<gfx::TextureImpl>(new Texture(std::static_pointer_cast<Context>(shared_from_this()), desc));
 			}
-			std::shared_ptr<gfx::FontImpl> OGL33Context::createFontImpl(const gfx::FontDesc& desc) {
+			std::shared_ptr<gfx::FontImpl> Context::createFontImpl(const gfx::FontDesc& desc) {
 				return std::shared_ptr<gfx::FontImpl>(new fty::FreetypeFont(desc, freetype));
 			}
-		}//ogl33
+		}//ogl
 	}//internal
 }//mc
