@@ -48,6 +48,10 @@ namespace mc {
 	public:
 		Initializable() noexcept = default;
 		virtual MACE__DEFAULT_OPERATORS(Initializable);
+
+		virtual bool isInit() const noexcept = 0;
+
+		explicit operator bool() const noexcept;
 	protected:
 		virtual void init() = 0;
 

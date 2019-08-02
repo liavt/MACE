@@ -54,7 +54,7 @@ namespace mc {
 
 #ifndef MACE_ASSERT
 #	ifdef MACE_DEBUG
-#		define MACE_ASSERT(cond, message) do{if(!( cond )){MACE__THROW(AssertionFailed, std::string("Assertion failed: " MACE_STRINGIFY(cond) ": ") + message);}}while(0)
+#		define MACE_ASSERT(cond, message) do{if(!( cond ))MACE_UNLIKELY{MACE__THROW(AssertionFailed, std::string("Assertion failed: " MACE_STRINGIFY(cond) ": ") + message);}}while(0)
 #	else
 #		define MACE_ASSERT(cond, message)
 #	endif//MACE_DEBUG

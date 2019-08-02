@@ -202,7 +202,7 @@ namespace mc {
 		}
 
 		void Painter::drawQuad(const Painter::Brush brush) {
-			draw(Model::getQuad(), brush);
+			draw(entity->getRoot()->getComponent<GraphicsContextComponent>()->getQuad(), brush);
 		}
 
 		void Painter::draw(const Model& m, const Painter::Brush brush) {
@@ -488,6 +488,10 @@ namespace mc {
 			return state;
 		}
 
+		bool Painter::isInit() const noexcept {
+			return impl != nullptr;
+		}
+
 		bool Painter::operator==(const Painter& other) const {
 			return impl == other.impl && entity == other.entity
 				&& state == other.state && stateStack == other.stateStack;
@@ -503,6 +507,10 @@ namespace mc {
 
 		bool PainterImpl::operator!=(const PainterImpl& other) const {
 			return !operator==(other);
+		}
+
+		bool PainterImpl::isInit() const noexcept {
+			return painter != nullptr;
 		}
 
 		bool Painter::State::operator==(const State& other) const {

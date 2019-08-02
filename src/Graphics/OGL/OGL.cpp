@@ -396,6 +396,10 @@ namespace mc {
 				return !operator==(other);
 			}
 
+			bool Object::isInit() const noexcept {
+				return id != 0;
+			}
+
 			Texture2D::Texture2D() noexcept {}
 
 			void Texture2D::bind() const {

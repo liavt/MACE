@@ -36,6 +36,10 @@ namespace mc {
 			return parent;
 		}
 
+		bool Component::isInit() const noexcept {
+			return parent != nullptr;
+		}
+
 		bool Component::operator==(const Component& other) const {
 			return parent == other.parent;
 		}
@@ -171,7 +175,7 @@ namespace mc {
 			return getProperty(Entity::DEAD) || !hasParent();
 		}
 
-		bool Entity::isInit() const {
+		bool Entity::isInit() const noexcept {
 			return getProperty(EntityProperty::INIT);
 		}
 

@@ -186,6 +186,9 @@ namespace mc {
 			void FreetypeLibrary::destroy() {
 				checkFreetypeError(FT_Done_FreeType(freetype), "Failed to destroy FreeType", __LINE__, __FILE__);
 			}
+			bool FreetypeLibrary::isInit() const noexcept {
+				return freetype != nullptr;
+			}
 		}//ogl
 	}//internal
 }//mc

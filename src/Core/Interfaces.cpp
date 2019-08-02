@@ -54,6 +54,10 @@ namespace mc {
 		return !operator==(other);
 	}
 
+	Initializable::operator bool() const noexcept{
+		return isInit();
+	}
+
 	Initializer::Initializer(Initializable* o) : obj(o) {
 		if (obj == nullptr) {
 			MACE__THROW(NullPointer, "Input to Initializer was null!");

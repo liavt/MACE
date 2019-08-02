@@ -59,6 +59,8 @@ namespace mc {
 				void destroy() override;
 			private:
 				FT_Library freetype{};
+
+				bool isInit() const noexcept override;
 			};
 		}//fty
 	}//internal

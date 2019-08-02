@@ -5,6 +5,7 @@ See LICENSE.md for full copyright information
 */
 #include <MACE/Graphics/Context.h>
 #include <MACE/Graphics/Renderer.h>
+#include <MACE/Graphics/Components.h>
 
 #ifdef MACE_GCC
 //stb_image raises this warning and can be safely ignored
@@ -55,43 +56,6 @@ namespace mc {
 
 		bool ModelImpl::operator!=(const ModelImpl& other) const {
 			return !operator==(other);
-		}
-
-		Model& Model::getQuad() {
-			auto context = gfx::getCurrentWindow()->getContext();
-			if (context == nullptr) {
-				MACE__THROW(NullPointer, "No graphics context found in window!");
-			} else {
-				return context->getOrCreateModel(MACE__RESOURCE_QUAD, []() {
-					Model model = Model();
-					model.init();
-
-					MACE_CONSTEXPR const float squareTextureCoordinates[8] = {
-						0.0f,1.0f,
-						0.0f,0.0f,
-						1.0f,0.0f,
-						1.0f,1.0f,
-					};
-
-					MACE_CONSTEXPR const unsigned int squareIndices[6] = {
-						0,1,3,
-						1,2,3
-					};
-
-					MACE_CONSTEXPR const float squareVertices[12] = {
-						-1.0f,-1.0f,0.0f,
-						-1.0f,1.0f,0.0f,
-						1.0f,1.0f,0.0f,
-						1.0f,-1.0f,0.0f
-					};
-
-					model.createVertices(squareVertices, PrimitiveType::TRIANGLES);
-					model.createIndices(squareIndices);
-					model.createTextureCoordinates(squareTextureCoordinates);
-
-					return model;
-				});
-			}
 		}
 
 		Model::Model() : model(nullptr) {}
@@ -249,8 +213,40 @@ namespace mc {
 			return texture;
 		}
 
+		Model GraphicsContextComponent::getQuad() {
+			return parent->getOrCreateComponent<CacheComponent<Model>>()->getOrCreate(MACE__RESOURCE_QUAD, []() {
+				Model model = Model();
+				model.init();
+
+				MACE_CONSTEXPR const float squareTextureCoordinates[8] = {
+					0.0f,1.0f,
+					0.0f,0.0f,
+					1.0f,0.0f,
+					1.0f,1.0f,
+				};
+
+				MACE_CONSTEXPR const unsigned int squareIndices[6] = {
+					0,1,3,
+					1,2,3
+				};
+
+				MACE_CONSTEXPR const float squareVertices[12] = {
+					-1.0f,-1.0f,0.0f,
+					-1.0f,1.0f,0.0f,
+					1.0f,1.0f,0.0f,
+					1.0f,-1.0f,0.0f
+				};
+
+				model.createVertices(squareVertices, PrimitiveType::TRIANGLES);
+				model.createIndices(squareIndices);
+				model.createTextureCoordinates(squareTextureCoordinates);
+
+				return model;
+			});
+		}
+
 		Texture GraphicsContextComponent::getSolidColor(const Color& col) {
-			return Texture(getOrCreateTexture(MACE__RESOURCE_SOLIDCOLOR, [this]() {
+			return Texture(parent->getOrCreateComponent<CacheComponent<Texture>>()->getOrCreate(MACE__RESOURCE_SOLIDCOLOR, [this]() {
 				TextureDesc desc = TextureDesc(1, 1, TextureDesc::Format::LUMINANCE);
 				desc.minFilter = TextureDesc::Filter::NEAREST;
 				desc.magFilter = TextureDesc::Filter::NEAREST;
@@ -266,8 +262,10 @@ namespace mc {
 			}), col);
 		}
 
-		Texture& GraphicsContextComponent::getGradient() {
-			return getOrCreateTexture(MACE__RESOURCE_GRADIENT, [this]() {
+		Texture GraphicsContextComponent::getGradient() {
+			auto val = parent->getOrCreateComponent<CacheComponent<Texture>>();
+			val->has("HEE");
+			return parent->getOrCreateComponent<CacheComponent<Texture>>()->getOrCreate(MACE__RESOURCE_GRADIENT, [this]() {
 				TextureDesc desc = TextureDesc(1, MACE__RESOURCE_GRADIENT_HEIGHT);
 				desc.format = TextureDesc::Format::LUMINANCE;
 				desc.type = TextureDesc::Type::FLOAT;
@@ -316,7 +314,7 @@ namespace mc {
 			texture.reset();
 		}
 
-		bool Texture::isCreated() const {
+		bool Texture::isCreated() const noexcept {
 			return texture != nullptr;
 		}
 
@@ -414,93 +412,6 @@ namespace mc {
 			return window;
 		}
 
-		Texture& GraphicsContextComponent::createTexture(const std::string& name, const Texture& texture) {
-			if (hasTexture(name)) {
-				MACE__THROW(AlreadyExists, "Texture with name " + name + " has already been created");
-			}
-
-			return textures[name] = texture;
-		}
-
-		Texture& GraphicsContextComponent::getOrCreateTexture(const std::string& name, const TextureCreateCallback create) {
-			if (!hasTexture(name)) {
-				return createTexture(name, create());
-			} else {
-				return getTexture(name);
-			}
-		}
-
-		Texture& GraphicsContextComponent::getOrCreateTextureFromFile(const std::string& name, const std::string& path) {
-			return getOrCreateTexture(name, [this, &path]() {
-				return createTextureFromFile(path);
-			});
-		}
-
-		Model& GraphicsContextComponent::createModel(const std::string& name, const Model& mod) {
-			if (hasModel(name)) {
-				MACE__THROW(AlreadyExists, "Model with name " + name + " has already been created");
-			}
-
-			return models[name] = mod;
-		}
-
-		Model& GraphicsContextComponent::getOrCreateModel(const std::string& name, const ModelCreateCallback create) {
-			if (!hasModel(name)) {
-				return createModel(name, create());
-			} else {
-				return getModel(name);
-			}
-		}
-
-		bool GraphicsContextComponent::hasTexture(const std::string& name) const {
-			//map.count() returns 1 if key exists, 0 otherwise.
-			return textures.count(name) != 0;//the verbosity is to suppress warnings of casting from std::size_t to bool
-		}
-
-		bool GraphicsContextComponent::hasModel(const std::string& name) const {
-			return models.count(name) != 0;
-		}
-
-		void GraphicsContextComponent::setTexture(const std::string& name, const Texture& texture) {
-			textures[name] = texture;
-		}
-
-		Texture& GraphicsContextComponent::getTexture(const std::string& name) {
-			return textures.at(name);
-		}
-
-		const Texture& GraphicsContextComponent::getTexture(const std::string& name) const {
-			return textures.at(name);
-		}
-
-		void GraphicsContextComponent::setModel(const std::string& name, const Model& model) {
-			models[name] = model;
-		}
-
-		Model& GraphicsContextComponent::getModel(const std::string& name) {
-			return models.at(name);
-		}
-
-		const Model& GraphicsContextComponent::getModel(const std::string& name) const {
-			return models.at(name);
-		}
-
-		std::map<std::string, Texture>& GraphicsContextComponent::getTextures() {
-			return textures;
-		}
-
-		const std::map<std::string, Texture>& GraphicsContextComponent::getTextures() const {
-			return textures;
-		}
-
-		std::map<std::string, Model>& GraphicsContextComponent::getModels() {
-			return models;
-		}
-
-		const std::map<std::string, Model>& GraphicsContextComponent::getModels() const {
-			return models;
-		}
-
 		GraphicsContextComponent::GraphicsContextComponent(gfx::WindowModule* win) :window(win) {
 			MACE_ASSERT(window != nullptr, "WindowModule inputted to GraphicsContextComponent is nullptr");
 		}
@@ -515,18 +426,6 @@ namespace mc {
 		}
 
 		void GraphicsContextComponent::destroy() {
-			for (auto& x : textures) {
-				if (x.second.isCreated()) {
-					x.second.destroy();
-				}
-			}
-
-			for (auto& x : models) {
-				if (x.second.isCreated()) {
-					x.second.destroy();
-				}
-			}
-
 			getRenderer()->destroy();
 			onDestroy(window);
 			window = nullptr;

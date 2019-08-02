@@ -48,6 +48,8 @@ namespace mc {
 		*/
 		virtual void destroy() override = 0;
 
+		bool isInit() const noexcept override;
+
 		/**
 		Override this function and return a UNIQUE name for this `Module`
 		<p>
@@ -203,6 +205,8 @@ namespace mc {
 		@see MACE for an optimal main loop
 		*/
 		void destroy() override MACE_EXPECTS(!empty());
+
+		bool isInit() const noexcept override;
 
 		/**
 		Checks whether the `MACE` is ready to be updated. Will return true if `MACE::init()` has been called, and `MACE::destroy()` and `MACE::requestStop()` have not been called.

@@ -18,13 +18,9 @@ namespace mc {
 	}
 
 	void Instance::addModule(ModulePtr m) {
-		if (m == nullptr) MACE_UNLIKELY{
-			MACE__THROW(NullPointer, "Input to addModule() was nullptr");
-		} else if (m->getInstance() != nullptr) MACE_UNLIKELY{
-			MACE__THROW(InvalidState, "Can\'t add a Module to 2 Instance\'s!");
-		} else if (hasModule(m->getName())) {
-			MACE__THROW(AlreadyExists, "Module with name " + m->getName() + " already exists in this Instance");
-		}
+		MACE_ASSERT(m != nullptr, "Input to addModule() was nullptr");
+		MACE_ASSERT(!m->isInit(), "Module is already init!");
+		MACE_ASSERT(!hasModule(m->getName()), "Module with name " + m->getName() + " already exists in this Instance");
 
 		m->instance = this;
 		modules.emplace(m->getName(), m);
@@ -76,9 +72,7 @@ namespace mc {
 	}
 
 	void Instance::init() {
-		if (modules.empty()) {
-			MACE__THROW(InitializationFailed, "Must add a Module via Instance::addModule!");
-		}
+		MACE_ASSERT(!modules.empty(), "Must add a Module via Instance::addModule!");
 
 		flags &= ~Instance::DESTROYED;
 		flags |= Instance::INIT;
@@ -89,9 +83,7 @@ namespace mc {
 	}
 
 	void Instance::destroy() {
-		if (!(flags & Instance::INIT)) {
-			MACE__THROW(InitializationFailed, "Can't destroy MACE without calling init() first!");
-		}
+		MACE_ASSERT(isInit(), "Can't destroy MACE without calling init() first!");
 
 		flags |= Instance::DESTROYED;
 		flags &= ~Instance::INIT;
@@ -105,16 +97,19 @@ namespace mc {
 	}
 
 	void Instance::update() {
-		if (!(flags & Instance::INIT)) {
-			MACE__THROW(InitializationFailed, "init() must be called!");
-		}
+		MACE_ASSERT(isInit(), "init() must be called!");
+
 		for (auto val : modules) {
 			val.second->update();
 		}
 	}
 
+	bool Instance::isInit() const noexcept {
+		return flags & Instance::INIT;
+	}
+
 	bool Instance::isRunning() const {
-		return flags & Instance::INIT && !(flags & (Instance::DESTROYED | Instance::STOP_REQUESTED));
+		return isInit() && !(flags & (Instance::DESTROYED | Instance::STOP_REQUESTED));
 	}
 
 	void Instance::requestStop() {
@@ -140,6 +135,10 @@ namespace mc {
 
 	bool Instance::operator!=(const Instance& other) const {
 		return !operator==(other);
+	}
+
+	bool Module::isInit() const noexcept {
+		return instance != nullptr;
 	}
 
 	Instance* Module::getInstance() {

@@ -216,6 +216,8 @@ namespace mc {
 			State& getState();
 			const State& getState() const;
 
+			bool isInit() const noexcept override;
+
 			bool operator==(const Painter& other) const;
 			bool operator!=(const Painter& other) const;
 		private:
@@ -278,6 +280,8 @@ namespace mc {
 			Painter* painter = nullptr;
 
 			PainterImpl() noexcept = default;
+		private:
+			bool isInit() const noexcept override;
 		};
 
 		/**

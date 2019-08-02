@@ -130,6 +130,7 @@ namespace mc {
 			ComponentPtr<GraphicsContextComponent> getContext();
 			const ComponentPtr<GraphicsContextComponent> getContext() const;
 
+			using Module::isInit;
 
 			Monitor getMonitor();
 		private:

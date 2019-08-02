@@ -46,20 +46,17 @@ namespace mc {
 
 		using ComponentTypeID = const void*;
 
-		template<bool Condition, typename T = void>
-		using EnableIfType = typename std::enable_if<Condition, T>::type;
-
 		/**
 		To ensure type safety, ExtendsComponent allows for SFINAE in classes that require Component
 		*/
 		template<typename T>
-		using ExtendsComponent = EnableIfType < std::is_base_of<gfx::Component, T>{} > ;
+		using ExtendsComponent = std::enable_if_t < std::is_base_of_v<gfx::Component, T> >;
 
 		template<typename T>
-		using ExtendsEntity = EnableIfType < std::is_base_of<gfx::Entity, T>{} > ;
+		using ExtendsEntity = std::enable_if_t < std::is_base_of_v<gfx::Entity, T> >;
 
 		template<typename T>
-		using DefaultConstrucible = EnableIfType < std::is_default_constructible<T>{} > ;
+		using DefaultConstrucible = std::enable_if_t < std::is_default_constructible_v<T>>;
 
 		template<typename T, typename = ExtendsComponent<T>>
 		MACE_NODISCARD MACE_CONSTEXPR inline ComponentTypeID getComponentTypeID() noexcept {
@@ -123,6 +120,8 @@ namespace mc {
 			virtual MACE__DEFAULT_OPERATORS(Component);
 
 			Entity* getParent();
+
+			bool isInit() const noexcept override;
 
 			bool operator==(const Component& other) const;
 			bool operator!=(const Component& other) const;
@@ -445,7 +444,7 @@ namespace mc {
 
 			bool needsRemoval() const;
 
-			MACE_NODISCARD bool isInit() const;
+			MACE_NODISCARD bool isInit() const noexcept override;
 
 			/**
 			@dirty

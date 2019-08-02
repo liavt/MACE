@@ -250,6 +250,9 @@ namespace mc {
 					destroyIndices(id, N);
 				}
 
+			private:
+				bool isInit() const noexcept override;
+
 			};
 
 			/**

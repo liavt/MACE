@@ -14,7 +14,6 @@ See LICENSE.md for full copyright information
 #include <MACE/Graphics/Entity.h>
 
 #include <memory>
-#include <map>
 #include <string>
 #include <functional>
 
@@ -103,21 +102,19 @@ namespace mc {
 			PrimitiveType primitiveType = PrimitiveType::TRIANGLES;
 		};
 
-		class Model: public Initializable {
+		class Model {
 		public:
-			static Model& getQuad();
-
 			Model();
 			Model(const Model& other);
 
 			/**
 			@rendercontext
 			*/
-			void init() override;
+			void init();
 			/**
 			@rendercontext
 			*/
-			void destroy() override;
+			void destroy();
 
 			/**
 			@rendercontext
@@ -165,8 +162,8 @@ namespace mc {
 
 			bool isCreated() const;
 
-			virtual bool operator==(const Model& other) const;
-			virtual bool operator!=(const Model& other) const;
+			bool operator==(const Model& other) const;
+			bool operator!=(const Model& other) const;
 		private:
 			std::shared_ptr<ModelImpl> model;
 
@@ -308,7 +305,7 @@ namespace mc {
 			*/
 			void destroy();
 
-			bool isCreated() const;
+			bool isCreated() const noexcept;
 
 			const TextureDesc& getDesc() const;
 
@@ -451,7 +448,7 @@ namespace mc {
 			void render() final;
 			void destroy() final;
 
-			virtual std::shared_ptr<Renderer> getRenderer()= 0;
+			virtual std::shared_ptr<Renderer> getRenderer() = 0;
 
 			gfx::WindowModule* getWindow();
 			const gfx::WindowModule* getWindow() const;
@@ -490,30 +487,9 @@ namespace mc {
 
 			@rendercontext
 			*/
-			Texture& getGradient();
+			Texture getGradient();
 
-			Texture& createTexture(const std::string& name, const Texture& texture = Texture());
-			Texture& getOrCreateTexture(const std::string& name, const TextureCreateCallback create);
-			Texture& getOrCreateTextureFromFile(const std::string& name, const std::string& path);
-			Model& createModel(const std::string& name, const Model& texture = Model());
-			Model& getOrCreateModel(const std::string& name, const ModelCreateCallback create);
-
-			bool hasTexture(const std::string& name) const;
-			bool hasModel(const std::string& name) const;
-
-			void setTexture(const std::string& name, const Texture& texture);
-			Texture& getTexture(const std::string& name);
-			const Texture& getTexture(const std::string& name) const;
-
-			void setModel(const std::string& name, const Model& model);
-			Model& getModel(const std::string& name);
-			const Model& getModel(const std::string& name) const;
-
-			std::map<std::string, Texture>& getTextures();
-			const std::map<std::string, Texture>& getTextures() const;
-
-			std::map<std::string, Model>& getModels();
-			const std::map<std::string, Model>& getModels() const;
+			Model getQuad();
 
 			template<typename T>
 			float convertPixelsToRelativeXCoordinates(T px) const {
@@ -550,10 +526,6 @@ namespace mc {
 			virtual void onInit(gfx::WindowModule* win) = 0;
 			virtual void onRender(gfx::WindowModule* win) = 0;
 			virtual void onDestroy(gfx::WindowModule* win) = 0;
-
-		private:
-			std::map<std::string, Texture> textures{};
-			std::map<std::string, Model> models{};
 		};
 	}
 }//mc

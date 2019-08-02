@@ -14,18 +14,9 @@ See LICENSE.md for full copyright information
 #include <chrono>
 #include <queue>
 #include <functional>
+#include <unordered_map>
 
 namespace mc {
-
-	namespace internal {
-		class CleanManagerComponent: public gfx::Component {
-		private:
-			void init() override;
-			void update() override;
-			void destroy() override;
-		};
-	}
-
 	namespace gfx {
 
 		class TexturedEntity2D;
@@ -554,7 +545,77 @@ namespace mc {
 			const std::vector<Texture> frames;
 		};
 
-	}//gfx
+	}//glfx
+	namespace internal {
+		template<typename T>
+		class MACE_NOVTABLE CacheComponentBase: public gfx::Component {
+		public:
+			using CreateCallback = std::function<T()>;
+
+			T& getOrCreate(const std::string& key, const CreateCallback callback) {
+				if (!has(key)) {
+					return set(key, callback());
+				} else {
+					return get(key);
+				}
+			}
+
+			bool has(const std::string& key) const {
+				return cache.count(key) > 0;
+			}
+
+			T& set(const std::string& key, const T& val) {
+				return cache.insert_or_assign(key, val).first->second;
+			}
+
+			T& get(const std::string& key) {
+				return cache[key];
+			}
+
+			const T& get(const std::string& key) const {
+				return cache[key];
+			}
+
+			std::unordered_map<std::string, T>& getCache() {
+				return cache;
+			}
+
+			const std::unordered_map<std::string, T>& getCache() const {
+				return cache;
+			}
+		protected:
+			mutable std::unordered_map<std::string, T> cache;
+		};
+
+
+		template<typename T>
+		class MACE_NOVTABLE AssetCacheComponentBase: public CacheComponentBase<T> {
+		public:
+			bool has(const std::string& key) const{
+				const auto val = cache.find(key);
+				return val != cache.end() && val->second.isCreated();
+			}
+		};
+	}//internal
+
+	namespace gfx {
+		template<typename T>
+		class CacheComponent: public MACE__INTERNAL_NS::CacheComponentBase<T> {};
+
+		template<>
+		class CacheComponent<Texture>: public MACE__INTERNAL_NS::AssetCacheComponentBase<Texture> {
+		public:
+			Texture& getOrCreateFromFile(const std::string& name, const std::string& path) {
+				MACE_ASSERT(parent != nullptr, "Parent was nullptr!");
+				return getOrCreate(name, [&path, this]() {
+					return parent->getRoot()->getComponent<gfx::GraphicsContextComponent>()->createTextureFromFile(path);
+				});
+			}
+		};
+
+		template<>
+		class CacheComponent<Model>: public MACE__INTERNAL_NS::AssetCacheComponentBase<Model> {};
+	}
 
 	namespace internal {
 		template<gfx::TextureSlot Slot>
@@ -595,7 +656,7 @@ namespace mc {
 		private:
 			gfx::Texture texture;
 
-			void destroy() override{
+			void destroy() override {
 				texture.destroy();
 			}
 		};
