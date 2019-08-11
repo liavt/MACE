@@ -591,7 +591,7 @@ namespace mc {
 		template<typename T>
 		class MACE_NOVTABLE AssetCacheComponentBase: public CacheComponentBase<T> {
 		public:
-			bool has(const std::string& key) const{
+			bool has(const std::string& key) const {
 				const auto val = cache.find(key);
 				return val != cache.end() && val->second.isCreated();
 			}
@@ -621,7 +621,6 @@ namespace mc {
 		template<gfx::TextureSlot Slot>
 		class TextureComponentBase: public gfx::Component {
 		public:
-			TextureComponentBase(gfx::Texture tex) : texture(tex) {}
 			TextureComponentBase() : texture() {}
 
 			/**
@@ -638,7 +637,7 @@ namespace mc {
 			/**
 			@dirty
 			*/
-			void setTexture(gfx::Texture& tex) {
+			void setTexture(const gfx::Texture& tex) {
 				if (tex != texture) {
 					parent->makeDirty();
 
@@ -671,10 +670,6 @@ namespace mc {
 		class MACE_NOVTABLE TexturedEntity: public virtual GraphicsEntity {
 		public:
 			TexturedEntity() noexcept = default;
-			template<SlotEnum Slot = Default>
-			TexturedEntity(Texture tex) {
-				addComponent(ComponentPtr< TextureComponent<Slot>>(new TextureComponent<Slot>(tex)));
-			}
 
 			/**
 			@dirty
@@ -693,7 +688,7 @@ namespace mc {
 			@dirty
 			*/
 			template<SlotEnum Slot = Default>
-			void setTexture(Texture & tex) {
+			void setTexture(const Texture & tex) {
 				getOrCreateComponent<TextureComponent<Slot>>()->setTexture(tex);
 			}
 		};

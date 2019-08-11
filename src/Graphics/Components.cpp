@@ -563,42 +563,42 @@ namespace mc {
 		}
 
 		void NineSliceComponent::render() {
-			Painter& painter = en->getPainter();
-			Transformation& transform = painter.getTransformation();
-			const float flipSides = desc.flipSides ? -1.0f : 1.0f;
+			//Painter& painter = en->getPainter();
+			//Transformation& transform = painter.getTransformation();
+			//const float flipSides = desc.flipSides ? -1.0f : 1.0f;
 
-			const Beginner beginner(&painter);
-			painter.push();
-			painter.reset();
-			painter.disableRenderFeatures(Painter::RenderFeatures::FILTER);
-			painter.enableRenderFeatures(Painter::RenderFeatures::DISCARD_INVISIBLE | Painter::RenderFeatures::STORE_ID);
-			transform.scaler = {1.0f - (cornerWidth * 2.0f), 1.0f - (cornerHeight * 2.0f), 1.0f};
-			painter.drawImage(desc.center);
-			transform.translation.x() = -1.0f + cornerWidth;
-			transform.scaler.x() = cornerWidth * flipSides;
-			painter.drawImage(desc.left);
-			transform.translation.x() *= -1.0f;
-			transform.scaler.x() *= flipSides;
-			painter.drawImage(desc.right);
-			transform.scaler.y() = cornerHeight * flipSides;
-			transform.translation.y() = -1.0f + cornerHeight;
-			painter.drawImage(desc.bottomRight);
-			transform.scaler.y() *= flipSides;
-			transform.translation.y() *= -1.0f;
-			painter.drawImage(desc.topRight);
-			transform.scaler.x() *= flipSides;
-			transform.translation.x() *= -1.0f;
-			painter.drawImage(desc.topLeft);
-			transform.scaler.y() *= flipSides;
-			transform.translation.y() *= -1.0f;
-			painter.drawImage(desc.bottomLeft);
-			transform.translation.x() = 0.0f;
-			transform.scaler.x() = (1.0f - (cornerWidth * 2.0f)) * flipSides;
-			painter.drawImage(desc.bottom);
-			transform.translation.y() *= -1.0f;
-			transform.translation.x() *= flipSides;
-			painter.drawImage(desc.top);
-			painter.pop();
+			//const Beginner beginner(&painter);
+			//painter.push();
+			//painter.reset();
+			//painter.disableRenderFeatures(Painter::RenderFeatures::FILTER);
+			//painter.enableRenderFeatures(Painter::RenderFeatures::DISCARD_INVISIBLE | Painter::RenderFeatures::STORE_ID);
+			//transform.scaler = {1.0f - (cornerWidth * 2.0f), 1.0f - (cornerHeight * 2.0f), 1.0f};
+			//painter.drawImage(desc.center);
+			//transform.translation.x() = -1.0f + cornerWidth;
+			//transform.scaler.x() = cornerWidth * flipSides;
+			//painter.drawImage(desc.left);
+			//transform.translation.x() *= -1.0f;
+			//transform.scaler.x() *= flipSides;
+			//painter.drawImage(desc.right);
+			//transform.scaler.y() = cornerHeight * flipSides;
+			//transform.translation.y() = -1.0f + cornerHeight;
+			//painter.drawImage(desc.bottomRight);
+			//transform.scaler.y() *= flipSides;
+			//transform.translation.y() *= -1.0f;
+			//painter.drawImage(desc.topRight);
+			//transform.scaler.x() *= flipSides;
+			//transform.translation.x() *= -1.0f;
+			//painter.drawImage(desc.topLeft);
+			//transform.scaler.y() *= flipSides;
+			//transform.translation.y() *= -1.0f;
+			//painter.drawImage(desc.bottomLeft);
+			//transform.translation.x() = 0.0f;
+			//transform.scaler.x() = (1.0f - (cornerWidth * 2.0f)) * flipSides;
+			//painter.drawImage(desc.bottom);
+			//transform.translation.y() *= -1.0f;
+			//transform.translation.x() *= flipSides;
+			//painter.drawImage(desc.top);
+			//painter.pop();
 		}
 
 		void NineSliceComponent::clean(Metrics& metrics) {

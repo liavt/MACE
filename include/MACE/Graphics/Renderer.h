@@ -112,8 +112,6 @@ namespace mc {
 
 				Vector<float, 4> data;
 
-				Transformation transformation;
-
 				Matrix<float, 4, 4> filter = math::identity<float, 4>();
 
 				RenderFeatures renderFeatures = RenderFeatures::DEFAULT;
@@ -126,9 +124,7 @@ namespace mc {
 
 			void fillModel(const Model& m);
 
-			void fillRect(const RelativeTranslation x = 0.0f, const RelativeTranslation y = 0.0f, const RelativeScale w = 1.0f, const RelativeScale h = 1.0f);
-			void fillRect(const Vector<RelativeTranslation, 2> & pos, const Vector<RelativeScale, 2> & size);
-			void fillRect(const Vector<RelativeUnit, 4> & dim);
+			void fillRect();
 
 			void drawImage(const Texture& img);
 
@@ -186,26 +182,11 @@ namespace mc {
 			Vector<float, 4> & getData();
 			const Vector<float, 4> & getData() const;
 
-			void setTransformation(const Transformation& trans);
-			Transformation& getTransformation();
-			const Transformation& getTransformation() const;
-
 			void setOpacity(const float opacity);
 			float getOpacity();
 			const float getOpacity() const;
 
 			void setTarget(const FrameBufferTarget& target);
-
-			void translate(const Vector<RelativeTranslation, 3> & vec);
-			void translate(const RelativeTranslation x, const RelativeTranslation y, const RelativeTranslation z = 0.0f);
-
-			void rotate(const Vector<RelativeRadian, 3> & vec);
-			void rotate(const RelativeRadian x, const RelativeRadian y, const RelativeRadian z);
-
-			void scale(const Vector<RelativeScale, 3> & vec);
-			void scale(const RelativeScale x, const RelativeScale y, const RelativeScale z = 1.0f);
-
-			void resetTransform();
 
 			void push();
 			void pop();

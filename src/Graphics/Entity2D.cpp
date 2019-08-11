@@ -78,7 +78,9 @@ namespace mc {
 
 		//IMAGE
 
-		Image::Image(const Texture& tex) : TexturedEntity(tex) {}
+		Image::Image(const Texture& tex){
+			setTexture(tex);
+		}
 
 		void Image::onRender(Painter& p) {
 			p.drawImage(getTexture());

@@ -42,7 +42,7 @@ namespace mc {
 			//the definition is later stringified. cant be a string because this gets added to the shader via a macro (see createShader)
 #define MACE__ENTITY_DATA_NAME _mc_EntityData
 
-#define MACE__PAINTER_DATA_BUFFER_SIZE sizeof(float) * 56
+#define MACE__PAINTER_DATA_BUFFER_SIZE sizeof(float) * 44
 #define MACE__PAINTER_DATA_LOCATION 1
 #define MACE__PAINTER_DATA_STORAGE_FLAGS GL_DYNAMIC_STORAGE_BIT
 #define MACE__PAINTER_DATA_NAME _mc_PainterData
@@ -688,18 +688,14 @@ namespace mc {
 				savedState = painter->getState();//create default state
 
 				float painterDataBuffer[MACE__PAINTER_DATA_BUFFER_SIZE / sizeof(float)] = {0};
-
-				savedState.transformation.translation.flatten(painterDataBuffer);
-				savedState.transformation.rotation.flatten(painterDataBuffer + 4);
-				savedState.transformation.scaler.flatten(painterDataBuffer + 8);
-				savedState.data.flatten(painterDataBuffer + 12);
-				savedState.foregroundColor.flatten(painterDataBuffer + 16);
-				savedState.foregroundTransform.flatten(painterDataBuffer + 20);
-				savedState.backgroundColor.flatten(painterDataBuffer + 24);
-				savedState.backgroundTransform.flatten(painterDataBuffer + 28);
-				savedState.maskColor.flatten(painterDataBuffer + 32);
-				savedState.maskTransform.flatten(painterDataBuffer + 36);
-				savedState.filter.flatten(painterDataBuffer + 40);
+				savedState.data.flatten(painterDataBuffer);
+				savedState.foregroundColor.flatten(painterDataBuffer + 4);
+				savedState.foregroundTransform.flatten(painterDataBuffer + 8);
+				savedState.backgroundColor.flatten(painterDataBuffer + 12);
+				savedState.backgroundTransform.flatten(painterDataBuffer + 16);
+				savedState.maskColor.flatten(painterDataBuffer + 20);
+				savedState.maskTransform.flatten(painterDataBuffer + 24);
+				savedState.filter.flatten(painterDataBuffer + 28);
 
 				uniformBuffers.painterData.createStorage(MACE__PAINTER_DATA_BUFFER_SIZE, painterDataBuffer, MACE__PAINTER_DATA_STORAGE_FLAGS);
 
@@ -767,17 +763,14 @@ namespace mc {
 					uniformBuffers.painterData.bind();
 
 #define MACE__DATA_RANGE_ENTRY(name, offset, size, cond) if(state.name != savedState.name && cond){uniformBuffers.painterData.setDataRange(sizeof(float) * offset, sizeof(float) * size, state.name.begin());}
-					MACE__DATA_RANGE_ENTRY(transformation.translation, 0, 3, true);
-					MACE__DATA_RANGE_ENTRY(transformation.rotation, 4, 3, true);
-					MACE__DATA_RANGE_ENTRY(transformation.scaler, 8, 3, true);
-					MACE__DATA_RANGE_ENTRY(data, 12, 4, true);
-					MACE__DATA_RANGE_ENTRY(foregroundColor, 16, 4, true);
-					MACE__DATA_RANGE_ENTRY(foregroundTransform, 20, 4, MACE__HAS_RENDER_FEATURE(state.renderFeatures, TEXTURE_TRANSFORM));
-					MACE__DATA_RANGE_ENTRY(backgroundColor, 24, 4, true);
-					MACE__DATA_RANGE_ENTRY(backgroundTransform, 28, 4, MACE__HAS_RENDER_FEATURE(state.renderFeatures, TEXTURE_TRANSFORM));
-					MACE__DATA_RANGE_ENTRY(maskColor, 32, 4, true);
-					MACE__DATA_RANGE_ENTRY(maskTransform, 36, 4, MACE__HAS_RENDER_FEATURE(state.renderFeatures, TEXTURE_TRANSFORM));
-					MACE__DATA_RANGE_ENTRY(filter, 40, 16, MACE__HAS_RENDER_FEATURE(state.renderFeatures, FILTER));
+					MACE__DATA_RANGE_ENTRY(data, 0, 4, true);
+					MACE__DATA_RANGE_ENTRY(foregroundColor, 4, 4, true);
+					MACE__DATA_RANGE_ENTRY(foregroundTransform, 8, 4, MACE__HAS_RENDER_FEATURE(state.renderFeatures, TEXTURE_TRANSFORM));
+					MACE__DATA_RANGE_ENTRY(backgroundColor, 12, 4, true);
+					MACE__DATA_RANGE_ENTRY(backgroundTransform, 16, 4, MACE__HAS_RENDER_FEATURE(state.renderFeatures, TEXTURE_TRANSFORM));
+					MACE__DATA_RANGE_ENTRY(maskColor, 20, 4, true);
+					MACE__DATA_RANGE_ENTRY(maskTransform, 24, 4, MACE__HAS_RENDER_FEATURE(state.renderFeatures, TEXTURE_TRANSFORM));
+					MACE__DATA_RANGE_ENTRY(filter, 28, 16, MACE__HAS_RENDER_FEATURE(state.renderFeatures, FILTER));
 #undef MACE__DATA_RANGE_ENTRY
 
 					savedState = state;

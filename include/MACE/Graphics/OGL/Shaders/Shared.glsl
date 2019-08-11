@@ -21,9 +21,6 @@ struct _mc_TextureAttachment{
 };
 
 MACE_UNIFORM_BUFFER MACE_PAINTER_DATA_NAME{
-	vec3 _mc_TransformTranslation;
-	vec3 _mc_TransformRotation;
-	vec3 _mc_TransformScale;
 	vec4 mc_Data;
 	_mc_TextureAttachment mc_Foreground;
 	_mc_TextureAttachment mc_Background;

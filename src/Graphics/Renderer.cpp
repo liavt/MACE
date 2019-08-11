@@ -247,21 +247,11 @@ namespace mc {
 			draw(m, Painter::Brush::COLOR);
 		}
 
-		void Painter::fillRect(const RelativeTranslation x, const RelativeTranslation y, const RelativeScale w, const RelativeScale h) {
+		void Painter::fillRect() {
 			push();
-			translate(x, y);
-			scale(w, h);
 			disableRenderFeatures(Painter::RenderFeatures::TEXTURE);
 			drawQuad(Painter::Brush::COLOR);
 			pop();
-		}
-
-		void Painter::fillRect(const Vector<RelativeTranslation, 2> & pos, const Vector<RelativeScale, 2> & size) {
-			fillRect(pos.x(), pos.y(), size.x(), size.y());
-		}
-
-		void Painter::fillRect(const Vector<RelativeUnit, 4> & dim) {
-			fillRect(dim.x(), dim.y(), dim.z(), dim.w());
 		}
 
 		void Painter::drawImage(const Texture& img) {
@@ -405,18 +395,6 @@ namespace mc {
 			return state.data;
 		}
 
-		void Painter::setTransformation(const Transformation& trans) {
-			state.transformation = trans;
-		}
-
-		Transformation& Painter::getTransformation() {
-			return state.transformation;
-		}
-
-		const Transformation& Painter::getTransformation() const {
-			return state.transformation;
-		}
-
 		void Painter::setOpacity(const float opacity) {
 			state.filter[3][3] = opacity;
 		}
@@ -431,34 +409,6 @@ namespace mc {
 
 		void Painter::setTarget(const FrameBufferTarget& target) {
 			impl->setTarget(target);
-		}
-
-		void Painter::translate(const Vector<RelativeTranslation, 3> & vec) {
-			translate(vec.x(), vec.y(), vec.z());
-		}
-
-		void Painter::translate(const RelativeTranslation x, const RelativeTranslation y, const RelativeTranslation z) {
-			state.transformation.translate(x, y, z);
-		}
-
-		void Painter::rotate(const Vector<RelativeRadian, 3> & vec) {
-			rotate(vec.x(), vec.y(), vec.z());
-		}
-
-		void Painter::rotate(const RelativeRadian x, const RelativeRadian y, const RelativeRadian z) {
-			state.transformation.rotate(x, y, z);
-		}
-
-		void Painter::scale(const Vector<RelativeScale, 3> & vec) {
-			scale(vec.x(), vec.y(), vec.z());
-		}
-
-		void Painter::scale(const RelativeScale x, const RelativeScale y, const RelativeScale z) {
-			state.transformation.scale(x, y, z);
-		}
-
-		void Painter::resetTransform() {
-			state.transformation.reset();
 		}
 
 		void Painter::push() {
@@ -514,7 +464,7 @@ namespace mc {
 		}
 
 		bool Painter::State::operator==(const State& other) const {
-			return transformation == other.transformation && foregroundColor == other.foregroundColor
+			return foregroundColor == other.foregroundColor
 				&& backgroundColor == other.backgroundColor && maskColor == other.maskColor
 				&& foregroundTransform == other.foregroundTransform && backgroundTransform == other.backgroundTransform
 				&& maskTransform == other.maskTransform && data == other.data && filter == other.filter
