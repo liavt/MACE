@@ -35,7 +35,7 @@ class RotationComponent: public gfx::Component {
 };
 
 void create(gfx::WindowModule& window) {
-	auto context = window.getContext();
+	auto context = window.getComponent<gfx::GraphicsContextComponent>();
 	srand(( unsigned int) time(nullptr));
 
 	const Size elementNum = 10;

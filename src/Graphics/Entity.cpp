@@ -4,7 +4,7 @@ Copyright (c) 2016-2019 Liav Turkia
 See LICENSE.md for full copyright information
 */
 #include <MACE/Graphics/Entity.h>
-#include <MACE/Graphics/Renderer.h>
+#include <MACE/Graphics/RenderTarget.h>
 #include <MACE/Graphics/Context.h>
 #include <MACE/Graphics/Components.h>
 #include <MACE/Core/Constants.h>

@@ -20,7 +20,9 @@ namespace mc {
 #include <MACE/Graphics/Components.h>
 #include <MACE/Graphics/Entity2D.h>
 #include <MACE/Graphics/UI.h>
-#include <MACE/Graphics/Renderer.h>
+#include <MACE/Graphics/RenderTarget.h>
+#include <MACE/Graphics/Model.h>
+#include <MACE/Graphics/Texture.h>
 #include <MACE/Graphics/Context.h>
 #include <MACE/Graphics/Window.h>
 

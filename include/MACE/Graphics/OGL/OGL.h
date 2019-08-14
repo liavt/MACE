@@ -15,7 +15,7 @@ See LICENSE.md for full copyright information
 #include <MACE/Utility/Vector.h>
 #include <MACE/Utility/Matrix.h>
 #include <MACE/Utility/Color.h>
-#include <MACE/Graphics/Renderer.h>
+#include <MACE/Graphics/RenderTarget.h>
 
 #include <glad/gl.h>
 

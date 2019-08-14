@@ -9,7 +9,7 @@ See LICENSE.md for full copyright information
 
 #define MACE_EXPOSE_GLFW
 #include <MACE/Graphics/Window.h>
-#include <MACE/Graphics/Renderer.h>
+#include <MACE/Graphics/RenderTarget.h>
 #include <MACE/Graphics/Context.h>
 #include <MACE/Graphics/OGL/OGLContext.h>
 
@@ -174,7 +174,7 @@ namespace mc {
 
 			void onWindowFramebufferResized(GLFWwindow* window, int, int) {
 				WindowModule* win = convertGLFWWindowToModule(window);
-				win->getContext()->getRenderer()->flagResize();
+				win->getComponent<Renderer>()->flagResize();
 				win->makeChildrenDirty();
 			}
 
@@ -239,6 +239,7 @@ namespace mc {
 			MACE_ASSERT(context != nullptr, "Internal Error: GraphicsContextComponent is nullptr");
 
 			addComponent<GraphicsContextComponent>(context);
+			addComponent<Renderer>(context->createRenderTarget());
 
 			glfwWindowHint(GLFW_RESIZABLE, config.resizable);
 			glfwWindowHint(GLFW_DECORATED, config.decorated);
@@ -343,7 +344,7 @@ namespace mc {
 
 					Entity::init();
 
-					getContext()->getRenderer()->resize(this, config.width, config.height);
+					getComponent<Renderer>()->resize(this, config.width, config.height);
 
 					config.onCreate(*this);
 
@@ -358,7 +359,7 @@ namespace mc {
 					MACE__THROW(Unknown, "An unknown error has occured trying to initalize MACE");
 				}
 
-				auto renderer = getContext()->getRenderer();
+				auto renderer = getComponent<Renderer>();
 
 				//this is the main rendering loop.
 				//we loop infinitely until break is called. break is called when an exception is thrown or MACE::isRunning is false
@@ -511,14 +512,6 @@ namespace mc {
 			glfwGetWindowContentScale(window, &out[0], &out[1]);
 
 			return out;
-		}
-
-		ComponentPtr<GraphicsContextComponent> WindowModule::getContext() {
-			return getComponent<GraphicsContextComponent>();
-		}
-
-		const ComponentPtr<GraphicsContextComponent> WindowModule::getContext() const {
-			return getComponent<GraphicsContextComponent>();
 		}
 
 		Monitor WindowModule::getMonitor() {

@@ -187,7 +187,7 @@ namespace mc {
 		}
 
 		void SimpleSlider::onClick() {
-			const auto renderer = getRoot()->getComponent<GraphicsContextComponent>()->getRenderer();
+			const auto renderer = getRoot()->getComponent<Renderer>();
 
 			const int mouseX = gfx::Input::getMouseX(), mouseY = gfx::Input::getMouseY();
 			if (mouseX >= 0 && mouseY >= 0) {
@@ -349,7 +349,7 @@ namespace mc {
 				if (getTexture().isCreated()) {
 					letters[i]->texture = getTexture();
 				} else {
-					letters[i]->texture = getContext()->getSolidColor(Colors::WHITE);
+					letters[i]->texture = getRoot()->getComponent<GraphicsContextComponent>()->getSolidColor(Colors::WHITE);
 				}
 
 				if (text[i] == '\n') {

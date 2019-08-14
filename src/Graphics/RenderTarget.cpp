@@ -3,17 +3,18 @@ Copyright (c) 2016-2019 Liav Turkia
 
 See LICENSE.md for full copyright information
 */
-#include <MACE/Graphics/Renderer.h>
+#include <MACE/Graphics/RenderTarget.h>
 #include <MACE/Graphics/Context.h>
 #include <MACE/Graphics/Entity2D.h>
+#include <MACE/Graphics/Model.h>
 
 //debug purposes
 #include <iostream>
 
 namespace mc {
 	namespace gfx {
-		void Renderer::init(gfx::WindowModule* win) {
-			onInit(win);
+		void Renderer::init() {
+			onInit();
 		}
 
 		void Renderer::setUp(gfx::WindowModule* win) {
@@ -480,7 +481,9 @@ namespace mc {
 		void GraphicsEntity::init() {
 			Entity::init();
 
-			getRoot()->getComponent<GraphicsContextComponent>()->getRenderer()->queue(this, painter);
+			MACE_ASSERT(getRoot()->hasComponent<Renderer>(), "No RenderTarget found at the root Entity!");
+
+			getRoot()->getComponent<Renderer>()->queue(this, painter);
 
 			painter.init();
 		}
@@ -501,14 +504,6 @@ namespace mc {
 			return painter;
 		}
 
-		ComponentPtr<GraphicsContextComponent> GraphicsEntity::getContext() {
-			return getRoot()->getComponent<GraphicsContextComponent>();
-		}
-
-		const ComponentPtr<GraphicsContextComponent> GraphicsEntity::getContext() const {
-			return getRoot()->getComponent<GraphicsContextComponent>();
-		}
-
 		bool GraphicsEntity::operator==(const GraphicsEntity& other) const noexcept {
 			return painter == other.painter && Entity::operator==(other);
 		}
@@ -526,20 +521,6 @@ namespace mc {
 			Entity::clean();
 
 			painter.clean();
-		}
-		Painter& PainterComponent::getPainter() {
-			parent->makeDirty();
-
-			return painter;
-		}
-		const Painter& PainterComponent::getPainter() const {
-			return painter;
-		}
-		void PainterComponent::clean(Metrics&) {
-			painter.clean();
-		}
-		void PainterComponent::init() {
-			parent->getRoot()->getComponent<GraphicsContextComponent>()->getRenderer()->queue(parent, painter);
 		}
 	}//gfx
 }//mc

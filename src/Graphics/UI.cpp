@@ -4,7 +4,7 @@ Copyright (c) 2016-2019 Liav Turkia
 See LICENSE.md for full copyright information
 */
 #include <MACE/Graphics/UI.h>
-#include <MACE/Graphics/Renderer.h>
+#include <MACE/Graphics/RenderTarget.h>
 #include <MACE/Core/System.h>
 
 namespace mc {

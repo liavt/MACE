@@ -9,7 +9,7 @@ See LICENSE.md for full copyright information
 #define MACE__GRAPHICS_ENTITY2D_H
 
 #include <MACE/Graphics/Entity.h>
-#include <MACE/Graphics/Renderer.h>
+#include <MACE/Graphics/RenderTarget.h>
 #include <MACE/Graphics/Font.h>
 #include <MACE/Graphics/Context.h>
 #include <MACE/Graphics/Components.h>

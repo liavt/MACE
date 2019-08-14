@@ -267,7 +267,7 @@ namespace mc {
 
 			Renderer::Renderer(std::shared_ptr<Context> context) : Dispatchable(context) {}
 
-			void Renderer::onInit(gfx::WindowModule* win) {
+			void Renderer::onInit() {
 				const int version = gladLoadGL(glfwGetProcAddress);
 				if (version == 0) {
 					std::ostringstream errorMessage;
@@ -299,14 +299,6 @@ namespace mc {
 #undef MACE__DEBUG_OUTPUT_EXTENSION
 				std::cout << os::consoleColor() << std::flush;
 #endif
-
-				const gfx::WindowModule::LaunchConfig& config = win->getLaunchConfig();
-
-				generateFramebuffer(config.width, config.height);
-
-				ogl::forceCheckGLError(__LINE__, __FILE__, "An OpenGL error occured initializing Renderer");
-
-				frameBuffer.bind();
 
 				ogl::enable(GL_BLEND);
 				ogl::enable(GL_MULTISAMPLE);

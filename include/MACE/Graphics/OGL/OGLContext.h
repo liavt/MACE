@@ -11,6 +11,8 @@ See LICENSE.md for full copyright information
 #ifndef MACE__DOXYGEN_PASS
 
 #include <MACE/Graphics/Context.h>
+#include <MACE/Graphics/Model.h>
+#include <MACE/Graphics/Texture.h>
 #include <MACE/Graphics/OGL/OGL.h>
 #include <MACE/Graphics/OGL/FreetypeFont.h>
 #include <queue>
@@ -71,7 +73,7 @@ namespace mc {
 				Context(const Context& other) = delete;
 				~Context() = default;
 
-				std::shared_ptr<gfx::Renderer> getRenderer() override;
+				gfx::ComponentPtr<gfx::Renderer> createRenderTarget() override;
 
 				std::shared_ptr<gfx::ModelImpl> createModelImpl() override;
 				std::shared_ptr<gfx::TextureImpl> createTextureImpl(const gfx::TextureDesc& desc) override;
@@ -83,7 +85,6 @@ namespace mc {
 				void onRender(gfx::WindowModule* win) override;
 				void onDestroy(gfx::WindowModule* win) override;
 			private:
-				std::shared_ptr<Renderer> renderer{nullptr};
 				std::queue <DispatchFunction, std::list<DispatchFunction>> dispatchQueue{};
 				std::mutex dispatchMutex;
 

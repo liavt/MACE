@@ -10,7 +10,7 @@ See LICENSE.md for full copyright information
 //The api docs shouldn't include a bunch of internal classes, since any end user wouldn't care about them
 #ifndef MACE__DOXYGEN_PASS
 
-#include <MACE/Graphics/Renderer.h>
+#include <MACE/Graphics/RenderTarget.h>
 #include <MACE/Graphics/OGL/OGL.h>
 #include <MACE/Graphics/OGL/OGLContext.h>
 #include <unordered_map>
@@ -40,7 +40,7 @@ namespace mc {
 				~Renderer() noexcept override = default;
 
 				void onResize(gfx::WindowModule* win, const Pixels width, const Pixels height) override;
-				void onInit(gfx::WindowModule* win) override;
+				void onInit() override;
 				void onSetUp(gfx::WindowModule* win) override;
 				void onTearDown(gfx::WindowModule* win) override;
 				void onDestroy() override;

@@ -11,7 +11,6 @@ See LICENSE.md for full copyright information
 #include <MACE/Core/Constants.h>
 #include <MACE/Graphics/Entity.h>
 #include <MACE/Utility/Color.h>
-#include <MACE/Graphics/Context.h>
 
 #include <thread>
 #include <string>
@@ -126,9 +125,6 @@ namespace mc {
 			Vector<Pixels, 2> getWindowSize() const;
 
 			Vector<float, 2> getContentScale() const;
-
-			ComponentPtr<GraphicsContextComponent> getContext();
-			const ComponentPtr<GraphicsContextComponent> getContext() const;
 
 			using Module::isInit;
 

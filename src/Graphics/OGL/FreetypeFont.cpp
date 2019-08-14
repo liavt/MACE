@@ -110,7 +110,7 @@ namespace mc {
 			void FreetypeFont::fillGlyph(gfx::Glyph& out, const wchar_t character) const {
 				checkFreetypeError(FT_Load_Char(face, character, FT_LOAD_RENDER | FT_LOAD_PEDANTIC | FT_LOAD_TARGET_LCD), "Failed to load glyph", __LINE__, __FILE__);
 
-				const auto context = gfx::getCurrentWindow()->getContext();
+				const auto context = gfx::getCurrentWindow()->getComponent<gfx::GraphicsContextComponent>();
 
 				const FT_GlyphSlot glyph = face->glyph;
 				const FT_Glyph_Metrics& gMetrics = glyph->metrics;
@@ -161,7 +161,7 @@ namespace mc {
 			}
 
 			gfx::FontMetrics FreetypeFont::getFontMetrics() {
-				const auto context = gfx::getCurrentWindow()->getContext();
+				const auto context = gfx::getCurrentWindow()->getComponent<gfx::GraphicsContextComponent>();
 
 				gfx::FontMetrics out{};
 				out.ascent = context->convertPixelsToRelativeYCoordinates(face->size->metrics.ascender >> 6);

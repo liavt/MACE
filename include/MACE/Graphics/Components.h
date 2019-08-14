@@ -8,7 +8,7 @@ See LICENSE.md for full copyright information
 #define MACE__GRAPHICS_COMPONENTS_H
 
 #include <MACE/Graphics/Entity.h>
-#include <MACE/Graphics/Renderer.h>
+#include <MACE/Graphics/RenderTarget.h>
 #include <MACE/Graphics/Context.h>
 
 #include <chrono>

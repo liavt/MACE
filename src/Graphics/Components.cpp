@@ -603,7 +603,7 @@ namespace mc {
 
 		void NineSliceComponent::clean(Metrics& metrics) {
 			const ComponentPtr<GraphicsContextComponent> context = getParent()->getRoot()->getComponent<GraphicsContextComponent>();
-			const Vector<float, 2> windowRatios = context->getRenderer()->getWindowRatios();
+			const Vector<float, 2> windowRatios = getParent()->getRoot()->getComponent<Renderer>()->getWindowRatios();
 			const Vector<float, 3> scale = metrics.transform.scaler * metrics.inherited.scaler;
 			cornerWidth = context->convertPixelsToRelativeXCoordinates(desc.topLeft.getWidth()) / scale.x() * windowRatios.x();
 			cornerHeight = context->convertPixelsToRelativeYCoordinates(desc.topLeft.getHeight()) / scale.y() * windowRatios.y();

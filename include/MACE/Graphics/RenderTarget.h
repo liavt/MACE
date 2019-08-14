@@ -8,13 +8,11 @@ See LICENSE.md for full copyright information
 #define MACE__GRAPHICS_RENDERER_H
 
 #include <MACE/Core/Interfaces.h>
-#include <MACE/Core/Error.h>
 #include <MACE/Graphics/Entity.h>
-#include <MACE/Graphics/Window.h>
-#include <MACE/Graphics/Context.h>
 #include <MACE/Utility/Vector.h>
 #include <MACE/Utility/Transform.h>
 #include <MACE/Utility/Color.h>
+#include <MACE/Graphics/Texture.h>
 
 #include <unordered_map>
 #include <stack>
@@ -26,6 +24,8 @@ namespace mc {
 		class GraphicsEntity;
 		class PainterImpl;
 		struct EaseSettings;
+		class Texture;
+		class Model;
 
 		enum class FrameBufferTarget: int {
 			COLOR = 0,
@@ -269,7 +269,7 @@ namespace mc {
 		@todo add function to change how many samples msaa uses
 		@todo add renderers for directx, cpu, vulkan, opengl es, opengl 1.1/2.1
 		*/
-		class MACE_NOVTABLE Renderer {
+		class MACE_NOVTABLE Renderer: public gfx::Component {
 			friend class Painter;
 			friend class GraphicsContextComponent;
 			friend class WindowModule;
@@ -326,7 +326,7 @@ namespace mc {
 			Renderer() noexcept = default;
 
 			virtual void onResize(gfx::WindowModule* win, const Pixels width, const Pixels height) = 0;
-			virtual void onInit(gfx::WindowModule* win) = 0;
+			virtual void onInit();
 			virtual void onSetUp(gfx::WindowModule* win) = 0;
 			virtual void onTearDown(gfx::WindowModule* win) = 0;
 			virtual void onDestroy() = 0;
@@ -347,7 +347,7 @@ namespace mc {
 			@internal
 			@rendercontext
 			*/
-			void init(gfx::WindowModule* win);
+			void init() override;
 
 			/**
 			@internal
@@ -372,7 +372,7 @@ namespace mc {
 			@internal
 			@rendercontext
 			*/
-			void destroy();
+			void destroy() override;
 
 			void queue(Entity* const e, Painter& p);
 		};//Renderer
@@ -389,9 +389,6 @@ namespace mc {
 			Painter& getPainter();
 			const Painter& getPainter() const;
 
-			ComponentPtr<GraphicsContextComponent> getContext();
-			const ComponentPtr<GraphicsContextComponent> getContext() const;
-
 			bool operator==(const GraphicsEntity& other) const noexcept;
 			bool operator!=(const GraphicsEntity& other) const noexcept;
 		protected:
@@ -407,20 +404,6 @@ namespace mc {
 
 			void onRender() override final;
 		};//GraphicsEntity
-
-		class PainterComponent: public Component {
-		public:
-			Painter& getPainter();
-			const Painter& getPainter() const;
-		private:
-			Painter painter;
-
-			void clean(Metrics& metrics) override final;
-
-			void init() override final;
-
-			void destroy() override final;
-		};
 	}//gfx
 }//mc
 

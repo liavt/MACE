@@ -107,7 +107,7 @@ namespace mc {
 				}
 			}
 
-			impl = gfx::getCurrentWindow()->getContext()->createFontImpl(desc);
+			impl = gfx::getCurrentWindow()->getComponent<GraphicsContextComponent>()->createFontImpl(desc);
 		}
 		void Font::destroy() {
 			impl.reset();

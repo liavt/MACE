@@ -367,12 +367,8 @@ namespace mc {
 
 			Context::Context(gfx::WindowModule* win) : GraphicsContextComponent(win) {}
 
-			std::shared_ptr<gfx::Renderer> Context::getRenderer() {
-				if (renderer == nullptr) {
-					//this has to be done here and not in the constructor because we need access to shared_from_this()
-					renderer = std::shared_ptr<Renderer>(new Renderer(std::static_pointer_cast<Context>(shared_from_this())));
-				}
-				return renderer;
+			gfx::ComponentPtr<gfx::Renderer> Context::createRenderTarget() {
+				return gfx::ComponentPtr<gfx::Renderer>(new ogl::Renderer(std::static_pointer_cast<Context>(shared_from_this())));
 			}
 
 			std::shared_ptr<gfx::ModelImpl> Context::createModelImpl() {
