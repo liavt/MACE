@@ -11,64 +11,32 @@ See LICENSE.md for full copyright information
 #ifndef MACE__DOXYGEN_PASS
 
 #include <MACE/Graphics/Context.h>
-#include <MACE/Graphics/Model.h>
-#include <MACE/Graphics/Texture.h>
-#include <MACE/Graphics/OGL/OGL.h>
+#include <MACE/Graphics/OGL/Dispatchable.h>
 #include <MACE/Graphics/OGL/FreetypeFont.h>
+#include <MACE/Graphics/OGL/OGL.h>
 #include <queue>
 #include <list>
-#include <functional>
 #include <mutex>
 
 namespace mc {
 	namespace internal {
 		namespace ogl {
-			class Context;
-
-			using DispatchFunction = std::function<void()>;
-
-			class MACE_NOVTABLE Dispatchable {
-			protected:
-				std::shared_ptr<Context> context;
-
-				Dispatchable(std::shared_ptr<Context> context);
-
-				void dispatch(const DispatchFunction func) const;
-			};
-
-			class Model: public gfx::ModelImpl, private ogl::VertexArray, private Dispatchable {
-			public:
-				Model(std::shared_ptr<Context> context);
-				~Model();
-
-				void bind() const;
-
-				void draw() const override;
-
-				/*
-				@bug these functions will create a NEW buffer each time you call them, instead of reusing them
-				*/
-				void loadTextureCoordinates(const unsigned int dataSize, const float* data) override;
-				void loadVertices(const unsigned int verticeSize, const float* vertices) override;
-				void loadIndices(const unsigned int indiceNum, const unsigned int* indiceData) override;
-			};
-
-			class Texture: public gfx::TextureImpl, private ogl::Texture2D, private Dispatchable {
-			public:
-				Texture(std::shared_ptr<Context> context, const gfx::TextureDesc& desc);
-				~Texture() override;
-
-				void setData(const void* data, const int x, const int y, const Pixels w, const Pixels h, const int mipmap, const gfx::PixelStorageHints hints) override;
-
-				void readPixels(void* data, const gfx::PixelStorageHints hints) const override;
-
-				void bindTextureSlot(const gfx::TextureSlot slot) const override;
-			};
-
-			class Renderer;
+			class Painter;
 
 			class Context: public gfx::GraphicsContextComponent {
 			public:
+				using ProtocolHash = unsigned short;
+
+				struct RenderProtocol {
+					ogl::ShaderProgram program;
+
+					Enum sourceBlend = GL_SRC_ALPHA, destBlend = GL_ONE_MINUS_SRC_ALPHA;
+
+					bool multitarget = true;
+
+					bool created = false;
+				};
+
 				Context(gfx::WindowModule* win);
 				Context(const Context& other) = delete;
 				~Context() = default;
@@ -80,18 +48,32 @@ namespace mc {
 				std::shared_ptr<gfx::FontImpl> createFontImpl(const gfx::FontDesc& desc) override;
 
 				void dispatch(const DispatchFunction dispatch);
+
+				void bindProtocol(Painter* painter, const std::pair<gfx::Painter::Brush, gfx::Painter::RenderFeatures> settings);
+
+				void setTarget(const gfx::FrameBufferTarget& target);
 			protected:
 				void onInit(gfx::WindowModule* win) override;
 				void onRender(gfx::WindowModule* win) override;
 				void onDestroy(gfx::WindowModule* win) override;
+
+				void setUp(gfx::WindowModule* win) override;
 			private:
 				std::queue <DispatchFunction, std::list<DispatchFunction>> dispatchQueue{};
 				std::mutex dispatchMutex;
 
+				std::unordered_map<ProtocolHash, RenderProtocol> protocols{};
+
+				ProtocolHash currentProtocol = 0;
+
 				//TODO forward declare this insead of including FreetypeFont.h
 				MACE__INTERNAL_NS::fty::FreetypeLibrary freetype;
 
+				gfx::FrameBufferTarget currentTarget = gfx::FrameBufferTarget::COLOR;
+
 				void processDispatchQueue();
+
+				void bindCurrentTarget();
 			};
 		}//ogl
 	}//internal

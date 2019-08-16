@@ -601,12 +601,12 @@ namespace mc {
 			//painter.pop();
 		}
 
-		void NineSliceComponent::clean(Metrics& metrics) {
+		void NineSliceComponent::clean(Metrics&) {
 			const ComponentPtr<GraphicsContextComponent> context = getParent()->getRoot()->getComponent<GraphicsContextComponent>();
-			const Vector<float, 2> windowRatios = getParent()->getRoot()->getComponent<Renderer>()->getWindowRatios();
-			const Vector<float, 3> scale = metrics.transform.scaler * metrics.inherited.scaler;
-			cornerWidth = context->convertPixelsToRelativeXCoordinates(desc.topLeft.getWidth()) / scale.x() * windowRatios.x();
-			cornerHeight = context->convertPixelsToRelativeYCoordinates(desc.topLeft.getHeight()) / scale.y() * windowRatios.y();
+			//const Vector<float, 2> windowRatios = getParent()->getRoot()->getComponent<Renderer>()->getWindowRatios();
+			//const Vector<float, 3> scale = metrics.transform.scaler * metrics.inherited.scaler;
+			//cornerWidth = context->convertPixelsToRelativeXCoordinates(desc.topLeft.getWidth()) / scale.x() * windowRatios.x();
+			//cornerHeight = context->convertPixelsToRelativeYCoordinates(desc.topLeft.getHeight()) / scale.y() * windowRatios.y();
 		}
 
 		TextureFramesComponent::TextureFramesComponent(const std::vector<Texture>& tex, const FrameCallback call) : callback(call), frames(tex), progress(0) {}

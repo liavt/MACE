@@ -11,11 +11,10 @@ See LICENSE.md for full copyright information
 #	pragma warning( disable: 4996 ) 
 #endif 
 
-#include <MACE/Graphics/OGL/OGLRenderer.h>
+#include <MACE/Graphics/OGL/OGLRenderTarget.h>
 #include <MACE/Graphics/Context.h>
+#include <MACE/Graphics/Model.h>
 #include <MACE/Core/System.h>
-
-#include <GLFW/glfw3.h>
 
 //we need to include algorithim for std::copy
 #include <algorithm>
@@ -24,285 +23,12 @@ See LICENSE.md for full copyright information
 //std::begin and std::end
 #include <iterator>
 
-//output error messages to console
-#include <sstream>
-
-#ifdef MACE_DEBUG
-#	include <iostream>
-#endif
-
 namespace mc {
 	namespace internal {
 		namespace ogl {
-			//how many floats in the uniform buffer
-#define MACE__ENTITY_DATA_BUFFER_SIZE sizeof(float) * 28
-			//which binding location the uniform buffer goes to
-#define MACE__ENTITY_DATA_LOCATION 0
-#define MACE__ENTITY_DATA_STORAGE_FLAGS GL_DYNAMIC_STORAGE_BIT
-			//the definition is later stringified. cant be a string because this gets added to the shader via a macro (see createShader)
-#define MACE__ENTITY_DATA_NAME _mc_EntityData
-
-#define MACE__PAINTER_DATA_BUFFER_SIZE sizeof(float) * 44
-#define MACE__PAINTER_DATA_LOCATION 1
-#define MACE__PAINTER_DATA_STORAGE_FLAGS GL_DYNAMIC_STORAGE_BIT
-#define MACE__PAINTER_DATA_NAME _mc_PainterData
-
-#define MACE__SCENE_ATTACHMENT_INDEX 0
-#define MACE__ID_ATTACHMENT_INDEX 1
-#define MACE__DATA_ATTACHMENT_INDEX 2
-
-#define MACE__HAS_RENDER_FEATURE(features, feature) (features & gfx::Painter::RenderFeatures::feature) != gfx::Painter::RenderFeatures::NONE
-
-			namespace {
-				Shader createShader(const Enum type, const gfx::Painter::RenderFeatures features, const char* source) {
-					Shader s = Shader(type);
-					s.init();
-#define MACE__SHADER_MACRO(name, def) "#define " #name " " MACE_STRINGIFY_DEFINITION(def) "\n"
-					std::vector<const char*> sources = std::vector<const char*>({
-						MACE__SHADER_MACRO(MACE_ENTITY_DATA_LOCATION, MACE__ENTITY_DATA_LOCATION),
-						MACE__SHADER_MACRO(MACE_ENTITY_DATA_NAME, MACE__ENTITY_DATA_NAME),
-						MACE__SHADER_MACRO(MACE_PAINTER_DATA_LOCATION, MACE__PAINTER_DATA_LOCATION),
-						MACE__SHADER_MACRO(MACE_PAINTER_DATA_NAME, MACE__PAINTER_DATA_NAME),
-						MACE__SHADER_MACRO(MACE_SCENE_ATTACHMENT_INDEX, MACE__SCENE_ATTACHMENT_INDEX),
-						MACE__SHADER_MACRO(MACE_ID_ATTACHMENT_INDEX, MACE__ID_ATTACHMENT_INDEX),
-						MACE__SHADER_MACRO(MACE_DATA_ATTACHMENT_INDEX, MACE__DATA_ATTACHMENT_INDEX),
-						MACE__SHADER_MACRO(MACE_VAO_DEFAULT_VERTICES_LOCATION, MACE__VAO_DEFAULT_VERTICES_LOCATION),
-						MACE__SHADER_MACRO(MACE_VAO_DEFAULT_TEXTURE_COORD_LOCATION, MACE__VAO_DEFAULT_TEXTURE_COORD_LOCATION),
-#include <MACE/Graphics/OGL/Shaders/Shared.glsl>
-																				});
-#undef MACE__SHADER_MACRO
-
-#define MACE__SHADER_RENDER_FEATURE(name) if(MACE__HAS_RENDER_FEATURE(features, name)){ sources.insert(sources.begin(), "#define MACE_" MACE_STRINGIFY(name) " 1\n"); }
-					MACE__SHADER_RENDER_FEATURE(DISCARD_INVISIBLE);
-					MACE__SHADER_RENDER_FEATURE(FILTER);
-					MACE__SHADER_RENDER_FEATURE(TEXTURE);
-					MACE__SHADER_RENDER_FEATURE(TEXTURE_TRANSFORM);
-					MACE__SHADER_RENDER_FEATURE(STORE_ID);
-#undef MACE__SHADER_RENDER_FEATURE
-
-					sources.insert(sources.begin(), "#version 330 core\n");
-
-					if (type == GL_VERTEX_SHADER) {
-						sources.push_back(
-#include <MACE/Graphics/OGL/Shaders/Vert.glsl>
-						);
-					} else if (type == GL_FRAGMENT_SHADER) {
-						sources.push_back(
-#include <MACE/Graphics/OGL/Shaders/Frag.glsl>
-						);
-					}
-#ifdef MACE_DEBUG
-					else MACE_UNLIKELY{
-						MACE__THROW(gfx::BadFormat, "Internal Error: Unknown GLSL shader type: " + std::to_string(type));
-					}
-#endif
-					sources.push_back(source);
-					s.setSource(static_cast<const GLsizei>(sources.size()), sources.data(), nullptr);
-					s.compile();
-					return s;
-				}
-
-				void initializeRenderProtocolForSettings(Renderer::RenderProtocol& prot, const std::pair<gfx::Painter::Brush, gfx::Painter::RenderFeatures>& settings) {
-					ogl::ShaderProgram program;
-
-					program.init();
-
-					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error initializing ShaderProgram");
-
-					program.attachShader(createShader(GL_VERTEX_SHADER, settings.second,
-#							include <MACE/Graphics/OGL/Shaders/RenderTypes/standard.v.glsl>
-					));
-
-					if (settings.first == gfx::Painter::Brush::COLOR) {
-						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
-#							include <MACE/Graphics/OGL/Shaders/Brushes/color.f.glsl>
-						));
-
-						program.link();
-					} else if (settings.first == gfx::Painter::Brush::TEXTURE) {
-						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
-#							include <MACE/Graphics/OGL/Shaders/Brushes/texture.f.glsl>
-						));
-
-						program.link();
-
-						program.bind();
-
-						program.createUniform("tex");
-
-						program.setUniform("tex", static_cast<int>(gfx::PainterTextureSlots::FOREGROUND));
-					} else if (settings.first == gfx::Painter::Brush::MASK) {
-						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
-#							include <MACE/Graphics/OGL/Shaders/Brushes/mask.f.glsl>
-						));
-
-						program.link();
-
-						program.bind();
-
-						program.createUniform("tex");
-						program.createUniform("mask");
-
-						//binding the samplers
-						program.setUniform("tex", static_cast<int>(gfx::PainterTextureSlots::FOREGROUND));
-						program.setUniform("mask", static_cast<int>(gfx::PainterTextureSlots::MASK));
-					} else if (settings.first == gfx::Painter::Brush::MASK) {
-						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
-#							include <MACE/Graphics/OGL/Shaders/Brushes/mask.f.glsl>
-						));
-
-						program.link();
-
-						program.bind();
-
-						program.createUniform("tex");
-						program.createUniform("mask");
-
-						//binding the samplers
-						program.setUniform("tex", static_cast<int>(gfx::PainterTextureSlots::FOREGROUND));
-						program.setUniform("mask", static_cast<int>(gfx::PainterTextureSlots::MASK));
-					} else if (settings.first == gfx::Painter::Brush::BLEND) {
-						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
-#							include <MACE/Graphics/OGL/Shaders/Brushes/blend.f.glsl>
-						));
-
-						program.link();
-
-						program.bind();
-
-						program.createUniform("tex1");
-						program.createUniform("tex2");
-
-						program.setUniform("tex1", static_cast<int>(gfx::PainterTextureSlots::FOREGROUND));
-						program.setUniform("tex2", static_cast<int>(gfx::PainterTextureSlots::BACKGROUND));
-					} else if (settings.first == gfx::Painter::Brush::CONDITIONAL_MASK) {
-						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
-#							include <MACE/Graphics/OGL/Shaders/Brushes/conditional_mask.f.glsl>
-						));
-
-						program.link();
-
-						program.bind();
-
-						program.createUniform("tex1");
-						program.createUniform("tex2");
-						program.createUniform("mask");
-
-						//binding the samplers
-						program.setUniform("tex1", static_cast<int>(gfx::PainterTextureSlots::FOREGROUND));
-						program.setUniform("tex2", static_cast<int>(gfx::PainterTextureSlots::BACKGROUND));
-						program.setUniform("mask", static_cast<int>(gfx::PainterTextureSlots::MASK));
-					} else if (settings.first == gfx::Painter::Brush::MULTICOMPONENT_BLEND) {
-						program.attachShader(createShader(GL_FRAGMENT_SHADER, settings.second,
-#							include <MACE/Graphics/OGL/Shaders/Brushes/multicomponent_blend.f.glsl>
-						));
-
-						program.link();
-
-						program.bind();
-
-						program.createUniform("tex1");
-						program.createUniform("tex2");
-
-						program.setUniform("tex1", static_cast<int>(gfx::PainterTextureSlots::FOREGROUND));
-						program.setUniform("tex2", static_cast<int>(gfx::PainterTextureSlots::BACKGROUND));
-
-						prot.sourceBlend = GL_SRC1_COLOR;
-						prot.destBlend = GL_ONE_MINUS_SRC1_COLOR;
-
-						prot.multitarget = false;
-					} else MACE_UNLIKELY{
-						MACE__THROW(gfx::BadFormat, "OpenGL 3.3 Renderer: Unsupported brush type: " + std::to_string(static_cast<unsigned int>(settings.first)));
-					}
-
-					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating shader program for RenderProtocol");
-
-					program.bind();
-
-					program.createUniformBuffer(MACE_STRINGIFY_DEFINITION(MACE__ENTITY_DATA_NAME), MACE__ENTITY_DATA_LOCATION);
-					program.createUniformBuffer(MACE_STRINGIFY_DEFINITION(MACE__PAINTER_DATA_NAME), MACE__PAINTER_DATA_LOCATION);
-
-					prot.program = program;
-
-					prot.created = true;
-
-					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating uniform buffer for RenderProtocol ShaderProgram");
-				}
-
-				Renderer::ProtocolHash hashSettings(const std::pair<gfx::Painter::Brush, gfx::Painter::RenderFeatures>& settings) {
-					Renderer::ProtocolHash j;
-					/*
-					endianness doesn't really matter, since the only purpose for this hash is
-					for unordered_map. so as long as it's consisent at runtime, its good.
-					*/
-					j = static_cast<Renderer::ProtocolHash>(settings.first);
-					j <<= 8;
-					j |= static_cast<Renderer::ProtocolHash>(settings.second);
-					return j;
-				}
-
-				std::unordered_map<gfx::FrameBufferTarget, const Enum*> generateFramebufferTargetLookup() {
-					static MACE_CONSTEXPR const Enum colorBuffers[] = {
-								GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX,
-								GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX,
-					};
-
-					static MACE_CONSTEXPR const Enum dataBuffers[] = {
-							GL_COLOR_ATTACHMENT0 + MACE__DATA_ATTACHMENT_INDEX,
-							GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX,
-					};
-
-					std::unordered_map<gfx::FrameBufferTarget, const Enum*> out{};
-					out[gfx::FrameBufferTarget::COLOR] = colorBuffers;
-					out[gfx::FrameBufferTarget::DATA] = dataBuffers;
-					return out;
-				}
-
-				const Enum* lookupFramebufferTarget(const gfx::FrameBufferTarget target) {
-					static auto lookupTable = generateFramebufferTargetLookup();
-
-					return lookupTable[target];
-				}
-			}//anon namespace
-
 			Renderer::Renderer(std::shared_ptr<Context> context) : Dispatchable(context) {}
 
-			void Renderer::onInit() {
-				const int version = gladLoadGL(glfwGetProcAddress);
-				if (version == 0) {
-					std::ostringstream errorMessage;
-					errorMessage << "This system (OpenGL " << glGetString(GL_VERSION) << ")";
-					errorMessage << " does not support the required OpenGL version required by this renderer, ";
-					errorMessage << "OpenGL 3.3";
-					MACE__THROW(gfx::UnsupportedRenderer, errorMessage.str());
-				}
-
-#ifdef MACE_DEBUG
-				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "OpenGL Info:\n";
-				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "Version:\n\t";
-				std::cout << os::consoleColor(os::ConsoleColor::GREEN) << glGetString(GL_VERSION) << '\n';
-				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "Vendor:\n\t";
-				std::cout << os::consoleColor(os::ConsoleColor::GREEN) << glGetString(GL_VENDOR) << '\n';
-				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "Renderer:\n\t";
-				std::cout << os::consoleColor(os::ConsoleColor::GREEN) << glGetString(GL_RENDERER) << '\n';
-				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "Shader version:\n\t";
-				std::cout << os::consoleColor(os::ConsoleColor::GREEN) << glGetString(GL_SHADING_LANGUAGE_VERSION) << '\n';
-				std::cout << os::consoleColor(os::ConsoleColor::LIGHT_GREEN) << "Supported extensions:\n";
-				std::cout << os::consoleColor(os::ConsoleColor::GREEN);
-#define MACE__DEBUG_OUTPUT_EXTENSION(ext) if(GLAD_##ext){std::cout << "\t* " << #ext << '\n';}
-				MACE__DEBUG_OUTPUT_EXTENSION(GL_ARB_buffer_storage);
-				MACE__DEBUG_OUTPUT_EXTENSION(GL_ARB_texture_storage);
-				MACE__DEBUG_OUTPUT_EXTENSION(GL_ARB_invalidate_subdata);
-				MACE__DEBUG_OUTPUT_EXTENSION(GL_ARB_multi_bind);
-				MACE__DEBUG_OUTPUT_EXTENSION(GL_ARB_direct_state_access);
-				MACE__DEBUG_OUTPUT_EXTENSION(GL_EXT_direct_state_access);
-#undef MACE__DEBUG_OUTPUT_EXTENSION
-				std::cout << os::consoleColor() << std::flush;
-#endif
-
-				ogl::enable(GL_BLEND);
-				ogl::enable(GL_MULTISAMPLE);
-			}
+			void Renderer::onInit() {}
 
 			void Renderer::onSetUp(gfx::WindowModule*) {
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: An error occured before onSetUp");
@@ -337,13 +63,6 @@ namespace mc {
 				glClearBufferfv(GL_COLOR, MACE__DATA_ATTACHMENT_INDEX, dataClearValues);
 
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to clear framebuffer");
-
-				RenderProtocol& proto = protocols[currentProtocol];
-				if (proto.created) {
-					ogl::setBlending(proto.sourceBlend, proto.destBlend);
-
-					bindCurrentTarget();
-				}
 			}
 
 			void Renderer::onTearDown(gfx::WindowModule* win) {
@@ -439,13 +158,7 @@ namespace mc {
 					RenderBuffer::destroy(renderBuffers, 4);
 				}
 
-				for (auto iter = protocols.begin(); iter != protocols.end(); ++iter) {
-					iter->second.program.destroy();
-				}
-
-				protocols.clear();
-
-				ogl::forceCheckGLError(__LINE__, __FILE__, "Internal Error: Error destroying OpenGL 3.3 renderer");
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error destroying OGL Render Target");
 
 			}
 
@@ -527,7 +240,7 @@ namespace mc {
 					break;
 				}
 
-				setTarget(gfx::FrameBufferTarget::COLOR);
+				context->setTarget(gfx::FrameBufferTarget::COLOR);
 
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error setting draw buffers in FrameBuffer for the renderer");
 
@@ -580,59 +293,6 @@ namespace mc {
 
 			std::shared_ptr<gfx::PainterImpl> Renderer::createPainterImpl() {
 				return std::shared_ptr<gfx::PainterImpl>(new Painter(context, this));
-			}
-
-			void Renderer::bindProtocol(Painter* painter, const std::pair<gfx::Painter::Brush, gfx::Painter::RenderFeatures> settings) {
-				const Renderer::ProtocolHash hash = hashSettings(settings);
-				//its a pointer so that we dont do a copy operation on assignment here
-				RenderProtocol& protocol = protocols[hash];
-
-				if (!protocol.created) MACE_UNLIKELY{
-					initializeRenderProtocolForSettings(protocol, settings);
-				}
-
-				MACE_ASSERT(protocol.created, "Internal Error: initalizeRenderProtocolForSettings() did not properly create the requested RenderProtocol");
-
-				const RenderProtocol& oldProtocol = protocols[currentProtocol];
-
-				//if there hasn't been a protocol bound yet, bind everything to default values
-				if (!oldProtocol.created || hash != currentProtocol) {
-					currentProtocol = hash;
-
-					if (oldProtocol.sourceBlend != protocol.sourceBlend || oldProtocol.destBlend != protocol.destBlend) {
-						ogl::setBlending(protocol.sourceBlend, protocol.destBlend);
-					}
-
-					if (oldProtocol.multitarget != protocol.multitarget) {
-						bindCurrentTarget();
-					}
-
-					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error swapping RenderProtocol");
-				}
-
-				if (oldProtocol.program.getID() != protocol.program.getID()) {
-					protocol.program.bind();
-				}
-
-				const UniformBuffer* buffers[] = {
-					&painter->uniformBuffers.entityData,
-					&painter->uniformBuffers.painterData
-				};
-
-				protocol.program.bindUniformBuffers(buffers, os::getArraySize(buffers));
-
-				checkGLError(__LINE__, __FILE__, "Internal Error: An error occured binding the RenderProtocol");
-			}
-
-			void Renderer::setTarget(const gfx::FrameBufferTarget& target) {
-				if (target != currentTarget) {
-					currentTarget = target;
-					bindCurrentTarget();
-				}
-			}
-
-			void Renderer::bindCurrentTarget() {
-				frameBuffer.setDrawBuffers(protocols[currentProtocol].multitarget ? 2 : 1, lookupFramebufferTarget(currentTarget));
 			}
 
 			Painter::Painter(std::shared_ptr<Context> con, Renderer* const r) : renderer(r), Dispatchable(con) {}
@@ -711,7 +371,7 @@ namespace mc {
 
 			void Painter::setTarget(const gfx::FrameBufferTarget& target) {
 				dispatch([this, &target]() {
-					renderer->setTarget(target);
+					context->setTarget(target);
 				});
 			}
 
@@ -771,7 +431,7 @@ namespace mc {
 
 			void Painter::draw(const gfx::Model& m, const gfx::Painter::Brush brush) {
 				dispatch([this, &m, brush]() {
-					renderer->bindProtocol(this, {brush, savedState.renderFeatures});
+					context->bindProtocol(this, {brush, savedState.renderFeatures});
 
 					m.draw();
 

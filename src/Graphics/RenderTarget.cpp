@@ -46,13 +46,6 @@ namespace mc {
 		}//flagResize
 
 		void Renderer::resize(WindowModule* win, const Pixels width, const Pixels height) {
-			const gfx::WindowModule::LaunchConfig& config = win->getLaunchConfig();
-
-			windowRatios = {
-				static_cast<float>(config.width) / static_cast<float>(width),
-				static_cast<float>(config.height) / static_cast<float>(height)
-			};
-
 			onResize(win, width, height);
 
 			this->currentWidth = width;
@@ -117,14 +110,6 @@ namespace mc {
 
 		Pixels Renderer::getHeight() const {
 			return currentHeight;
-		}
-
-		unsigned int Renderer::getSamples() const {
-			return samples;
-		}//getSamples()
-
-		Vector<float, 2> Renderer::getWindowRatios() const {
-			return windowRatios;
 		}
 
 		bool Renderer::isResized() const {

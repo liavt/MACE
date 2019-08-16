@@ -360,6 +360,7 @@ namespace mc {
 				}
 
 				auto renderer = getComponent<Renderer>();
+				auto context = getComponent<GraphicsContextComponent>();
 
 				//this is the main rendering loop.
 				//we loop infinitely until break is called. break is called when an exception is thrown or MACE::isRunning is false
@@ -369,6 +370,7 @@ namespace mc {
 						const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
 
 						if (getProperty(Entity::DIRTY)) {
+							context->setUp(this);
 							renderer->setUp(this);
 							setProperty(Entity::DIRTY, false);
 							Entity::clean();

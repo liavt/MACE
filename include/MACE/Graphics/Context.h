@@ -33,6 +33,7 @@ namespace mc {
 			friend class Texture;
 			friend class Model;
 			friend class Font;
+			friend class WindowModule;
 		public:
 			using TextureCreateCallback = std::function<Texture()>;
 			using ModelCreateCallback = std::function<Model()>;
@@ -124,6 +125,8 @@ namespace mc {
 			virtual void onInit(gfx::WindowModule* win) = 0;
 			virtual void onRender(gfx::WindowModule* win) = 0;
 			virtual void onDestroy(gfx::WindowModule* win) = 0;
+
+			virtual void setUp(gfx::WindowModule* win) = 0;
 		};
 	}
 }//mc

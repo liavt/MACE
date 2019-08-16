@@ -263,7 +263,7 @@ namespace mc {
 				glClear(field);
 			}
 
-			void FrameBuffer::readPixels(const int x, const int y, const Size width, const Size height, const Enum format, const Enum type, void* data) const {
+			void FrameBuffer::readPixels(const int x, const int y, const Size width, const Size height, const Enum format, const Enum type, void* data) {
 				glReadPixels(x, y, static_cast<GLsizei>(width), static_cast<GLsizei>(height), format, type, data);
 			}
 

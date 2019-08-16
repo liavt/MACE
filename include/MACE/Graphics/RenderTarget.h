@@ -304,10 +304,6 @@ namespace mc {
 			Pixels getWidth() const;
 			Pixels getHeight() const;
 
-			unsigned int getSamples() const;
-
-			Vector<float, 2> getWindowRatios() const;
-
 			bool isResized() const;
 
 
@@ -317,11 +313,7 @@ namespace mc {
 			*/
 			void flagResize();
 		protected:
-			unsigned int samples = 1;
-
 			bool resized = false;
-
-			Vector<float, 2> windowRatios;
 
 			Renderer() noexcept = default;
 

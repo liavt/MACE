@@ -25,6 +25,24 @@ See LICENSE.md for full copyright information
 #define MACE__VAO_DEFAULT_VERTICES_LOCATION 0
 #define MACE__VAO_DEFAULT_TEXTURE_COORD_LOCATION 1
 
+			//how many floats in the uniform buffer
+#define MACE__ENTITY_DATA_BUFFER_SIZE sizeof(float) * 28
+			//which binding location the uniform buffer goes to
+#define MACE__ENTITY_DATA_LOCATION 0
+#define MACE__ENTITY_DATA_STORAGE_FLAGS GL_DYNAMIC_STORAGE_BIT
+			//the definition is later stringified. cant be a string because this gets added to the shader via a macro (see createShader)
+#define MACE__ENTITY_DATA_NAME _mc_EntityData
+
+#define MACE__PAINTER_DATA_BUFFER_SIZE sizeof(float) * 44
+#define MACE__PAINTER_DATA_LOCATION 1
+#define MACE__PAINTER_DATA_STORAGE_FLAGS GL_DYNAMIC_STORAGE_BIT
+#define MACE__PAINTER_DATA_NAME _mc_PainterData
+
+#define MACE__SCENE_ATTACHMENT_INDEX 0
+#define MACE__ID_ATTACHMENT_INDEX 1
+#define MACE__DATA_ATTACHMENT_INDEX 2
+
+#define MACE__HAS_RENDER_FEATURE(features, feature) (features & gfx::Painter::RenderFeatures::feature) != gfx::Painter::RenderFeatures::NONE
 
 namespace mc {
 	namespace internal {
@@ -486,7 +504,7 @@ namespace mc {
 				@see FrameBuffer::attachRenderbuffer(const Enum, const Enum, const RenderBuffer&)
 				@rendercontext
 				*/
-				void setDrawBuffers(const Size arrSize, const Enum* buffers);
+				static void setDrawBuffers(const Size arrSize, const Enum* buffers);
 
 				/**
 				Read pixels from this `FrameBuffer`
@@ -503,7 +521,7 @@ namespace mc {
 				@see FrameBuffer::setReadBuffer(const Enum);
 				@rendercontext
 				*/
-				void readPixels(const int x, const int y, const Size width, const Size height, const Enum format, const Enum type, void* data) const;
+				static void readPixels(const int x, const int y, const Size width, const Size height, const Enum format, const Enum type, void* data);
 
 				/**
 				Set the pixel storage mode for this `FrameBuffer` for use in
