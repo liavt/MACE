@@ -28,9 +28,17 @@ namespace mc {
 		namespace ogl {
 			Renderer::Renderer(std::shared_ptr<Context> context) : Dispatchable(context) {}
 
-			void Renderer::onInit() {}
+			void Renderer::onInit() {
+				parent->addListener<gfx::PreRenderEvent>([this](auto win){
+					preRender(win);
+				});
 
-			void Renderer::onSetUp(gfx::WindowModule*) {
+				parent->addListener<gfx::PostRenderEvent>([this](auto win) {
+					postRender(win);
+				});
+			}
+
+			void Renderer::preRender(gfx::WindowModule*) {
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: An error occured before onSetUp");
 
 				ogl::resetBlending();
@@ -65,7 +73,7 @@ namespace mc {
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to clear framebuffer");
 			}
 
-			void Renderer::onTearDown(gfx::WindowModule* win) {
+			void Renderer::postRender(gfx::WindowModule* win) {
 				ogl::checkGLError(__LINE__, __FILE__, "Error occured during rendering");
 
 				//frameBuffer.unbind();

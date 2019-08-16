@@ -276,6 +276,10 @@ namespace mc {
 
 				ogl::enable(GL_BLEND);
 				ogl::enable(GL_MULTISAMPLE);
+
+				parent->addListener<gfx::PreRenderEvent>([this](auto win) {
+					preRender(win);
+				});
 			}
 
 
@@ -350,7 +354,7 @@ namespace mc {
 				currentContext = nullptr;
 			}
 
-			void Context::setUp(gfx::WindowModule* win) {
+			void Context::preRender(gfx::WindowModule*) {
 				RenderProtocol& proto = protocols[currentProtocol];
 				if (proto.created) {
 					ogl::setBlending(proto.sourceBlend, proto.destBlend);

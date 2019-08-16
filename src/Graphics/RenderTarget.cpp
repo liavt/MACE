@@ -14,10 +14,14 @@ See LICENSE.md for full copyright information
 namespace mc {
 	namespace gfx {
 		void Renderer::init() {
+			parent->addListener<gfx::PreRenderEvent>([this](auto win) {
+				preRender(win);
+			});
+
 			onInit();
 		}
 
-		void Renderer::setUp(gfx::WindowModule* win) {
+		void Renderer::preRender(gfx::WindowModule* win) {
 			if (resized) {
 				const Vector<Pixels, 2> dimensions = win->getFramebufferSize();
 
@@ -25,8 +29,6 @@ namespace mc {
 
 				resized = false;
 			}
-
-			onSetUp(win);
 		}//setUp
 
 		void Renderer::queue(Entity* const e, Painter& p) {
@@ -53,10 +55,6 @@ namespace mc {
 
 			resized = false;
 		}//resize
-
-		void Renderer::tearDown(gfx::WindowModule* win) {
-			onTearDown(win);
-		}//tearDown
 
 		void Renderer::checkInput(gfx::WindowModule* win) {
 			const int mouseX = gfx::Input::getMouseX(), mouseY = gfx::Input::getMouseY();

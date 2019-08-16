@@ -161,6 +161,9 @@ namespace mc {
 			void threadCallback();
 		};//WindowModule
 
+		MACE_CREATE_EVENT(PreRenderEvent, WindowModule*);
+		MACE_CREATE_EVENT(PostRenderEvent, WindowModule*);
+
 		class Monitor;
 
 		struct VideoMode {

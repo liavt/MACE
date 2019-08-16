@@ -16,6 +16,7 @@ See LICENSE.md for full copyright information
 //TODO find a way to not import type_traits as it's really heavy. a custom SFINAE would be nice
 #include <type_traits>
 #include <queue>
+#include <functional>
 
 namespace mc {
 	namespace gfx {
@@ -171,6 +172,49 @@ namespace mc {
 			MACE_NODISCARD virtual bool isDone() const;
 		};//Component
 
+
+		enum class EventPolicy: Byte {
+			PROPAGATE_DOWNARDS = 0x01,
+
+			NONE = 0x00,
+			DEFAULT = NONE
+		};
+
+	}//gfx
+
+	namespace internal {
+		template<typename Arg, gfx::EventPolicy Policy>
+		struct MACE_NOVTABLE Event {
+		public:
+			using ListenerType = std::function<void(Arg)>;
+			using ArgumentType = Arg;
+
+			static MACE_CONSTEXPR const gfx::EventPolicy POLICY = Policy;
+		};
+	}//internal
+
+#define MACE_CREATE_EVENT_WITH_POLICY(name, arg, policy) struct name : public MACE__INTERNAL_NS::Event<arg, ::mc::gfx::policy> {}
+#define MACE_CREATE_EVENT(name, arg) MACE_CREATE_EVENT_WITH_POLICY(name, arg, EventPolicy::NONE)
+
+	namespace internal {
+		template<typename EventType>
+		class EventComponent: public gfx::Component {
+		public:
+			void addListener(const typename EventType::ListenerType listener) {
+				listeners.push_back(listener);
+			}
+
+			void call(typename EventType::ArgumentType arg) {
+				for (const auto listener : listeners) {
+					listener(arg);
+				}
+			}
+		private:
+			std::deque<typename EventType::ListenerType> listeners;
+		};
+	}
+
+	namespace gfx {
 		/**
 		A pointer to a `Component` that automatically manages pointer lifecycle
 		@note There is no default type as you are expected to provide the specific `Component` type as the template parameter. It uses the template typename to drive internal calculations
@@ -524,6 +568,25 @@ namespace mc {
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
 			bool hasComponent() noexcept {
 				return components.count(MACE__INTERNAL_NS::getComponentTypeID<T>()) > 0;
+			}
+
+			template<typename EventType>
+			void addListener(const typename EventType::ListenerType listener) {
+				getOrCreateComponent<MACE__INTERNAL_NS::EventComponent<EventType>>()->addListener(listener);
+			}
+
+			template<typename EventType>
+			void callListeners(typename EventType::ArgumentType arg) {
+				auto listenerCom = getComponent<MACE__INTERNAL_NS::EventComponent<EventType>>();
+				if (listenerCom != nullptr) {
+					listenerCom->call(arg);
+				}
+
+				MACE_IF_CONSTEXPR((static_cast<Byte>(EventType::POLICY) & static_cast<Byte>(EventPolicy::PROPAGATE_DOWNARDS)) != static_cast<Byte>(EventPolicy::NONE)) {
+					for (auto child : children) {
+						child->callListeners<EventType>(arg);
+					}
+				}
 			}
 
 			const RelativeScale& getWidth() const;

@@ -125,8 +125,6 @@ namespace mc {
 			virtual void onInit(gfx::WindowModule* win) = 0;
 			virtual void onRender(gfx::WindowModule* win) = 0;
 			virtual void onDestroy(gfx::WindowModule* win) = 0;
-
-			virtual void setUp(gfx::WindowModule* win) = 0;
 		};
 	}
 }//mc

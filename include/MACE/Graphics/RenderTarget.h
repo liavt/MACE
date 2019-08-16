@@ -319,8 +319,6 @@ namespace mc {
 
 			virtual void onResize(gfx::WindowModule* win, const Pixels width, const Pixels height) = 0;
 			virtual void onInit();
-			virtual void onSetUp(gfx::WindowModule* win) = 0;
-			virtual void onTearDown(gfx::WindowModule* win) = 0;
 			virtual void onDestroy() = 0;
 			virtual void onQueue(Entity* en) = 0;
 
@@ -345,13 +343,7 @@ namespace mc {
 			@internal
 			@rendercontext
 			*/
-			void setUp(gfx::WindowModule* win);
-
-			/**
-			@internal
-			@rendercontext
-			*/
-			void tearDown(gfx::WindowModule* win);
+			void preRender(gfx::WindowModule* win);
 
 			/**
 			@internal

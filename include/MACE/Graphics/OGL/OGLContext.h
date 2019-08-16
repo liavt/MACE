@@ -56,8 +56,6 @@ namespace mc {
 				void onInit(gfx::WindowModule* win) override;
 				void onRender(gfx::WindowModule* win) override;
 				void onDestroy(gfx::WindowModule* win) override;
-
-				void setUp(gfx::WindowModule* win) override;
 			private:
 				std::queue <DispatchFunction, std::list<DispatchFunction>> dispatchQueue{};
 				std::mutex dispatchMutex;
@@ -74,6 +72,8 @@ namespace mc {
 				void processDispatchQueue();
 
 				void bindCurrentTarget();
+
+				void preRender(gfx::WindowModule* win);
 			};
 		}//ogl
 	}//internal
