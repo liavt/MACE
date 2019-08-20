@@ -126,7 +126,9 @@ namespace mc {
 
 			Texture::Texture(std::shared_ptr<Context> con, const gfx::TextureDesc& desc) : TextureImpl(desc), ogl::Texture2D(), Dispatchable(con) {
 				dispatch([this, desc]() {
+					MACE__BEGIN_OGL_FUNCTION;
 					ogl::Texture2D::init();
+					ogl::Texture2D::setName("OGLTexture");
 					ogl::Texture2D::bind();
 
 					if (desc.minFilter == gfx::TextureDesc::Filter::MIPMAP_LINEAR) {
@@ -208,6 +210,7 @@ namespace mc {
 
 			void Texture::setData(const void* data, const int x, const int y, const Pixels w, const Pixels h, const int mipmap, const gfx::PixelStorageHints hints) {
 				dispatch([this, data, x, y, w, h, mipmap, hints]() {
+					MACE__BEGIN_OGL_FUNCTION;
 					setPixelStorage(GL_UNPACK_ALIGNMENT, hints.alignment);
 					setPixelStorage(GL_UNPACK_ROW_LENGTH, hints.rowLength);
 
@@ -221,6 +224,7 @@ namespace mc {
 
 			void Texture::readPixels(void* data, const gfx::PixelStorageHints hints) const {
 				dispatch([this, data, hints]() {
+					MACE__BEGIN_OGL_FUNCTION;
 					setPixelStorage(GL_PACK_ALIGNMENT, hints.alignment);
 					setPixelStorage(GL_PACK_ROW_LENGTH, hints.rowLength);
 

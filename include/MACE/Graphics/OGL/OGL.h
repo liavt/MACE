@@ -44,6 +44,14 @@ See LICENSE.md for full copyright information
 
 #define MACE__HAS_RENDER_FEATURE(features, feature) (features & gfx::Painter::RenderFeatures::feature) != gfx::Painter::RenderFeatures::NONE
 
+#define MACE__FORCE_BEGIN_OGL_FUNCTION MACE__INTERNAL_NS::ogl::DebugGroup oglDebugGroup{MACE_FUNCTION_NAME};
+
+#ifdef MACE_DEBUG
+#	define MACE__BEGIN_OGL_FUNCTION MACE__FORCE_BEGIN_OGL_FUNCTION
+#else
+#	define MACE__BEGIN_OGL_FUNCTION
+#endif
+
 namespace mc {
 	namespace internal {
 		/**
@@ -84,6 +92,20 @@ namespace mc {
 			@see OpenGLError
 			*/
 			MACE__DECLARE_ERROR(Framebuffer);
+
+			void debugMessageCallback(GLenum source,
+									  GLenum type,
+									  GLuint id,
+									  GLenum severity,
+									  GLsizei length,
+									  const GLchar* message,
+									  const void* userParam);
+
+#ifdef MACE_DEBUG
+			void preGladCallback(CString name, GLADapiproc proc, int lenArgs, ...);
+
+			void postGladCallback(void* ret, CString name, GLADapiproc proc, int lenArgs, ...);
+#endif
 
 			void forceCheckGLError(const unsigned int line, const char* MACE_RESTRICT file, const char* MACE_RESTRICT message);
 
@@ -141,6 +163,14 @@ namespace mc {
 			inline void setViewport(const int x, const int y, const int width, const int height) {
 				glViewport(x, y, width, height);
 			}
+
+			class DebugGroup {
+			public:
+				DebugGroup(CString name);
+				~DebugGroup();
+			private:
+				CString name;
+			};
 
 			/**
 			Represents a OpenGL object in memory. All abstractions for OpenGL objects override this.
@@ -221,6 +251,8 @@ namespace mc {
 				*/
 				GLuint getID() const;
 
+				void setName(CString name);
+
 				static void init(Object* objects[], const GLsizei length);
 				static void destroy(Object* objects[], const GLsizei length);
 
@@ -268,6 +300,8 @@ namespace mc {
 					destroyIndices(id, N);
 				}
 
+				virtual const GLenum getNameTarget() const = 0;
+
 			private:
 				bool isInit() const noexcept override;
 
@@ -313,6 +347,8 @@ namespace mc {
 
 				void initIndices(GLuint id[], const GLsizei length) const override;
 				void destroyIndices(const GLuint id[], const GLsizei length) const override;
+
+				const GLenum getNameTarget() const override;
 			};//RenderBuffer
 
 			/**
@@ -392,6 +428,8 @@ namespace mc {
 
 				void initIndices(GLuint id[], const GLsizei length) const override;
 				void destroyIndices(const GLuint id[], const GLsizei length) const override;
+
+				const GLenum getNameTarget() const override;
 			};//Texture2D
 
 			/**
@@ -558,6 +596,8 @@ namespace mc {
 
 				void initIndices(GLuint id[], const GLsizei length) const override;
 				void destroyIndices(const GLuint id[], const GLsizei length) const override;
+
+				const GLenum getNameTarget() const override;
 			};//FrameBuffer
 
 			/**
@@ -695,6 +735,8 @@ namespace mc {
 
 				void initIndices(GLuint id[], const GLsizei length) const override;
 				void destroyIndices(const GLuint id[], const GLsizei length) const override;
+
+				const GLenum getNameTarget() const override;
 			};//Buffer
 
 			/**
@@ -902,6 +944,8 @@ namespace mc {
 
 				void initIndices(GLuint id[], const GLsizei length) const override;
 				void destroyIndices(const GLuint id[], const GLsizei length) const override;
+
+				const GLenum getNameTarget() const override;
 			};//VertexArray
 
 
@@ -1031,6 +1075,8 @@ namespace mc {
 
 				void initIndices(GLuint id[], const GLsizei length) const override;
 				void destroyIndices(const GLuint id[], const GLsizei length) const override;
+
+				const GLenum getNameTarget() const override;
 			};//Shader
 
 			/**
@@ -1237,6 +1283,8 @@ namespace mc {
 
 				void initIndices(GLuint id[], const GLsizei length) const override;
 				void destroyIndices(const GLuint id[], const GLsizei length) const override;
+
+				const GLenum getNameTarget() const override;
 			};//ShaderProgram
 		}//ogl
 	}//internal

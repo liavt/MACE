@@ -36,6 +36,7 @@ namespace mc {
 			Model::Model(std::shared_ptr<Context> con) : Dispatchable(con) {
 				dispatch([this]() {
 					ogl::VertexArray::init();
+					ogl::VertexArray::setName("OGLModel");
 				});
 			}
 
@@ -62,6 +63,7 @@ namespace mc {
 
 			void Model::draw() const {
 				dispatch([this]() {
+					MACE__BEGIN_OGL_FUNCTION;
 					bind();
 
 					if (indices.getIndiceNumber() > 0) {

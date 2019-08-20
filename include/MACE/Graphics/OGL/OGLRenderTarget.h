@@ -28,12 +28,11 @@ namespace mc {
 				Renderer(std::shared_ptr<Context> context);
 				~Renderer() noexcept override = default;
 
-				void onResize(gfx::WindowModule* win, const Pixels width, const Pixels height) override;
 				void onInit() override;
 				void onDestroy() override;
 				void onQueue(gfx::Entity* en) override;
 
-				void preRender(gfx::WindowModule* win);
+				void preRender();
 				void postRender(gfx::WindowModule* win);
 
 				void setRefreshColor(const float r, const float g, const float b, const float a = 1.0f) override;

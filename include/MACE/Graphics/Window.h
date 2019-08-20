@@ -161,7 +161,15 @@ namespace mc {
 			void threadCallback();
 		};//WindowModule
 
+		struct WindowResizedEventData {
+			WindowModule* window;
+			Pixels width, height;
+		};
+
+		MACE_CREATE_EVENT(WindowResizedEvent, const WindowResizedEventData);
+
 		MACE_CREATE_EVENT(PreRenderEvent, WindowModule*);
+
 		MACE_CREATE_EVENT(PostRenderEvent, WindowModule*);
 
 		class Monitor;

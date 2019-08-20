@@ -12,7 +12,7 @@ namespace mc {
 			Dispatchable::Dispatchable(std::shared_ptr<Context> con) : context(con) {}
 
 			void Dispatchable::dispatch(const DispatchFunction func) const {
-				context->dispatch(func);
+				context->dispatch(std::move(func));
 			}
 		}//ogl
 	}//internal

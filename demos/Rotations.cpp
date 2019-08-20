@@ -81,6 +81,7 @@ int main() {
 	try {
 		gfx::WindowModule::LaunchConfig config = gfx::WindowModule::LaunchConfig(500, 500, "Rotations Demo");
 		config.onCreate = &create;
+		config.resizable = true;
 		gfx::WindowModule module = gfx::WindowModule(config);
 
 		instance.addModule(module);

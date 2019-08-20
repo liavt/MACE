@@ -270,12 +270,39 @@ namespace mc {
 				MACE__DEBUG_OUTPUT_EXTENSION(GL_ARB_multi_bind);
 				MACE__DEBUG_OUTPUT_EXTENSION(GL_ARB_direct_state_access);
 				MACE__DEBUG_OUTPUT_EXTENSION(GL_EXT_direct_state_access);
+				MACE__DEBUG_OUTPUT_EXTENSION(GL_KHR_debug);
 #undef MACE__DEBUG_OUTPUT_EXTENSION
+#endif//MACE_DEBUG
+
+				if (GLAD_GL_KHR_debug) {
+					std::cout << "Advanced OpenGL debug output enabled.\n";
+					glEnable(GL_DEBUG_OUTPUT);
+					// we are only printing to std::cout, so we don't need to hamper performance by doing synchronous callback
+					glDisable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+					glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, 0, nullptr, GL_FALSE);
+					glDebugMessageCallback(static_cast<GLDEBUGPROC>(debugMessageCallback), nullptr);
+				}
+
+#ifdef GLAD_OPTION_GL_DEBUG
+#ifdef MACE_DEBUG
+				gladSetGLPreCallback(preGladCallback);
+				gladSetGLPostCallback(postGladCallback);
+#else
+				gladSetGLPreCallback([](CString, GLADapiproc, int, ...) {
+					//do nothing
+				});
+				// do nothing
+				gladSetGLPostCallback([](void*, CString, GLADapiproc, int, ...) {
+					//ogl33::checkGLError(__LINE__, __FILE__, name);
+				});
+#endif//MACE_DEBUG
+#endif//GLAD_DEBUG
 				std::cout << os::consoleColor() << std::flush;
-#endif
 
 				ogl::enable(GL_BLEND);
 				ogl::enable(GL_MULTISAMPLE);
+
+				checkGLError(__LINE__, __FILE__, "Internal Error: An error occured creating the Context");
 
 				parent->addListener<gfx::PreRenderEvent>([this](auto win) {
 					preRender(win);
@@ -305,7 +332,7 @@ namespace mc {
 					}
 
 					if (oldProtocol.multitarget != protocol.multitarget) {
-						bindCurrentTarget();
+						FrameBuffer::setDrawBuffers(protocols[currentProtocol].multitarget ? 2 : 1, lookupFramebufferTarget(currentTarget));
 					}
 
 					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error swapping RenderProtocol");
@@ -328,18 +355,13 @@ namespace mc {
 			void Context::setTarget(const gfx::FrameBufferTarget& target) {
 				if (target != currentTarget) {
 					currentTarget = target;
-					bindCurrentTarget();
 				}
 			}
-
-			void Context::bindCurrentTarget() {
-				FrameBuffer::setDrawBuffers(protocols[currentProtocol].multitarget ? 2 : 1, lookupFramebufferTarget(currentTarget));
-			}
-
 
 			void Context::onRender(gfx::WindowModule*) {
 				std::lock_guard<std::mutex> guard(dispatchMutex);
 				processDispatchQueue();
+				checkGLError(__LINE__, __FILE__, "Internal Error: An error occured during onRender()");
 			}
 
 			void Context::onDestroy(gfx::WindowModule*) {
@@ -351,6 +373,8 @@ namespace mc {
 
 				protocols.clear();
 
+				checkGLError(__LINE__, __FILE__, "Internal Error: Error destroying Context");
+
 				currentContext = nullptr;
 			}
 
@@ -358,9 +382,9 @@ namespace mc {
 				RenderProtocol& proto = protocols[currentProtocol];
 				if (proto.created) {
 					ogl::setBlending(proto.sourceBlend, proto.destBlend);
-
-					bindCurrentTarget();
 				}
+
+				checkGLError(__LINE__, __FILE__, "Internal Error: An error occured during preRender()");
 			}
 
 			void Context::dispatch(const DispatchFunction dispatch) {
@@ -370,14 +394,15 @@ namespace mc {
 					dispatch();
 				} else {
 					std::lock_guard<std::mutex> guard(dispatchMutex);
-					dispatchQueue.push(dispatch);
+					dispatchQueue.push(std::move(dispatch));
 				}
 			}
 
 			void Context::processDispatchQueue() {
 				while (!dispatchQueue.empty()) {
-					const DispatchFunction& dispatch = dispatchQueue.front();
+					const DispatchFunction dispatch = dispatchQueue.front();
 					dispatchQueue.pop();
+					MACE_ASSERT(dispatch, "Internal Error: DispatchFunction in queue was empty!");
 					dispatch();
 				}
 			}

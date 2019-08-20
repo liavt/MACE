@@ -303,21 +303,9 @@ namespace mc {
 
 			Pixels getWidth() const;
 			Pixels getHeight() const;
-
-			bool isResized() const;
-
-
-			/**
-			@internal
-			@todo remove this from the public interface (see glfwWindowResized in Window.cpp for why this is a problem)
-			*/
-			void flagResize();
 		protected:
-			bool resized = false;
-
 			Renderer() noexcept = default;
 
-			virtual void onResize(gfx::WindowModule* win, const Pixels width, const Pixels height) = 0;
 			virtual void onInit();
 			virtual void onDestroy() = 0;
 			virtual void onQueue(Entity* en) = 0;
@@ -331,19 +319,7 @@ namespace mc {
 			@internal
 			@rendercontext
 			*/
-			void resize(gfx::WindowModule* win, const Pixels width, const Pixels height);
-
-			/**
-			@internal
-			@rendercontext
-			*/
 			void init() override;
-
-			/**
-			@internal
-			@rendercontext
-			*/
-			void preRender(gfx::WindowModule* win);
 
 			/**
 			@internal

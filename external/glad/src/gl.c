@@ -33,6 +33,7 @@ int GLAD_GL_ARB_blend_func_extended = 0;
 int GLAD_GL_ARB_buffer_storage = 0;
 int GLAD_GL_ARB_color_buffer_float = 0;
 int GLAD_GL_ARB_copy_buffer = 0;
+int GLAD_GL_ARB_debug_output = 0;
 int GLAD_GL_ARB_direct_state_access = 0;
 int GLAD_GL_ARB_draw_buffers = 0;
 int GLAD_GL_ARB_draw_elements_base_vertex = 0;
@@ -93,6 +94,7 @@ int GLAD_GL_EXT_timer_query = 0;
 int GLAD_GL_EXT_transform_feedback = 0;
 int GLAD_GL_EXT_vertex_array = 0;
 int GLAD_GL_INGR_blend_func_separate = 0;
+int GLAD_GL_KHR_debug = 0;
 int GLAD_GL_NVX_conditional_render = 0;
 int GLAD_GL_NV_conditional_render = 0;
 int GLAD_GL_NV_explicit_multisample = 0;
@@ -284,6 +286,12 @@ PFNGLCREATETEXTURESPROC glad_glCreateTextures = NULL;
 PFNGLCREATETRANSFORMFEEDBACKSPROC glad_glCreateTransformFeedbacks = NULL;
 PFNGLCREATEVERTEXARRAYSPROC glad_glCreateVertexArrays = NULL;
 PFNGLCULLFACEPROC glad_glCullFace = NULL;
+PFNGLDEBUGMESSAGECALLBACKPROC glad_glDebugMessageCallback = NULL;
+PFNGLDEBUGMESSAGECALLBACKARBPROC glad_glDebugMessageCallbackARB = NULL;
+PFNGLDEBUGMESSAGECONTROLPROC glad_glDebugMessageControl = NULL;
+PFNGLDEBUGMESSAGECONTROLARBPROC glad_glDebugMessageControlARB = NULL;
+PFNGLDEBUGMESSAGEINSERTPROC glad_glDebugMessageInsert = NULL;
+PFNGLDEBUGMESSAGEINSERTARBPROC glad_glDebugMessageInsertARB = NULL;
 PFNGLDELETEBUFFERSPROC glad_glDeleteBuffers = NULL;
 PFNGLDELETEBUFFERSARBPROC glad_glDeleteBuffersARB = NULL;
 PFNGLDELETEFRAMEBUFFERSPROC glad_glDeleteFramebuffers = NULL;
@@ -437,6 +445,8 @@ PFNGLGETCOMPRESSEDTEXIMAGEPROC glad_glGetCompressedTexImage = NULL;
 PFNGLGETCOMPRESSEDTEXIMAGEARBPROC glad_glGetCompressedTexImageARB = NULL;
 PFNGLGETCOMPRESSEDTEXTUREIMAGEPROC glad_glGetCompressedTextureImage = NULL;
 PFNGLGETCOMPRESSEDTEXTUREIMAGEEXTPROC glad_glGetCompressedTextureImageEXT = NULL;
+PFNGLGETDEBUGMESSAGELOGPROC glad_glGetDebugMessageLog = NULL;
+PFNGLGETDEBUGMESSAGELOGARBPROC glad_glGetDebugMessageLogARB = NULL;
 PFNGLGETDOUBLEINDEXEDVEXTPROC glad_glGetDoubleIndexedvEXT = NULL;
 PFNGLGETDOUBLEI_VPROC glad_glGetDoublei_v = NULL;
 PFNGLGETDOUBLEI_VEXTPROC glad_glGetDoublei_vEXT = NULL;
@@ -492,8 +502,10 @@ PFNGLGETNAMEDPROGRAMSTRINGEXTPROC glad_glGetNamedProgramStringEXT = NULL;
 PFNGLGETNAMEDPROGRAMIVEXTPROC glad_glGetNamedProgramivEXT = NULL;
 PFNGLGETNAMEDRENDERBUFFERPARAMETERIVPROC glad_glGetNamedRenderbufferParameteriv = NULL;
 PFNGLGETNAMEDRENDERBUFFERPARAMETERIVEXTPROC glad_glGetNamedRenderbufferParameterivEXT = NULL;
+PFNGLGETOBJECTLABELPROC glad_glGetObjectLabel = NULL;
 PFNGLGETOBJECTPARAMETERFVARBPROC glad_glGetObjectParameterfvARB = NULL;
 PFNGLGETOBJECTPARAMETERIVARBPROC glad_glGetObjectParameterivARB = NULL;
+PFNGLGETOBJECTPTRLABELPROC glad_glGetObjectPtrLabel = NULL;
 PFNGLGETPATHCOMMANDSNVPROC glad_glGetPathCommandsNV = NULL;
 PFNGLGETPATHCOORDSNVPROC glad_glGetPathCoordsNV = NULL;
 PFNGLGETPATHDASHARRAYNVPROC glad_glGetPathDashArrayNV = NULL;
@@ -820,6 +832,8 @@ PFNGLNAMEDRENDERBUFFERSTORAGEMULTISAMPLEPROC glad_glNamedRenderbufferStorageMult
 PFNGLNAMEDRENDERBUFFERSTORAGEMULTISAMPLECOVERAGEEXTPROC glad_glNamedRenderbufferStorageMultisampleCoverageEXT = NULL;
 PFNGLNAMEDRENDERBUFFERSTORAGEMULTISAMPLEEXTPROC glad_glNamedRenderbufferStorageMultisampleEXT = NULL;
 PFNGLNORMALPOINTEREXTPROC glad_glNormalPointerEXT = NULL;
+PFNGLOBJECTLABELPROC glad_glObjectLabel = NULL;
+PFNGLOBJECTPTRLABELPROC glad_glObjectPtrLabel = NULL;
 PFNGLPATHCOMMANDSNVPROC glad_glPathCommandsNV = NULL;
 PFNGLPATHCOORDSNVPROC glad_glPathCoordsNV = NULL;
 PFNGLPATHCOVERDEPTHFUNCNVPROC glad_glPathCoverDepthFuncNV = NULL;
@@ -856,6 +870,7 @@ PFNGLPOINTPARAMETERIVNVPROC glad_glPointParameterivNV = NULL;
 PFNGLPOINTSIZEPROC glad_glPointSize = NULL;
 PFNGLPOLYGONMODEPROC glad_glPolygonMode = NULL;
 PFNGLPOLYGONOFFSETPROC glad_glPolygonOffset = NULL;
+PFNGLPOPDEBUGGROUPPROC glad_glPopDebugGroup = NULL;
 PFNGLPRIMITIVERESTARTINDEXPROC glad_glPrimitiveRestartIndex = NULL;
 PFNGLPRIORITIZETEXTURESPROC glad_glPrioritizeTextures = NULL;
 PFNGLPRIORITIZETEXTURESEXTPROC glad_glPrioritizeTexturesEXT = NULL;
@@ -981,6 +996,7 @@ PFNGLPROGRAMVERTEXLIMITNVPROC glad_glProgramVertexLimitNV = NULL;
 PFNGLPROVOKINGVERTEXPROC glad_glProvokingVertex = NULL;
 PFNGLPROVOKINGVERTEXEXTPROC glad_glProvokingVertexEXT = NULL;
 PFNGLPUSHCLIENTATTRIBDEFAULTEXTPROC glad_glPushClientAttribDefaultEXT = NULL;
+PFNGLPUSHDEBUGGROUPPROC glad_glPushDebugGroup = NULL;
 PFNGLQUERYCOUNTERPROC glad_glQueryCounter = NULL;
 PFNGLREADBUFFERPROC glad_glReadBuffer = NULL;
 PFNGLREADPIXELSPROC glad_glReadPixels = NULL;
@@ -1820,6 +1836,17 @@ static void glad_gl_load_GL_ARB_color_buffer_float( GLADuserptrloadfunc load, vo
 static void glad_gl_load_GL_ARB_copy_buffer( GLADuserptrloadfunc load, void* userptr) {
     if(!GLAD_GL_ARB_copy_buffer) return;
     glad_glCopyBufferSubData = (PFNGLCOPYBUFFERSUBDATAPROC) load(userptr, "glCopyBufferSubData");
+}
+static void glad_gl_load_GL_ARB_debug_output( GLADuserptrloadfunc load, void* userptr) {
+    if(!GLAD_GL_ARB_debug_output) return;
+    glad_glDebugMessageCallback = (PFNGLDEBUGMESSAGECALLBACKPROC) load(userptr, "glDebugMessageCallback");
+    glad_glDebugMessageCallbackARB = (PFNGLDEBUGMESSAGECALLBACKARBPROC) load(userptr, "glDebugMessageCallbackARB");
+    glad_glDebugMessageControl = (PFNGLDEBUGMESSAGECONTROLPROC) load(userptr, "glDebugMessageControl");
+    glad_glDebugMessageControlARB = (PFNGLDEBUGMESSAGECONTROLARBPROC) load(userptr, "glDebugMessageControlARB");
+    glad_glDebugMessageInsert = (PFNGLDEBUGMESSAGEINSERTPROC) load(userptr, "glDebugMessageInsert");
+    glad_glDebugMessageInsertARB = (PFNGLDEBUGMESSAGEINSERTARBPROC) load(userptr, "glDebugMessageInsertARB");
+    glad_glGetDebugMessageLog = (PFNGLGETDEBUGMESSAGELOGPROC) load(userptr, "glGetDebugMessageLog");
+    glad_glGetDebugMessageLogARB = (PFNGLGETDEBUGMESSAGELOGARBPROC) load(userptr, "glGetDebugMessageLogARB");
 }
 static void glad_gl_load_GL_ARB_direct_state_access( GLADuserptrloadfunc load, void* userptr) {
     if(!GLAD_GL_ARB_direct_state_access) return;
@@ -3142,6 +3169,20 @@ static void glad_gl_load_GL_INGR_blend_func_separate( GLADuserptrloadfunc load, 
     glad_glBlendFuncSeparate = (PFNGLBLENDFUNCSEPARATEPROC) load(userptr, "glBlendFuncSeparate");
     glad_glBlendFuncSeparateINGR = (PFNGLBLENDFUNCSEPARATEINGRPROC) load(userptr, "glBlendFuncSeparateINGR");
 }
+static void glad_gl_load_GL_KHR_debug( GLADuserptrloadfunc load, void* userptr) {
+    if(!GLAD_GL_KHR_debug) return;
+    glad_glDebugMessageCallback = (PFNGLDEBUGMESSAGECALLBACKPROC) load(userptr, "glDebugMessageCallback");
+    glad_glDebugMessageControl = (PFNGLDEBUGMESSAGECONTROLPROC) load(userptr, "glDebugMessageControl");
+    glad_glDebugMessageInsert = (PFNGLDEBUGMESSAGEINSERTPROC) load(userptr, "glDebugMessageInsert");
+    glad_glGetDebugMessageLog = (PFNGLGETDEBUGMESSAGELOGPROC) load(userptr, "glGetDebugMessageLog");
+    glad_glGetObjectLabel = (PFNGLGETOBJECTLABELPROC) load(userptr, "glGetObjectLabel");
+    glad_glGetObjectPtrLabel = (PFNGLGETOBJECTPTRLABELPROC) load(userptr, "glGetObjectPtrLabel");
+    glad_glGetPointerv = (PFNGLGETPOINTERVPROC) load(userptr, "glGetPointerv");
+    glad_glObjectLabel = (PFNGLOBJECTLABELPROC) load(userptr, "glObjectLabel");
+    glad_glObjectPtrLabel = (PFNGLOBJECTPTRLABELPROC) load(userptr, "glObjectPtrLabel");
+    glad_glPopDebugGroup = (PFNGLPOPDEBUGGROUPPROC) load(userptr, "glPopDebugGroup");
+    glad_glPushDebugGroup = (PFNGLPUSHDEBUGGROUPPROC) load(userptr, "glPushDebugGroup");
+}
 static void glad_gl_load_GL_NVX_conditional_render( GLADuserptrloadfunc load, void* userptr) {
     if(!GLAD_GL_NVX_conditional_render) return;
     glad_glBeginConditionalRenderNVX = (PFNGLBEGINCONDITIONALRENDERNVXPROC) load(userptr, "glBeginConditionalRenderNVX");
@@ -3532,6 +3573,12 @@ static void glad_gl_resolve_aliases(void) {
     if (glad_glCreateProgramObjectARB == NULL && glad_glCreateProgram != NULL) glad_glCreateProgramObjectARB = (PFNGLCREATEPROGRAMOBJECTARBPROC)glad_glCreateProgram;
     if (glad_glCreateShader == NULL && glad_glCreateShaderObjectARB != NULL) glad_glCreateShader = (PFNGLCREATESHADERPROC)glad_glCreateShaderObjectARB;
     if (glad_glCreateShaderObjectARB == NULL && glad_glCreateShader != NULL) glad_glCreateShaderObjectARB = (PFNGLCREATESHADEROBJECTARBPROC)glad_glCreateShader;
+    if (glad_glDebugMessageCallback == NULL && glad_glDebugMessageCallbackARB != NULL) glad_glDebugMessageCallback = (PFNGLDEBUGMESSAGECALLBACKPROC)glad_glDebugMessageCallbackARB;
+    if (glad_glDebugMessageCallbackARB == NULL && glad_glDebugMessageCallback != NULL) glad_glDebugMessageCallbackARB = (PFNGLDEBUGMESSAGECALLBACKARBPROC)glad_glDebugMessageCallback;
+    if (glad_glDebugMessageControl == NULL && glad_glDebugMessageControlARB != NULL) glad_glDebugMessageControl = (PFNGLDEBUGMESSAGECONTROLPROC)glad_glDebugMessageControlARB;
+    if (glad_glDebugMessageControlARB == NULL && glad_glDebugMessageControl != NULL) glad_glDebugMessageControlARB = (PFNGLDEBUGMESSAGECONTROLARBPROC)glad_glDebugMessageControl;
+    if (glad_glDebugMessageInsert == NULL && glad_glDebugMessageInsertARB != NULL) glad_glDebugMessageInsert = (PFNGLDEBUGMESSAGEINSERTPROC)glad_glDebugMessageInsertARB;
+    if (glad_glDebugMessageInsertARB == NULL && glad_glDebugMessageInsert != NULL) glad_glDebugMessageInsertARB = (PFNGLDEBUGMESSAGEINSERTARBPROC)glad_glDebugMessageInsert;
     if (glad_glDeleteBuffers == NULL && glad_glDeleteBuffersARB != NULL) glad_glDeleteBuffers = (PFNGLDELETEBUFFERSPROC)glad_glDeleteBuffersARB;
     if (glad_glDeleteBuffersARB == NULL && glad_glDeleteBuffers != NULL) glad_glDeleteBuffersARB = (PFNGLDELETEBUFFERSARBPROC)glad_glDeleteBuffers;
     if (glad_glDeleteFramebuffers == NULL && glad_glDeleteFramebuffersEXT != NULL) glad_glDeleteFramebuffers = (PFNGLDELETEFRAMEBUFFERSPROC)glad_glDeleteFramebuffersEXT;
@@ -3644,6 +3691,8 @@ static void glad_gl_resolve_aliases(void) {
     if (glad_glGetBufferSubDataARB == NULL && glad_glGetBufferSubData != NULL) glad_glGetBufferSubDataARB = (PFNGLGETBUFFERSUBDATAARBPROC)glad_glGetBufferSubData;
     if (glad_glGetCompressedTexImage == NULL && glad_glGetCompressedTexImageARB != NULL) glad_glGetCompressedTexImage = (PFNGLGETCOMPRESSEDTEXIMAGEPROC)glad_glGetCompressedTexImageARB;
     if (glad_glGetCompressedTexImageARB == NULL && glad_glGetCompressedTexImage != NULL) glad_glGetCompressedTexImageARB = (PFNGLGETCOMPRESSEDTEXIMAGEARBPROC)glad_glGetCompressedTexImage;
+    if (glad_glGetDebugMessageLog == NULL && glad_glGetDebugMessageLogARB != NULL) glad_glGetDebugMessageLog = (PFNGLGETDEBUGMESSAGELOGPROC)glad_glGetDebugMessageLogARB;
+    if (glad_glGetDebugMessageLogARB == NULL && glad_glGetDebugMessageLog != NULL) glad_glGetDebugMessageLogARB = (PFNGLGETDEBUGMESSAGELOGARBPROC)glad_glGetDebugMessageLog;
     if (glad_glGetDoublei_v == NULL && glad_glGetDoubleIndexedvEXT != NULL) glad_glGetDoublei_v = (PFNGLGETDOUBLEI_VPROC)glad_glGetDoubleIndexedvEXT;
     if (glad_glGetDoublei_v == NULL && glad_glGetDoublei_vEXT != NULL) glad_glGetDoublei_v = (PFNGLGETDOUBLEI_VPROC)glad_glGetDoublei_vEXT;
     if (glad_glGetDoublei_vEXT == NULL && glad_glGetDoublei_v != NULL) glad_glGetDoublei_vEXT = (PFNGLGETDOUBLEI_VEXTPROC)glad_glGetDoublei_v;
@@ -4336,6 +4385,7 @@ static int glad_gl_find_extensions_gl( int version) {
     GLAD_GL_ARB_buffer_storage = glad_gl_has_extension(version, exts, num_exts_i, exts_i, "GL_ARB_buffer_storage");
     GLAD_GL_ARB_color_buffer_float = glad_gl_has_extension(version, exts, num_exts_i, exts_i, "GL_ARB_color_buffer_float");
     GLAD_GL_ARB_copy_buffer = glad_gl_has_extension(version, exts, num_exts_i, exts_i, "GL_ARB_copy_buffer");
+    GLAD_GL_ARB_debug_output = glad_gl_has_extension(version, exts, num_exts_i, exts_i, "GL_ARB_debug_output");
     GLAD_GL_ARB_direct_state_access = glad_gl_has_extension(version, exts, num_exts_i, exts_i, "GL_ARB_direct_state_access");
     GLAD_GL_ARB_draw_buffers = glad_gl_has_extension(version, exts, num_exts_i, exts_i, "GL_ARB_draw_buffers");
     GLAD_GL_ARB_draw_elements_base_vertex = glad_gl_has_extension(version, exts, num_exts_i, exts_i, "GL_ARB_draw_elements_base_vertex");
@@ -4396,6 +4446,7 @@ static int glad_gl_find_extensions_gl( int version) {
     GLAD_GL_EXT_transform_feedback = glad_gl_has_extension(version, exts, num_exts_i, exts_i, "GL_EXT_transform_feedback");
     GLAD_GL_EXT_vertex_array = glad_gl_has_extension(version, exts, num_exts_i, exts_i, "GL_EXT_vertex_array");
     GLAD_GL_INGR_blend_func_separate = glad_gl_has_extension(version, exts, num_exts_i, exts_i, "GL_INGR_blend_func_separate");
+    GLAD_GL_KHR_debug = glad_gl_has_extension(version, exts, num_exts_i, exts_i, "GL_KHR_debug");
     GLAD_GL_NVX_conditional_render = glad_gl_has_extension(version, exts, num_exts_i, exts_i, "GL_NVX_conditional_render");
     GLAD_GL_NV_conditional_render = glad_gl_has_extension(version, exts, num_exts_i, exts_i, "GL_NV_conditional_render");
     GLAD_GL_NV_explicit_multisample = glad_gl_has_extension(version, exts, num_exts_i, exts_i, "GL_NV_explicit_multisample");
@@ -4477,6 +4528,7 @@ int gladLoadGLUserPtr( GLADuserptrloadfunc load, void *userptr) {
     glad_gl_load_GL_ARB_buffer_storage(load, userptr);
     glad_gl_load_GL_ARB_color_buffer_float(load, userptr);
     glad_gl_load_GL_ARB_copy_buffer(load, userptr);
+    glad_gl_load_GL_ARB_debug_output(load, userptr);
     glad_gl_load_GL_ARB_direct_state_access(load, userptr);
     glad_gl_load_GL_ARB_draw_buffers(load, userptr);
     glad_gl_load_GL_ARB_draw_elements_base_vertex(load, userptr);
@@ -4537,6 +4589,7 @@ int gladLoadGLUserPtr( GLADuserptrloadfunc load, void *userptr) {
     glad_gl_load_GL_EXT_transform_feedback(load, userptr);
     glad_gl_load_GL_EXT_vertex_array(load, userptr);
     glad_gl_load_GL_INGR_blend_func_separate(load, userptr);
+    glad_gl_load_GL_KHR_debug(load, userptr);
     glad_gl_load_GL_NVX_conditional_render(load, userptr);
     glad_gl_load_GL_NV_conditional_render(load, userptr);
     glad_gl_load_GL_NV_explicit_multisample(load, userptr);
@@ -4562,3 +4615,4 @@ int gladLoadGL( GLADloadfunc load) {
 
 
  
+

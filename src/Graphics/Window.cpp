@@ -174,7 +174,14 @@ namespace mc {
 
 			void onWindowFramebufferResized(GLFWwindow* window, int, int) {
 				WindowModule* win = convertGLFWWindowToModule(window);
-				win->getComponent<Renderer>()->flagResize();
+				const auto size = win->getFramebufferSize();
+
+				WindowResizedEventData data{};
+				data.window = win;
+				data.width = size.x();
+				data.height = size.y();
+				win->callListeners<WindowResizedEvent>(data);
+
 				win->makeChildrenDirty();
 			}
 
@@ -230,7 +237,9 @@ namespace mc {
 				glfwWindowHint(GLFW_DEPTH_BITS, GLFW_DONT_CARE);
 #ifdef MACE_DEBUG
 				glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
+				glfwWindowHint(GLFW_CONTEXT_NO_ERROR, false);
 #else
+				glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, false);
 				glfwWindowHint(GLFW_CONTEXT_NO_ERROR, true);
 #endif
 				break;
@@ -344,7 +353,13 @@ namespace mc {
 
 					Entity::init();
 
-					getComponent<Renderer>()->resize(this, config.width, config.height);
+					const auto size = getFramebufferSize();
+
+					WindowResizedEventData data{};
+					data.window = this;
+					data.width = size.x();
+					data.height = size.y();
+					callListeners<WindowResizedEvent>(data);
 
 					config.onCreate(*this);
 

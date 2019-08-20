@@ -49,6 +49,7 @@ namespace mc {
 #endif//MACE_DEBUG
 #define MACE__DECLARE_ERROR_BASE(name, base) MACE__DECLARE_ERROR_TYPE(name); using MACE__GET_ERROR_NAME(name) = MACE__INTERNAL_NS::Error< name##Type, base >;
 #define MACE__DECLARE_ERROR(name) MACE__DECLARE_ERROR_BASE(name, std::runtime_error)
+
 #define MACE__THROW_CUSTOM_LINE(name, message, line, file) do{throw ::mc::MACE__GET_ERROR_NAME(name) ( std::string(MACE_FUNCTION_NAME) +  ": " + std::string(message), line, file);}while(0)
 #define MACE__THROW(name, message) MACE__THROW_CUSTOM_LINE(name, message, MACE_STRINGIFY_DEFINITION(__LINE__), __FILE__)
 

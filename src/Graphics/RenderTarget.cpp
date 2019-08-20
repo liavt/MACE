@@ -14,22 +14,13 @@ See LICENSE.md for full copyright information
 namespace mc {
 	namespace gfx {
 		void Renderer::init() {
-			parent->addListener<gfx::PreRenderEvent>([this](auto win) {
-				preRender(win);
+			parent->addListener<gfx::WindowResizedEvent>([this](const auto data){
+				this->currentWidth = data.width;
+				this->currentHeight = data.height;
 			});
 
 			onInit();
 		}
-
-		void Renderer::preRender(gfx::WindowModule* win) {
-			if (resized) {
-				const Vector<Pixels, 2> dimensions = win->getFramebufferSize();
-
-				resize(win, dimensions.x(), dimensions.y());
-
-				resized = false;
-			}
-		}//setUp
 
 		void Renderer::queue(Entity* const e, Painter& p) {
 			if (e == nullptr) {
@@ -42,19 +33,6 @@ namespace mc {
 			impl->painter = &p;
 			impl->init();
 		}//queue
-
-		void Renderer::flagResize() {
-			resized = true;
-		}//flagResize
-
-		void Renderer::resize(WindowModule* win, const Pixels width, const Pixels height) {
-			onResize(win, width, height);
-
-			this->currentWidth = width;
-			this->currentHeight = height;
-
-			resized = false;
-		}//resize
 
 		void Renderer::checkInput(gfx::WindowModule* win) {
 			const int mouseX = gfx::Input::getMouseX(), mouseY = gfx::Input::getMouseY();
@@ -108,10 +86,6 @@ namespace mc {
 
 		Pixels Renderer::getHeight() const {
 			return currentHeight;
-		}
-
-		bool Renderer::isResized() const {
-			return resized;
 		}
 
 		Painter::Painter() : entity(nullptr), impl(nullptr) {}

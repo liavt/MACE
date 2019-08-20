@@ -4,21 +4,34 @@ Copyright (c) 2016-2019 Liav Turkia
 See LICENSE.md for full copyright information
 */
 #include <MACE/Graphics/OGL/OGL.h>
+#include <MACE/Core/System.h>
 #include <memory>
 #include <string>
 #include <sstream>
+#include <iostream>
+
+#include <GLFW/glfw3.h>
+
 
 namespace mc {
 	namespace internal {
 		namespace ogl {
 			namespace {
 				Shader createShader(const Enum type, const char* sources[], const GLsizei sourceSize) {
+					MACE__BEGIN_OGL_FUNCTION;
 					Shader s = Shader(type);
 					s.init();
 					s.setSource(sourceSize, sources, nullptr);
 					s.compile();
 					return s;
 				}
+
+				struct ErrorInfo {
+					GLenum error;
+					std::string name;
+				};
+
+				std::stack<ErrorInfo> errorTrace;
 
 #ifdef MACE_DEBUG
 				void throwShaderError(const unsigned int shaderId, const Enum type, const std::string& message) {
@@ -42,45 +55,127 @@ namespace mc {
 					MACE__THROW(internal::ogl::Shader, "Error generating shader of type " + std::to_string(type));
 				}
 #endif//MACE_DEBUG
-			}//anon namespace
+				void populateErrorTrace(CString name) {
+					GLenum lastErrorCode = GL_NO_ERROR;
+					GLenum errorCode = GL_NO_ERROR;
 
-			void forceCheckGLError(const unsigned int line, const char* file, const char* inMessage) {
-				std::stringstream message{};
-
-				// in order not to potentially overflow it only shows up to 10 errors
-				Index errorAmount = 0;
-				Enum result = GL_NO_ERROR;
-				//have to use glad_glGetError instead of glGetError to prevent stack overflow
-				//see GLAD docs about the post- and pre- callbacks
-				while ((result = glad_glGetError()) != GL_NO_ERROR && (++errorAmount) < 10) {
-					if (errorAmount > 1) {
-						message << "\n";
-					}
-					message << inMessage << ": ";
-					switch (result) {
-#define MACE__GL_ERROR_DEF(error, errorName, mes) case error : message << errorName << ": " << mes; break
-						MACE__GL_ERROR_DEF(GL_INVALID_ENUM, MACE_STRINGIFY_NAME(GL_INVALID_ENUM), "An unacceptable value is specified for an enumerated argument");
-						MACE__GL_ERROR_DEF(GL_INVALID_VALUE, MACE_STRINGIFY_NAME(GL_INVALID_VALUE), "A numeric argument is out of range");
-						MACE__GL_ERROR_DEF(GL_INVALID_OPERATION, MACE_STRINGIFY_NAME(GL_INVALID_OPERATION), "The specified operation is not allowed in the current state");
-						MACE__GL_ERROR_DEF(GL_INVALID_FRAMEBUFFER_OPERATION, MACE_STRINGIFY_NAME(GL_INVALID_FRAMEBUFFER_OPERATION), "The command is trying to render to or read from the framebuffer while the currently bound framebuffer is not framebuffer complete (i.e. the return value from glCheckFramebufferStatus is not GL_FRAMEBUFFER_COMPLETE)");
-						MACE__GL_ERROR_DEF(GL_OUT_OF_MEMORY, MACE_STRINGIFY_NAME(GL_OUT_OF_MEMORY), "There is not enough memory left to execute the command");
-#undef MACE__GL_ERROR_DEF
-					MACE_UNLIKELY default:
-						message << "OpenGL has errored with an error code of" << result;
-						break;
+					// in order not to potentially overflow it only shows up to 10 errors
+					//have to use glad_glGetError instead of glGetError to prevent stack overflow
+					//see GLAD docs about the post- and pre- callbacks
+					while ((errorCode = glad_glGetError()) != GL_NO_ERROR && errorCode != lastErrorCode && errorTrace.size() < 10) {
+						errorTrace.push({errorCode, name});
+						lastErrorCode = errorCode;
 					}
 				}
+			}//anon namespace
 
-				/*
-				if glGetError initially returns GL_NO_ERROR, it short circuits and keeps
-				errorAmount at 0.
-				*/
-				if (errorAmount > 0) {
+			void debugMessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void*) {
+				std::stringstream output{};
+				output << id << ": [";
+				switch (source) {
+#define MACE__SOURCE_ENUM_DEF(name) case GL_DEBUG_SOURCE_##name : output << MACE_STRINGIFY(name); break
+					MACE__SOURCE_ENUM_DEF(API);
+					MACE__SOURCE_ENUM_DEF(WINDOW_SYSTEM);
+					MACE__SOURCE_ENUM_DEF(SHADER_COMPILER);
+					MACE__SOURCE_ENUM_DEF(THIRD_PARTY);
+					MACE__SOURCE_ENUM_DEF(APPLICATION);
+					MACE__SOURCE_ENUM_DEF(OTHER);
+#undef MACE__SOURCE_ENUM_DEF
+				}
+				output << "] [";
+
+				switch (severity) {
+#define MACE__SEVERITY_ENUM_DEF(name) case GL_DEBUG_SEVERITY_##name : output << MACE_STRINGIFY(name); break
+					MACE__SEVERITY_ENUM_DEF(HIGH);
+					MACE__SEVERITY_ENUM_DEF(MEDIUM);
+					MACE__SEVERITY_ENUM_DEF(LOW);
+					MACE__SEVERITY_ENUM_DEF(NOTIFICATION);
+#undef MACE__SEVERITY_ENUM_DEF
+				}
+				output << "] ";
+
+				switch (type) {
+#define MACE__TYPE_ENUM_DEF(name) case GL_DEBUG_TYPE_##name : output << MACE_STRINGIFY(name); break
+					MACE__TYPE_ENUM_DEF(ERROR);
+					MACE__TYPE_ENUM_DEF(DEPRECATED_BEHAVIOR);
+					MACE__TYPE_ENUM_DEF(UNDEFINED_BEHAVIOR);
+					MACE__TYPE_ENUM_DEF(PORTABILITY);
+					MACE__TYPE_ENUM_DEF(PERFORMANCE);
+					MACE__TYPE_ENUM_DEF(MARKER);
+					MACE__TYPE_ENUM_DEF(PUSH_GROUP);
+					MACE__TYPE_ENUM_DEF(POP_GROUP);
+					MACE__TYPE_ENUM_DEF(OTHER);
+#undef MACE__TYPE_ENUM_DEF
+				}
+
+				output << ": " << std::string(message, length);
+
+
+				switch (severity) {
+#define MACE__SEVERITY_COLOR(name, color) case GL_DEBUG_SEVERITY_##name : std::cout << mc::os::consoleColor(mc::os::ConsoleColor::color ); break
+					MACE__SEVERITY_COLOR(HIGH, LIGHT_RED);
+					MACE__SEVERITY_COLOR(MEDIUM, YELLOW);
+					MACE__SEVERITY_COLOR(LOW, GREEN);
+					MACE__SEVERITY_COLOR(NOTIFICATION, DEFAULT);
+#undef MACE__SEVERITY_COLOR
+				}
+
+				// std::endl is intentional here for the flush
+				std::cout << output.str() << os::consoleColor() << std::endl;
+			}
+
+#ifdef MACE_DEBUG
+			void preGladCallback(CString name, GLADapiproc, int, ...) {
+				if (glfwGetCurrentContext() == nullptr) {
+					errorTrace.push({GL_INVALID_OPERATION, (std::string("No context found before ") + name).c_str()});
+				} else {
+					populateErrorTrace((std::string("<before ") + name + ">").c_str());
+				}
+			}
+
+			void postGladCallback(void*, CString name, GLADapiproc, int, ...) {
+				populateErrorTrace(name);
+			}
+#endif
+
+			void forceCheckGLError(const unsigned int line, const char* file, const char* inMessage) {
+				populateErrorTrace("<unknown>");
+
+				if (!errorTrace.empty()) {
+					std::stringstream message{};
+
+					Index iterAmount = 0;
+					message << inMessage << "\nError trace:\n";
+					while (!errorTrace.empty()) {
+						if (iterAmount >= 1) {
+							message << "\n";
+						}
+						const ErrorInfo trace = errorTrace.top();
+						message << iterAmount << " - " << trace.name;
+						message << "\n\t[" << trace.error << "] ";
+						switch (trace.error) {
+#define MACE__GL_ERROR_DEF(error, errorName, mes) case error : message << errorName << ": " << mes; break
+							MACE__GL_ERROR_DEF(GL_INVALID_ENUM, MACE_STRINGIFY_NAME(GL_INVALID_ENUM), "An unacceptable value is specified for an enumerated argument");
+							MACE__GL_ERROR_DEF(GL_INVALID_VALUE, MACE_STRINGIFY_NAME(GL_INVALID_VALUE), "A numeric argument is out of range");
+							MACE__GL_ERROR_DEF(GL_INVALID_OPERATION, MACE_STRINGIFY_NAME(GL_INVALID_OPERATION), "The specified operation is not allowed in the current state");
+							MACE__GL_ERROR_DEF(GL_INVALID_FRAMEBUFFER_OPERATION, MACE_STRINGIFY_NAME(GL_INVALID_FRAMEBUFFER_OPERATION), "The command is trying to render to or read from the framebuffer while the currently bound framebuffer is not framebuffer complete (i.e. the return value from glCheckFramebufferStatus is not GL_FRAMEBUFFER_COMPLETE)");
+							MACE__GL_ERROR_DEF(GL_OUT_OF_MEMORY, MACE_STRINGIFY_NAME(GL_OUT_OF_MEMORY), "There is not enough memory left to execute the command");
+#undef MACE__GL_ERROR_DEF
+						}
+						errorTrace.pop();
+						++iterAmount;
+					}
+
+					std::cout << message.str();
+
 					MACE__THROW_CUSTOM_LINE(internal::ogl::OpenGL, message.str(), std::to_string(line), file);
+
 				}
 			}
 
 			void VertexArray::destroy() {
+				MACE__BEGIN_OGL_FUNCTION;
+
 				Object::destroy();
 
 				if (indices.isCreated()) {
@@ -105,6 +200,7 @@ namespace mc {
 			}
 
 			void VertexArray::storeDataInAttributeList(const unsigned int dataSize, const GLvoid* data, const GLuint location, const Byte attributeSize, const Enum type, const bool normalized) {
+				MACE__BEGIN_OGL_FUNCTION;
 				bind();
 
 				VertexBuffer buffer = VertexBuffer();
@@ -119,6 +215,7 @@ namespace mc {
 			}
 
 			void VertexArray::loadIndices(const unsigned int indiceNum, const unsigned int* indiceData) {
+				MACE__BEGIN_OGL_FUNCTION;
 				indices = ElementBuffer(indiceNum);
 				indices.init();
 				indices.bind();
@@ -126,6 +223,7 @@ namespace mc {
 			}
 
 			void VertexArray::addBuffer(const VertexBuffer& newBuffer) {
+				MACE__BEGIN_OGL_FUNCTION;
 				bind();
 				newBuffer.bind();
 				newBuffer.enable();
@@ -193,6 +291,10 @@ namespace mc {
 				glDeleteVertexArrays(length, ids);
 			}
 
+			const GLenum VertexArray::getNameTarget() const {
+				return GL_VERTEX_ARRAY;
+			}
+
 			UniformBuffer::UniformBuffer() noexcept : UniformBuffer("") {}
 
 			UniformBuffer::UniformBuffer(const char* n) noexcept : Buffer(GL_UNIFORM_BUFFER), name(n) {}
@@ -203,6 +305,7 @@ namespace mc {
 
 			void UniformBuffer::setName(const char* na) {
 				this->name = na;
+				ogl::Object::setName(na);
 			}
 
 			bool UniformBuffer::operator==(const UniformBuffer& other) const {
@@ -299,6 +402,10 @@ namespace mc {
 				glDeleteFramebuffers(length, ids);
 			}
 
+			const GLenum FrameBuffer::getNameTarget() const {
+				return GL_FRAMEBUFFER;
+			}
+
 			void RenderBuffer::setStorage(const Enum format, const GLsizei width, const GLsizei height) {
 				if (GLAD_GL_ARB_direct_state_access) {
 					glNamedRenderbufferStorage(id, format, width, height);
@@ -335,6 +442,10 @@ namespace mc {
 				glDeleteRenderbuffers(length, ids);
 			}
 
+			const GLenum RenderBuffer::getNameTarget() const {
+				return GL_RENDERBUFFER;
+			}
+
 			void Object::init() {
 				initIndices(&id, 1);
 			}
@@ -354,6 +465,14 @@ namespace mc {
 
 			GLuint Object::getID() const {
 				return id;
+			}
+
+			void Object::setName(CString name) {
+#ifdef MACE_DEBUG
+				if (GLAD_GL_KHR_debug) {
+					glObjectLabel(getNameTarget(), id, -1, name);
+				}
+#endif
 			}
 
 			void Object::init(Object* objects[], const GLsizei length) {
@@ -416,6 +535,7 @@ namespace mc {
 			}
 
 			void Texture2D::createStorage(GLsizei w, GLsizei h, Enum type, Enum format, Enum internalFormat, GLint mipmapLevels) {
+				MACE__BEGIN_OGL_FUNCTION;
 				if (GLAD_GL_ARB_texture_storage) {
 					if (GLAD_GL_ARB_direct_state_access) {
 						glTextureStorage2D(id, mipmapLevels, internalFormat, w, h);
@@ -521,6 +641,10 @@ namespace mc {
 
 			void Texture2D::destroyIndices(const GLuint ids[], const GLsizei length) const {
 				glDeleteTextures(length, ids);
+			}
+
+			const GLenum Texture2D::getNameTarget() const {
+				return GL_TEXTURE;
 			}
 
 			Buffer::Buffer(const Enum type) noexcept : bufferType(type) {}
@@ -647,6 +771,10 @@ namespace mc {
 
 			void Buffer::destroyIndices(const GLuint ids[], const GLsizei length) const {
 				glDeleteBuffers(length, ids);
+			}
+
+			const GLenum Buffer::getNameTarget() const {
+				return GL_BUFFER;
 			}
 
 			VertexBuffer::VertexBuffer() noexcept : Buffer(GL_ARRAY_BUFFER) {}
@@ -786,6 +914,7 @@ namespace mc {
 
 
 			void Shader::compile() {
+				MACE__BEGIN_OGL_FUNCTION;
 				if (type == GL_FALSE) {
 					MACE__THROW(internal::ogl::Shader, "Shader must have a type before compile() is called");
 				}
@@ -828,12 +957,20 @@ namespace mc {
 
 			void Shader::destroyIndices(const GLuint[], const GLsizei) const {}
 
+			const GLenum Shader::getNameTarget() const {
+				return GL_SHADER;
+			}
+
 			void ShaderProgram::bindIndex(const GLuint ID) const {
 				glUseProgram(ID);
 			}
 
 			void ShaderProgram::initIndices(GLuint[], const GLsizei) const {}
 			void ShaderProgram::destroyIndices(const GLuint[], const GLsizei) const {}
+
+			const GLenum ShaderProgram::getNameTarget() const {
+				return GL_PROGRAM;
+			}
 
 			void ShaderProgram::init() {
 				id = glCreateProgram();
@@ -843,6 +980,7 @@ namespace mc {
 				}
 			}
 			void ShaderProgram::destroy() {
+				MACE__BEGIN_OGL_FUNCTION;
 				if (id > 0) {
 					unbind();
 					for (auto s : shaders) {
@@ -854,6 +992,7 @@ namespace mc {
 				}
 			}
 			void ShaderProgram::link() {
+				MACE__BEGIN_OGL_FUNCTION;
 				glLinkProgram(id);
 
 				if (!isLinked()) {
@@ -947,6 +1086,7 @@ namespace mc {
 			}
 
 			void ShaderProgram::createUniformBuffer(const char* name, const GLint location) {
+				MACE__BEGIN_OGL_FUNCTION;
 				UniformBufferData out = UniformBufferData();
 
 				if (location >= 0) {
@@ -1015,6 +1155,7 @@ namespace mc {
 			}
 
 			void ShaderProgram::bindUniformBuffers(const UniformBuffer* bufs[], const Size size) {
+				MACE__BEGIN_OGL_FUNCTION;
 				if (GLAD_GL_ARB_multi_bind) {
 					std::vector<GLuint> ids = std::vector<GLuint>(size);
 					for (Index i = 0; i < size; ++i) {
@@ -1241,6 +1382,21 @@ namespace mc {
 
 			std::unordered_map<std::string, int>& ShaderProgram::getUniforms() {
 				return uniforms;
+			}
+
+			DebugGroup::DebugGroup(CString n) : name(n) {
+				if (GLAD_GL_KHR_debug) {
+					//dont want the pre-callback to throw an exception before the debug group was pushed
+					glad_glPushDebugGroup(GL_DEBUG_SOURCE_APPLICATION, 1, -1, name);
+				}
+				populateErrorTrace((std::string("<before ") + name + ">").c_str());
+			}
+
+			DebugGroup::~DebugGroup() {
+				populateErrorTrace((std::string("<after ") + name + ">").c_str());
+				if (GLAD_GL_KHR_debug) {
+					glad_glPopDebugGroup();
+				}
 			}
 		}//ogl
 	}//internal

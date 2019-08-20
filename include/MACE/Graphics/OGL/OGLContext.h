@@ -71,8 +71,6 @@ namespace mc {
 
 				void processDispatchQueue();
 
-				void bindCurrentTarget();
-
 				void preRender(gfx::WindowModule* win);
 			};
 		}//ogl

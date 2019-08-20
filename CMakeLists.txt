@@ -329,11 +329,18 @@ if(NOT ${GLFW_FOUND})
 	endif()
 endif()
 
-add_library(glad "${CMAKE_CURRENT_SOURCE_DIR}/external/glad/src/gl.c")
-target_include_directories(glad PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/external/glad/include")
+# Generator permalink:
+# http://gen.glad.sh/#profile=gl%3Dcore%2Cgles1%3Dcommon&api=gl%3D3.3&extensions=GL_ARB_buffer_storage%2CGL_ARB_direct_state_access%2CGL_ARB_invalidate_subdata%2CGL_ARB_multi_bind%2CGL_ARB_texture_storage%2CGL_EXT_direct_state_access%2CGL_KHR_debug&options=ALIAS&generator=c
+add_library(glad-release "${CMAKE_CURRENT_SOURCE_DIR}/external/glad/src/gl.c")
+target_include_directories(glad-release PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/external/glad/include")
 
-set(GLAD_LIBRARY "glad")
-set(GLAD_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/external/glad/include")
+# Generator permalink:
+# http://gen.glad.sh/#profile=gl%3Dcore%2Cgles1%3Dcommon&api=gl%3D3.3&extensions=GL_ARB_buffer_storage%2CGL_ARB_direct_state_access%2CGL_ARB_invalidate_subdata%2CGL_ARB_multi_bind%2CGL_ARB_texture_storage%2CGL_EXT_direct_state_access%2CGL_KHR_debug&options=ALIAS%2CDEBUG&generator=c 
+add_library(glad-debug "${CMAKE_CURRENT_SOURCE_DIR}/external/glad-debug/src/gl.c")
+target_include_directories(glad-debug PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/external/glad-debug/include")
+
+set(GLAD_LIBRARY "$<IF:$<CONFIG:DEBUG>,glad-debug,glad-release>")
+set(GLAD_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/external/glad$<$<CONFIG:DEBUG>:-debug>/include")
 
 if(NOT ${FREETYPE_FOUND})
 	if(NOT MACE_DOWNLOAD_DEPENDENCIES)

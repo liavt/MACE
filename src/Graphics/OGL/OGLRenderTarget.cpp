@@ -29,8 +29,33 @@ namespace mc {
 			Renderer::Renderer(std::shared_ptr<Context> context) : Dispatchable(context) {}
 
 			void Renderer::onInit() {
-				parent->addListener<gfx::PreRenderEvent>([this](auto win){
-					preRender(win);
+				parent->addListener<gfx::WindowResizedEvent>([this](const auto data) {
+					dispatch([this, data]() {
+						MACE__BEGIN_OGL_FUNCTION;
+						frameBuffer.destroy();
+						{
+							Object* renderBuffers[] = {
+								&sceneBuffer,
+								&idBuffer,
+								&dataBuffer,
+								&depthStencilBuffer
+							};
+
+							RenderBuffer::destroy(renderBuffers, 4);
+						}
+
+						//if the window is iconified, width and height will be 0. we cant create a framebuffer of size 0, so we make it 1 instead
+
+						ogl::setViewport(0, 0, math::max<Pixels>(1, data.width), math::max<Pixels>(1, data.height));
+
+						generateFramebuffer(math::max<Pixels>(1, data.width), math::max<Pixels>(1, data.height));
+
+						ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error resizing framebuffer for renderer");
+					});
+				});
+
+				parent->addListener<gfx::PreRenderEvent>([this](auto) {
+					preRender();
 				});
 
 				parent->addListener<gfx::PostRenderEvent>([this](auto win) {
@@ -38,136 +63,119 @@ namespace mc {
 				});
 			}
 
-			void Renderer::preRender(gfx::WindowModule*) {
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: An error occured before onSetUp");
+			void Renderer::preRender() {
+				dispatch([this]() {
+					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: An error occured before onSetUp");
 
-				ogl::resetBlending();
+					ogl::resetBlending();
 
-				frameBuffer.bind();
+					frameBuffer.bind();
 
-				MACE_CONSTEXPR const Enum buffers[] = {
-					GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX,
-					GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX,
-					GL_COLOR_ATTACHMENT0 + MACE__DATA_ATTACHMENT_INDEX
-				};
-
-				frameBuffer.setDrawBuffers(3, buffers);
-
-				glClearBufferfi(GL_DEPTH_STENCIL, 0, 0.0f, 0);
-
-				glClearBufferfv(GL_COLOR, MACE__SCENE_ATTACHMENT_INDEX, clearColor.begin());
-
-				MACE_CONSTEXPR const GLuint idClearValue = 0;
-
-				glClearBufferuiv(GL_COLOR, MACE__ID_ATTACHMENT_INDEX, &idClearValue);
-
-				MACE_CONSTEXPR const float dataClearValues[] = {
-					0.0f,
-					0.0f,
-					0.0f,
-					0.0f
-				};
-
-				glClearBufferfv(GL_COLOR, MACE__DATA_ATTACHMENT_INDEX, dataClearValues);
-
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to clear framebuffer");
-			}
-
-			void Renderer::postRender(gfx::WindowModule* win) {
-				ogl::checkGLError(__LINE__, __FILE__, "Error occured during rendering");
-
-				//frameBuffer.unbind();
-
-				const Vector<Pixels, 2> size = win->getWindowSize();
-
-				if (GLAD_GL_ARB_direct_state_access) {
-					glNamedFramebufferReadBuffer(frameBuffer.getID(), GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
-					//glNamedFramebufferDrawBuffer(frameBuffer.getID(), GL_COLOR_ATTACHMENT0 + MACE__DATA_ATTACHMENT_INDEX);
-					//glNamedFramebufferDrawBuffer(0, GL_FRONT);
-				} else {
-					glBindFramebuffer(GL_READ_FRAMEBUFFER, frameBuffer.getID());
-					ogl::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
-				}
-
-				glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-				ogl::FrameBuffer::setDrawBuffer(GL_FRONT);
-
-				if (GLAD_GL_ARB_invalidate_subdata) {
-					MACE_CONSTEXPR const Enum buffers[] = {
-						GL_COLOR
-					};
-
-					glInvalidateFramebuffer(GL_DRAW_FRAMEBUFFER, os::getArraySize<GLsizei>(buffers), buffers);
-				}
-
-				if (GLAD_GL_ARB_direct_state_access) {
-					glBlitNamedFramebuffer(frameBuffer.getID(), 0, 0, 0, size[0], size[1], 0, 0, size[0], size[1], GL_COLOR_BUFFER_BIT, GL_NEAREST);
-				} else {
-					glBlitFramebuffer(0, 0, size[0], size[1], 0, 0, size[0], size[1], GL_COLOR_BUFFER_BIT, GL_NEAREST);
-				}
-
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to tear down renderer");
-
-				//glfwSwapBuffers(win->getGLFWWindow());
-
-				if (GLAD_GL_ARB_invalidate_subdata) {
 					MACE_CONSTEXPR const Enum buffers[] = {
 						GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX,
 						GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX,
 						GL_COLOR_ATTACHMENT0 + MACE__DATA_ATTACHMENT_INDEX
 					};
 
-					if (GLAD_GL_ARB_direct_state_access) {
-						glInvalidateNamedFramebufferData(frameBuffer.getID(), os::getArraySize<GLsizei>(buffers), buffers);
-					} else {
-						//our framebuffer was bound to GL_READ_FRAMEBUFFER in the previous if statement for blitting
-						glInvalidateFramebuffer(GL_READ_FRAMEBUFFER, os::getArraySize<GLsizei>(buffers), buffers);
-					}
-				}
+					FrameBuffer::setDrawBuffers(3, buffers);
 
-				glFlush();
+					glClearBufferfi(GL_DEPTH_STENCIL, 0, 0.0f, 0);
 
-				ogl::forceCheckGLError(__LINE__, __FILE__, "An OpenGL error occurred during a rendering frame");
-			}
+					glClearBufferfv(GL_COLOR, MACE__SCENE_ATTACHMENT_INDEX, clearColor.begin());
 
-			void Renderer::onResize(gfx::WindowModule*, const Pixels width, const Pixels height) {
-				frameBuffer.destroy();
-				{
-					Object* renderBuffers[] = {
-						&sceneBuffer,
-						&idBuffer,
-						&dataBuffer,
-						&depthStencilBuffer
+					MACE_CONSTEXPR const GLuint idClearValue = 0;
+
+					glClearBufferuiv(GL_COLOR, MACE__ID_ATTACHMENT_INDEX, &idClearValue);
+
+					MACE_CONSTEXPR const float dataClearValues[] = {
+						0.0f,
+						0.0f,
+						0.0f,
+						0.0f
 					};
 
-					RenderBuffer::destroy(renderBuffers, 4);
-				}
+					glClearBufferfv(GL_COLOR, MACE__DATA_ATTACHMENT_INDEX, dataClearValues);
 
-				//if the window is iconified, width and height will be 0. we cant create a framebuffer of size 0, so we make it 1 instead
+					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to clear framebuffer");
+				});
+			}
 
-				ogl::setViewport(0, 0, math::max<Pixels>(1, width), math::max<Pixels>(1, height));
+			void Renderer::postRender(gfx::WindowModule* win) {
+				dispatch([this, win]() {
+					ogl::checkGLError(__LINE__, __FILE__, "Error occured during rendering");
 
-				generateFramebuffer(math::max<Pixels>(1, width), math::max<Pixels>(1, height));
+					//frameBuffer.unbind();
 
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error resizing framebuffer for renderer");
+					const Vector<Pixels, 2> size = win->getWindowSize();
+
+					if (GLAD_GL_ARB_direct_state_access) {
+						glNamedFramebufferReadBuffer(frameBuffer.getID(), GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
+						//glNamedFramebufferDrawBuffer(frameBuffer.getID(), GL_COLOR_ATTACHMENT0 + MACE__DATA_ATTACHMENT_INDEX);
+						//glNamedFramebufferDrawBuffer(0, GL_FRONT);
+					} else {
+						glBindFramebuffer(GL_READ_FRAMEBUFFER, frameBuffer.getID());
+						ogl::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX);
+					}
+
+					glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+					ogl::FrameBuffer::setDrawBuffer(GL_FRONT);
+
+					if (GLAD_GL_ARB_invalidate_subdata) {
+						MACE_CONSTEXPR const Enum buffers[] = {
+							GL_COLOR
+						};
+
+						glInvalidateFramebuffer(GL_DRAW_FRAMEBUFFER, os::getArraySize<GLsizei>(buffers), buffers);
+					}
+
+					if (GLAD_GL_ARB_direct_state_access) {
+						glBlitNamedFramebuffer(frameBuffer.getID(), 0, 0, 0, size[0], size[1], 0, 0, size[0], size[1], GL_COLOR_BUFFER_BIT, GL_NEAREST);
+					} else {
+						glBlitFramebuffer(0, 0, size[0], size[1], 0, 0, size[0], size[1], GL_COLOR_BUFFER_BIT, GL_NEAREST);
+					}
+
+					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Failed to tear down renderer");
+
+					//glfwSwapBuffers(win->getGLFWWindow());
+
+					if (GLAD_GL_ARB_invalidate_subdata) {
+						MACE_CONSTEXPR const Enum buffers[] = {
+							GL_COLOR_ATTACHMENT0 + MACE__SCENE_ATTACHMENT_INDEX,
+							GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX,
+							GL_COLOR_ATTACHMENT0 + MACE__DATA_ATTACHMENT_INDEX
+						};
+
+						if (GLAD_GL_ARB_direct_state_access) {
+							glInvalidateNamedFramebufferData(frameBuffer.getID(), os::getArraySize<GLsizei>(buffers), buffers);
+						} else {
+							//our framebuffer was bound to GL_READ_FRAMEBUFFER in the previous if statement for blitting
+							glInvalidateFramebuffer(GL_READ_FRAMEBUFFER, os::getArraySize<GLsizei>(buffers), buffers);
+						}
+					}
+
+					glFlush();
+
+					ogl::forceCheckGLError(__LINE__, __FILE__, "An OpenGL error occurred during a rendering frame");
+				});
 			}
 
 			void Renderer::onDestroy() {
-				frameBuffer.destroy();
+				dispatch([this]() {
+					frameBuffer.destroy();
 
-				{
-					Object* renderBuffers[] = {
-						&sceneBuffer,
-						&idBuffer,
-						&dataBuffer,
-						&depthStencilBuffer
-					};
+					{
+						Object* renderBuffers[] = {
+							&sceneBuffer,
+							&idBuffer,
+							&dataBuffer,
+							&depthStencilBuffer
+						};
 
-					RenderBuffer::destroy(renderBuffers, 4);
-				}
+						RenderBuffer::destroy(renderBuffers, 4);
+					}
 
-				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error destroying OGL Render Target");
-
+					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error destroying OGL Render Target");
+				});
 			}
 
 			void Renderer::onQueue(gfx::Entity*) {}
@@ -189,22 +197,27 @@ namespace mc {
 				}
 
 				depthStencilBuffer.setStorage(GL_DEPTH_STENCIL, width, height);
+				depthStencilBuffer.setName("Depth-Stencil buffer");
 
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating depth buffers for renderer");
 
 				sceneBuffer.setStorage(GL_RGBA, width, height);
+				sceneBuffer.setName("Scene buffer");
 
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating scene texture for renderer");
 
 				idBuffer.setStorage(GL_R32UI, width, height);
+				idBuffer.setName("ID buffer");
 
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating id texture for renderer");
 
 				dataBuffer.setStorage(GL_RGBA, width, height);
+				dataBuffer.setName("Data buffer");
 
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating data texture for renderer");
 
 				frameBuffer.init();
+				frameBuffer.setName("Render Target");
 				frameBuffer.bind();
 
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating FrameBuffer for the renderer");
@@ -269,7 +282,7 @@ namespace mc {
 					ogl::FrameBuffer::setReadBuffer(GL_COLOR_ATTACHMENT0 + MACE__ID_ATTACHMENT_INDEX);
 				}
 				//opengl y-axis is inverted from window coordinates
-				frameBuffer.readPixels(x, getHeight() - y, w, h, GL_RED_INTEGER, GL_UNSIGNED_INT, arr);
+				ogl::FrameBuffer::readPixels(x, getHeight() - y, w, h, GL_RED_INTEGER, GL_UNSIGNED_INT, arr);
 
 				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error getting Entity from index buffer");
 			}
@@ -296,7 +309,9 @@ namespace mc {
 				}
 
 				//opengl y-axis is inverted from window coordinates
-				frameBuffer.readPixels(x, getHeight() - y, w, h, GL_RGBA, GL_FLOAT, arr);
+				ogl::FrameBuffer::readPixels(x, getHeight() - y, w, h, GL_RGBA, GL_FLOAT, arr);
+
+				ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error reading pixels");
 			}
 
 			std::shared_ptr<gfx::PainterImpl> Renderer::createPainterImpl() {
@@ -316,6 +331,8 @@ namespace mc {
 
 					createPainterData();
 					createEntityData();
+
+					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error creating painter");
 				});
 			}
 
@@ -370,6 +387,8 @@ namespace mc {
 					};
 
 					UniformBuffer::destroy(buffers, 2);
+
+					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error destroying painter");
 				});
 			}
 
@@ -434,6 +453,8 @@ namespace mc {
 #undef MACE__DATA_RANGE_ENTRY
 
 					savedState = state;
+
+					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error loading painter settings");
 				});
 			}
 
