@@ -29,6 +29,8 @@ namespace mc {
 				MACE__THROW(OutOfBounds, "Width of a Texture cannot be zero");
 			} else if (desc.height == 0) {
 				MACE__THROW(OutOfBounds, "Height of a Texture cannot be zero");
+			} else if (desc.magFilter == TextureDesc::Filter::MIPMAP_LINEAR || desc.magFilter == TextureDesc::Filter::MIPMAP_NEAREST) {
+				MACE__THROW(InvalidType, "Texture magnification filter can't be mipmapped");
 			}
 
 			//the old texture will be deallocated, and its destructor will be called and decrement ref count

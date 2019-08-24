@@ -114,7 +114,7 @@ namespace mc {
 			desc.wrapS = wrap;
 			desc.wrapT = wrap;
 			desc.minFilter = TextureDesc::Filter::MIPMAP_LINEAR;
-			desc.magFilter = TextureDesc::Filter::NEAREST;
+			//desc.magFilter = TextureDesc::Filter::NEAREST;
 			tex.init(this, desc);
 
 			tex.setData(image.get());
@@ -145,9 +145,9 @@ namespace mc {
 		}
 
 		Model GraphicsContextComponent::getQuad() {
-			return parent->getOrCreateComponent<CacheComponent<Model>>()->getOrCreate(MACE__RESOURCE_QUAD, []() {
+			return parent->getOrCreateComponent<CacheComponent<Model>>()->getOrCreate(MACE__RESOURCE_QUAD, [this]() {
 				Model model = Model();
-				model.init();
+				model.init(this);
 
 				MACE_CONSTEXPR const float squareTextureCoordinates[8] = {
 					0.0f,1.0f,

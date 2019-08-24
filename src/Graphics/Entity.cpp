@@ -26,8 +26,6 @@ namespace mc {
 
 		void Component::clean(Metrics&) {}
 
-		void Component::hover() {}
-
 		bool Component::isDone() const {
 			return false;
 		}
@@ -157,8 +155,6 @@ namespace mc {
 
 		void Entity::onClean() {}
 
-		void Entity::onHover() {}
-
 		Entity* const Entity::getParent() {
 			return parent;
 		}
@@ -259,20 +255,6 @@ namespace mc {
 				}
 			}
 
-		}
-
-		void Entity::hover() {
-			onHover();
-			for (auto com : components) {
-				com.second->hover();
-			}
-
-			//propagate upwards
-			Entity* par = getParent();
-			while (par != nullptr) {
-				par->hover();
-				par = par->getParent();
-			}
 		}
 
 		void Entity::clean() {

@@ -5,14 +5,13 @@ See LICENSE.md for full copyright information
 */
 #include <MACE/Graphics/Model.h>
 #include <MACE/Core/Error.h>
-#include <MACE/Graphics/Window.h>
 #include <MACE/Graphics/Context.h>
 
 namespace mc {
 	namespace gfx {
 #define MACE__VERIFY_MODEL_INIT() MACE_ASSERT(model != nullptr, "This Model has not had init() called yet")
 
-		bool ModelImpl::operator==(const ModelImpl & other) const {
+		bool ModelImpl::operator==(const ModelImpl& other) const {
 			return primitiveType == other.primitiveType;
 		}
 
@@ -22,12 +21,16 @@ namespace mc {
 
 		Model::Model() : model(nullptr) {}
 
+		Model::Model(GraphicsContextComponent* context) : Model() {
+			init(context);
+		}
+
 		Model::Model(const std::shared_ptr<ModelImpl> mod) : model(mod) {}
 
 		Model::Model(const Model& other) : model(other.model) {}
 
-		void Model::init() {
-			model = gfx::getCurrentWindow()->getComponent<GraphicsContextComponent>()->createModelImpl();
+		void Model::init(GraphicsContextComponent* context) {
+			model = context->createModelImpl();
 		}
 
 		void Model::destroy() {

@@ -42,7 +42,7 @@ namespace mc {
 				Entity* hovered = rootComponent->getEntityByID(getEntityAt(static_cast<Pixels>(mouseX), static_cast<Pixels>(mouseY)));
 
 				if (hovered != nullptr && !hovered->needsRemoval()) {
-					hovered->hover();
+					hovered->callListeners<HoverEvent>();
 				}
 			}
 		}//checkInput

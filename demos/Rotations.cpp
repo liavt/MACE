@@ -17,12 +17,12 @@ class TestComponent: public gfx::Component {
 
 	void init() override {
 		parent->getComponent<gfx::TextureComponent<>>()->getTexture().setHue(Color((rand() % 10) / 10.0f, (rand() % 10) / 10.0f, (rand() % 10) / 10.0f, 0.5f));
-	}
 
-	void hover() override {
-		if (gfx::Input::isKeyDown(gfx::Input::MOUSE_LEFT)) {
-			parent->rotate(0.0f, 0.0f, 0.01f);
-		}
+		parent->addListener<gfx::HoverEvent>([this]() {
+			if (gfx::Input::isKeyDown(gfx::Input::MOUSE_LEFT)) {
+				parent->rotate(0.0f, 0.0f, 0.01f);
+			}
+		});
 	}
 };
 

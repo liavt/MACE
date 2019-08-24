@@ -126,9 +126,9 @@ namespace mc {
 			SimpleSlider() noexcept;
 			SimpleSlider(const Progress minimum, const Progress maximum, const Progress progress = 0) noexcept;
 		private:
+			void onInit() override;
 			void onRender(Painter& p) override;
 			void onClick() override;
-			void onHover() override;
 		};//SimpleSlider
 
 		//TEXT IS UP AHEAD

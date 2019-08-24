@@ -416,10 +416,6 @@ namespace mc {
 			destroyCallback(parent);
 		}
 
-		void CallbackComponent::hover() {
-			hoverCallback(parent);
-		}
-
 		void CallbackComponent::clean(Metrics& metrics) {
 			cleanCallback(parent, metrics);
 		}
@@ -429,8 +425,6 @@ namespace mc {
 		MACE_GETTER_SETTER_DEF(CallbackComponent, UpdateCallback, updateCallback, CallbackComponent::CallbackPtr);
 
 		MACE_GETTER_SETTER_DEF(CallbackComponent, RenderCallback, renderCallback, CallbackComponent::CallbackPtr);
-
-		MACE_GETTER_SETTER_DEF(CallbackComponent, HoverCallback, hoverCallback, CallbackComponent::CallbackPtr);
 
 		MACE_GETTER_SETTER_DEF(CallbackComponent, CleanCallback, cleanCallback, CallbackComponent::CleanPtr);
 
@@ -456,10 +450,6 @@ namespace mc {
 			return cleansPerSecond;
 		}
 
-		unsigned int FPSComponent::getHoversPerSecond() const {
-			return hoversPerSecond;
-		}
-
 		void FPSComponent::setTickCallback(const TickCallback callback) {
 			tickCallback = callback;
 		}
@@ -475,9 +465,8 @@ namespace mc {
 		bool FPSComponent::operator==(const FPSComponent& other) const {
 			return Component::operator==(other) && updatesPerSecond == other.updatesPerSecond
 				&& framesPerSecond == other.framesPerSecond && cleansPerSecond == other.framesPerSecond
-				&& hoversPerSecond == other.hoversPerSecond
 				&& lastTime == other.lastTime && nbUpdates == other.nbUpdates && nbFrames == other.nbFrames
-				&& nbCleans == other.nbCleans && nbHovers == other.nbHovers;
+				&& nbCleans == other.nbCleans;
 		}
 
 		bool FPSComponent::operator!=(const FPSComponent& other) const {
@@ -494,12 +483,10 @@ namespace mc {
 				updatesPerSecond = nbUpdates;
 				framesPerSecond = nbFrames;
 				cleansPerSecond = nbCleans;
-				hoversPerSecond = nbHovers;
 
 				nbFrames = 0;
 				nbUpdates = 0;
 				nbCleans = 0;
-				nbHovers = 0;
 
 				lastTime = std::chrono::steady_clock::now();
 
@@ -513,10 +500,6 @@ namespace mc {
 
 		void FPSComponent::clean(Metrics&) {
 			++nbCleans;
-		}
-
-		void FPSComponent::hover() {
-			++nbHovers;
 		}
 
 		void FPSComponent::destroy() {}
@@ -875,12 +858,6 @@ namespace mc {
 		}
 
 		void ComponentQueue::destroy() {}
-
-		void ComponentQueue::hover() {
-			if (!components.empty()) {
-				components.front()->hover();
-			}
-		}
 
 		void ComponentQueue::clean(Metrics& metrics) {
 			if (!components.empty()) {

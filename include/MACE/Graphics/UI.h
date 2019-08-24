@@ -17,7 +17,6 @@ namespace mc {
 			NineSliceComponent nineSlice;
 
 			void onInit() override final;
-			void onHover() override final;
 			void onRender(Painter& p) override final;
 		};
 	}//gfx

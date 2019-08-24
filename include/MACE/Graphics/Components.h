@@ -135,7 +135,6 @@ namespace mc {
 			void update() final;
 			void render() final;
 			void destroy() final;
-			void hover() final;
 			void clean(Metrics& metrics) final;
 			bool isDone() const final;
 		private:
@@ -255,8 +254,6 @@ namespace mc {
 
 			MACE_GETTER_SETTER_DEC(DestroyCallback, CallbackPtr);
 
-			MACE_GETTER_SETTER_DEC(HoverCallback, CallbackPtr);
-
 			MACE_GETTER_SETTER_DEC(CleanCallback, CleanPtr);
 
 			bool operator==(const CallbackComponent& other) const;
@@ -266,13 +263,11 @@ namespace mc {
 			void update() final;
 			void render() final;
 			void destroy() final;
-			void hover() final;
 			void clean(Metrics& metrics) final;
 		private:
 			CallbackPtr destroyCallback = [](Entity*) {},
 				renderCallback = [](Entity*) {},
 				initCallback = [](Entity*) {},
-				hoverCallback = [](Entity*) {},
 				updateCallback = [](Entity*) {};
 			CleanPtr cleanCallback = [](Entity*, Metrics&) {};
 		};//CallbackEntity
@@ -284,7 +279,6 @@ namespace mc {
 			unsigned int getUpdatesPerSecond() const;
 			unsigned int getFramesPerSecond() const;
 			unsigned int getCleansPerSecond() const;
-			unsigned int getHoversPerSecond() const;
 
 			void setTickCallback(const TickCallback callback);
 			TickCallback getTickCallback();
@@ -296,7 +290,6 @@ namespace mc {
 			unsigned int updatesPerSecond = 0, nbUpdates = 0;
 			unsigned int framesPerSecond = 0, nbFrames = 0;
 			unsigned int cleansPerSecond = 0, nbCleans = 0;
-			unsigned int hoversPerSecond = 0, nbHovers = 0;
 
 			TickCallback tickCallback = [](FPSComponent*, Entity*) {};
 
@@ -306,7 +299,6 @@ namespace mc {
 			void update() final;
 			void render() final;
 			void clean(Metrics& metrics) final;
-			void hover() final;
 			void destroy() final;
 		};//FPSComponent
 

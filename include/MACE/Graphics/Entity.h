@@ -156,11 +156,6 @@ namespace mc {
 			virtual void clean(Metrics& metrics);
 
 			/**
-			@rendercontext
-			*/
-			virtual void hover();
-
-			/**
 			Calculate whether this `Component` has finished performing whatever functionality it needed.
 			<br>
 			This is used to implement timed events like tweening or easing.
@@ -175,6 +170,7 @@ namespace mc {
 
 		enum class EventPolicy: Byte {
 			PROPAGATE_DOWNARDS = 0x01,
+			PROPAGATE_UPWARDS = 0x02,
 
 			NONE = 0x00,
 			DEFAULT = NONE
@@ -183,18 +179,17 @@ namespace mc {
 	}//gfx
 
 	namespace internal {
-		template<typename Arg, gfx::EventPolicy Policy>
+		template<gfx::EventPolicy Policy, typename... Args>
 		struct MACE_NOVTABLE Event {
 		public:
-			using ListenerType = std::function<void(Arg)>;
-			using ArgumentType = Arg;
+			using ListenerType = std::function<void(Args...)>;
 
 			static MACE_CONSTEXPR const gfx::EventPolicy POLICY = Policy;
 		};
 	}//internal
 
-#define MACE_CREATE_EVENT_WITH_POLICY(name, arg, policy) struct name : public MACE__INTERNAL_NS::Event<arg, ::mc::gfx::policy> {}
-#define MACE_CREATE_EVENT(name, arg) MACE_CREATE_EVENT_WITH_POLICY(name, arg, EventPolicy::NONE)
+#define MACE_CREATE_EVENT_WITH_POLICY(name, args, policy) struct name : public MACE__INTERNAL_NS::Event<::mc::gfx::policy, args> {}
+#define MACE_CREATE_EVENT(name, args) MACE_CREATE_EVENT_WITH_POLICY(name, args, EventPolicy::NONE)
 
 	namespace internal {
 		template<typename EventType>
@@ -204,9 +199,10 @@ namespace mc {
 				listeners.push_back(listener);
 			}
 
-			void call(typename EventType::ArgumentType arg) {
+			template<typename... Args>
+			void call(Args... args) {
 				for (const auto listener : listeners) {
-					listener(arg);
+					listener(args...);
 				}
 			}
 		private:
@@ -575,16 +571,23 @@ namespace mc {
 				getOrCreateComponent<MACE__INTERNAL_NS::EventComponent<EventType>>()->addListener(listener);
 			}
 
-			template<typename EventType>
-			void callListeners(typename EventType::ArgumentType arg) {
+			template<typename EventType, typename... Args>
+			void callListeners(Args... args) {
 				auto listenerCom = getComponent<MACE__INTERNAL_NS::EventComponent<EventType>>();
 				if (listenerCom != nullptr) {
-					listenerCom->call(arg);
+					listenerCom->call(args...);
 				}
 
 				MACE_IF_CONSTEXPR((static_cast<Byte>(EventType::POLICY) & static_cast<Byte>(EventPolicy::PROPAGATE_DOWNARDS)) != static_cast<Byte>(EventPolicy::NONE)) {
 					for (auto child : children) {
-						child->callListeners<EventType>(arg);
+						child->callListeners<EventType>(args...);
+					}
+				}
+
+				MACE_IF_CONSTEXPR((static_cast<Byte>(EventType::POLICY) & static_cast<Byte>(EventPolicy::PROPAGATE_UPWARDS)) != static_cast<Byte>(EventPolicy::NONE)) {
+					auto par = getParent();
+					if (par != nullptr) {
+						par->callListeners<EventType>(args...);
 					}
 				}
 			}
@@ -729,12 +732,6 @@ namespace mc {
 			*/
 			void tween(const Transformation dest);
 
-			/**
-			@internal
-			@rendercontext
-			*/
-			virtual void hover();
-
 		protected:
 			/**
 			Should be called a by `Entity` when `MACE.update()` is called. Calls `onUpdate()`.
@@ -809,14 +806,6 @@ namespace mc {
 			@rendercontext
 			*/
 			virtual void onClean();
-
-			/**
-			@internal
-			@rendercontext
-			*/
-			virtual void onHover();
-
-
 
 			/**
 			Retrieves the `Entity's` properties as a `ByteField`

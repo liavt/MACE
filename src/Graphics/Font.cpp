@@ -5,6 +5,7 @@ See LICENSE.md for full copyright information
 */
 #include <MACE/Graphics/Font.h>
 #include <MACE/Graphics/Window.h>
+#include <MACE/Graphics/Context.h>
 
 namespace mc {
 	namespace internal {

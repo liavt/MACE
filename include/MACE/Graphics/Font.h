@@ -9,7 +9,7 @@ See LICENSE.md for full copyright information
 #define MACE__GRAPHICS_FONT_H
 
 #include <MACE/Core/Interfaces.h>
-#include <MACE/Graphics/Context.h>
+#include <MACE/Graphics/Texture.h>
 #include <memory>
 #include <unordered_map>
 

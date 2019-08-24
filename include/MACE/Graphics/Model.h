@@ -13,6 +13,8 @@ See LICENSE.md for full copyright information
 
 namespace mc {
 	namespace gfx {
+		class GraphicsContextComponent;
+
 		enum class PrimitiveType: short int {
 			//these draw modes were chosen because they exist in both OpenGL 3.3 and Direct3D
 			POINTS = 0,
@@ -49,12 +51,13 @@ namespace mc {
 		class Model {
 		public:
 			Model();
+			Model(GraphicsContextComponent* context);
 			Model(const Model& other);
 
 			/**
 			@rendercontext
 			*/
-			void init();
+			void init(GraphicsContextComponent* context);
 			/**
 			@rendercontext
 			*/

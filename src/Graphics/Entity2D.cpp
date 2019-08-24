@@ -179,6 +179,12 @@ namespace mc {
 
 		SimpleSlider::SimpleSlider(const Progress minimum, const Progress maximum, const Progress progress) noexcept : SimpleProgressBar(minimum, maximum, progress) {}
 
+		void SimpleSlider::onInit() {
+			addListener<HoverEvent>([this](){
+				doHover();
+			});
+		}
+
 		void SimpleSlider::onRender(Painter& p) {
 			SimpleProgressBar::onRender(p);
 
@@ -195,10 +201,6 @@ namespace mc {
 
 				setProgress(minimumProgress + (pixel.r * (maximumProgress - minimumProgress)));
 			}
-		}
-
-		void SimpleSlider::onHover() {
-			doHover();
 		}
 
 		Letter::Letter() {}

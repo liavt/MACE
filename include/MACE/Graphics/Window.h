@@ -172,6 +172,8 @@ namespace mc {
 
 		MACE_CREATE_EVENT(PostRenderEvent, WindowModule*);
 
+		MACE_CREATE_EVENT_WITH_POLICY(HoverEvent, void, EventPolicy::PROPAGATE_UPWARDS);
+
 		class Monitor;
 
 		struct VideoMode {

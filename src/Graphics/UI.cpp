@@ -33,6 +33,22 @@ namespace mc {
 		}//anonymous namespace
 
 		void UIButton::onInit() {
+			addListener<HoverEvent>([this](){
+				auto context = getRoot()->getComponent<GraphicsContextComponent>();
+
+				NineSliceDesc& desc = nineSlice.getDesc();
+				desc.center = context->createTextureFromColor(Colors::BLUE);
+				desc.top = desc.center;
+				desc.left = desc.center;
+				desc.right = desc.center;
+				desc.bottom = desc.center;
+
+				desc.topLeft = Texture(desc.topLeft, Colors::BLUE);
+				desc.topRight = desc.topLeft;
+				desc.bottomLeft = desc.topLeft;
+				desc.bottomRight = desc.topLeft;
+			});
+
 			auto context = getRoot()->getComponent<GraphicsContextComponent>();
 
 			NineSliceDesc desc{};
@@ -50,22 +66,6 @@ namespace mc {
 			desc.flipSides = true;
 			nineSlice.setDesc(desc);
 			addComponent(nineSlice);
-		}
-
-		void UIButton::onHover() {
-			auto context = getRoot()->getComponent<GraphicsContextComponent>();
-
-			NineSliceDesc& desc = nineSlice.getDesc();
-			desc.center = context->createTextureFromColor(Colors::BLUE);
-			desc.top = desc.center;
-			desc.left = desc.center;
-			desc.right = desc.center;
-			desc.bottom = desc.center;
-
-			desc.topLeft = Texture(desc.topLeft, Colors::BLUE);
-			desc.topRight = desc.topLeft;
-			desc.bottomLeft = desc.topLeft;
-			desc.bottomRight = desc.topLeft;
 		}
 
 		void UIButton::onRender(Painter&) {
