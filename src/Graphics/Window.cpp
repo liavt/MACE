@@ -174,13 +174,7 @@ namespace mc {
 
 			void onWindowFramebufferResized(GLFWwindow* window, int, int) {
 				WindowModule* win = convertGLFWWindowToModule(window);
-				const auto size = win->getFramebufferSize();
-
-				WindowResizedEventData data{};
-				data.window = win;
-				data.width = size.x();
-				data.height = size.y();
-				win->callListeners<WindowResizedEvent>(data);
+				win->callListeners<WindowResizedEvent>(win, win->getFramebufferSize());
 
 				win->makeChildrenDirty();
 			}
@@ -353,13 +347,7 @@ namespace mc {
 
 					Entity::init();
 
-					const auto size = getFramebufferSize();
-
-					WindowResizedEventData data{};
-					data.window = this;
-					data.width = size.x();
-					data.height = size.y();
-					callListeners<WindowResizedEvent>(data);
+					callListeners<WindowResizedEvent>(this, getFramebufferSize());
 
 					config.onCreate(*this);
 

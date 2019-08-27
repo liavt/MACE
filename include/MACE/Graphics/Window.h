@@ -161,18 +161,13 @@ namespace mc {
 			void threadCallback();
 		};//WindowModule
 
-		struct WindowResizedEventData {
-			WindowModule* window;
-			Pixels width, height;
-		};
-
-		MACE_CREATE_EVENT(WindowResizedEvent, const WindowResizedEventData);
+		MACE_CREATE_EVENT(WindowResizedEvent, WindowModule*, Vector<Pixels, 2>);
 
 		MACE_CREATE_EVENT(PreRenderEvent, WindowModule*);
 
 		MACE_CREATE_EVENT(PostRenderEvent, WindowModule*);
 
-		MACE_CREATE_EVENT_WITH_POLICY(HoverEvent, void, EventPolicy::PROPAGATE_UPWARDS);
+		MACE_CREATE_EVENT_WITH_POLICY(HoverEvent, EventPolicy::PROPAGATE_UPWARDS);
 
 		class Monitor;
 

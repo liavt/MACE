@@ -29,8 +29,8 @@ namespace mc {
 			Renderer::Renderer(std::shared_ptr<Context> context) : Dispatchable(context) {}
 
 			void Renderer::onInit() {
-				parent->addListener<gfx::WindowResizedEvent>([this](const auto data) {
-					dispatch([this, data]() {
+				parent->addListener<gfx::WindowResizedEvent>([this](gfx::WindowModule*, Vector<Pixels, 2> dims) {
+					dispatch([this, dims]() {
 						MACE__BEGIN_OGL_FUNCTION;
 						frameBuffer.destroy();
 						{
@@ -46,9 +46,9 @@ namespace mc {
 
 						//if the window is iconified, width and height will be 0. we cant create a framebuffer of size 0, so we make it 1 instead
 
-						ogl::setViewport(0, 0, math::max<Pixels>(1, data.width), math::max<Pixels>(1, data.height));
+						ogl::setViewport(0, 0, math::max<Pixels>(1, dims.x()), math::max<Pixels>(1, dims.y()));
 
-						generateFramebuffer(math::max<Pixels>(1, data.width), math::max<Pixels>(1, data.height));
+						generateFramebuffer(math::max<Pixels>(1, dims.x()), math::max<Pixels>(1, dims.y()));
 
 						ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error resizing framebuffer for renderer");
 					});

@@ -14,9 +14,9 @@ See LICENSE.md for full copyright information
 namespace mc {
 	namespace gfx {
 		void Renderer::init() {
-			parent->addListener<gfx::WindowResizedEvent>([this](const auto data){
-				this->currentWidth = data.width;
-				this->currentHeight = data.height;
+			parent->addListener<gfx::WindowResizedEvent>([this](WindowModule*, Vector<Pixels, 2> dims){
+				this->currentWidth = dims.x();
+				this->currentHeight = dims.y();
 			});
 
 			onInit();
