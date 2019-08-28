@@ -167,7 +167,6 @@ namespace mc {
 			MACE_NODISCARD virtual bool isDone() const;
 		};//Component
 
-
 		enum class EventPolicy: Byte {
 			PROPAGATE_DOWNARDS = 0x01,
 			PROPAGATE_UPWARDS = 0x02,
@@ -180,8 +179,6 @@ namespace mc {
 	namespace internal {
 		template<gfx::EventPolicy Policy, typename... Args>
 		struct MACE_NOVTABLE Event {
-			friend class Entity;
-		private:
 			using ListenerType = std::function<void(Args...)>;
 
 			static MACE_CONSTEXPR const gfx::EventPolicy POLICY = Policy;
@@ -199,12 +196,16 @@ namespace mc {
 		//forward declaration for EventListener and EventListenerNode types
 		class EventComponent;
 
+		struct MACE_NOVTABLE EventListenerNodeBase {
+		public:
+			bool connected;
+		};
+
 		template<typename EventType>
-		struct EventListenerNode {
+		struct EventListenerNode: public EventListenerNodeBase {
 			friend class MACE__INTERNAL_NS::EventComponent<EventType>;
 		public:
 			typename EventType::ListenerType listener;
-			bool connected = true;
 		private:
 			EventListenerNode(typename EventType::ListenerType func) : listener(func) {}
 		};
@@ -213,40 +214,44 @@ namespace mc {
 	}//internal
 
 	namespace gfx {
-		template<typename EventType>
 		class EventListener: public Initializable {
-			friend class MACE__INTERNAL_NS::EventComponent<EventType>;
 		public:
-			void destroy() noexcept override {
-				if (auto lockedNode = node.lock()) {
-					lockedNode->connected = false;
-				}
-			}
+			void destroy() noexcept override;
 
-			bool isInit() const noexcept {
-				std::shared_ptr< MACE__INTERNAL_NS::EventListenerNode<EventType>> lockedNode = node.lock();
-				return lockedNode && lockedNode->connected;
-			}
+			bool isInit() const noexcept;
+
+			// TODO make this private as this is part of the internal interface
+			EventListener(std::weak_ptr<MACE__INTERNAL_NS::EventListenerNodeBase> n);
 		private:
-			std::weak_ptr<MACE__INTERNAL_NS::EventListenerNode<EventType>> node;
+			std::weak_ptr<MACE__INTERNAL_NS::EventListenerNodeBase> node;
 
-			EventListener(std::weak_ptr<MACE__INTERNAL_NS::EventListenerNode<EventType>> n) : node(n) {}
+			void init() override;
+		};
 
-			void init() override {
-				//do nothing as initialization is done in constructor
+		class EventListenerManager {
+		public:
+			template<typename EventType, typename... Args>
+			void addListener(Entity* entity, const typename EventType::ListenerType listener) {
+				manage(entity->addListener<EventType>(listener));
 			}
+
+			void manage(EventListener&& listener);
+
+			void destroy();
+		private:
+			std::forward_list<EventListener> eventListeners;
 		};
 	}//gfx
 
 	namespace internal {
 		template<typename EventType>
 		class EventComponent: public gfx::Component {
-			friend class gfx::EventListener<EventType>;
+			friend class gfx::EventListener;
 		public:
-			MACE_NODISCARD gfx::EventListener<EventType>&& addListener(const typename EventType::ListenerType listener) {
+			MACE_NODISCARD gfx::EventListener&& addListener(const typename EventType::ListenerType listener) {
 				auto newNode = std::shared_ptr< MACE__INTERNAL_NS::EventListenerNode<EventType>>{new MACE__INTERNAL_NS::EventListenerNode<EventType>(listener)};
 				listeners.push_front(newNode);
-				return std::move(gfx::EventListener<EventType>(newNode));
+				return std::move(gfx::EventListener(newNode));
 			}
 
 			template<typename... Args>
@@ -627,7 +632,7 @@ namespace mc {
 			}
 
 			template<typename EventType>
-			MACE_NODISCARD EventListener<EventType> addListener(const typename EventType::ListenerType listener) {
+			MACE_NODISCARD EventListener addListener(const typename EventType::ListenerType listener) {
 				return getOrCreateComponent<MACE__INTERNAL_NS::EventComponent<EventType>>()->addListener(listener);
 			}
 

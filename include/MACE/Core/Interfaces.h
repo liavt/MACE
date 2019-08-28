@@ -52,7 +52,7 @@ namespace mc {
 		virtual bool isInit() const noexcept = 0;
 
 		explicit operator bool() const noexcept;
-	protected:
+
 		virtual void init() = 0;
 
 		virtual void destroy() = 0;

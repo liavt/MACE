@@ -30,6 +30,34 @@ namespace mc {
 			return false;
 		}
 
+		void EventListener::destroy() noexcept {
+			if (auto lockedNode = node.lock()) {
+				lockedNode->connected = false;
+			}
+		}
+
+		bool EventListener::isInit() const noexcept {
+			std::shared_ptr< MACE__INTERNAL_NS::EventListenerNodeBase> lockedNode = node.lock();
+			return lockedNode && lockedNode->connected;
+		}
+
+		void EventListener::init() {
+			//do nothing as initialization is done in constructor
+		}
+
+		EventListener::EventListener(std::weak_ptr<MACE__INTERNAL_NS::EventListenerNodeBase> n) : node(n) {}
+
+		void EventListenerManager::manage(EventListener&& listener){
+			eventListeners.push_front(listener);
+		}
+
+		void EventListenerManager::destroy() {
+			while(!eventListeners.empty()){
+				eventListeners.front().destroy();
+				eventListeners.pop_front();
+			}
+		}
+
 		Entity* Component::getParent() {
 			return parent;
 		}

@@ -62,6 +62,8 @@ namespace mc {
 
 				std::unordered_map<ProtocolHash, RenderProtocol> protocols{};
 
+				gfx::EventListenerManager eventManager{};
+
 				ProtocolHash currentProtocol = 0;
 
 				//TODO forward declare this insead of including FreetypeFont.h

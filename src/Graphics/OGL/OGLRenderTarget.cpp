@@ -18,10 +18,6 @@ See LICENSE.md for full copyright information
 
 //we need to include algorithim for std::copy
 #include <algorithm>
-//cstring is for strcmp
-#include <cstring>
-//std::begin and std::end
-#include <iterator>
 
 namespace mc {
 	namespace internal {
@@ -29,7 +25,7 @@ namespace mc {
 			Renderer::Renderer(std::shared_ptr<Context> context) : Dispatchable(context) {}
 
 			void Renderer::onInit() {
-				parent->addListener<gfx::WindowResizedEvent>([this](gfx::WindowModule*, Vector<Pixels, 2> dims) {
+				eventManager.addListener<gfx::WindowResizedEvent>(parent, [this](gfx::WindowModule*, Vector<Pixels, 2> dims) {
 					dispatch([this, dims]() {
 						MACE__BEGIN_OGL_FUNCTION;
 						frameBuffer.destroy();
@@ -54,11 +50,11 @@ namespace mc {
 					});
 				});
 
-				parent->addListener<gfx::PreRenderEvent>([this](auto) {
+				eventManager.addListener<gfx::PreRenderEvent>(parent, [this](auto) {
 					preRender();
 				});
 
-				parent->addListener<gfx::PostRenderEvent>([this](auto win) {
+				eventManager.addListener<gfx::PostRenderEvent>(parent, [this](auto win) {
 					postRender(win);
 				});
 			}
@@ -160,6 +156,8 @@ namespace mc {
 			}
 
 			void Renderer::onDestroy() {
+				eventManager.destroy();
+
 				dispatch([this]() {
 					frameBuffer.destroy();
 

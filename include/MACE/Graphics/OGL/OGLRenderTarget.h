@@ -46,6 +46,8 @@ namespace mc {
 				ogl::FrameBuffer frameBuffer{};
 				ogl::RenderBuffer sceneBuffer{}, idBuffer{}, dataBuffer{}, depthStencilBuffer{};
 
+				gfx::EventListenerManager eventManager {};
+
 				Color clearColor = Colors::BLACK;
 
 				void generateFramebuffer(const Pixels width, const Pixels height);

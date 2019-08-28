@@ -304,7 +304,7 @@ namespace mc {
 
 				checkGLError(__LINE__, __FILE__, "Internal Error: An error occured creating the Context");
 
-				parent->addListener<gfx::PreRenderEvent>([this](auto win) {
+				eventManager.addListener<gfx::PreRenderEvent>(parent, [this](auto win) {
 					preRender(win);
 				});
 			}
@@ -365,6 +365,8 @@ namespace mc {
 			}
 
 			void Context::onDestroy(gfx::WindowModule*) {
+				eventManager.destroy();
+
 				freetype.destroy();
 
 				for (auto iter = protocols.begin(); iter != protocols.end(); ++iter) {
