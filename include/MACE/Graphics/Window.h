@@ -161,6 +161,8 @@ namespace mc {
 			void threadCallback();
 		};//WindowModule
 
+		MACE_CREATE_EVENT(RenderThreadStartedEvent);
+
 		MACE_CREATE_EVENT(WindowResizedEvent, WindowModule*, Vector<Pixels, 2>);
 
 		MACE_CREATE_EVENT(PreRenderEvent, WindowModule*);

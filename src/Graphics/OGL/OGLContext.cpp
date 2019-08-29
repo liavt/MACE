@@ -240,8 +240,6 @@ namespace mc {
 			void Context::onInit(gfx::WindowModule*) {
 				freetype.init();
 
-				currentContext = this;
-
 				const int version = gladLoadGL(glfwGetProcAddress);
 				if (version == 0) {
 					std::ostringstream errorMessage;
@@ -303,6 +301,10 @@ namespace mc {
 				ogl::enable(GL_MULTISAMPLE);
 
 				checkGLError(__LINE__, __FILE__, "Internal Error: An error occured creating the Context");
+
+				eventManager.addListener<gfx::RenderThreadStartedEvent>(parent, [this](){
+					currentContext = this;
+				});
 
 				eventManager.addListener<gfx::PreRenderEvent>(parent, [this](auto win) {
 					preRender(win);
@@ -369,15 +371,17 @@ namespace mc {
 
 				freetype.destroy();
 
-				for (auto iter = protocols.begin(); iter != protocols.end(); ++iter) {
-					iter->second.program.destroy();
-				}
+				dispatch([this]() {
+					for (auto iter = protocols.begin(); iter != protocols.end(); ++iter) {
+						iter->second.program.destroy();
+					}
 
-				protocols.clear();
+					protocols.clear();
 
-				checkGLError(__LINE__, __FILE__, "Internal Error: Error destroying Context");
+					checkGLError(__LINE__, __FILE__, "Internal Error: Error destroying Context");
 
-				currentContext = nullptr;
+					currentContext = nullptr;
+				});
 			}
 
 			void Context::preRender(gfx::WindowModule*) {

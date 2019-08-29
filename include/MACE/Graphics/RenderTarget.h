@@ -306,7 +306,7 @@ namespace mc {
 		protected:
 			Renderer() noexcept = default;
 
-			virtual void onInit();
+			virtual void onInit() = 0;
 			virtual void onDestroy() = 0;
 			virtual void onQueue(Entity* en) = 0;
 
@@ -314,6 +314,8 @@ namespace mc {
 			virtual std::shared_ptr<PainterImpl> createPainterImpl() = 0;
 		private:
 			Pixels currentWidth = 0, currentHeight = 0;
+
+			EventListenerManager eventManager;
 
 			/**
 			@internal

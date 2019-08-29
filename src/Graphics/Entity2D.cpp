@@ -325,7 +325,7 @@ namespace mc {
 			}
 
 			while (letters.size() > text.length()) {
-				removeChild(letters.back());
+				letters.back()->removeFromParent();
 				letters.pop_back();
 			}
 			while (letters.size() < text.length()) {

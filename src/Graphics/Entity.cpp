@@ -13,6 +13,9 @@ See LICENSE.md for full copyright information
 #include <MACE/Utility/Transform.h>
 #include <string>
 #include <algorithm>
+#include <execution>
+
+#define MACE__ASSERT_CHILD_NOT_NULL(child) MACE_ASSERT(child != nullptr, "Internal Error: Child was nullptr during iteration")
 
 namespace mc {
 	namespace gfx {
@@ -47,12 +50,12 @@ namespace mc {
 
 		EventListener::EventListener(std::weak_ptr<MACE__INTERNAL_NS::EventListenerNodeBase> n) : node(n) {}
 
-		void EventListenerManager::manage(EventListener&& listener){
+		void EventListenerManager::manage(EventListener&& listener) {
 			eventListeners.push_front(listener);
 		}
 
 		void EventListenerManager::destroy() {
-			while(!eventListeners.empty()){
+			while (!eventListeners.empty()) {
 				eventListeners.front().destroy();
 				eventListeners.pop_front();
 			}
@@ -74,81 +77,38 @@ namespace mc {
 			return !operator==(other);
 		}
 
-		bool Entity::hasChild(Entity& e) const {
-			for (auto child : children) {
-				if (child.get() == &e) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-
 		void Entity::clearChildren() {
 			makeDirty();
 
-			for (auto iter : children) {
-				removeChild(iter);
+			for (auto child : children) {
+				MACE__ASSERT_CHILD_NOT_NULL(child);
+				child->destroy();
 			}
+
+			children.clear();
+		}
+
+		void Entity::removeFromParent() {
+			const EntityID myID = getID();
+			children.erase(std::remove_if(std::execution::par_unseq, parent->children.begin(), parent->children.end(), [myID](EntityPtr<Entity> en) {
+				MACE__ASSERT_CHILD_NOT_NULL(en);
+				return en->getID() == myID;
+			}));
+
+			destroy();
 		}
 
 		void Entity::makeChildrenDirty() {
 			setProperty(Entity::DIRTY, true);
 
 			for (auto e : children) {
+				MACE__ASSERT_CHILD_NOT_NULL(e);
 				e->makeChildrenDirty();
 			}
 		}
 
 		const std::vector<EntityPtr<Entity>>& Entity::getChildren() const {
 			return this->children;
-		}
-
-
-		void Entity::removeChild(const Entity& e) {
-			removeChild(&e);
-		}
-
-		void Entity::removeChild(const Entity* e) {
-			MACE_ASSERT(e != nullptr, "Argument to removeChild is nullptr!");
-			MACE_ASSERT(!children.empty(), "Can\'t remove child from an empty entity (empty() is true)");
-
-			for (Index i = 0; i < children.size(); ++i) {
-				if (e == children[i].get()) {
-					makeDirty();
-
-					removeChild(i);
-					return;
-				}
-			}
-
-			MACE__THROW(ObjectNotFound, "Specified argument to removeChild is not a valid object in the array!");
-		}
-
-		void Entity::removeChild(EntityPtr<Entity> ent) {
-			removeChild(ent.get());
-		}
-
-		void Entity::removeChild(const Index index) {
-			makeDirty();
-
-			MACE_ASSERT(index < children.size(), std::to_string(index) + " is larger than the amount of children!");
-
-			if (children.size() == 1) {
-				children.clear();
-			} else {
-				removeChild(children.begin() + index);
-			}
-		}
-
-		void Entity::removeChild(const std::vector<EntityPtr<Entity>>::iterator& iter) {
-			MACE_ASSERT(!children.empty(), "Can\'t remove child from an empty entity (empty() is true)");
-
-			//strange line, isn't it?
-			//iter-> returns a std::shared_ptr, which we need to call -> of again to get the raw pointer
-			iter->operator->()->destroy();
-
-			children.erase(iter);
 		}
 
 		void Entity::onUpdate() {}
@@ -195,37 +155,8 @@ namespace mc {
 			return parent != nullptr;
 		}
 
-		bool Entity::needsRemoval() const {
-			return getProperty(Entity::DEAD) || !hasParent();
-		}
-
 		bool Entity::isInit() const noexcept {
 			return getProperty(EntityProperty::INIT);
-		}
-
-		Entity& Entity::operator[](const Index i) {
-			return *children[i].get();
-		}
-
-		const Entity& Entity::operator[](const Index i) const {
-			return *children[i].get();
-		}
-
-		Entity& Entity::getChild(const Index i) {
-			return *children.at(i).get();
-		}
-
-		const Entity& Entity::getChild(const Index i) const {
-			return *children.at(i).get();
-		}
-
-		Index Entity::indexOf(const Entity& e) const {
-			for (Index i = 0; i < children.size(); ++i) {
-				if (children[i].get() == &e) {
-					return i;
-				}
-			}
-			return size();
 		}
 
 		bool Entity::isEmpty() const {
@@ -279,6 +210,7 @@ namespace mc {
 				onRender();
 
 				for (auto child : children) {
+					MACE__ASSERT_CHILD_NOT_NULL(child);
 					child->render();
 				}
 			}
@@ -314,13 +246,8 @@ namespace mc {
 					}
 				}
 
-				for (Index i = 0; i < children.size(); ++i) {
-					std::shared_ptr<Entity> child = children[i];
-					if (child->needsRemoval()) MACE_UNLIKELY{
-						child->destroy();
-						removeChild(i--);//update the index after the removal of an element, dont want an error
-						continue;
-					}
+				for (auto child : children) {
+					MACE__ASSERT_CHILD_NOT_NULL(child);
 					child->setProperty(Entity::DIRTY, true);
 					child->clean();
 				}
@@ -328,6 +255,7 @@ namespace mc {
 				setProperty(Entity::DIRTY, false);
 			} else {
 				for (auto child : children) {
+					MACE__ASSERT_CHILD_NOT_NULL(child);
 					child->clean();
 				}
 			}
@@ -349,6 +277,7 @@ namespace mc {
 
 				//call update() on children
 				for (auto child : children) {
+					MACE__ASSERT_CHILD_NOT_NULL(child);
 					child->update();
 				}
 			}
@@ -376,6 +305,7 @@ namespace mc {
 			id = root->getOrCreateComponent<MACE__INTERNAL_NS::RootComponent>()->generateID(this);
 
 			for (auto child : children) {
+				MACE__ASSERT_CHILD_NOT_NULL(child);
 				child->init();
 			}
 
@@ -387,12 +317,11 @@ namespace mc {
 		}
 
 		void Entity::destroy() {
-			if (getProperty(Entity::INIT)) {
-				setProperty(Entity::DEAD, true);
-
+			if (isInit()) {
 				onDestroy();
 
 				for (auto& child : children) {
+					MACE__ASSERT_CHILD_NOT_NULL(child);
 					child->destroy();
 				}
 				children.clear();
@@ -687,3 +616,5 @@ namespace mc {
 		}
 	}//internal
 }//mc
+
+#undef MACE__ASSERT_CHILD_NOT_NULL

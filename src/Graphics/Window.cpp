@@ -270,6 +270,8 @@ namespace mc {
 				}
 			}
 
+			glfwMakeContextCurrent(window);
+
 			if (window == nullptr) {
 				MACE__THROW(InitializationFailed, "OpenGL context was unable to be created. This graphics card may not be supported or the graphics drivers are installed incorrectly");
 			}
@@ -345,7 +347,7 @@ namespace mc {
 
 					configureThread();
 
-					Entity::init();
+					callListeners<RenderThreadStartedEvent>();
 
 					callListeners<WindowResizedEvent>(this, getFramebufferSize());
 
@@ -408,8 +410,6 @@ namespace mc {
 				try {
 					const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
 
-					Entity::destroy();
-
 					//the window will be destroyed on the main thread, need to detach this one
 					glfwMakeContextCurrent(nullptr);
 
@@ -435,6 +435,8 @@ namespace mc {
 
 			os::clearError(__LINE__, __FILE__);//sometimes an error comes from GLFW that we can ignore
 
+			Entity::init();
+
 			//release context on this thread, it wll be owned by the seperate rendering thread
 			glfwMakeContextCurrent(nullptr);
 
@@ -453,11 +455,7 @@ namespace mc {
 		}//update
 
 		void WindowModule::destroy() {
-			{
-				std::mutex mutex;
-				const std::unique_lock<std::mutex> guard(mutex);
-				setProperty(gfx::Entity::DEAD, true);
-			}
+			Entity::destroy();
 
 			windowThread.join();
 

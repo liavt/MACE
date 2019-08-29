@@ -302,13 +302,6 @@ namespace mc {
 			//values defining which bit in a byte every propety is, or how much to bit shift it
 			enum EntityProperty: Byte {
 				/**
-				Bit location representing whether an `Entity` is dead.
-				<p>
-				If `true,` any {@link Entity} holding it will remove it and call `kill()`
-				@see Entity::getProperty(unsigned int)
-				*/
-				DEAD,
-				/**
 				Property defining if an `Entity` can be updated and rendered. If this is `true`, `Entity::update()` and `Entity::render()` will not be called by it's parent.
 				@see Entity::getProperty(unsigned int)
 				*/
@@ -362,65 +355,13 @@ namespace mc {
 			@return an `std::vector` with all children of this `Entity`
 			*/
 			const std::vector<EntityPtr<Entity>>& getChildren() const;
-			/**
-			Removes a child.
-			<p>
-			This function calls no member functions of the argument, meaning that
-			@throws ObjectNotFoundInArray if this `Entity` does not contain the argument returns `false`
-			@param e an `Entity` to remove
-			@see Entity::removeChild(Index)
-			@dirty
-			@rendercontext
-			*/
-			void removeChild(const Entity& e);
-
-			/**
-			@copydoc Entity::removeChild(const Entity&)
-			<p>
-			The passed pointer does not have it's lifecycle managed by this `Entity`
-			@throws NullPointerError if the argument is `nullptr`
-			@dirty
-			@rendercontext
-			@todo Make this function not have to be called in a render context by moving the destroy() call to render() and set a flag
-			*/
-			void removeChild(const Entity* e);
-
-			/**
-			@copydoc Entity::removeChild(const Entity*)
-			*/
-			void removeChild(EntityPtr<Entity> ent);
-
-			/**
-			Removes a child via location.
-			@throws IndexOutOfBounds if the index is less than 0 or greater than {@link #size()}
-			@param index Index of the `Entity` to be removed
-			@see Entity::indexOf(const Entity&) const
-			@see Entity::removeChild(const Entity&)
-			@todo call Entity::destroy in the render thread
-			@dirty
-			@rendercontext
-			*/
-			void removeChild(const Index index);
-
-			/**
-			@copydoc removeChild(Index)
-			*/
-			void removeChild(const std::vector<EntityPtr<Entity>>::iterator& iter);
-
-			/**
-			Checks to see if this `Entity` contains an `Entity`
-			@param e Reference to an `Entity`
-			@return `false` if this `Entity` doesn't contain the referenced `Entity`, `true` otherwise
-			@see Entity::indexOf(const Entity& ) const
-			*/
-			bool hasChild(Entity& e) const;
+		
+			void removeFromParent();
 
 			/**
 			Removes EVERY `Entity` from this `Entity`
 			@dirty
 			@see Entity::size()
-			@see Entity::removeChild(Index)
-			@see Entity::removeChild(const Entity&)
 			*/
 			void clearChildren();
 
@@ -428,57 +369,6 @@ namespace mc {
 			@dirty
 			*/
 			void makeChildrenDirty();
-
-			/**
-			Access an `Entity`.
-			<p>
-			This is different than `getChild()` because `operator[]` doesn't do bounds checking. Accessing an invalid location will result in a memory error.
-			@param i Location of an `Entity`
-			@return Reference to the `Entity` located at `i`
-			@see Entity::getChild(Index)
-			@see Entity::indexOf(const Entity&) const
-			*/
-			Entity& operator[](const Index i);//get children via [i]
-
-			/**
-			`const` version of {@link #operator[](Index i)}
-			@param i Location of an `Entity`
-			@return Reference to the `Entity` located at `i`
-			@see Entity::getChild(Index) const
-			@see Entity::indexOf(const Entity&) const
-			*/
-			const Entity& operator[](const Index i) const;//get children via [i]
-
-			/**
-
-			Retrieves a child at a certain index.
-			@param i Index of the `Entity`
-			@return Reference to the `Entity` located at `i`
-			@throws IndexOutOfBounds if `i` is less than `0` or greater than {@link #size()}
-			@see Entity::operator[]
-			@see Entity::indexOf(const Entity&) const
-			*/
-			Entity& getChild(const Index i);
-			/**
-			`const` version of {@link #getChild(Index)}
-
-			@param i `Index` of the `Entity`
-			@return Reference to the `Entity` located at `i`
-			@throws IndexOutOfBounds if `i` is less than `0` or greater than {@link #size()}
-			@see Entity::operator[]
-			@see Entity::indexOf(const Entity&) const
-			*/
-			const Entity& getChild(const Index i) const;
-
-			/**
-			Finds the location of an `Entity` in this `Entity`
-			@param e Reference to an `Entity`
-			@return Location of `e,` or -1 if `e` is not a child of this `Entity`
-			@see Entity::operator[]
-			@see Entity::getChild(Index)
-			*/
-			Index indexOf(const Entity& e) const;
-
 			/**
 			Checks whether this `Entity` has any children
 			@return If Entity::size() is 0
@@ -547,8 +437,6 @@ namespace mc {
 
 			bool hasParent() const;
 
-			bool needsRemoval() const;
-
 			MACE_NODISCARD bool isInit() const noexcept override;
 
 			/**
@@ -594,8 +482,8 @@ namespace mc {
 
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
 			MACE_NODISCARD ComponentPtr<T> getComponent() {
-				//TODO use the __cpp_lib_generic_unordered_hash_lookup (201902L) macro to use precomputated hashes
-
+				//TODO check the __cpp_lib_generic_unordered_hash_lookup (201902L) macro to potentially use precomputated hashes
+				 
 				auto it = components.find(MACE__INTERNAL_NS::getComponentTypeID<T>());
 				if (it != components.end()) {
 					return std::static_pointer_cast<T>(it->second);

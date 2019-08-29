@@ -9,20 +9,29 @@ See LICENSE.md for full copyright information
 
 using namespace mc;
 
+Size elementNum = 10;
+bool needsElementRefresh = false;
+
 bool rotating = false;
 
 gfx::Group botLeft, botRight, topLeft, topRight;
 
 class TestComponent: public gfx::Component {
+private:
+	gfx::EventListenerManager eventManager{};
 
 	void init() override {
 		parent->getComponent<gfx::TextureComponent<>>()->getTexture().setHue(Color((rand() % 10) / 10.0f, (rand() % 10) / 10.0f, (rand() % 10) / 10.0f, 0.5f));
 
-		parent->addListener<gfx::HoverEvent>([this]() {
+		eventManager.addListener<gfx::HoverEvent>(parent, [this]() {
 			if (gfx::Input::isKeyDown(gfx::Input::MOUSE_LEFT)) {
 				parent->rotate(0.0f, 0.0f, 0.01f);
 			}
 		});
+	}
+
+	void destroy() override {
+		eventManager.destroy();
 	}
 };
 
@@ -34,29 +43,32 @@ class RotationComponent: public gfx::Component {
 	};
 };
 
-void create(gfx::WindowModule& window) {
-	auto context = window.getComponent<gfx::GraphicsContextComponent>();
-	srand(( unsigned int) time(nullptr));
+void fillStars(gfx::Entity* root, const Size elementNum) {
+	std::cout << "Filling with " << elementNum << " stars" << std::endl;
 
-	const Size elementNum = 10;
+	botLeft.clearChildren();
+	botRight.clearChildren();
+	topLeft.clearChildren();
+	topRight.clearChildren();
 
-	gfx::Texture star = context->createTextureFromFile(MACE_DEMO_ASSETS + std::string("star.png"), gfx::ImageFormat::DONT_CARE);
+	auto cache = root->getOrCreateComponent<gfx::CacheComponent<gfx::Texture>>();
 
 	for (Index x = 0; x < elementNum; x++) {
 		for (Index y = 0; y < elementNum; y++) {
 			gfx::EntityPtr<gfx::Image> entity = gfx::EntityPtr<gfx::Image>(new gfx::Image());
 
-			entity->setTexture(star);
+			entity->setTexture(root->getComponent<gfx::GraphicsContextComponent>()->getSolidColor());
+			//entity->setTexture(cache->getOrCreateFromFile("star", MACE_DEMO_ASSETS + std::string("star.png")));
 
-			entity->setX((((x % (elementNum / 2)) * (1.0f / elementNum)) * 4) - (1.0f - (1.0f / elementNum) * 2));
-			entity->setY((((y % (elementNum / 2)) * (1.0f / elementNum)) * 4) - (1.0f - (1.0f / elementNum) * 2));
+			//entity->setX((((x % (elementNum / 2)) * (1.0f / elementNum)) * 4) - (1.0f - (1.0f / elementNum) * 2));
+			//entity->setY((((y % (elementNum / 2)) * (1.0f / elementNum)) * 4) - (1.0f - (1.0f / elementNum) * 2));
 
-			entity->setWidth((1.0f / elementNum) * 2);
-			entity->setHeight((1.0f / elementNum) * 2);
+			//entity->setWidth((1.0f / elementNum) * 2);
+			//entity->setHeight((1.0f / elementNum) * 2);
 
-			entity->getPainter().setOpacity(0.5f);
+			//entity->getPainter().setOpacity(0.5f);
 
-			entity->addComponent(gfx::ComponentPtr<TestComponent>(new TestComponent()));
+			//entity->addComponent(gfx::ComponentPtr<TestComponent>(new TestComponent()));
 
 			if (x >= elementNum / 2) {
 				if (y >= elementNum / 2) {
@@ -73,7 +85,12 @@ void create(gfx::WindowModule& window) {
 			}
 		}
 	}
+}
 
+void create(gfx::WindowModule& window) {
+	srand(( unsigned int) time(nullptr));
+
+	fillStars(&window, elementNum);
 }
 
 int main() {
@@ -135,6 +152,21 @@ int main() {
 				rotating = true;
 			} else {
 				rotating = false;
+			}
+
+			if (gfx::Input::isKeyDown(gfx::Input::DOWN)) {
+				elementNum >>= 1;
+				needsElementRefresh = true;
+			} else if (gfx::Input::isKeyDown(gfx::Input::UP)) {
+				elementNum <<= 1;
+				needsElementRefresh = true;
+			}
+
+			elementNum = math::max(static_cast<Size>(1), elementNum);
+
+			if (needsElementRefresh) {
+				fillStars(&module, elementNum);
+				needsElementRefresh = false;
 			}
 
 			mc::os::wait(33);

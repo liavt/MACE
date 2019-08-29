@@ -14,7 +14,7 @@ See LICENSE.md for full copyright information
 namespace mc {
 	namespace gfx {
 		void Renderer::init() {
-			parent->addListener<gfx::WindowResizedEvent>([this](WindowModule*, Vector<Pixels, 2> dims){
+			eventManager.addListener<gfx::WindowResizedEvent>(parent, [this](WindowModule*, Vector<Pixels, 2> dims){
 				this->currentWidth = dims.x();
 				this->currentHeight = dims.y();
 			});
@@ -41,7 +41,7 @@ namespace mc {
 				//std::cout << getEntityAt(static_cast<Pixels>(mouseX), static_cast<Pixels>(mouseY)) << std::endl;
 				Entity* hovered = rootComponent->getEntityByID(getEntityAt(static_cast<Pixels>(mouseX), static_cast<Pixels>(mouseY)));
 
-				if (hovered != nullptr && !hovered->needsRemoval()) {
+				if (hovered != nullptr && hovered->isInit()) {
 					hovered->callListeners<HoverEvent>();
 				}
 			}
@@ -49,6 +49,8 @@ namespace mc {
 
 		void Renderer::destroy() {
 			onDestroy();
+
+			eventManager.destroy();
 		}//destroy()
 
 		EntityID Renderer::getEntityAt(const RelativeTranslation x, const RelativeTranslation y) const {
