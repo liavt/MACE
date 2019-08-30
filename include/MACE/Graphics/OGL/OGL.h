@@ -214,7 +214,7 @@ namespace mc {
 				@see Object::isCreated() const
 				@throws GL_INVALID_OPERATION If this `Object` has not been created yet (Object::init() has not been called)
 				*/
-				virtual void destroy() override;
+				virtual void destroy();
 
 				/**
 				Binds this `Object` to be used in an OpenGL function.

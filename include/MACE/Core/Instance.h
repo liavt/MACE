@@ -39,14 +39,6 @@ namespace mc {
 		Use this update states, send messages, swap graphics buffers, render, process, or anything that needs to be periodically checked.
 		*/
 		virtual void update() = 0;
-		/**
-		Called when {@link MACE#destroy} is called and this `Module` is registered.
-		<p>
-		Use this to clear memory, close streams, or clean up anything that needs to be cleaned up.
-		<p>
-		Should only be called before the program is closed.
-		*/
-		virtual void destroy() override = 0;
 
 		bool isInit() const noexcept override;
 
@@ -196,15 +188,6 @@ namespace mc {
 		@see MACE for an optimal main loop
 		*/
 		void update() MACE_EXPECTS(!empty());
-		/**
-		Destroys MACE and calls {@link Module#destroy() destroy()} on all registered `Modules.`
-		<p>
-		Should be called at the end of the program after `MACE.isRunning()` is `false`
-		@throw InitializationError if `init()` has not been called yet
-		@see MACE::addModule(Module&)
-		@see MACE for an optimal main loop
-		*/
-		void destroy() override MACE_EXPECTS(!empty());
 
 		bool isInit() const noexcept override;
 

@@ -47,12 +47,6 @@ namespace mc {
 			}
 		}//checkInput
 
-		void Renderer::destroy() {
-			onDestroy();
-
-			eventManager.destroy();
-		}//destroy()
-
 		EntityID Renderer::getEntityAt(const RelativeTranslation x, const RelativeTranslation y) const {
 			return getEntityAt(static_cast<Pixels>(getWidth() * ((x * 0.5f) + 0.5f)), static_cast<Pixels>(getHeight() * ((y * 0.5f) + 0.5f)));
 		}
@@ -124,10 +118,6 @@ namespace mc {
 
 			impl->painter = this;
 			impl->init();
-		}
-
-		void Painter::destroy() {
-			//impl->destroy() is called by the Renderer
 		}
 
 		void Painter::clean() {
@@ -445,12 +435,6 @@ namespace mc {
 			getRoot()->getComponent<Renderer>()->queue(this, painter);
 
 			painter.init();
-		}
-
-		void GraphicsEntity::destroy() {
-			Entity::destroy();
-
-			painter.destroy();
 		}
 
 		Painter& GraphicsEntity::getPainter() {

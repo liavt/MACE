@@ -55,8 +55,9 @@ namespace mc {
 			class FreetypeLibrary: public Initializable {
 				friend class FreetypeFont;
 			public:
+				~FreetypeLibrary() noexcept;
+
 				void init() override;
-				void destroy() override;
 			private:
 				FT_Library freetype{};
 

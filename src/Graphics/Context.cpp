@@ -233,10 +233,5 @@ namespace mc {
 		void GraphicsContextComponent::render() {
 			onRender(window);
 		}
-
-		void GraphicsContextComponent::destroy() {
-			onDestroy(window);
-			window = nullptr;
-		}
 	}//gfx
 }//mc

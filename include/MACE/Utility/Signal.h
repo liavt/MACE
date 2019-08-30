@@ -47,18 +47,20 @@ namespace mc {
 
 		class SignalModule: public Module {
 		public:
+			// declared virtual because ErrorModule inherits from SignalModule
+			virtual ~SignalModule();
+
 			virtual void init() override;
 			virtual void update() override;
-			virtual void destroy() override;
 
 			virtual std::string getName() const override;
 		};//SignalModule
 
 		class ErrorModule: public SignalModule {
 		public:
+			~ErrorModule() override;
 			void init() override;
 			void update() override;
-			void destroy() override;
 
 			std::string getName() const override;
 		private:

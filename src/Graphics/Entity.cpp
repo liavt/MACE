@@ -23,8 +23,6 @@ namespace mc {
 
 		void Component::update() {}
 
-		void Component::destroy() {}
-
 		void Component::render() {}
 
 		void Component::clean(Metrics&) {}
@@ -33,7 +31,11 @@ namespace mc {
 			return false;
 		}
 
-		void EventListener::destroy() noexcept {
+		EventListener::~EventListener() noexcept {
+			disconnect();
+		}
+
+		void EventListener::disconnect() noexcept {
 			if (auto lockedNode = node.lock()) {
 				lockedNode->connected = false;
 			}
@@ -54,9 +56,13 @@ namespace mc {
 			eventListeners.push_front(listener);
 		}
 
-		void EventListenerManager::destroy() {
+		EventListenerManager::~EventListenerManager(){
+			disconnect();
+		}
+
+		void EventListenerManager::disconnect() noexcept{
 			while (!eventListeners.empty()) {
-				eventListeners.front().destroy();
+				eventListeners.front().disconnect();
 				eventListeners.pop_front();
 			}
 		}
@@ -80,11 +86,6 @@ namespace mc {
 		void Entity::clearChildren() {
 			makeDirty();
 
-			for (auto child : children) {
-				MACE__ASSERT_CHILD_NOT_NULL(child);
-				child->destroy();
-			}
-
 			children.clear();
 		}
 
@@ -94,8 +95,6 @@ namespace mc {
 				MACE__ASSERT_CHILD_NOT_NULL(en);
 				return en->getID() == myID;
 			}));
-
-			destroy();
 		}
 
 		void Entity::makeChildrenDirty() {
@@ -114,8 +113,6 @@ namespace mc {
 		void Entity::onUpdate() {}
 
 		void Entity::onInit() {}
-
-		void Entity::onDestroy() {}
 
 		Entity* Entity::getRoot() {
 			return root;
@@ -238,7 +235,6 @@ namespace mc {
 				for (auto com = components.begin(); com != components.end();) {
 					com->second->clean(metrics);
 					if (com->second->isDone()) MACE_UNLIKELY{
-						com->second->destroy();
 						com->second->parent = nullptr;
 						components.erase(com++);
 					} else {
@@ -316,34 +312,14 @@ namespace mc {
 			onInit();
 		}
 
-		void Entity::destroy() {
-			if (isInit()) {
-				onDestroy();
-
-				for (auto& child : children) {
-					MACE__ASSERT_CHILD_NOT_NULL(child);
-					child->destroy();
-				}
-				children.clear();
-
-				for (auto& component : components) {
-					component.second->destroy();
-					component.second->parent = nullptr;
-				}
-				components.clear();
-
+		Entity::~Entity() {
+			if (isInit() && root->isInit()) {
 				root->setProperty(Entity::DIRTY, true);
 
 				// if this is root, the RootComponent would have already been destroyed already.
 				if (root != this) {
 					root->getComponent<MACE__INTERNAL_NS::RootComponent>()->deleteID(id);
 				}
-
-				transformation.reset();
-				parent = nullptr;
-				root = nullptr;
-				id = 0;
-				properties = Entity::DEFAULT_PROPERTIES;
 			}
 		}
 

@@ -111,6 +111,7 @@ namespace mc {
 			};
 
 			WindowModule(const LaunchConfig& config);
+			~WindowModule() noexcept override;
 
 			const LaunchConfig& getLaunchConfig() const;
 
@@ -148,14 +149,12 @@ namespace mc {
 
 			void init() override;
 			void update() override;
-			void destroy() override;
 
 			void clean() final;
 
 			//these are for the Entity inheritence
 			void onUpdate() final;
 			void onRender() final;
-			void onDestroy() final;
 			void onInit() final;
 
 			void threadCallback();

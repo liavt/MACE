@@ -366,20 +366,16 @@ namespace mc {
 				checkGLError(__LINE__, __FILE__, "Internal Error: An error occured during onRender()");
 			}
 
-			void Context::onDestroy(gfx::WindowModule*) {
-				eventManager.destroy();
-
-				freetype.destroy();
-
+			Context::~Context() {
 				dispatch([this]() {
 					for (auto iter = protocols.begin(); iter != protocols.end(); ++iter) {
 						iter->second.program.destroy();
 					}
 
-					protocols.clear();
-
-					checkGLError(__LINE__, __FILE__, "Internal Error: Error destroying Context");
-
+					// called in the render thread, so we can reset the thread_local flag
+					// TODO make this less amibigious and less prone to changes of the render thread
+					// basically make this more robust and future proof (checking whether we are in
+					// the render thread)
 					currentContext = nullptr;
 				});
 			}

@@ -54,30 +54,7 @@ namespace mc {
 		explicit operator bool() const noexcept;
 
 		virtual void init() = 0;
-
-		virtual void destroy() = 0;
 	};//Initializable
-
-	class Initializer final {
-	public:
-		Initializer(Initializable* o);
-		Initializer(Initializable& o);
-		~Initializer();
-
-		MACE_NODISCARD Initializable* get();
-		MACE_NODISCARD const Initializable* get() const;
-
-		MACE_NODISCARD Initializable* operator->();
-		MACE_NODISCARD const Initializable* operator->() const;
-
-		MACE_NODISCARD Initializable* operator*();
-		MACE_NODISCARD const Initializable* operator*() const;
-
-		bool operator==(const Initializer& other) const;
-		bool operator!=(const Initializer& other) const;
-	private:
-		Initializable* obj;
-	};//Initializer
 }//mc
 
 #endif//MACE__CORE_INTERFACES_H

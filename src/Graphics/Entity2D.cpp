@@ -172,9 +172,6 @@ namespace mc {
 									(progress - minimumProgress) / (maximumProgress - minimumProgress));
 		}
 
-		void SimpleProgressBar::onDestroy() {}
-
-
 		SimpleSlider::SimpleSlider() noexcept : SimpleProgressBar() {}
 
 		SimpleSlider::SimpleSlider(const Progress minimum, const Progress maximum, const Progress progress) noexcept : SimpleProgressBar(minimum, maximum, progress) {}
@@ -233,16 +230,6 @@ namespace mc {
 			p.setTexture(texture, PainterTextureSlots::FOREGROUND);
 			p.setTexture(glyph, PainterTextureSlots::BACKGROUND);
 			p.drawQuad(Painter::Brush::MULTICOMPONENT_BLEND);
-		}
-
-		void Letter::onDestroy() {
-			if (texture.isCreated()) {
-				texture.destroy();
-			}
-
-			if (glyph.isCreated()) {
-				glyph.destroy();
-			}
 		}
 
 		void Letter::onClean() {}
@@ -312,12 +299,6 @@ namespace mc {
 		void Text::onUpdate() {}
 
 		void Text::onRender(Painter&) {}
-
-		void Text::onDestroy() {
-			if (font.isCreated()) {
-				font.destroy();
-			}
-		}
 
 		void Text::onClean() {
 			if (!font.isCreated()) {

@@ -114,7 +114,6 @@ namespace mc {
 			bool operator!=(const SimpleProgressBar& other) const;
 		protected:
 			virtual void onRender(Painter& p) override;
-			void onDestroy() override final;
 
 			Progress minimumProgress = 0, maximumProgress = 0, progress = 0;
 		};//SimpleProgressBar
@@ -153,7 +152,6 @@ namespace mc {
 			void onInit() override final;
 			void onUpdate() override final;
 			void onRender(Painter& p) override final;
-			void onDestroy() override final;
 			void onClean() override final;
 		private:
 			Texture glyph = Texture();
@@ -220,7 +218,6 @@ namespace mc {
 			void onInit() override final;
 			void onUpdate() override final;
 			void onRender(Painter& p) override final;
-			void onDestroy() override final;
 			void onClean() override final;
 		private:
 			std::vector<std::shared_ptr<Letter>> letters;

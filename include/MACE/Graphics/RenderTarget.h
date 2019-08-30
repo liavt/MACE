@@ -120,6 +120,8 @@ namespace mc {
 				bool operator!=(const State& other) const;
 			};
 
+			MACE__DEFAULT_OPERATORS(Painter);
+
 			void drawModel(const Model& m, const Texture& img);
 
 			void fillModel(const Model& m);
@@ -219,7 +221,6 @@ namespace mc {
 			void end() override;
 
 			void init() override;
-			void destroy() override;
 
 			void clean();
 		};
@@ -240,10 +241,9 @@ namespace mc {
 			friend class Renderer;
 			friend class Painter;
 		public:
-			virtual MACE__DEFAULT_OPERATORS(PainterImpl);
+			virtual ~PainterImpl() = default;
 
 			virtual void init() override = 0;
-			virtual void destroy() override = 0;
 
 			virtual void begin() override = 0;
 			virtual void end() override = 0;
@@ -307,7 +307,6 @@ namespace mc {
 			Renderer() noexcept = default;
 
 			virtual void onInit() = 0;
-			virtual void onDestroy() = 0;
 			virtual void onQueue(Entity* en) = 0;
 
 			//not declared const because some of the functions require modification to an internal buffer of impls
@@ -329,21 +328,13 @@ namespace mc {
 			*/
 			void checkInput(gfx::WindowModule* win);
 
-
-			/**
-			@internal
-			@rendercontext
-			*/
-			void destroy() override;
-
 			void queue(Entity* const e, Painter& p);
 		};//Renderer
 
 		class MACE_NOVTABLE GraphicsEntity: public virtual Entity {
 		public:
 			GraphicsEntity() noexcept;
-
-			virtual ~GraphicsEntity() noexcept override = default;
+			virtual MACE__DEFAULT_OPERATORS(GraphicsEntity);
 
 			/**
 			@dirty
@@ -359,8 +350,6 @@ namespace mc {
 			void clean() override final;
 
 			void init() override final;
-
-			void destroy() override final;
 		private:
 			Painter painter;
 

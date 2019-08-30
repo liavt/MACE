@@ -45,7 +45,6 @@ namespace mc {
 
 			void init() final;
 			void render() final;
-			void destroy() final;
 
 			gfx::WindowModule* getWindow();
 			const gfx::WindowModule* getWindow() const;
@@ -124,7 +123,6 @@ namespace mc {
 
 			virtual void onInit(gfx::WindowModule* win) = 0;
 			virtual void onRender(gfx::WindowModule* win) = 0;
-			virtual void onDestroy(gfx::WindowModule* win) = 0;
 		};
 	}
 }//mc

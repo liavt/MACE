@@ -39,7 +39,7 @@ namespace mc {
 
 				Context(gfx::WindowModule* win);
 				Context(const Context& other) = delete;
-				~Context() = default;
+				~Context();
 
 				gfx::ComponentPtr<gfx::Renderer> createRenderTarget() override;
 
@@ -55,7 +55,6 @@ namespace mc {
 			protected:
 				void onInit(gfx::WindowModule* win) override;
 				void onRender(gfx::WindowModule* win) override;
-				void onDestroy(gfx::WindowModule* win) override;
 			private:
 				std::queue <DispatchFunction, std::list<DispatchFunction>> dispatchQueue{};
 				std::mutex dispatchMutex;

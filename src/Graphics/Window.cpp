@@ -410,7 +410,7 @@ namespace mc {
 				try {
 					const std::unique_lock<std::mutex> guard(mutex);//in case there is an exception, the unique lock will unlock the mutex
 
-					//the window will be destroyed on the main thread, need to detach this one
+					glfwDestroyWindow(window);
 					glfwMakeContextCurrent(nullptr);
 
 					os::checkError(__LINE__, __FILE__, "A system error occurred destroying the window");
@@ -454,15 +454,12 @@ namespace mc {
 			Entity::update();
 		}//update
 
-		void WindowModule::destroy() {
-			Entity::destroy();
-
+		WindowModule::~WindowModule() {
+			//TODO find a way to do this safely without causing a deadlock (if windowThread refuses to join)
+			// potientially use some sort of interrupt system? or c++20 std::jthread?
 			windowThread.join();
 
 			os::checkError(__LINE__, __FILE__, "A system error occured while trying to destroy the WindowModule");
-
-			glfwDestroyWindow(window);
-			glfwMakeContextCurrent(nullptr);
 
 			glfwTerminate();
 			os::clearError(__LINE__, __FILE__);//https://github.com/glfw/glfw/issues/1053
@@ -529,8 +526,6 @@ namespace mc {
 		void WindowModule::onUpdate() {}
 
 		void WindowModule::onRender() {}
-
-		void WindowModule::onDestroy() {}
 
 		void WindowModule::clean() {
 			setProperty(Entity::DIRTY, false);

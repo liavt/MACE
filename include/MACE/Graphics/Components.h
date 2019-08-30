@@ -134,7 +134,6 @@ namespace mc {
 			void init() final;
 			void update() final;
 			void render() final;
-			void destroy() final;
 			void clean(Metrics& metrics) final;
 			bool isDone() const final;
 		private:
@@ -192,6 +191,7 @@ namespace mc {
 
 			EaseComponent(const EaseUpdateCallback callback, const EaseSettings settings = EaseSettings(), const Progress start = 0.0f, const Progress dest = 1.0f);
 			EaseComponent(Progressable* progressable, const EaseSettings settings = EaseSettings(), const Progress start = 0.0f, const Progress dest = 1.0f);
+			~EaseComponent();
 
 			/**
 			@dirty
@@ -213,7 +213,6 @@ namespace mc {
 			void init() override;
 			void update() override;
 			void render() override;
-			void destroy() override;
 			bool isDone() const override;
 		private:
 			const EaseSettings settings;
@@ -252,8 +251,6 @@ namespace mc {
 
 			MACE_GETTER_SETTER_DEC(RenderCallback, CallbackPtr);
 
-			MACE_GETTER_SETTER_DEC(DestroyCallback, CallbackPtr);
-
 			MACE_GETTER_SETTER_DEC(CleanCallback, CleanPtr);
 
 			bool operator==(const CallbackComponent& other) const;
@@ -262,7 +259,6 @@ namespace mc {
 			void init() final;
 			void update() final;
 			void render() final;
-			void destroy() final;
 			void clean(Metrics& metrics) final;
 		private:
 			CallbackPtr destroyCallback = [](Entity*) {},
@@ -299,7 +295,6 @@ namespace mc {
 			void update() final;
 			void render() final;
 			void clean(Metrics& metrics) final;
-			void destroy() final;
 		};//FPSComponent
 
 		template<typename T>
@@ -646,10 +641,6 @@ namespace mc {
 			}
 		private:
 			gfx::Texture texture;
-
-			void destroy() override {
-				texture.destroy();
-			}
 		};
 	}//internal
 

@@ -139,13 +139,6 @@ namespace mc {
 			@rendercontext
 			*/
 			virtual void update();
-			/**
-			Called when Entity::destroy() is called or the `Component` is removed via Component::update(Entity*),
-			whichever comes first. Once Component::destroy(Entity*) is called, it is immediately removed from
-			the `Entity`.
-			@rendercontext
-			*/
-			virtual void destroy() override;
 
 			virtual void render();
 			/**
@@ -216,7 +209,9 @@ namespace mc {
 	namespace gfx {
 		class EventListener: public Initializable {
 		public:
-			void destroy() noexcept override;
+			~EventListener() noexcept;
+
+			void disconnect() noexcept;
 
 			bool isInit() const noexcept;
 
@@ -230,6 +225,8 @@ namespace mc {
 
 		class EventListenerManager {
 		public:
+			~EventListenerManager() noexcept;
+
 			template<typename EventType, typename... Args>
 			void addListener(Entity* entity, const typename EventType::ListenerType listener) {
 				manage(entity->addListener<EventType>(listener));
@@ -237,7 +234,7 @@ namespace mc {
 
 			void manage(EventListener&& listener);
 
-			void destroy();
+			void disconnect() noexcept;
 		private:
 			std::forward_list<EventListener> eventListeners;
 		};
@@ -257,13 +254,13 @@ namespace mc {
 			template<typename... Args>
 			void call(Args... args) {
 				auto lastElement = listeners.cbefore_begin();
-				for (auto it = listeners.cbegin(); it != listeners.cend(); ++it) {
+				for (auto it = listeners.cbegin(); it != listeners.cend() && !listeners.empty(); ++it) {
 					const auto element = *it;
-					if (!element->connected) MACE_UNLIKELY{
-						it = listeners.erase_after(lastElement);
-					} else {
-						element->listener(args...);
-					}
+					//if (!element->connected) MACE_UNLIKELY{
+					//	it = listeners.erase_after(lastElement);
+					//} else {
+					//	element->listener(args...);
+					//}
 					lastElement = it;
 				}
 			}
@@ -344,11 +341,7 @@ namespace mc {
 			should instead be thrown from `init()`.
 			*/
 			Entity() noexcept;
-			/**
-			Destructor. Made `virtual` for inheritance.
-			@see ~Entity()
-			*/
-			virtual MACE__DEFAULT_OPERATORS(Entity);
+			virtual ~Entity() noexcept;
 
 			/**
 			Gets all of this `Entity's` children.
@@ -708,16 +701,6 @@ namespace mc {
 			*/
 			virtual void clean();
 			/**
-			Should be called a by `Entity` when `MACE.destroy()` is called. Calls `onDestroy()`. Sets `Entity::INIT` to be false
-			<p>
-			Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override `onDestroy()`
-			@dirty
-			@rendercontext
-			@throws InitializationError If the property `Entity::INIT` is false, meaning `init()` was not called.
-			*/
-			virtual void destroy() override;
-
-			/**
 			Should be called by a `Entity` when the graphical `Window` clears the frame.
 			<p>
 			Overriding this function is dangerous. Only do it if you know what you are doing. Instead, override `onRender()`
@@ -739,13 +722,6 @@ namespace mc {
 			@rendercontext
 			*/
 			virtual void onInit();
-			/**
-			When `Entity.destroy()` is called, `onDestroy()` is called on all of it's children.
-			@see MACE#destroy()
-			@internal
-			@rendercontext
-			*/
-			virtual void onDestroy();
 
 			/**
 			When `Entity.render()` is called, `onRender()` is called on all of it's children.
@@ -853,7 +829,7 @@ namespace mc {
 			void deleteID(const gfx::EntityID id);
 
 			void init() override;
-			void destroy() override;
+			void destroy();
 		};//RootComponent
 	}
 }//mc

@@ -26,7 +26,7 @@ namespace mc {
 		~Process();
 
 		void init() override;
-		void destroy() override;
+		void destroy();
 
 		int wait();
 

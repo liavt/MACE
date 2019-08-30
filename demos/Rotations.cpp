@@ -29,10 +29,6 @@ private:
 			}
 		});
 	}
-
-	void destroy() override {
-		eventManager.destroy();
-	}
 };
 
 class RotationComponent: public gfx::Component {
@@ -171,7 +167,6 @@ int main() {
 
 			mc::os::wait(33);
 		}
-		instance.destroy();
 	} catch (const std::exception& e) {
 		mc::handleError(e, instance);
 		return -1;

@@ -19,6 +19,8 @@ See LICENSE.md for full copyright information
 //we need to include algorithim for std::copy
 #include <algorithm>
 
+#define MACE__CHECK_ENTITY_INIT(entity) if(!entity->isInit()) return
+
 namespace mc {
 	namespace internal {
 		namespace ogl {
@@ -61,6 +63,7 @@ namespace mc {
 
 			void Renderer::preRender() {
 				dispatch([this]() {
+					MACE__BEGIN_OGL_FUNCTION;
 					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: An error occured before onSetUp");
 
 					ogl::resetBlending();
@@ -98,6 +101,7 @@ namespace mc {
 
 			void Renderer::postRender(gfx::WindowModule* win) {
 				dispatch([this, win]() {
+					MACE__BEGIN_OGL_FUNCTION;
 					ogl::checkGLError(__LINE__, __FILE__, "Error occured during rendering");
 
 					//frameBuffer.unbind();
@@ -155,10 +159,10 @@ namespace mc {
 				});
 			}
 
-			void Renderer::onDestroy() {
-				eventManager.destroy();
-
+			Renderer::~Renderer() {
 				dispatch([this]() {
+					MACE__BEGIN_OGL_FUNCTION;
+
 					frameBuffer.destroy();
 
 					{
@@ -171,8 +175,6 @@ namespace mc {
 
 						RenderBuffer::destroy(renderBuffers, 4);
 					}
-
-					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error destroying OGL Render Target");
 				});
 			}
 
@@ -183,6 +185,8 @@ namespace mc {
 			}
 
 			void Renderer::generateFramebuffer(const Pixels width, const Pixels height) {
+				MACE__BEGIN_OGL_FUNCTION;
+
 				{
 					Object* renderBuffers[] = {
 						&sceneBuffer,
@@ -320,6 +324,9 @@ namespace mc {
 
 			void Painter::init() {
 				dispatch([this]() {
+					MACE__CHECK_ENTITY_INIT(painter->getEntity());
+					MACE__BEGIN_OGL_FUNCTION;
+
 					Object* buffers[] = {
 						&uniformBuffers.entityData,
 						&uniformBuffers.painterData
@@ -335,6 +342,8 @@ namespace mc {
 			}
 
 			void Painter::createEntityData() {
+				MACE__BEGIN_OGL_FUNCTION;
+
 				MACE_STATIC_ASSERT(sizeof(float) >= sizeof(gfx::EntityID), "This system doesn't not support the required size for EntityID");
 
 				savedMetrics = painter->getEntity()->getMetrics();
@@ -360,6 +369,8 @@ namespace mc {
 			}
 
 			void Painter::createPainterData() {
+				MACE__BEGIN_OGL_FUNCTION;
+
 				savedState = painter->getState();//create default state
 
 				float painterDataBuffer[MACE__PAINTER_DATA_BUFFER_SIZE / sizeof(float)] = {0};
@@ -377,16 +388,16 @@ namespace mc {
 				uniformBuffers.painterData.setName(MACE_STRINGIFY_DEFINITION(MACE__PAINTER_DATA_NAME));
 			}
 
-			void Painter::destroy() {
+			Painter::~Painter() {
 				dispatch([this]() {
+					MACE__BEGIN_OGL_FUNCTION;
+
 					Object* buffers[] = {
 						&uniformBuffers.entityData,
 						&uniformBuffers.painterData
 					};
 
 					UniformBuffer::destroy(buffers, 2);
-
-					ogl::checkGLError(__LINE__, __FILE__, "Internal Error: Error destroying painter");
 				});
 			}
 
@@ -402,7 +413,8 @@ namespace mc {
 
 			void Painter::clean() {
 				dispatch([this]() {
-					MACE_ASSERT(painter->getEntity()->isInit(), "Internal Error: Renderer: clean(): Painter Entity is not initializd.");
+					MACE__CHECK_ENTITY_INIT(painter->getEntity());
+					MACE__BEGIN_OGL_FUNCTION;
 
 					const gfx::Metrics metrics = painter->getEntity()->getMetrics();
 
@@ -436,6 +448,10 @@ namespace mc {
 					if (state == savedState) {
 						return;
 					}
+					
+					MACE__CHECK_ENTITY_INIT(painter->getEntity());
+
+					MACE__BEGIN_OGL_FUNCTION;
 
 					uniformBuffers.painterData.bind();
 
@@ -458,6 +474,9 @@ namespace mc {
 
 			void Painter::draw(const gfx::Model& m, const gfx::Painter::Brush brush) {
 				dispatch([this, &m, brush]() {
+					MACE__CHECK_ENTITY_INIT(painter->getEntity());
+					MACE__BEGIN_OGL_FUNCTION;
+
 					context->bindProtocol(this, {brush, savedState.renderFeatures});
 
 					m.draw();
@@ -473,3 +492,5 @@ namespace mc {
  //pop the disable of warning 4996 which is a useless warning in our scenario
 #	pragma warning( pop ) 
 #endif 
+
+#undef MACE__CHECK_ENTITY_INIT

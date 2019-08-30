@@ -183,9 +183,11 @@ namespace mc {
 				checkFreetypeError(FT_Init_FreeType(&freetype), "Failed to initialize FreeType", __LINE__, __FILE__);
 			}
 
-			void FreetypeLibrary::destroy() {
-				checkFreetypeError(FT_Done_FreeType(freetype), "Failed to destroy FreeType", __LINE__, __FILE__);
+			FreetypeLibrary::~FreetypeLibrary() {
+				//dont check for error, since we are in a destructor (and hence noexcept) we would rather ignore errors
+				FT_Done_FreeType(freetype);
 			}
+
 			bool FreetypeLibrary::isInit() const noexcept {
 				return freetype != nullptr;
 			}

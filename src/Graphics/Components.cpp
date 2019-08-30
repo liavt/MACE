@@ -395,7 +395,7 @@ namespace mc {
 
 		void EaseComponent::render() {}
 
-		void EaseComponent::destroy() {
+		EaseComponent::~EaseComponent() {
 			progress = destination;
 			settings.done(parent);
 		}
@@ -412,10 +412,6 @@ namespace mc {
 			renderCallback(parent);
 		}
 
-		void CallbackComponent::destroy() {
-			destroyCallback(parent);
-		}
-
 		void CallbackComponent::clean(Metrics& metrics) {
 			cleanCallback(parent, metrics);
 		}
@@ -427,8 +423,6 @@ namespace mc {
 		MACE_GETTER_SETTER_DEF(CallbackComponent, RenderCallback, renderCallback, CallbackComponent::CallbackPtr);
 
 		MACE_GETTER_SETTER_DEF(CallbackComponent, CleanCallback, cleanCallback, CallbackComponent::CleanPtr);
-
-		MACE_GETTER_SETTER_DEF(CallbackComponent, DestroyCallback, destroyCallback, CallbackComponent::CallbackPtr);
 
 		bool CallbackComponent::operator==(const CallbackComponent& other) const {
 			return Component::operator==(other);
@@ -501,8 +495,6 @@ namespace mc {
 		void FPSComponent::clean(Metrics&) {
 			++nbCleans;
 		}
-
-		void FPSComponent::destroy() {}
 
 		bool NineSliceDesc::operator==(const NineSliceDesc& other) const {
 			return topLeft == other.topLeft && top == other.top && topRight == other.topRight && right == other.right && bottomRight == other.bottomRight && bottom == other.bottom && bottomLeft == other.bottomLeft && left == other.left && center == other.center;
@@ -856,8 +848,6 @@ namespace mc {
 		bool ComponentQueue::isDone() const {
 			return components.empty();
 		}
-
-		void ComponentQueue::destroy() {}
 
 		void ComponentQueue::clean(Metrics& metrics) {
 			if (!components.empty()) {

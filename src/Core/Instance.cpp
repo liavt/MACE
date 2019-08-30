@@ -62,7 +62,7 @@ namespace mc {
 	}
 
 	void Instance::start(const long long ups) {
-		mc::Initializer i(this);
+		init();
 
 		while (mc::Instance::isRunning()) {
 			mc::Instance::update();
@@ -80,20 +80,6 @@ namespace mc {
 		for (auto val : modules) {
 			val.second->init();
 		}
-	}
-
-	void Instance::destroy() {
-		MACE_ASSERT(isInit(), "Can't destroy MACE without calling init() first!");
-
-		flags |= Instance::DESTROYED;
-		flags &= ~Instance::INIT;
-		flags &= ~Instance::STOP_REQUESTED;
-
-		for (auto val : modules) {
-			val.second->destroy();
-		}
-
-		modules.clear();
 	}
 
 	void Instance::update() {

@@ -119,7 +119,7 @@ namespace mc {
 
 		void SignalModule::update() {}
 
-		void SignalModule::destroy() {
+		SignalModule::~SignalModule() {
 			std::signal(SIGABRT, SIG_DFL);
 			std::signal(SIGFPE, SIG_DFL);
 			std::signal(SIGILL, SIG_DFL);
@@ -151,9 +151,7 @@ namespace mc {
 			SignalModule::update();
 		}
 
-		void ErrorModule::destroy() {
-			SignalModule::destroy();
-
+		ErrorModule::~ErrorModule() {
 			std::set_terminate(oldTerminate);
 		}
 

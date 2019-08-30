@@ -26,10 +26,9 @@ namespace mc {
 				friend class Painter;
 			public:
 				Renderer(std::shared_ptr<Context> context);
-				~Renderer() noexcept override = default;
+				~Renderer() noexcept override;
 
 				void onInit() override;
-				void onDestroy() override;
 				void onQueue(gfx::Entity* en) override;
 
 				void preRender();
@@ -57,9 +56,9 @@ namespace mc {
 				friend class Context;
 			public:
 				Painter(std::shared_ptr<Context> context, Renderer* const renderer);
+				~Painter() override;
 
 				void init() override;
-				void destroy() override;
 
 				void begin() override;
 				void end() override;
