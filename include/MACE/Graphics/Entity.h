@@ -256,11 +256,11 @@ namespace mc {
 				auto lastElement = listeners.cbefore_begin();
 				for (auto it = listeners.cbegin(); it != listeners.cend() && !listeners.empty(); ++it) {
 					const auto element = *it;
-					//if (!element->connected) MACE_UNLIKELY{
-					//	it = listeners.erase_after(lastElement);
-					//} else {
-					//	element->listener(args...);
-					//}
+					if (!element->connected) MACE_UNLIKELY{
+						it = listeners.erase_after(lastElement);
+					} else {
+						element->listener(args...);
+					}
 					lastElement = it;
 				}
 			}
@@ -293,7 +293,7 @@ namespace mc {
 		@see Entity2D
 		@see Component
 		*/
-		class MACE_NOVTABLE Entity: public Initializable {
+		class Entity: public Initializable, public std::enable_shared_from_this<Entity> {
 			friend class Component;
 		public:
 			//values defining which bit in a byte every propety is, or how much to bit shift it

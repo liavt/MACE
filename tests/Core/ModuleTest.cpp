@@ -111,7 +111,7 @@ namespace mc {
 			REQUIRE(MACE.hasModule(m2.getName()));
 			REQUIRE(MACE.hasModule(m2.getName()));
 
-			mc::Initializer i(MACE);
+			MACE.init();
 
 			REQUIRE(MACE.hasModule(m2.getName()));
 			REQUIRE(MACE.hasModule(m2.getName()));
@@ -155,12 +155,6 @@ namespace mc {
 				REQUIRE(MACE.getFlag(MACE.STOP_REQUESTED));
 				REQUIRE(!MACE.isRunning());
 
-				MACE.destroy();
-
-				REQUIRE(MACE.getFlag(MACE.DESTROYED));
-				REQUIRE_FALSE(MACE.getFlag(MACE.INIT));
-				REQUIRE_FALSE(MACE.getFlag(MACE.STOP_REQUESTED));
-
 			}
 		}
 
@@ -192,10 +186,7 @@ namespace mc {
 					MACE.update();
 				}
 
-				MACE.destroy();
-
 				REQUIRE(m.updates == 10);
-				REQUIRE_FALSE(m.isInit);
 
 			}
 		}

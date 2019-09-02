@@ -16,12 +16,6 @@ See LICENSE.md for full copyright information
 #include <exception>
 #include <iostream>
 
-
-void onUnexpected MACE_NORETURN(){
-	std::cerr << "Unexpected exception occured" << std::endl;
-	std::abort();
-}
-
 void onTerminate MACE_NORETURN(){
 	std::cerr << "An unhandled exception occured" << std::endl;
 	std::abort();
@@ -29,7 +23,6 @@ void onTerminate MACE_NORETURN(){
 
 int main(int argc, char* const argv[]) {
 	try {
-		std::set_unexpected(&onUnexpected);
 		std::set_terminate(&onTerminate);
 
 		//const int? constant? get it?

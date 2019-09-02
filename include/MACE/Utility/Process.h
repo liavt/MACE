@@ -31,7 +31,7 @@ namespace mc {
 		int wait();
 
 		bool isRunning() const;
-		bool isCreated() const;
+		bool isInit() const noexcept override;
 
 		void setPath(const char* p) MACE_EXPECTS(p != nullptr);
 		const char* getPath() const;

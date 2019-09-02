@@ -7,365 +7,132 @@ See LICENSE.md for full copyright information
 #include <MACE/Graphics/Entity.h>
 #include <MACE/Graphics/Entity2D.h>
 
-
-namespace mc {
-	namespace gfx {
-
-		class DummyEntity: public mc::gfx::Entity {
-		public:
-			DummyEntity() : Entity() {};
-
-			//bring protected members in public for testing purposes
-			using mc::gfx::Entity::init;
-			using mc::gfx::Entity::update;
-			using mc::gfx::Entity::render;
-			using mc::gfx::Entity::clean;
-			using mc::gfx::Entity::setProperty;
-			using mc::gfx::Entity::getProperty;
-
-			bool isUpdated = false, isInit = false, isDestroyed = false, isRendered = false, isCleaned = false;
-		protected:
-
-			virtual void onUpdate() override {
-				isUpdated = true;
-			}
-
-			virtual void onInit() override {
-				isInit = true;
-			}
-
-			virtual void onDestroy() override {
-				isDestroyed = true;
-			}
-
-			virtual void onRender() override {
-				isRendered = true;
-			}
-
-			virtual void onClean() override {
-				isCleaned = true;
-			}
-		};
-
-		class DummyGroup: public mc::gfx::Group {
-		public:
-			using Entity::init;
-			using Entity::update;
-			using Entity::render;
-			using Entity::destroy;
-		};
-
-		class DummyComponent: public mc::gfx::Component {
-		public:
-			int updates;
-			bool destroySelf = false;
-			bool isInit = false;
-			bool destroyed = false;
-
-			void init() override {
-				isInit = true;
-			}
-
-			bool update() override {
-				updates++;
-				if( destroySelf )return true;
-				else return false;
-			}
-
-			void destroy() override {
-				destroyed = true;
-			}
-
-			void render() override {
-			
-			}
-		};
-
-		DummyGroup c = DummyGroup();
-
-		TEST_CASE("Testing dirtiness") {
-			DummyEntity e = DummyEntity();
-
-			SECTION("Testing what makes something dirty") {
-				e = DummyEntity();
-				REQUIRE(!e.getProperty(Entity::DIRTY));
-				e.setProperty(Entity::DEAD, true);
-				REQUIRE(e.getProperty(Entity::DIRTY));
-			}
-
-			SECTION("Testing clean()") {
-				e = DummyEntity();
-				REQUIRE(!e.getProperty(Entity::DIRTY));
-				REQUIRE_FALSE(e.isCleaned);
-
-				e.makeDirty();
-				REQUIRE(e.getProperty(Entity::DIRTY));
-				REQUIRE_FALSE(e.isCleaned);
-
-				e.update();
-				e.clean();
-				e.render();
-
-				REQUIRE_FALSE(e.getProperty(Entity::DIRTY));
-				REQUIRE(e.isCleaned);
-
-				e.clean();
-
-				REQUIRE_FALSE(e.getProperty(Entity::DIRTY));
-				REQUIRE(e.isCleaned);
-			}
-		}
-
-		TEST_CASE("Testing the getParent() function", "[entity][graphics]") {
-
-			DummyEntity e = DummyEntity();
-			DummyEntity e2 = DummyEntity();
-
-			REQUIRE_FALSE(e.hasParent());
-			REQUIRE_FALSE(e2.hasParent());
-			REQUIRE(c.isEmpty());
-
-			c.addChild(e);
-
-			REQUIRE(!c.isEmpty());
-
-			SECTION("hasParent()") {
-				REQUIRE(e.hasParent());
-				REQUIRE_FALSE(e2.hasParent());
-			}
-
-			e.addChild(e2);
-
-			SECTION("Checking whether it recognizes the parent") {
-				REQUIRE(e.hasParent());
-				REQUIRE(*e2.getParent() == e);
-			}
-
-			c.clearChildren();
-
-			REQUIRE_FALSE(e.hasParent());
-			REQUIRE_FALSE(e2.hasParent());
-			REQUIRE(c.isEmpty());
-		}
-
-		TEST_CASE("Testing getRoot()") {
-			REQUIRE(c.getRoot() == &c);
-			REQUIRE_FALSE(c.hasParent());
-
-			DummyEntity e = DummyEntity();
-
-			REQUIRE_FALSE(e.hasParent());
-			REQUIRE(e.getRoot() == &e);
-
-			c.addChild(e);
-
-			REQUIRE(c.getRoot() == &c);
-			REQUIRE(e.hasParent());
-			REQUIRE(e.getRoot() == &c);
-			
-			DummyEntity e1 = DummyEntity();
-
-			REQUIRE(e1.getRoot() == &e1);
-
-			c.addChild(e1);
-
-			REQUIRE(c.getRoot() == &c);
-			REQUIRE(e.getRoot() == &c);
-			REQUIRE(e1.getRoot() == &c);
-
-			c.clearChildren();
-		}
-
-		TEST_CASE("Testing the ENABLE property of an entity", "[entity][graphics]") {
-
-			DummyEntity e = DummyEntity();
-
-
-			c.addChild(e);
-
-			SECTION("Updating an entity") {
-				REQUIRE(!e.getProperty(Entity::DISABLED));
-				e.isUpdated = false;
-				e.setProperty(Entity::DISABLED, true);
-
-				c.update();
-
-				REQUIRE(!e.isUpdated);
-			}
-
-			SECTION("Rendering an entity") {
-				REQUIRE(!e.getProperty(Entity::DISABLED));
-				e.isRendered = false;
-				e.setProperty(Entity::DISABLED, true);
-
-				c.render();
-
-				REQUIRE(!e.isRendered);
-			}
-
-			c.clearChildren();
-		}
-
-		TEST_CASE("Testing death", "[entity][graphics]") {//the sweet embrace of death
-
-
-			DummyEntity e = DummyEntity();
-
-			c.addChild(e);
-
-			SECTION("Killing some entities") {//RIP
-
-				c.init();
-
-				REQUIRE(c.hasChild(e));
-				REQUIRE(!e.getProperty(Entity::DEAD));
-
-				c.update();
-
-				REQUIRE(!e.getProperty(Entity::DEAD));
-				REQUIRE(e.isUpdated);
-
-
-				e.isUpdated = false;
-				e.setProperty(Entity::DEAD, true);
-
-				c.update();
-
-				REQUIRE(!e.isUpdated);
-				REQUIRE(e.isDestroyed);
-				REQUIRE(!c.hasChild(e));
-			}
-
-			c.clearChildren();
-		}
-
-		TEST_CASE("Testing actions", "[entity][graphics]") {
-			DummyComponent a = DummyComponent();
-			DummyEntity e = DummyEntity();
-
-			SECTION("Testing default values") {
-				REQUIRE_FALSE(a.isInit);
-				REQUIRE_FALSE(a.destroyed);
-				REQUIRE(a.updates == 0);
-				REQUIRE_FALSE(a.destroySelf);
-			}
-
-			e.addComponent(a);
-			c.addChild(e);
-
-			SECTION("Testing if it gets init") {
-				REQUIRE(a.isInit);
-			}
-
-			SECTION("Testing update") {
-				for( Index i = 0; i < 10; i++ ) {
-					REQUIRE(a.updates == i);
-					c.update();
-				}
-			}
-
-			SECTION("Testing destruction") {
-				a.destroySelf = true;
-				c.update();
-				REQUIRE(a.destroyed);
-			}
-
-			c.clearChildren();
-		}
-
-		TEST_CASE("Testing init()", "[entity][graphics]") {
-			DummyEntity e = DummyEntity();
-			c.addChild(e);
-
-
-
-			SECTION("Calling init() on entities") {
-
-
-				REQUIRE(!e.getProperty(Entity::INIT));
-
-
-				c.init();
-
-				REQUIRE(e.isInit);
-				REQUIRE(e.getProperty(Entity::INIT));
-
-
-			}
-
-			c.clearChildren();
-		}
-
-		TEST_CASE("Testing entity properties", "[entity][graphics]") {
-			DummyEntity e = DummyEntity();
-
-			REQUIRE_FALSE(e.getProperty(Entity::DEAD));
-			e.setProperty(Entity::DEAD, true);
-
-			REQUIRE(e.getProperty(Entity::DEAD));
-
-			REQUIRE(!e.getProperty(Entity::DISABLED));
-			e.setProperty(Entity::DISABLED, true);
-			REQUIRE(e.getProperty(Entity::DISABLED));
-			REQUIRE(e.getProperty(Entity::DEAD));
-		}
-
-
-		TEST_CASE("Testing entity module and updating", "[entity][graphics]") {
-			DummyEntity e = DummyEntity();
-
-			c.addChild(e);
-
-			SECTION("Testing init(), destroy(), render() and destroy()") {
-
-				REQUIRE(e.isUpdated == false);
-
-				c.init();
-
-				REQUIRE(e.isInit);
-
-				c.update();
-
-				REQUIRE(e.isUpdated);
-
-				c.render();
-
-				REQUIRE(e.isRendered);
-
-				c.destroy();
-
-				REQUIRE(e.isDestroyed);
-
-			}
-
-			c.clearChildren();
-
-			DummyEntity child = DummyEntity();
-
-			SECTION("Testing init() destroy() render() and update() with children") {
-
-				e.addChild(child);
-				c.addChild(e);
-
-				c.init();
-
-				REQUIRE(child.isInit);
-
-				c.update();
-
-				REQUIRE(child.isUpdated);
-
-				c.render();
-
-				REQUIRE(child.isRendered);
-
-				c.destroy();
-
-				REQUIRE(child.isDestroyed);
-
-			}
-
-			c.clearChildren();
-		}
+class DummyEntity: public mc::gfx::Entity {
+public:
+	DummyEntity() : Entity() {};
+
+	//bring protected members in public for testing purposes
+	using mc::gfx::Entity::init;
+	using mc::gfx::Entity::update;
+	using mc::gfx::Entity::render;
+	using mc::gfx::Entity::clean;
+	using mc::gfx::Entity::setProperty;
+	using mc::gfx::Entity::getProperty;
+
+	bool isUpdated = false, isInit = false, isRendered = false, isCleaned = false;
+protected:
+
+	virtual void onUpdate() override {
+		isUpdated = true;
 	}
+
+	virtual void onInit() override {
+		isInit = true;
+	}
+
+	virtual void onRender() override {
+		isRendered = true;
+	}
+
+	virtual void onClean() override {
+		isCleaned = true;
+	}
+};
+
+class DummyGroup: public mc::gfx::Group {
+public:
+	using Entity::init;
+	using Entity::update;
+	using Entity::render;
+};
+
+class DummyComponent: public mc::gfx::Component {
+public:
+	int updates;
+	bool destroySelf = false;
+	bool isInit = false;
+	bool destroyed = false;
+
+	void init() override {
+		isInit = true;
+	}
+
+	void update() override {
+		updates++;
+	}
+
+	bool isDone() {
+		return destroySelf;
+	}
+
+	void render() override {
+
+	}
+};
+
+template<typename T>
+void requireEntityNotInit(mc::gfx::EntityPtr<T> en) {
+	requireEntityNotInit(en.get());
+}
+
+void requireEntityNotInit(mc::gfx::Entity* en) {
+	REQUIRE(en->getID() == 0);
+	REQUIRE_FALSE(en->isInit());
+	REQUIRE(en->getRoot() == nullptr);
+}
+
+template<typename T>
+void requireEntityInit(mc::gfx::EntityPtr<T> en) {
+	requireEntityInit(en.get());
+}
+
+void requireEntityInit(mc::gfx::Entity* en) {
+	REQUIRE(en->getID() != 0);
+	REQUIRE(en->isInit());
+}
+
+
+TEST_CASE("Testing basic entity operations", "[entity]") {
+	DummyGroup en{};
+
+	requireEntityNotInit(&en);
+	REQUIRE(en.getChildren().empty());
+	REQUIRE(en.getParent() == nullptr);
+
+	en.init();
+
+	requireEntityInit(&en);
+	//since it is the only entity in the tree, it is the root
+	REQUIRE(en.getRoot() == &en);
+	REQUIRE(en.getChildren().empty());
+}
+
+TEST_CASE("Testing entity with children", "[entity]") {
+	mc::gfx::EntityPtr<DummyEntity> root = mc::gfx::EntityPtr<DummyEntity>(new DummyEntity());
+
+	requireEntityNotInit(root);
+
+	REQUIRE(root->getChildren().empty());
+	REQUIRE(root->getParent() == nullptr);
+
+	mc::gfx::EntityPtr<DummyEntity> child = mc::gfx::EntityPtr<DummyEntity>(new DummyEntity());
+
+	requireEntityNotInit(child);
+
+	REQUIRE(child->getParent() == nullptr);
+
+	root->addChild(child);
+
+	requireEntityNotInit(child);
+
+	REQUIRE(child->getParent() == root.get());
+
+	root->init();
+
+	requireEntityInit(root);
+	requireEntityInit(child);
+
+	REQUIRE(root->getID() != child->getID());
+	REQUIRE(child->getRoot() == root.get());
+
 }

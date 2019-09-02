@@ -24,23 +24,23 @@ namespace mc {
 
 		REQUIRE_FALSE(p.isRunning());
 
-		REQUIRE_FALSE(p.isCreated());
+		REQUIRE_FALSE(p.isInit());
 
 		p.init();
 
 		REQUIRE(p.isRunning());
 
-		REQUIRE(p.isCreated());
+		REQUIRE(p.isInit());
 
 		REQUIRE(p.wait() == 5);
 
 		REQUIRE_FALSE(p.isRunning());
 
-		REQUIRE(p.isCreated());
+		REQUIRE(p.isInit());
 
 		p.destroy();
 
-		REQUIRE_FALSE(p.isCreated());
+		REQUIRE_FALSE(p.isInit());
 		REQUIRE_FALSE(p.isRunning());
 	}
 }//mc

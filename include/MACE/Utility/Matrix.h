@@ -177,9 +177,9 @@ namespace mc {
 		@see #operator[]
 		*/
 		T& get(const Index x, const Index y) MACE_EXPECTS(x < W&& y < H) {
-			MACE_IF_CONSTEXPR(x >= W) {
+			if(x >= W) {
 				MACE__THROW(OutOfBounds, std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
-			} else MACE_IF_CONSTEXPR(y >= H) {
+			} else if(y >= H) {
 				MACE__THROW(OutOfBounds, std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
 			}
 
@@ -217,9 +217,9 @@ namespace mc {
 		@see #get(Index, Index)
 		*/
 		void set(const Index x, const Index y, const T& value) MACE_EXPECTS(x < W&& y < H) {
-			MACE_IF_CONSTEXPR(x >= W) {
+			if(x >= W) {
 				MACE__THROW(OutOfBounds, std::to_string(x) + " is greater than this Matrix's width, " + std::to_string(W) + "!");
-			} else MACE_IF_CONSTEXPR(y >= H) {
+			} else if(y >= H) {
 				MACE__THROW(OutOfBounds, std::to_string(y) + " is greater than this Matrix's width, " + std::to_string(H) + "!");
 			}
 
@@ -268,9 +268,9 @@ namespace mc {
 		@see get(Index,Index)
 		*/
 		T& operator()(const Index x, const Index y) MACE_EXPECTS(x > 0 && x <= W && y > 0 && y <= H) {
-			MACE_IF_CONSTEXPR(x <= 0) {
+			if(x <= 0) {
 				MACE__THROW(OutOfBounds, std::to_string(x) + " is less than or equal zero");
-			} else MACE_IF_CONSTEXPR(y <= 0) {
+			} else if(y <= 0) {
 				MACE__THROW(OutOfBounds, std::to_string(y) + " is less than or equal to zero");
 			}
 

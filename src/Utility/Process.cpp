@@ -29,7 +29,7 @@ namespace mc {
 	Process::Process() : Process(nullptr, nullptr) {}
 
 	Process::~Process() {
-		if (isCreated()) {
+		if (isInit()) {
 			destroy();
 		}
 	}
@@ -39,7 +39,7 @@ namespace mc {
 			MACE__THROW(NullPointer, "The path can\'t be null!");
 		} else if (args == nullptr) {
 			MACE__THROW(NullPointer, "The args can\'t be null!");
-		} else if (isCreated()) {
+		} else if (isInit()) {
 			MACE__THROW(InitializationFailed, "Can\'t call init() on an already initialized Process");
 		}
 
@@ -103,7 +103,7 @@ namespace mc {
 	void Process::destroy() {
 		os::clearError();
 
-		if (!isCreated()) {
+		if (!isInit()) {
 			MACE__THROW(InitializationFailed, "Can\'t destroy an unitialized Process");
 		}
 
@@ -152,7 +152,7 @@ namespace mc {
 	int Process::wait() {
 		os::clearError(__LINE__, __FILE__);
 
-		if (!isCreated()) {
+		if (!isInit()) {
 			MACE__THROW(InitializationFailed, "Can\'t use wait() on unitialized Process");
 		}
 
@@ -198,7 +198,7 @@ namespace mc {
 	}
 
 	bool Process::isRunning() const {
-		if (!isCreated()) {
+		if (!isInit()) {
 			return false;
 		}
 
@@ -209,7 +209,7 @@ namespace mc {
 #endif
 	}
 
-	bool Process::isCreated() const {
+	bool Process::isInit() const noexcept{
 		return created;
 	}
 
