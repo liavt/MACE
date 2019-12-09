@@ -404,17 +404,7 @@ namespace mc {
 		}
 
 		bool Entity::operator==(const Entity& other) const noexcept {
-			if (other.properties != properties) {
-				return false;
-			} else if (other.parent != parent) {
-				return false;
-			} else if (other.transformation != transformation) {
-				return false;
-			} else if (other.components != components) {
-				return false;
-			}
-
-			return children == other.children;
+			return getID() == other.getID();
 		}
 
 		bool Entity::operator!=(const Entity& other) const noexcept {

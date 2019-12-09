@@ -254,14 +254,16 @@ namespace mc {
 			template<typename... Args>
 			void call(Args... args) {
 				auto lastElement = listeners.cbefore_begin();
-				for (auto it = listeners.cbegin(); it != listeners.cend() && !listeners.empty(); ++it) {
+				auto it = listeners.cbegin();
+				while (it != listeners.cend() && !listeners.empty()) {
 					const auto element = *it;
 					if (!element->connected) MACE_UNLIKELY{
 						it = listeners.erase_after(lastElement);
+						continue;
 					} else {
 						element->listener(args...);
 					}
-					lastElement = it;
+					lastElement = it++;
 				}
 			}
 		private:
@@ -293,7 +295,7 @@ namespace mc {
 		@see Entity2D
 		@see Component
 		*/
-		class Entity: public Initializable, public std::enable_shared_from_this<Entity> {
+		class Entity: public Initializable {
 			friend class Component;
 		public:
 			//values defining which bit in a byte every propety is, or how much to bit shift it
@@ -348,7 +350,7 @@ namespace mc {
 			@return an `std::vector` with all children of this `Entity`
 			*/
 			const std::vector<EntityPtr<Entity>>& getChildren() const;
-		
+
 			void removeFromParent();
 
 			/**
@@ -476,7 +478,7 @@ namespace mc {
 			template<typename T, typename = MACE__INTERNAL_NS::ExtendsComponent<T>>
 			MACE_NODISCARD ComponentPtr<T> getComponent() {
 				//TODO check the __cpp_lib_generic_unordered_hash_lookup (201902L) macro to potentially use precomputated hashes
-				 
+
 				auto it = components.find(MACE__INTERNAL_NS::getComponentTypeID<T>());
 				if (it != components.end()) {
 					return std::static_pointer_cast<T>(it->second);

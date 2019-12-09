@@ -56,9 +56,11 @@ namespace mc {
 					preRender();
 				});
 
-				eventManager.addListener<gfx::PostRenderEvent>(parent, [this](auto win) {
-					postRender(win);
-				});
+				// TODO figure out why this errors
+
+				//eventManager.addListener<gfx::PostRenderEvent>(parent, [this](auto win) {
+				//	postRender(win);
+				//});
 			}
 
 			void Renderer::preRender() {
